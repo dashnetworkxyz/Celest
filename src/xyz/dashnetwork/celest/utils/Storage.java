@@ -14,20 +14,27 @@ import java.nio.file.Path;
 
 public class Storage {
 
+    public enum Directory { USERDATA, CACHE }
+
     private static final Gson gson;
     private static final File folder;
 
     static {
         gson = new GsonBuilder().create();
-        folder = new File(Path.of("plugins", "Celest", "data").toUri());
+        folder = new File(Path.of("plugins", "Celest").toUri());
 
-        if (!folder.exists() && !folder.mkdirs())
-            Celest.getLogger().error("Failed to create plugin data directory"); // TODO: Update message
+        for (Directory directory : Directory.values()) {
+            String name = directory.name().toLowerCase();
+            File file = new File(folder, name);
+
+            if (!file.exists() && file.mkdirs())
+                throw new RuntimeException("Failed to create " + name + " folder");
+        }
     }
 
-    public static void write(String fileName, Object object) {
+    public static void write(String fileName, Directory directory, Object object) {
+        File file = new File(new File(folder, directory.name().toLowerCase()), fileName + ".json");
         String json = gson.toJson(object);
-        File file = new File(folder, fileName + ".json");
 
         try {
             if (file.createNewFile())
@@ -41,8 +48,8 @@ public class Storage {
         }
     }
 
-    public static <T>T read(String fileName, Class<T> clazz) {
-        File file = new File(folder, fileName + ".json");
+    public static <T>T read(String fileName, Directory directory, Class<T> clazz) {
+        File file = new File(new File(folder, directory.name().toLowerCase()), fileName + ".json");
 
         if (!file.exists())
             return null;
