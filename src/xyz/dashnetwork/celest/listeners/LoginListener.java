@@ -15,7 +15,9 @@ public class LoginListener {
     @Subscribe
     public void onPostLogin(PostLoginEvent event) {
         Player player = event.getPlayer();
-        User user = new User(player); // Create User instance on join.
+        User user = User.getUser(player);
+
+        // TODO
     }
 
 }

@@ -21,8 +21,7 @@ public class ServerConnectListener {
         User user = User.getUser(player);
         Optional<RegisteredServer> server = event.getResult().getServer();
 
-        assert user != null; // Avoid compilation warnings
-        assert server.isPresent();
+        assert server.isPresent(); // Avoid compilation warnings
 
         String name = server.get().getServerInfo().getName();
 

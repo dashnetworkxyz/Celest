@@ -35,7 +35,7 @@ public class User {
         for (User user : users)
             if (user.getPlayer().getUniqueId().equals(player.getUniqueId()))
                 return user;
-        return null;
+        return new User(player);
     }
 
     private void load() {

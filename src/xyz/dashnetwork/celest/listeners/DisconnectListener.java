@@ -17,8 +17,6 @@ public class DisconnectListener {
         Player player = event.getPlayer();
         User user = User.getUser(player);
 
-        assert user != null; // Avoid compilation warnings
-
         user.save();
         user.remove();
     }
