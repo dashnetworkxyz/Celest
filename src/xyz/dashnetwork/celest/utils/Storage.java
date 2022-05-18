@@ -30,7 +30,7 @@ public class Storage {
 
     }
 
-    static {
+    public static void mkdir() {
         for (Directory directory : Directory.values()) {
             File file = directory.getFile();
 
