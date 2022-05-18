@@ -14,26 +14,33 @@ import java.nio.file.Path;
 
 public class Storage {
 
-    public enum Directory { USERDATA, CACHE }
+    private static Gson gson = new GsonBuilder().create();
+    private static File folder = Path.of("plugins", "Celest").toFile();
 
-    private static final Gson gson;
-    private static final File folder;
+    public enum Directory {
+
+        USERDATA(new File(folder, "userdata")),
+        CACHE(new File(folder, "cache"));
+
+        private File file;
+
+        Directory(File file) { this.file = file; }
+
+        public File getFile() { return file; }
+
+    }
 
     static {
-        gson = new GsonBuilder().create();
-        folder = new File(Path.of("plugins", "Celest").toUri());
-
         for (Directory directory : Directory.values()) {
-            String name = directory.name().toLowerCase();
-            File file = new File(folder, name);
+            File file = directory.getFile();
 
             if (!file.exists() && file.mkdirs())
-                throw new RuntimeException("Failed to create " + name + " folder");
+                throw new RuntimeException("Failed to create " + directory.name() + " folder");
         }
     }
 
     public static void write(String fileName, Directory directory, Object object) {
-        File file = new File(new File(folder, directory.name().toLowerCase()), fileName + ".json");
+        File file = new File(directory.getFile(), fileName + ".json");
         String json = gson.toJson(object);
 
         try {
@@ -49,7 +56,7 @@ public class Storage {
     }
 
     public static <T>T read(String fileName, Directory directory, Class<T> clazz) {
-        File file = new File(new File(folder, directory.name().toLowerCase()), fileName + ".json");
+        File file = new File(directory.getFile(), fileName + ".json");
 
         if (!file.exists())
             return null;
