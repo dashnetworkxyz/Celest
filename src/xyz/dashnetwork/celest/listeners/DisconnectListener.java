@@ -19,6 +19,8 @@ public class DisconnectListener {
         Player player = event.getPlayer();
         User user = User.getUser(player);
 
+        // TODO
+
         user.save();
         user.remove();
     }

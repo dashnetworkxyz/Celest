@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.tasks;
 
 import xyz.dashnetwork.celest.User;
+import xyz.dashnetwork.celest.utils.Cache;
 
 public class SaveTask implements Runnable {
 
@@ -15,6 +16,8 @@ public class SaveTask implements Runnable {
     public void run() {
         for (User user : User.getUsers())
             user.save();
+
+        Cache.save();
     }
 
 }

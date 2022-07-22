@@ -23,15 +23,18 @@ public class Cache {
         usernames = new ArrayList<>();
 
         if (addressArray != null)
-            addresses = new ArrayList<>(Arrays.asList(addressArray));
+            addresses.addAll(Arrays.asList(addressArray));
 
         if (usernameArray != null)
-            usernames = new ArrayList<>(Arrays.asList(usernameArray));
+            usernames.addAll(Arrays.asList(usernameArray));
     }
 
     public static void save() {
-        Storage.write("address", Storage.Directory.CACHE, addresses.toArray(new Address[0]));
-        Storage.write("username", Storage.Directory.CACHE, usernames.toArray(new Username[0]));
+        if (!addresses.isEmpty())
+            Storage.write("address", Storage.Directory.CACHE, addresses.toArray(new Address[0]));
+
+        if (!usernames.isEmpty())
+            Storage.write("username", Storage.Directory.CACHE, usernames.toArray(new Username[0]));
     }
 
     public static void generate(UserData data) {

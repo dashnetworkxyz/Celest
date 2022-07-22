@@ -28,7 +28,7 @@ import xyz.dashnetwork.celest.utils.Storage;
 
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celect", version = "1.0", authors = {"MasterDash5"})
+@Plugin(id = "celest", name = "Celest", version = "1.0", authors = {"MasterDash5"})
 public class Celest {
 
     private static ProxyServer server;

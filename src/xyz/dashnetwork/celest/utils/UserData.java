@@ -9,13 +9,14 @@ package xyz.dashnetwork.celest.utils;
 
 public class UserData {
 
-    private String address;
+    private String address, nickname;
     private long lastPlayed;
     private boolean adminChat, altSpy, commandSpy, ownerChat, pingSpy, staffChat, vanish;
-
     // TODO: Add Punish to userdata once system is made.
 
     public String getAddress() { return address; }
+
+    public String getNickname() { return nickname; }
 
     public long getLastPlayed() { return lastPlayed; }
 
@@ -34,6 +35,8 @@ public class UserData {
     public boolean getVanish() { return vanish; }
 
     public void setAddress(String address) { this.address = address; }
+
+    public void setNickname(String nickname) { this.nickname = nickname; }
 
     public void setLastPlayed(long lastPlayed) { this.lastPlayed = lastPlayed; }
 

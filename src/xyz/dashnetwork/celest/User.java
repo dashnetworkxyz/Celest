@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest;
 
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.utils.Cache;
 import xyz.dashnetwork.celest.utils.Storage;
 import xyz.dashnetwork.celest.utils.UserData;
 
@@ -16,17 +17,16 @@ import java.util.List;
 
 public class User {
 
-    private static List<User> users = new ArrayList<>();
-    private Player player;
+    private static final List<User> users = new ArrayList<>();
+    private final Player player;
     private UserData userData;
     private String uuid;
 
     public User(Player player) {
         this.player = player;
+        this.uuid = player.getUniqueId().toString();
 
         load();
-
-        this.uuid = player.getUniqueId().toString();
 
         users.add(this);
     }
@@ -35,7 +35,7 @@ public class User {
 
     public static User getUser(Player player) {
         for (User user : users)
-            if (user.getPlayer().getUniqueId().equals(player.getUniqueId()))
+            if (user.player.getUniqueId().equals(player.getUniqueId()))
                 return user;
         return new User(player);
     }
@@ -45,6 +45,8 @@ public class User {
 
         if (userData == null)
             userData = new UserData();
+
+        Cache.generate(userData);
     }
 
     public void save() { Storage.write(uuid, Storage.Directory.USERDATA, userData); }
