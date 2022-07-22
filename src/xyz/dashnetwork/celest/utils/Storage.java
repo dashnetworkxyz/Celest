@@ -17,12 +17,12 @@ import java.nio.file.Path;
 public class Storage {
 
     private static final Gson gson = new GsonBuilder().create();
-    private static final File folder = Path.of("plugins", "Celest").toFile();
+    private static final File folder = Celest.getDirectory().toFile();
 
     public enum Directory {
 
-        USERDATA(new File(folder, "userdata")),
-        CACHE(new File(folder, "cache"));
+        PARENT(folder),
+        USERDATA(new File(folder, "userdata"));
 
         private File file;
 

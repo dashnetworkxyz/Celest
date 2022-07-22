@@ -14,6 +14,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
@@ -23,9 +24,9 @@ import xyz.dashnetwork.celest.listeners.DisconnectListener;
 import xyz.dashnetwork.celest.listeners.LoginListener;
 import xyz.dashnetwork.celest.listeners.ServerConnectListener;
 import xyz.dashnetwork.celest.tasks.SaveTask;
-import xyz.dashnetwork.celest.utils.Cache;
 import xyz.dashnetwork.celest.utils.Storage;
 
+import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
 @Plugin(id = "celest", name = "Celest", version = "1.0", authors = {"MasterDash5"})
@@ -33,15 +34,19 @@ public class Celest {
 
     private static ProxyServer server;
     private static Logger logger;
+    private static Path directory;
 
     public static ProxyServer getServer() { return server; }
 
     public static Logger getLogger() { return logger; }
 
+    public static Path getDirectory() { return directory; }
+
     @Inject
-    public Celest(ProxyServer server, Logger logger) {
+    public Celest(ProxyServer server, Logger logger, @DataDirectory Path directory) {
         Celest.server = server;
         Celest.logger = logger;
+        Celest.directory = directory;
     }
 
     @Subscribe

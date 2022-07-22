@@ -8,7 +8,6 @@
 package xyz.dashnetwork.celest;
 
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.Cache;
 import xyz.dashnetwork.celest.utils.Storage;
 import xyz.dashnetwork.celest.utils.UserData;
 
@@ -46,7 +45,7 @@ public class User {
         if (userData == null)
             userData = new UserData();
 
-        Cache.generate(userData);
+        Cache.generate(player);
     }
 
     public void save() { Storage.write(uuid, Storage.Directory.USERDATA, userData); }
