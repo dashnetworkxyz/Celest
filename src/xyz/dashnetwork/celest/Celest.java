@@ -10,6 +10,7 @@ import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -20,6 +21,8 @@ import xyz.dashnetwork.celest.listeners.DisconnectListener;
 import xyz.dashnetwork.celest.listeners.LoginListener;
 import xyz.dashnetwork.celest.listeners.ServerConnectListener;
 import xyz.dashnetwork.celest.tasks.SaveTask;
+import xyz.dashnetwork.celest.utils.Cache;
+import xyz.dashnetwork.celest.utils.Storage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -44,6 +47,8 @@ public class Celest {
         for (Player player : server.getAllPlayers())
             new User(player); // Create User instances for plugin reloads.
 
+        Storage.mkdir();
+
         CommandManager commandManager = server.getCommandManager();
         commandManager.register("test", new CommandTest());
 
@@ -54,6 +59,14 @@ public class Celest {
 
         Scheduler scheduler = server.getScheduler();
         scheduler.buildTask(this, new SaveTask()).repeat(1, TimeUnit.MINUTES);
+    }
+
+    @Subscribe
+    public void onProxyShutdown(ProxyShutdownEvent event) {
+        for (User user : User.getUsers())
+            user.save();
+
+        Cache.save();
     }
 
 }
