@@ -36,7 +36,7 @@ public class Storage {
         for (Directory directory : Directory.values()) {
             File file = directory.getFile();
 
-            if (!file.exists() && file.mkdirs())
+            if (!file.exists() && !file.mkdirs())
                 throw new RuntimeException("Failed to create " + directory.name() + " folder");
         }
     }
