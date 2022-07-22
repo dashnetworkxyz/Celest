@@ -7,35 +7,38 @@
 
 package xyz.dashnetwork.celest.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.util.*;
 
 public class Cache {
 
+    private static Gson gson = new GsonBuilder().create();
     private static File userdata = new File(Path.of("plugins", "Celest", "userdata").toUri());
-    private static Address address;
-    private static List<Username> username;
+    private static List<Address> addresses;
+    private static List<Username> usernames;
     // TODO: Punish system
 
     public static void load() {
-        address = Storage.read("address", Storage.Directory.CACHE, Address.class);
-        username = Storage.read("username", Storage.Directory.CACHE, List.class);
+        Address[] addressArray = Storage.read("address", Storage.Directory.CACHE, Address[].class);
+        Username[] usernameArray = Storage.read("username", Storage.Directory.CACHE, Username[].class);
 
-        if (address == null || username == null) {
-            address = new Address();
-            username = new ArrayList<>();
+        addresses = new ArrayList<>();
+        usernames = new ArrayList<>();
 
-            username.add(new Username("test", UUID.randomUUID()));
-            username.add(new Username("testy 2", UUID.randomUUID()));
+        if (addressArray != null)
+            addresses = new ArrayList<>(Arrays.asList(addressArray));
 
-            address.test = "test";
-        }
+        if (usernameArray != null)
+            usernames = new ArrayList<>(Arrays.asList(usernameArray));
     }
 
     public static void save() {
-        Storage.write("address", Storage.Directory.CACHE, address);
-        Storage.write("username", Storage.Directory.CACHE, username);
+        Storage.write("address", Storage.Directory.CACHE, addresses.toArray(new Address[0]));
+        Storage.write("username", Storage.Directory.CACHE, usernames.toArray(new Username[0]));
     }
 
     public static void generate(UserData data) {
@@ -44,7 +47,15 @@ public class Cache {
 
     public static class Address {
 
-        public String test;
+        private String address;
+
+        public Address(String address) {
+            this.address = address;
+
+            // TODO: UUID list
+        }
+
+        public String getAddress() { return address; }
 
     }
 
