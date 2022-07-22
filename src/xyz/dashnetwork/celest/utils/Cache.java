@@ -13,19 +13,21 @@ public class Cache {
 
     private static File userdata = new File(Path.of("plugins", "Celest", "userdata").toUri());
     private static Address address;
-    private static Username username;
+    private static List<Username> username;
     // TODO: Punish system
 
     public static void load() {
         address = Storage.read("address", Storage.Directory.CACHE, Address.class);
-        username = Storage.read("username", Storage.Directory.CACHE, Username.class);
+        username = Storage.read("username", Storage.Directory.CACHE, List.class);
 
         if (address == null || username == null) {
             address = new Address();
-            username = new Username();
+            username = new ArrayList<>();
+
+            username.add(new Username("test", UUID.randomUUID()));
+            username.add(new Username("testy 2", UUID.randomUUID()));
 
             address.test = "test";
-            username.test = UUID.randomUUID();
         }
     }
 
@@ -35,7 +37,7 @@ public class Cache {
     }
 
     public static void generate(UserData data) {
-
+        // TODO: Update username and address cache on login
     }
 
     public static class Address {
@@ -46,7 +48,17 @@ public class Cache {
 
     public static class Username {
 
-        public UUID test;
+        private String username;
+        private UUID uuid;
+
+        public Username(String username, UUID uuid) {
+            this.username = username;
+            this.uuid = uuid;
+        }
+
+        public String getUsername() { return username; }
+
+        public UUID getUUID() { return uuid; }
 
     }
 

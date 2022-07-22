@@ -48,6 +48,7 @@ public class Celest {
             new User(player); // Create User instances for plugin reloads.
 
         Storage.mkdir();
+        Cache.load();
 
         CommandManager commandManager = server.getCommandManager();
         commandManager.register("test", new CommandTest());
