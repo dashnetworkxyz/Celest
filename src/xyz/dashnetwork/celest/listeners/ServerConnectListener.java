@@ -23,11 +23,7 @@ public class ServerConnectListener {
         User user = User.getUser(player);
         Optional<RegisteredServer> server = event.getResult().getServer();
 
-        if (!server.isPresent()) {
-            // TODO: Send warning to player.
-            event.setResult(ServerPreConnectEvent.ServerResult.denied());
-            return;
-        }
+        assert server.isPresent(); // This assertion should never fail, purely for warnings only.
 
         String name = server.get().getServerInfo().getName();
 
