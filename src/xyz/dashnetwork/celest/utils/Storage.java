@@ -16,8 +16,8 @@ import java.nio.file.Path;
 
 public class Storage {
 
-    private static Gson gson = new GsonBuilder().create();
-    private static File folder = Path.of("plugins", "Celest").toFile();
+    private static final Gson gson = new GsonBuilder().create();
+    private static final File folder = Path.of("plugins", "Celest").toFile();
 
     public enum Directory {
 

@@ -16,8 +16,8 @@ import java.util.*;
 
 public class Cache {
 
-    private static Gson gson = new GsonBuilder().create();
-    private static File userdata = new File(Path.of("plugins", "Celest", "userdata").toUri());
+    private static final Gson gson = new GsonBuilder().create();
+    private static final File userdata = new File(Path.of("plugins", "Celest", "userdata").toUri());
     private static List<Address> addresses;
     private static List<Username> usernames;
     // TODO: Punish system
