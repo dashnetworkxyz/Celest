@@ -7,17 +7,10 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.File;
-import java.nio.file.Path;
 import java.util.*;
 
 public class Cache {
 
-    private static final Gson gson = new GsonBuilder().create();
-    private static final File userdata = new File(Path.of("plugins", "Celest", "userdata").toUri());
     private static List<Address> addresses;
     private static List<Username> usernames;
     // TODO: Punish system
