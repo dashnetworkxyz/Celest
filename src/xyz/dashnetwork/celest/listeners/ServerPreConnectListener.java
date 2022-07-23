@@ -15,7 +15,7 @@ import xyz.dashnetwork.celest.User;
 
 import java.util.Optional;
 
-public class ServerConnectListener {
+public class ServerPreConnectListener {
 
     @Subscribe
     public void onServerPreConnect(ServerPreConnectEvent event) {

@@ -40,4 +40,21 @@ public class Cache {
         cache.add(new CacheData(uuid, username, address));
     }
 
+    public static CacheData fromUuid(UUID uuid) {
+        for (CacheData each : cache)
+            if (each.getUUID().equals(uuid))
+                return each;
+        return null;
+    }
+
+    public static List<CacheData> fromAddress(String address) {
+        List<CacheData> list = new ArrayList<>();
+
+        for (CacheData each : cache)
+            if (each.getAddress().equals(address))
+                list.add(each);
+
+        return list;
+    }
+
 }

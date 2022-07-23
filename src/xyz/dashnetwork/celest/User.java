@@ -67,4 +67,7 @@ public class User {
 
     public UserData getData() { return userData; }
 
+    // TODO: Displaynames
+    public String getDisplayname() { return "TODO"; }
+
 }

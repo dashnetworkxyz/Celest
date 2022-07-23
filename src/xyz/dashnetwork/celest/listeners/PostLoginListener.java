@@ -8,31 +8,32 @@
 package xyz.dashnetwork.celest.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.connection.DisconnectEvent;
+import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.utils.MessageUtils;
 import xyz.dashnetwork.celest.utils.Messages;
+import xyz.dashnetwork.celest.utils.UserData;
 
-public class DisconnectListener {
+public class PostLoginListener {
 
     @Subscribe
-    public void onDisconnect(DisconnectEvent event) {
+    public void onPostLogin(PostLoginEvent event) {
         Player player = event.getPlayer();
         User user = User.getUser(player);
+        UserData data = user.getData();
 
         String username = player.getUsername();
         String displayname = user.getDisplayname(); // TODO: Displayname
 
-        if (user.getData().getVanish())
-            MessageUtils.broadcast(User::isStaff, Messages.leaveServerVanished(username, displayname));
+        if (data.getVanish())
+            MessageUtils.broadcast(User::isStaff, Messages.joinServerVanished(username, displayname));
+        else if (data.getLastPlayed() == -1)
+            MessageUtils.broadcast(Messages.welcome(username, displayname));
         else
-            MessageUtils.broadcast(Messages.leaveServer(username, displayname));
+            MessageUtils.broadcast(Messages.joinServer(username, displayname));
 
         // TODO
-
-        user.save();
-        user.remove();
     }
 
 }

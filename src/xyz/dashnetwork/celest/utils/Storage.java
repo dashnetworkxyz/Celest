@@ -12,7 +12,6 @@ import com.google.gson.GsonBuilder;
 import xyz.dashnetwork.celest.Celest;
 
 import java.io.*;
-import java.nio.file.Path;
 
 public class Storage {
 
@@ -47,7 +46,7 @@ public class Storage {
 
         try {
             if (file.createNewFile())
-                Celest.getLogger().info(fileName + ".json generated");
+                Celest.getLogger().info(fileName + ".json created");
 
             FileWriter writer = new FileWriter(file);
             writer.write(json);

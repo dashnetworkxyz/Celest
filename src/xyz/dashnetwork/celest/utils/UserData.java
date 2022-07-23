@@ -14,6 +14,19 @@ public class UserData {
     private boolean adminChat, altSpy, commandSpy, ownerChat, pingSpy, staffChat, vanish;
     // TODO: Add Punish to userdata once system is made.
 
+    public UserData() {
+        address = null;
+        nickname = null;
+        lastPlayed = -1;
+        adminChat = false;
+        altSpy = false;
+        commandSpy = false;
+        ownerChat = false;
+        pingSpy = false;
+        staffChat = false;
+        vanish = false;
+    }
+
     public String getAddress() { return address; }
 
     public String getNickname() { return nickname; }

@@ -18,15 +18,14 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
-import net.kyori.adventure.text.event.ClickEvent;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.commands.CommandTest;
 import xyz.dashnetwork.celest.listeners.DisconnectListener;
 import xyz.dashnetwork.celest.listeners.LoginListener;
-import xyz.dashnetwork.celest.listeners.ServerConnectListener;
+import xyz.dashnetwork.celest.listeners.PostLoginListener;
+import xyz.dashnetwork.celest.listeners.ServerPreConnectListener;
 import xyz.dashnetwork.celest.tasks.SaveTask;
 import xyz.dashnetwork.celest.utils.Cache;
-import xyz.dashnetwork.celest.utils.MessageBuilder;
 import xyz.dashnetwork.celest.utils.Storage;
 
 import java.nio.file.Path;
@@ -66,18 +65,11 @@ public class Celest {
         EventManager eventManager = server.getEventManager();
         eventManager.register(this, new DisconnectListener());
         eventManager.register(this, new LoginListener());
-        eventManager.register(this, new ServerConnectListener());
+        eventManager.register(this, new PostLoginListener());
+        eventManager.register(this, new ServerPreConnectListener());
 
         Scheduler scheduler = server.getScheduler();
         scheduler.buildTask(this, new SaveTask()).repeat(1, TimeUnit.MINUTES);
-
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&6test");
-        builder.append("test 2");
-        builder.append("test 3").hover("hover");
-        builder.append("test 4").click(ClickEvent.runCommand("/test"));
-
-        server.sendMessage(builder.build());
     }
 
     @Subscribe

@@ -8,18 +8,18 @@
 package xyz.dashnetwork.celest.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.connection.PostLoginEvent;
+import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.User;
 
 public class LoginListener {
 
     @Subscribe
-    public void onPostLogin(PostLoginEvent event) {
+    public void onLogin(LoginEvent event) {
         Player player = event.getPlayer();
         User user = User.getUser(player);
 
-        // TODO
+        // TODO: Ban detection from Punish system
     }
 
 }
