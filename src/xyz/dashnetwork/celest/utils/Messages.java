@@ -47,6 +47,25 @@ public class Messages {
         return message.build();
     }
 
+    public static Component loginBanned(String reason) {
+        MessageBuilder message = new MessageBuilder();
+        message.append("&6&lDashNetwork\n");
+        message.append("&7You have been banned\n\n");
+        message.append("&6" + reason);
+
+        return message.build();
+    }
+
+    public static Component loginBannedTemporary(String reason, String expiration) {
+        MessageBuilder message = new MessageBuilder();
+        message.append("&6&lDashNetwork\n");
+        message.append("&7You have been banned\n");
+        message.append("&7Your ban will expire on &6" + expiration + "\n\n");
+        message.append("&6" + reason);
+
+        return message.build();
+    }
+
     public static Component welcome(String username, String displayname) {
         MessageBuilder message = new MessageBuilder();
         message.append("&6&l» &6Welcome, ");

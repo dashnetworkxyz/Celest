@@ -9,12 +9,15 @@ package xyz.dashnetwork.celest.utils;
 
 public class UserData {
 
+    // TODO: Add Punish to userdata once system is made.
+    private PunishData ban, mute;
     private String address, nickname;
     private long lastPlayed;
     private boolean adminChat, altSpy, commandSpy, ownerChat, pingSpy, staffChat, vanish;
-    // TODO: Add Punish to userdata once system is made.
 
     public UserData() {
+        ban = null;
+        mute = null;
         address = null;
         nickname = null;
         lastPlayed = -1;
@@ -26,6 +29,10 @@ public class UserData {
         staffChat = false;
         vanish = false;
     }
+
+    public PunishData getBan() { return ban; }
+
+    public PunishData getMute() { return mute; }
 
     public String getAddress() { return address; }
 
@@ -46,6 +53,10 @@ public class UserData {
     public boolean getStaffChat() { return staffChat; }
 
     public boolean getVanish() { return vanish; }
+
+    public void setBan(PunishData ban) { this.ban = ban; }
+
+    public void setMute(PunishData mute) { this.mute = mute; }
 
     public void setAddress(String address) { this.address = address; }
 
