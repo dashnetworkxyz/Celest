@@ -22,14 +22,12 @@ public class DisconnectListener {
         User user = User.getUser(player);
 
         String username = player.getUsername();
-        String displayname = user.getDisplayname(); // TODO: Displayname
+        String displayname = user.getDisplayname();
 
         if (user.getData().getVanish())
             MessageUtils.broadcast(User::isStaff, Messages.leaveServerVanished(username, displayname));
         else
             MessageUtils.broadcast(Messages.leaveServer(username, displayname));
-
-        // TODO
 
         user.save();
         user.remove();

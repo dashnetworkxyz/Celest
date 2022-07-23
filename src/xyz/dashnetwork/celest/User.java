@@ -11,12 +11,14 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.Cache;
 import xyz.dashnetwork.celest.utils.Storage;
 import xyz.dashnetwork.celest.utils.UserData;
+import xyz.dashnetwork.celest.vault.Vault;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class User {
 
+    private static final Vault vault = Celest.getVault();
     private static final List<User> users = new ArrayList<>();
     private final Player player;
     private UserData userData;
@@ -46,6 +48,8 @@ public class User {
         if (userData == null)
             userData = new UserData();
 
+        userData.setAddress(getPlayer().getRemoteAddress().getHostString());
+
         Cache.generate(player);
     }
 
@@ -53,7 +57,11 @@ public class User {
 
     public void remove() { users.remove(this); }
 
-    public boolean isBuilder() { return player.hasPermission("dashnetwork.builder") || isOwner(); }
+    public Player getPlayer() { return player; }
+
+    public UserData getData() { return userData; }
+
+    public boolean isBuilder() { return player.hasPermission("dashnetwork.builder") || isAdmin(); }
 
     public boolean isStaff() { return player.hasPermission("dashnetwork.staff") || isAdmin(); }
 
@@ -63,11 +71,13 @@ public class User {
 
     public boolean isDash() { return uuid.equals("4f771152-ce61-4d6f-9541-1d2d9e725d0e"); }
 
-    public Player getPlayer() { return player; }
+    public String getDisplayname() {
+        String name = userData.getNickname();
 
-    public UserData getData() { return userData; }
+        if (name == null)
+            name = player.getUsername();
 
-    // TODO: Displaynames
-    public String getDisplayname() { return "TODO"; }
+        return vault.getPrefix(player) + name + vault.getSuffix(player);
+    }
 
 }

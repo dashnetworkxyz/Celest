@@ -12,6 +12,8 @@ import com.google.gson.GsonBuilder;
 import xyz.dashnetwork.celest.Celest;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Storage {
 
@@ -62,6 +64,24 @@ public class Storage {
         if (!file.exists())
             return null;
 
+        return gson.fromJson(new String(readFile(file)), clazz);
+    }
+
+    public static <T>List<T> readAll(Directory directory, Class<T> clazz) {
+        File[] files = directory.getFile().listFiles();
+
+        if (files.length == 0)
+            return null;
+
+        List<T> list = new ArrayList<>();
+
+        for (File file : files)
+            list.add(gson.fromJson(new String(readFile(file)), clazz));
+
+        return list;
+    }
+
+    private static byte[] readFile(File file) {
         byte[] data;
 
         try {
@@ -74,7 +94,7 @@ public class Storage {
             return null;
         }
 
-        return gson.fromJson(new String(data), clazz);
+        return data;
     }
 
 }
