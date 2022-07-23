@@ -1,0 +1,4 @@
+motd: "&6&lDashNetwork &6&l»&7 [{LOWEST_VERSION} - {HIGHEST_VERSION}]\n&c&lServer IP: &6play.dashnetwork.xyz"
+motd.software: "DashNetwork {LOWEST_VERSION} - {HIGHEST_VERSION}"
+motd.hover: ["&f             &6&n&lDashNetwork","&6&lMinecraft &7play.dashnetwork.xyz","&6&lDiscord &7discord.dashnetwork.xyz"]
+motd.max: 54

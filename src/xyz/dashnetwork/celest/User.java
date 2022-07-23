@@ -67,9 +67,11 @@ public class User {
 
     public boolean isAdmin() { return player.hasPermission("dashnetwork.admin") || isOwner(); }
 
-    public boolean isOwner() { return player.hasPermission("dashnetwork.owner") || isDash(); }
+    public boolean isOwner() { return player.hasPermission("dashnetwork.owner") || isDash() || isKevin(); }
 
     public boolean isDash() { return uuid.equals("4f771152-ce61-4d6f-9541-1d2d9e725d0e"); }
+
+    public boolean isKevin() { return uuid.equals("a948c50c-ede2-4dfa-9b6c-688daf22197c"); }
 
     public String getDisplayname() {
         String name = userData.getNickname();

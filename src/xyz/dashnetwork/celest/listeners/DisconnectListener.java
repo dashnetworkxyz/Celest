@@ -29,6 +29,8 @@ public class DisconnectListener {
         else
             MessageUtils.broadcast(Messages.leaveServer(username, displayname));
 
+        user.getData().setLastPlayed(System.currentTimeMillis());
+
         user.save();
         user.remove();
     }

@@ -15,6 +15,7 @@ import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.utils.Messages;
 import xyz.dashnetwork.celest.utils.PunishData;
+import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.UserData;
 
 public class LoginListener {
@@ -33,7 +34,7 @@ public class LoginListener {
                 String reason = ban.getReason();
                 Component message = expiration == -1 ?
                         Messages.loginBanned(reason) :
-                        Messages.loginBannedTemporary(reason, "TODO"); // TODO
+                        Messages.loginBannedTemporary(reason, TimeUtils.toDate(expiration));
 
                 event.setResult(ResultedEvent.ComponentResult.denied(message));
             }

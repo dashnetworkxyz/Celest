@@ -19,15 +19,12 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
-import net.luckperms.api.LuckPerms;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.commands.CommandTest;
-import xyz.dashnetwork.celest.listeners.DisconnectListener;
-import xyz.dashnetwork.celest.listeners.LoginListener;
-import xyz.dashnetwork.celest.listeners.PostLoginListener;
-import xyz.dashnetwork.celest.listeners.ServerPreConnectListener;
+import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.tasks.SaveTask;
 import xyz.dashnetwork.celest.utils.Cache;
+import xyz.dashnetwork.celest.utils.Configuration;
 import xyz.dashnetwork.celest.utils.Storage;
 import xyz.dashnetwork.celest.vault.Vault;
 import xyz.dashnetwork.celest.vault.api.DummyAPI;
@@ -66,6 +63,7 @@ public class Celest {
 
         Storage.mkdir();
         Cache.load();
+        Configuration.load();
 
         CommandManager commandManager = server.getCommandManager();
         commandManager.register("test", new CommandTest());
@@ -74,6 +72,7 @@ public class Celest {
         eventManager.register(this, new DisconnectListener());
         eventManager.register(this, new LoginListener());
         eventManager.register(this, new PostLoginListener());
+        eventManager.register(this, new ProxyPingListener());
         eventManager.register(this, new ServerPreConnectListener());
 
         Scheduler scheduler = server.getScheduler();
@@ -84,7 +83,7 @@ public class Celest {
         if (pluginManager.isLoaded("luckperms"))
             vault = new LuckAPI();
         else {
-            logger.warn("Vault failed to hook into a permissions API, using fallback.");
+            logger.warn("Couldn't find a permissions plugin for Vault, using fallback.");
             vault = new DummyAPI();
         }
     }

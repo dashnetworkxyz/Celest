@@ -24,7 +24,7 @@ public class PostLoginListener {
         UserData data = user.getData();
 
         String username = player.getUsername();
-        String displayname = user.getDisplayname(); // TODO: Displayname
+        String displayname = user.getDisplayname();
 
         if (data.getVanish())
             MessageUtils.broadcast(User::isStaff, Messages.joinServerVanished(username, displayname));

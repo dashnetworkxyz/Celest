@@ -70,7 +70,7 @@ public class Storage {
     public static <T>List<T> readAll(Directory directory, Class<T> clazz) {
         File[] files = directory.getFile().listFiles();
 
-        if (files.length == 0)
+        if (files == null || files.length == 0)
             return null;
 
         List<T> list = new ArrayList<>();
@@ -89,9 +89,7 @@ public class Storage {
             data = input.readAllBytes();
             input.close();
         } catch (IOException exception) {
-            exception.printStackTrace();
-
-            return null;
+            throw new RuntimeException(exception);
         }
 
         return data;

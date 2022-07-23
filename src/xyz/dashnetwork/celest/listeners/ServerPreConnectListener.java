@@ -22,8 +22,7 @@ public class ServerPreConnectListener {
         Player player = event.getPlayer();
         User user = User.getUser(player);
         Optional<RegisteredServer> server = event.getResult().getServer();
-
-        assert server.isPresent(); // This assertion should never fail, purely for warnings only.
+        assert server.isPresent();
 
         String name = server.get().getServerInfo().getName();
 

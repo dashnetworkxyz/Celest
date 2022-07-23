@@ -9,7 +9,6 @@ package xyz.dashnetwork.celest.utils;
 
 public class UserData {
 
-    // TODO: Add Punish to userdata once system is made.
     private PunishData ban, mute;
     private String address, nickname;
     private long lastPlayed;

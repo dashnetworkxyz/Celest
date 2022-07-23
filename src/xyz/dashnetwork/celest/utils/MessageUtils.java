@@ -7,7 +7,6 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -28,12 +27,7 @@ public class MessageUtils {
 
     public static void broadcast(String message) { broadcast(legacy.deserialize(message)); }
 
-    public static void broadcast(Component component) {
-        for (Player player : server.getAllPlayers())
-            player.sendMessage(component);
-
-        server.sendMessage(component);
-    }
+    public static void broadcast(Component component) { server.sendMessage(component); }
 
     public static void broadcast(Predicate<User> predicate, String message) { broadcast(predicate, legacy.deserialize(message)); }
 
@@ -42,7 +36,7 @@ public class MessageUtils {
             if (predicate.test(user))
                 user.getPlayer().sendMessage(component);
 
-        server.sendMessage(component);
+        server.getConsoleCommandSource().sendMessage(component);
     }
 
 }
