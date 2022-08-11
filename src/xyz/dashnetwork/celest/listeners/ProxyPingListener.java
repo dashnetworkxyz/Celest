@@ -7,14 +7,13 @@
 
 package xyz.dashnetwork.celest.listeners;
 
-import com.google.common.reflect.TypeToken;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import xyz.dashnetwork.celest.User;
+import xyz.dashnetwork.celest.utils.ColorUtils;
 import xyz.dashnetwork.celest.utils.Configuration;
 
 import java.util.ArrayList;
@@ -35,19 +34,12 @@ public class ProxyPingListener {
             if (!user.getData().getVanish())
                 online++;
 
-        // TODO: Not at all finished.
+        Component description = legacy.deserialize(Configuration.get(String.class, "motd"));
+        String software = ColorUtils.fromAmpersand(Configuration.get(String.class, "motd.software"));
+        int max = Configuration.get(int.class, "motd.max");
+        List<String> hover = new ArrayList<>();
 
-        int max = Configuration.getConfig("motd.max").getInt();
-        Component description = legacy.deserialize(Configuration.getConfig("motd").getString());
-        String software = Configuration.getConfig("motd.software").getString();
-        List<String> hover;
-
-        try {
-            hover = Configuration.getConfig("motd.hover").getList(TypeToken.of(String.class));
-        } catch (ObjectMappingException exception) {
-            exception.printStackTrace();
-            hover = new ArrayList<>();
-        }
+        // TODO
 
         builder.clearMods().clearSamplePlayers();
         builder.onlinePlayers(online);

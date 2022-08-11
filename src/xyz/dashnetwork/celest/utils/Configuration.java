@@ -19,6 +19,8 @@ import java.net.URL;
 
 public class Configuration {
 
+    // TODO: switch to typesafe config. this one sucks.
+
     private static final URL resource = Configuration.class.getClassLoader().getResource("config.yml");
     private static final File file = new File(Celest.getDirectory().toFile(), "config.yml");
     private static final ConfigurationOptions options = ConfigurationOptions.defaults().withShouldCopyDefaults(true);
@@ -43,6 +45,10 @@ public class Configuration {
         }
     }
 
-    public static ConfigurationNode getConfig(String node) { return config.getNode(node); }
+    public static ConfigurationNode getNode(String node) { return config.getNode(node); }
+
+    public static <T>T get(Class<T> type, String node) {
+        return (T) config.getNode(node).getValue(type); // TODO: test if this actually works
+    }
 
 }

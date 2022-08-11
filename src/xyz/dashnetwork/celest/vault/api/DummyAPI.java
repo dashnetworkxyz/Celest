@@ -19,10 +19,10 @@ public class DummyAPI implements Vault {
 
         if (user.isOwner())
             return "&4&lOwner &6";
-        else if (user.isBuilder())
-            return "&3&lBuilder &c";
         else if (user.isAdmin())
             return "&4&lAdmin &6";
+        else if (user.isBuilder())
+            return "&3&lBuilder &c";
         else if (user.isStaff())
             return "&1&lMod &6";
         else
