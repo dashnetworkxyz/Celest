@@ -19,7 +19,7 @@ public class CacheData {
         this.uuid = uuid;
         this.username = username;
         this.address = address;
-        this.date = System.currentTimeMillis();
+        this.date = System.currentTimeMillis(); // TODO: Test this isn't overwritten by Gson
     }
 
     public UUID getUUID() { return uuid; }

@@ -11,5 +11,6 @@ public class Address {
 
     // TODO
     // Store in ram?
+    // Add and remove uuids from addresses on join
 
 }

@@ -41,8 +41,6 @@ public class LoginListener {
                 user.remove(); // TODO: Check if this is needed.
             }
         }
-
-        // TODO: Ban detection from Punish system
     }
 
 }

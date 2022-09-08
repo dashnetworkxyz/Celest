@@ -26,7 +26,7 @@ public class PlayerChatListener {
 
             if (expiration == -1 || expiration > System.currentTimeMillis()) {
                 String reason = mute.getReason();
-                // Component message = expiration == -1 ? TODO: Username pulling
+                // Component message = expiration == -1 ? // TODO: Username pulling
                 //         Messages.playerMuted(reason) :
                 //         Messages.playerMutedTemporary(reason, TimeUtils.toDate(expiration));
             }
