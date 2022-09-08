@@ -22,10 +22,8 @@ import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.commands.CommandTest;
 import xyz.dashnetwork.celest.listeners.*;
+import xyz.dashnetwork.celest.tasks.ClearTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
-import xyz.dashnetwork.celest.utils.Cache;
-import xyz.dashnetwork.celest.utils.Configuration;
-import xyz.dashnetwork.celest.utils.Storage;
 import xyz.dashnetwork.celest.vault.Vault;
 import xyz.dashnetwork.celest.vault.api.DummyAPI;
 import xyz.dashnetwork.celest.vault.api.LuckAPI;
@@ -58,12 +56,15 @@ public class Celest {
 
     @Subscribe
     public void onProxyInitialize(ProxyInitializeEvent event) {
-        for (Player player : server.getAllPlayers())
-            new User(player); // Create User instances for plugin reloads.
+        long start = System.currentTimeMillis();
 
+        Configuration.load();
         Storage.mkdir();
         Cache.load();
-        Configuration.load();
+        Cache.removeOldEntries();
+
+        for (Player player : server.getAllPlayers())
+            new User(player); // Create User instances for plugin reloads.
 
         CommandManager commandManager = server.getCommandManager();
         commandManager.register("test", new CommandTest());
@@ -77,6 +78,7 @@ public class Celest {
 
         Scheduler scheduler = server.getScheduler();
         scheduler.buildTask(this, new SaveTask()).repeat(1, TimeUnit.MINUTES);
+        scheduler.buildTask(this, new ClearTask()).repeat(1, TimeUnit.DAYS);
 
         PluginManager pluginManager = server.getPluginManager();
 
@@ -86,6 +88,8 @@ public class Celest {
             logger.warn("Couldn't find a permissions plugin for Vault, using fallback.");
             vault = new DummyAPI();
         }
+
+        logger.info("Startup complete. (took " + (System.currentTimeMillis() - start) + "ms)");
     }
 
     @Subscribe

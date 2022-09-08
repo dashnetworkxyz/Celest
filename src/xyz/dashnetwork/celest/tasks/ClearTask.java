@@ -5,14 +5,13 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.tasks;
 
-public class TimeUtils {
+import xyz.dashnetwork.celest.Cache;
 
-    public static String toDate(long time) {
-        // TODO
+public class ClearTask implements Runnable {
 
-        return null;
-    }
+    @Override
+    public void run() { Cache.removeOldEntries(); }
 
 }

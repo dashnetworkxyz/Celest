@@ -5,18 +5,17 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest;
 
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
-import xyz.dashnetwork.celest.Celest;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.function.IntFunction;
 
 public class Configuration {
@@ -46,12 +45,14 @@ public class Configuration {
 
     public static ConfigurationNode getNode(String node) { return config.getNode(node); }
 
-    public static <T>T get(Class<T> type, String node) { return type.cast(config.getNode(node).getValue(type)); }
+    @SuppressWarnings("unchecked")
+    public static <T>T get(Class<T> type, String node) { return (T) config.getNode(node).getValue(type); }
 
-    public static <T>T[] getArray(IntFunction<T[]> instance, String node) {
-        Class<?> type = instance.apply(0).getClass();
+    @SuppressWarnings("unchecked")
+    public static <T>T[] getArray(IntFunction<T[]> function, String node) {
+        Class<?> type = function.apply(0).getClass();
 
-        return Arrays.stream(((Object[]) config.getNode(node).getValue(type))).toArray(instance);
+        return ((ArrayList<T>) config.getNode(node).getValue(type)).toArray(function);
     }
 
 }

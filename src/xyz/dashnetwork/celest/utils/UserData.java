@@ -12,7 +12,7 @@ public class UserData {
     private PunishData ban, mute;
     private String nickname;
     private long lastPlayed;
-    private boolean adminChat, altSpy, commandSpy, ownerChat, pingSpy, staffChat, vanish;
+    private boolean adminChat, altSpy, commandSpy, ownerChat, pingSpy, staffChat, localChat, vanish;
 
     public UserData() {
         ban = null;
@@ -25,6 +25,7 @@ public class UserData {
         ownerChat = false;
         pingSpy = false;
         staffChat = false;
+        localChat = false;
         vanish = false;
     }
 
@@ -48,6 +49,8 @@ public class UserData {
 
     public boolean getStaffChat() { return staffChat; }
 
+    public boolean getLocalChat() { return localChat; }
+
     public boolean getVanish() { return vanish; }
 
     public void setBan(PunishData ban) { this.ban = ban; }
@@ -69,6 +72,8 @@ public class UserData {
     public void setPingSpy(boolean pingSpy) { this.pingSpy = pingSpy; }
 
     public void setStaffChat(boolean staffChat) { this.staffChat = staffChat; }
+
+    public void setLocalChat(boolean localChat) { this.localChat = localChat; }
 
     public void setVanish(boolean vanish) { this.vanish = vanish; }
 

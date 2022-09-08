@@ -5,9 +5,11 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest;
 
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.Storage;
+import xyz.dashnetwork.celest.utils.CacheData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,8 +17,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class Cache {
-
-    // TODO: Punish system
 
     private static final List<CacheData> cache = new ArrayList<>();
 
@@ -31,7 +31,11 @@ public class Cache {
 
     public static void save() {
         if (!cache.isEmpty())
-            Storage.write("cache", Storage.Directory.PARENT, cache.toArray(new CacheData[0]));
+            Storage.write("cache", Storage.Directory.PARENT, cache.toArray(CacheData[]::new));
+    }
+
+    public static void removeOldEntries() {
+        cache.removeIf(data -> System.currentTimeMillis() - 7776000000L >= data.getDate()); // Remove after 90 days
     }
 
     public static void generate(Player player) {

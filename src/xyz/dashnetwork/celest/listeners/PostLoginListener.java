@@ -26,14 +26,14 @@ public class PostLoginListener {
         String username = player.getUsername();
         String displayname = user.getDisplayname();
 
+        // TODO: Altspy
+
         if (data.getVanish())
             MessageUtils.broadcast(User::isStaffOrVanished, Messages.joinServerVanished(username, displayname));
         else if (data.getLastPlayed() == -1)
             MessageUtils.broadcast(Messages.welcome(username, displayname));
         else
             MessageUtils.broadcast(Messages.joinServer(username, displayname));
-
-        // TODO
     }
 
 }

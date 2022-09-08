@@ -13,11 +13,13 @@ public class CacheData {
 
     private UUID uuid;
     private String username, address;
+    private long date;
 
     public CacheData(UUID uuid, String username, String address) {
         this.uuid = uuid;
         this.username = username;
         this.address = address;
+        this.date = System.currentTimeMillis();
     }
 
     public UUID getUUID() { return uuid; }
@@ -25,5 +27,7 @@ public class CacheData {
     public String getUsername() { return username; }
 
     public String getAddress() { return address; }
+
+    public long getDate() { return date; }
 
 }

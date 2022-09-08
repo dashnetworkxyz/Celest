@@ -5,14 +5,11 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest;
 
-public class TimeUtils {
+public class Address {
 
-    public static String toDate(long time) {
-        // TODO
-
-        return null;
-    }
+    // TODO
+    // Store in ram?
 
 }

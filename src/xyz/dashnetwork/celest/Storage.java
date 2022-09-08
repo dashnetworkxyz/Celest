@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,9 +23,10 @@ public class Storage {
     public enum Directory {
 
         PARENT(folder),
-        USERDATA(new File(folder, "userdata"));
+        USERDATA(new File(folder, "userdata")),
+        ADDRESSDATA(new File(folder, "addressdata"));
 
-        private File file;
+        private final File file;
 
         Directory(File file) { this.file = file; }
 

@@ -33,8 +33,8 @@ public class LoginListener {
             if (expiration == -1 || expiration > System.currentTimeMillis()) {
                 String reason = ban.getReason();
                 Component message = expiration == -1 ?
-                        Messages.loginBanned(reason) :
-                        Messages.loginBannedTemporary(reason, TimeUtils.toDate(expiration));
+                        Messages.loginBanned(reason, "") : // TODO: Username pulling
+                        Messages.loginBannedTemporary(reason, "", TimeUtils.toDate(expiration));
 
                 event.setResult(ResultedEvent.ComponentResult.denied(message));
 

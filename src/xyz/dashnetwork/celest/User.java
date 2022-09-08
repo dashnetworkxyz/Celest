@@ -8,8 +8,7 @@
 package xyz.dashnetwork.celest;
 
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.Cache;
-import xyz.dashnetwork.celest.utils.Storage;
+import xyz.dashnetwork.celest.utils.AddressData;
 import xyz.dashnetwork.celest.utils.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
@@ -22,6 +21,7 @@ public class User {
     private static final List<User> users = new ArrayList<>();
     private final Player player;
     private final String uuid;
+    private AddressData addressData; // TODO
     private UserData userData;
 
     public User(Player player) {

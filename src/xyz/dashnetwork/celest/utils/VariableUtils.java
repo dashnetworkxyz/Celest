@@ -18,9 +18,7 @@ public class VariableUtils {
 
         private final String replace;
 
-        Variable(String replace) {
-            this.replace = replace;
-        }
+        Variable(String replace) { this.replace = replace; }
 
         public String getReplace() { return replace; }
 
