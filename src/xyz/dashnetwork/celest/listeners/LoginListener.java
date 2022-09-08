@@ -37,6 +37,8 @@ public class LoginListener {
                         Messages.loginBannedTemporary(reason, TimeUtils.toDate(expiration));
 
                 event.setResult(ResultedEvent.ComponentResult.denied(message));
+
+                user.remove(); // TODO: Check if this is needed.
             }
         }
 

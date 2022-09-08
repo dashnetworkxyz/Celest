@@ -46,9 +46,7 @@ public class Configuration {
 
     public static ConfigurationNode getNode(String node) { return config.getNode(node); }
 
-    public static <T>T get(Class<T> type, String node) {
-        return type.cast(config.getNode(node).getValue(type));
-    }
+    public static <T>T get(Class<T> type, String node) { return type.cast(config.getNode(node).getValue(type)); }
 
     public static <T>T[] getArray(IntFunction<T[]> instance, String node) {
         Class<?> type = instance.apply(0).getClass();
