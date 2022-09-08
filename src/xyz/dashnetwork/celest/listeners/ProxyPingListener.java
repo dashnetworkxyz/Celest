@@ -16,8 +16,6 @@ import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.utils.ColorUtils;
 import xyz.dashnetwork.celest.utils.Configuration;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class ProxyPingListener {
@@ -34,12 +32,10 @@ public class ProxyPingListener {
             if (!user.getData().getVanish())
                 online++;
 
+        int max = Configuration.get(int.class, "motd.max");
         Component description = legacy.deserialize(Configuration.get(String.class, "motd"));
         String software = ColorUtils.fromAmpersand(Configuration.get(String.class, "motd.software"));
-        int max = Configuration.get(int.class, "motd.max");
-        List<String> hover = new ArrayList<>();
-
-        // TODO
+        String[] hover = Configuration.getArray(String[]::new, "motd.hover");
 
         builder.clearMods().clearSamplePlayers();
         builder.onlinePlayers(online);
@@ -48,7 +44,7 @@ public class ProxyPingListener {
         builder.version(new ServerPing.Version(builder.getVersion().getProtocol(), software));
 
         for (String line : hover)
-            builder.samplePlayers(new ServerPing.SamplePlayer(line, UUID.randomUUID()));
+            builder.samplePlayers(new ServerPing.SamplePlayer(ColorUtils.fromAmpersand(line), UUID.randomUUID()));
 
         event.setPing(builder.build());
 

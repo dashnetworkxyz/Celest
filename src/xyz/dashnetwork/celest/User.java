@@ -21,8 +21,8 @@ public class User {
     private static final Vault vault = Celest.getVault();
     private static final List<User> users = new ArrayList<>();
     private final Player player;
+    private final String uuid;
     private UserData userData;
-    private String uuid;
 
     public User(Player player) {
         this.player = player;
@@ -47,8 +47,6 @@ public class User {
 
         if (userData == null)
             userData = new UserData();
-
-        userData.setAddress(getPlayer().getRemoteAddress().getHostString());
 
         Cache.generate(player);
     }
@@ -81,5 +79,8 @@ public class User {
 
         return vault.getPrefix(player) + name + vault.getSuffix(player);
     }
+
+    // Methods for predicate cleanness
+    public boolean isStaffOrVanished() { return isStaff() || userData.getVanish(); }
 
 }

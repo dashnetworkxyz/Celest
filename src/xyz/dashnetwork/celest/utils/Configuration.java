@@ -16,15 +16,14 @@ import xyz.dashnetwork.celest.Celest;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.function.IntFunction;
 
 public class Configuration {
-
-    // TODO: switch to typesafe config. this one sucks.
 
     private static final URL resource = Configuration.class.getClassLoader().getResource("config.yml");
     private static final File file = new File(Celest.getDirectory().toFile(), "config.yml");
     private static final ConfigurationOptions options = ConfigurationOptions.defaults().withShouldCopyDefaults(true);
-    private static ConfigurationLoader<ConfigurationNode> loader;
     private static ConfigurationNode config;
 
     public static void load() {
@@ -35,7 +34,7 @@ public class Configuration {
         builder.setURL(resource);
         builder.setDefaultOptions(options);
 
-        loader = builder.build();
+        ConfigurationLoader<ConfigurationNode> loader = builder.build();
 
         try {
             config = loader.load(options);
@@ -48,7 +47,13 @@ public class Configuration {
     public static ConfigurationNode getNode(String node) { return config.getNode(node); }
 
     public static <T>T get(Class<T> type, String node) {
-        return (T) config.getNode(node).getValue(type); // TODO: test if this actually works
+        return type.cast(config.getNode(node).getValue(type));
+    }
+
+    public static <T>T[] getArray(IntFunction<T[]> instance, String node) {
+        Class<?> type = instance.apply(0).getClass();
+
+        return Arrays.stream(((Object[]) config.getNode(node).getValue(type))).toArray(instance);
     }
 
 }

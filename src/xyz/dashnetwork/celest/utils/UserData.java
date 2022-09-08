@@ -10,14 +10,13 @@ package xyz.dashnetwork.celest.utils;
 public class UserData {
 
     private PunishData ban, mute;
-    private String address, nickname;
+    private String nickname;
     private long lastPlayed;
     private boolean adminChat, altSpy, commandSpy, ownerChat, pingSpy, staffChat, vanish;
 
     public UserData() {
         ban = null;
         mute = null;
-        address = null;
         nickname = null;
         lastPlayed = -1;
         adminChat = false;
@@ -32,8 +31,6 @@ public class UserData {
     public PunishData getBan() { return ban; }
 
     public PunishData getMute() { return mute; }
-
-    public String getAddress() { return address; }
 
     public String getNickname() { return nickname; }
 
@@ -56,8 +53,6 @@ public class UserData {
     public void setBan(PunishData ban) { this.ban = ban; }
 
     public void setMute(PunishData mute) { this.mute = mute; }
-
-    public void setAddress(String address) { this.address = address; }
 
     public void setNickname(String nickname) { this.nickname = nickname; }
 

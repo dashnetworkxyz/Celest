@@ -50,6 +50,13 @@ public class Cache {
         return null;
     }
 
+    public static CacheData fromUsername(String username) {
+        for (CacheData each : cache)
+            if (each.getUsername().equals(username))
+                return each;
+        return null;
+    }
+
     public static List<CacheData> fromAddress(String address) {
         List<CacheData> list = new ArrayList<>();
 

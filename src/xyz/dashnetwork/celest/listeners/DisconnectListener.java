@@ -13,6 +13,7 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.utils.MessageUtils;
 import xyz.dashnetwork.celest.utils.Messages;
+import xyz.dashnetwork.celest.utils.UserData;
 
 public class DisconnectListener {
 
@@ -20,16 +21,18 @@ public class DisconnectListener {
     public void onDisconnect(DisconnectEvent event) {
         Player player = event.getPlayer();
         User user = User.getUser(player);
+        UserData data = user.getData();
 
         String username = player.getUsername();
         String displayname = user.getDisplayname();
 
-        if (user.getData().getVanish())
-            MessageUtils.broadcast(User::isStaff, Messages.leaveServerVanished(username, displayname));
-        else
+        if (data.getVanish())
+            MessageUtils.broadcast(User::isStaffOrVanished, Messages.leaveServerVanished(username, displayname));
+        else {
             MessageUtils.broadcast(Messages.leaveServer(username, displayname));
 
-        user.getData().setLastPlayed(System.currentTimeMillis());
+            data.setLastPlayed(System.currentTimeMillis()); // TODO: Set this variable on /vanish
+        }
 
         user.save();
         user.remove();
