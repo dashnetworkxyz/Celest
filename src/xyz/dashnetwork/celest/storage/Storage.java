@@ -48,8 +48,8 @@ public class Storage {
         String json = gson.toJson(object);
 
         try {
-            if (!file.createNewFile())
-                Celest.getLogger().error("failed to create " + fileName + ".json (" + directory.name() + ")");
+            if (file.createNewFile())
+                Celest.getLogger().info("created " + fileName + ".json (" + directory.name() + ")");
 
             FileWriter writer = new FileWriter(file);
             writer.write(json);

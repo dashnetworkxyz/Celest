@@ -47,19 +47,8 @@ public class User {
     private void load() {
         userData = Storage.read(uuid, Storage.Directory.USERDATA, UserData.class);
 
-        String newAddress = player.getRemoteAddress().getHostString();
-
         if (userData == null)
             userData = new UserData(player.getRemoteAddress().getHostString(), player.getUsername());
-        else {
-            String oldAddress = userData.getAddress();
-
-            if (!oldAddress.equals(newAddress)) {
-                AddressData data = Address.getAddress(oldAddress).getAddressData();
-
-                // TODO
-            }
-        }
 
         // TODO: Check for and remove old address entries
 

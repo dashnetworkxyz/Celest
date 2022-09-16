@@ -64,7 +64,7 @@ public class PlayerChatListener {
                 MessageUtils.broadcast(User::isStaffOrStaffchat, Messages.playerChatStaff(username, displayname, message));
                 break;
             case LOCAL:
-                event.setResult(PlayerChatEvent.ChatResult.message(message)); // Always use .message() to strip chat signatures
+                player.spoofChatInput(message); // Removes chat signatures
                 break;
             default:
                 MessageUtils.broadcast(Messages.playerChat(username, displayname, message));

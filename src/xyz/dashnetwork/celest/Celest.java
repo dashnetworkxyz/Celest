@@ -77,6 +77,7 @@ public class Celest {
         EventManager eventManager = server.getEventManager();
         eventManager.register(this, new DisconnectListener());
         eventManager.register(this, new LoginListener());
+        eventManager.register(this, new PlayerChatListener());
         eventManager.register(this, new PostLoginListener());
         eventManager.register(this, new ProxyPingListener());
         eventManager.register(this, new ServerPreConnectListener());
