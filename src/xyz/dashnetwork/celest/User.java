@@ -10,7 +10,6 @@ package xyz.dashnetwork.celest;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.utils.AddressData;
 import xyz.dashnetwork.celest.utils.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
@@ -48,9 +47,12 @@ public class User {
         userData = Storage.read(uuid, Storage.Directory.USERDATA, UserData.class);
 
         if (userData == null)
-            userData = new UserData(player.getRemoteAddress().getHostString(), player.getUsername());
+            userData = new UserData();
 
-        // TODO: Check for and remove old address entries
+        // TODO: Check for and remove old username entries
+
+        userData.setAddress(player.getRemoteAddress().getHostString());
+        userData.setUsername(player.getUsername());
 
         Cache.generate(player);
     }

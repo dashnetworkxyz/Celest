@@ -14,7 +14,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.utils.ColorUtils;
-import xyz.dashnetwork.celest.storage.Configuration;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
 import xyz.dashnetwork.celest.utils.Variables;
 

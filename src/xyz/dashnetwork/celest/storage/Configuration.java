@@ -16,9 +16,10 @@ import xyz.dashnetwork.celest.Celest;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.function.IntFunction;
-import java.util.function.Predicate;
 
 public class Configuration {
 
@@ -30,16 +31,22 @@ public class Configuration {
     public static void load() {
         assert resource != null;
 
+        if (!file.exists()) {
+            try {
+                Files.copy(resource.openStream(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+
         YAMLConfigurationLoader.Builder builder = YAMLConfigurationLoader.builder();
-        builder.setFile(file);
-        builder.setURL(resource);
         builder.setDefaultOptions(options);
+        builder.setFile(file);
 
         ConfigurationLoader<ConfigurationNode> loader = builder.build();
 
         try {
             config = loader.load(options);
-            loader.save(config);
         } catch (IOException exception) {
             exception.printStackTrace();
         }

@@ -14,11 +14,11 @@ public class UserData {
     private long lastPlayed;
     private boolean adminChat, altSpy, commandSpy, ownerChat, pingSpy, staffChat, localChat, vanish;
 
-    public UserData(String address, String username) {
-        this.address = address;
-        this.username = username;
+    public UserData() {
         ban = null;
         mute = null;
+        address = null;
+        username = null;
         nickname = null;
         lastPlayed = -1;
         adminChat = false;
