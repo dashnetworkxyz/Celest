@@ -50,7 +50,7 @@ public class ProxyPingListener {
         // TODO: Don't do Pingspy for banned ips.
 
         for (User user : User.getUsers())
-            if (user.getAddress().equals(address))
+            if (user.getData().getAddress().equals(address))
                 return; // Some clients ping the server while connected (notably Lunar Client)
 
         // TODO: Add Pingspy
