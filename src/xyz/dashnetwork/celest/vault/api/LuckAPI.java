@@ -8,7 +8,6 @@
 package xyz.dashnetwork.celest.vault.api;
 
 import com.velocitypowered.api.proxy.Player;
-import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;
@@ -18,7 +17,7 @@ import java.util.UUID;
 
 public class LuckAPI implements Vault {
 
-    private final LuckPerms luckperms = LuckPermsProvider.get();
+    private final UserManager manager = LuckPermsProvider.get().getUserManager();
 
     @Override
     public String getPrefix(Player player) {
@@ -43,8 +42,6 @@ public class LuckAPI implements Vault {
     }
 
     private User getUser(UUID uuid) {
-        UserManager manager = luckperms.getUserManager();
-
         if (!manager.isLoaded(uuid))
             manager.loadUser(uuid);
 

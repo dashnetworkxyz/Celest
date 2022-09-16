@@ -14,8 +14,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.utils.ColorUtils;
-import xyz.dashnetwork.celest.Configuration;
-import xyz.dashnetwork.celest.utils.VariableUtils;
+import xyz.dashnetwork.celest.storage.Configuration;
+import xyz.dashnetwork.celest.utils.ConfigurationList;
+import xyz.dashnetwork.celest.utils.Variables;
 
 import java.util.UUID;
 
@@ -33,26 +34,23 @@ public class ProxyPingListener {
             if (!user.getData().getVanish())
                 online++;
 
-        int max = Configuration.get(Integer.class, "motd.max");
-        Component description = legacy.deserialize(VariableUtils.parse(Configuration.get(String.class, "motd")));
-        String software = ColorUtils.fromAmpersand(VariableUtils.parse(Configuration.get(String.class, "motd.software")));
-        String[] hover = Configuration.getArray(String[]::new, "motd.hover");
+        Component description = legacy.deserialize(Variables.parse(ConfigurationList.MOTD_DESCRIPTION));
+        String software = ColorUtils.fromAmpersand(Variables.parse(ConfigurationList.MOTD_SOFTWARE));
 
         builder.clearMods().clearSamplePlayers();
         builder.onlinePlayers(online);
-        builder.maximumPlayers(max);
         builder.description(description);
         builder.version(new ServerPing.Version(builder.getVersion().getProtocol(), software));
 
-        for (String line : hover)
-            builder.samplePlayers(new ServerPing.SamplePlayer(ColorUtils.fromAmpersand(VariableUtils.parse(line)), UUID.randomUUID()));
+        for (String line : ConfigurationList.MOTD_HOVER)
+            builder.samplePlayers(new ServerPing.SamplePlayer(ColorUtils.fromAmpersand(Variables.parse(line)), UUID.randomUUID()));
 
         event.setPing(builder.build());
 
         // TODO: Don't do Pingspy for banned ips.
 
         for (User user : User.getUsers())
-            if (user.getPlayer().getRemoteAddress().getHostString().equals(address))
+            if (user.getAddress().equals(address))
                 return; // Some clients ping the server while connected (notably Lunar Client)
 
         // TODO: Add Pingspy

@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest;
+package xyz.dashnetwork.celest.storage;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,7 +39,7 @@ public class Storage {
             File file = directory.getFile();
 
             if (!file.exists() && !file.mkdirs())
-                throw new RuntimeException("Failed to create " + directory.name() + " folder");
+                Celest.getLogger().error("Failed to create " + directory.name() + " folder");
         }
     }
 
@@ -48,8 +48,8 @@ public class Storage {
         String json = gson.toJson(object);
 
         try {
-            if (file.createNewFile())
-                Celest.getLogger().info(fileName + ".json created");
+            if (!file.createNewFile())
+                Celest.getLogger().error("failed to create " + fileName + ".json (" + directory.name() + ")");
 
             FileWriter writer = new FileWriter(file);
             writer.write(json);

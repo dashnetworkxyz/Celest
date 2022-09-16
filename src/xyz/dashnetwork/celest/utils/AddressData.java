@@ -13,19 +13,23 @@ public class AddressData {
 
     // TODO: Create Address class?
 
-    private PunishData ban, mute;
     private UUID[] uuids;
+    private PunishData ban, mute;
 
-    public AddressData() {
-        this.ban = null;
-        this.mute = null;
-        this.uuids = null;
+    public AddressData(UUID... uuids) {
+        this.uuids = uuids;
+        ban = null;
+        mute = null;
     }
+
+    // User data
+
+    public UUID[] getUuids() { return uuids; }
 
     public PunishData getBan() { return ban; }
 
-    public PunishData getMute() { return mute; }
+    // Celest data
 
-    public UUID[] getUuids() { return uuids; }
+    public PunishData getMute() { return mute; }
 
 }

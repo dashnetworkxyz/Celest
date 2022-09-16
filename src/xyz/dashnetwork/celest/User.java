@@ -8,6 +8,8 @@
 package xyz.dashnetwork.celest;
 
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.storage.Cache;
+import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.utils.AddressData;
 import xyz.dashnetwork.celest.utils.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
@@ -21,7 +23,7 @@ public class User {
     private static final List<User> users = new ArrayList<>();
     private final Player player;
     private final String uuid;
-    private AddressData addressData; // TODO
+    private Address address; // TODO
     private UserData userData;
 
     public User(Player player) {
@@ -45,8 +47,21 @@ public class User {
     private void load() {
         userData = Storage.read(uuid, Storage.Directory.USERDATA, UserData.class);
 
+        String newAddress = player.getRemoteAddress().getHostString();
+
         if (userData == null)
-            userData = new UserData();
+            userData = new UserData(player.getRemoteAddress().getHostString(), player.getUsername());
+        else {
+            String oldAddress = userData.getAddress();
+
+            if (!oldAddress.equals(newAddress)) {
+                AddressData data = Address.getAddress(oldAddress).getAddressData();
+
+                // TODO
+            }
+        }
+
+        // TODO: Check for and remove old address entries
 
         Cache.generate(player);
     }
@@ -58,8 +73,6 @@ public class User {
     public Player getPlayer() { return player; }
 
     public UserData getData() { return userData; }
-
-    public boolean isBuilder() { return player.hasPermission("dashnetwork.builder") || isAdmin(); }
 
     public boolean isStaff() { return player.hasPermission("dashnetwork.staff") || isAdmin(); }
 
@@ -73,14 +86,29 @@ public class User {
 
     public String getDisplayname() {
         String name = userData.getNickname();
+        String prefix = vault.getPrefix(player);
+        String suffix = vault.getSuffix(player);
 
         if (name == null)
             name = player.getUsername();
 
-        return vault.getPrefix(player) + name + vault.getSuffix(player);
+        if (!prefix.isBlank())
+            prefix += " ";
+        if (!suffix.isBlank())
+            suffix = " " + suffix;
+
+        return prefix + name + suffix;
     }
 
     // Methods for predicate cleanness
     public boolean isStaffOrVanished() { return isStaff() || userData.getVanish(); }
+
+    public boolean isStaffOrStaffchat() { return isStaff() || userData.getStaffChat(); }
+
+    public boolean isAdminOrAdminchat() { return isAdmin() || userData.getAdminChat(); }
+
+    public boolean isOwnerOrOwnerchat() { return isOwner() || userData.getOwnerChat(); }
+
+    public boolean isOwnerOrLocalchat() { return isOwner() || userData.getLocalChat(); }
 
 }

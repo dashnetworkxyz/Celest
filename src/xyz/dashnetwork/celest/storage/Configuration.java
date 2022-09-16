@@ -5,18 +5,20 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest;
+package xyz.dashnetwork.celest.storage;
 
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
+import xyz.dashnetwork.celest.Celest;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.function.IntFunction;
+import java.util.function.Predicate;
 
 public class Configuration {
 

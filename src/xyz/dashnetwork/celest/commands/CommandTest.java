@@ -9,8 +9,8 @@ package xyz.dashnetwork.celest.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
-import xyz.dashnetwork.celest.Cache;
-import xyz.dashnetwork.celest.Storage;
+import xyz.dashnetwork.celest.storage.Cache;
+import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.utils.*;
 
 public class CommandTest implements SimpleCommand {

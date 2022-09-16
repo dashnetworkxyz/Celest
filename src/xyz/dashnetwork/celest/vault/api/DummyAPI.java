@@ -18,15 +18,13 @@ public class DummyAPI implements Vault {
         User user = User.getUser(player);
 
         if (user.isOwner())
-            return "&4&lOwner &6";
+            return "&4&lOwner&6";
         else if (user.isAdmin())
-            return "&4&lAdmin &6";
-        else if (user.isBuilder())
-            return "&3&lBuilder &c";
+            return "&4&lAdmin&6";
         else if (user.isStaff())
-            return "&1&lMod &6";
+            return "&1&lMod&6";
         else
-            return "&2&lMember &7";
+            return "&2&lMember&7";
     }
 
     @Override

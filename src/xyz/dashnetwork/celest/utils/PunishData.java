@@ -21,6 +21,7 @@ public class PunishData {
         this.expiration = expiration;
     }
 
+    // TODO: Better name?
     public UUID getBanner() { return banner; }
 
     public String getReason() { return reason; }

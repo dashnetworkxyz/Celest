@@ -9,23 +9,19 @@ package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.network.ProtocolVersion;
 
-public class VariableUtils {
+public enum Variables {
 
-    private enum Variable {
+    VERSION_HIGHEST(ProtocolVersion.MAXIMUM_VERSION.getMostRecentSupportedVersion()),
+    VERSION_LOWEST(ProtocolVersion.MINIMUM_VERSION.getVersionIntroducedIn());
 
-        VERSION_HIGHEST(ProtocolVersion.MAXIMUM_VERSION.getMostRecentSupportedVersion()),
-        VERSION_LOWEST(ProtocolVersion.MINIMUM_VERSION.getVersionIntroducedIn());
+    private final String replace;
 
-        private final String replace;
+    Variables(String replace) { this.replace = replace; }
 
-        Variable(String replace) { this.replace = replace; }
-
-        public String getReplace() { return replace; }
-
-    }
+    public String getReplace() { return replace; }
 
     public static String parse(String input) {
-        for (Variable variable : Variable.values())
+        for (Variables variable : values())
             input = input.replace("{" + variable.name() + "}", variable.getReplace());
 
         return input;

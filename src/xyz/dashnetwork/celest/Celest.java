@@ -22,8 +22,12 @@ import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.commands.CommandTest;
 import xyz.dashnetwork.celest.listeners.*;
+import xyz.dashnetwork.celest.storage.Cache;
+import xyz.dashnetwork.celest.storage.Configuration;
+import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.tasks.ClearTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
+import xyz.dashnetwork.celest.utils.ConfigurationList;
 import xyz.dashnetwork.celest.vault.Vault;
 import xyz.dashnetwork.celest.vault.api.DummyAPI;
 import xyz.dashnetwork.celest.vault.api.LuckAPI;
@@ -58,8 +62,9 @@ public class Celest {
     public void onProxyInitialize(ProxyInitializeEvent event) {
         long start = System.currentTimeMillis();
 
-        Configuration.load();
         Storage.mkdir();
+        Configuration.load();
+        ConfigurationList.load(); // TODO: Call this on a config reload command
         Cache.load();
         Cache.removeOldEntries();
 

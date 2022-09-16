@@ -10,7 +10,7 @@ package xyz.dashnetwork.celest.utils;
 public class ColorUtils {
 
     public static String fromAmpersand(String string) {
-         return string.replaceAll("&([0-f]|[k-o]|r|x)", "§$1");
+        return string.replaceAll("&([0-f]|[k-o]|r|x)", "§$1");
     }
 
 }
