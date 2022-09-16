@@ -26,9 +26,9 @@ public class AddressData {
 
     public UUID[] getUuids() { return uuids; }
 
-    public PunishData getBan() { return ban; }
-
     // Celest data
+
+    public PunishData getBan() { return ban; }
 
     public PunishData getMute() { return mute; }
 
