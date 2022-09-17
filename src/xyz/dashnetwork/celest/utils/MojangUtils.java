@@ -1,0 +1,63 @@
+/*
+ * Copyright (C) 2022 Andrew Bell. - All Rights Reserved
+ *
+ * Unauthorized copying or redistribution of this file in source and binary forms via any medium
+ * is strictly prohibited.
+ */
+
+package xyz.dashnetwork.celest.utils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import xyz.dashnetwork.celest.Celest;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.UUID;
+
+public class MojangUtils {
+
+    private static final Gson gson = new GsonBuilder().create();
+
+    public static PlayerProfile fromUsername(String username) {
+        try {
+            URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + username);
+            Response response = gson.fromJson(new InputStreamReader(url.openStream()), Response.class);
+
+            return new PlayerProfile(
+                    UUID.fromString(response.id.replaceFirst(
+                            "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
+                            "$1-$2-$3-$4-$5")),
+                    response.name);
+        } catch (IOException exception) {
+            Celest.getLogger().warn("Failed to pull response from Mojang API.");
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    public static PlayerProfile fromUuid(UUID uuid) {
+        try {
+            URL url = new URL("https://api.mojang.com/user/profile/" + uuid.toString());
+            Response response = gson.fromJson(new InputStreamReader(url.openStream()), Response.class);
+
+            return new PlayerProfile(
+                    UUID.fromString(response.id.replaceFirst(
+                            "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
+                            "$1-$2-$3-$4-$5")),
+                    response.name);
+        } catch (IOException exception) {
+            Celest.getLogger().warn("Failed to pull response from Mojang API.");
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    private static class Response {
+
+        private String name, id;
+
+    }
+
+}

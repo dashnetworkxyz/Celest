@@ -11,9 +11,9 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.utils.CacheData;
-import xyz.dashnetwork.celest.utils.MessageUtils;
-import xyz.dashnetwork.celest.utils.UserData;
+import xyz.dashnetwork.celest.utils.*;
+
+import java.util.UUID;
 
 public class CommandTest implements SimpleCommand {
 
@@ -22,11 +22,24 @@ public class CommandTest implements SimpleCommand {
         CommandSource source = invocation.source();
 
         if (source.hasPermission("dashnetwork.owner")) {
-            for (CacheData cache : Cache.getCache())
-                MessageUtils.message(source, cache.getUUID() + " " + cache.getUsername() + " " + cache.getAddress());
+            String[] args = invocation.arguments();
 
-            for (UserData data : Storage.readAll(Storage.Directory.USERDATA, UserData.class))
-                MessageUtils.message(source, "" + data.getNickname());
+            if (args.length < 2) {
+                MessageUtils.message(source, "no u");
+                return;
+            }
+
+            if (args[0].equalsIgnoreCase("username")) {
+                PlayerProfile profile = MojangUtils.fromUsername(args[1]);
+
+                MessageUtils.message(source, "name: " + profile.getUsername() + " uuid: " + profile.getUuid());
+            }
+
+            if (args[0].equalsIgnoreCase("uuid")) {
+                PlayerProfile profile = MojangUtils.fromUuid(UUID.fromString(args[1]));
+
+                MessageUtils.message(source, "name: " + profile.getUsername() + " uuid: " + profile.getUuid());
+            }
         }
     }
 

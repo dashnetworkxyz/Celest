@@ -9,15 +9,14 @@ package xyz.dashnetwork.celest;
 
 import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.utils.AddressData;
+import xyz.dashnetwork.celest.utils.ArrayUtils;
+import xyz.dashnetwork.celest.utils.PlayerProfile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Address {
-
-    // TODO
-    // Store in ram? -> Cache's job
-    // Add and remove uuids from addresses on join
 
     private static final List<Address> addresses = new ArrayList<>();
     private final String address;
@@ -27,10 +26,16 @@ public class Address {
     public Address(String address) {
         this.address = address;
 
-        load();
+        addressData = Storage.read(address, Storage.Directory.ADDRESSDATA, AddressData.class);
+
+        if (addressData == null)
+            addressData = new AddressData();
 
         accessTime = System.currentTimeMillis();
+        addresses.add(this);
     }
+
+    public static List<Address> getAddresses() { return addresses; }
 
     public static Address getAddress(String address) {
         for (Address each : addresses)
@@ -41,16 +46,34 @@ public class Address {
         return new Address(address);
     }
 
-    private void load() {
-        addressData = Storage.read(address, Storage.Directory.ADDRESSDATA, AddressData.class);
+    public void removeUserIfPresent(UUID uuid) {
+        List<PlayerProfile> queue = new ArrayList<>();
+        PlayerProfile[] profiles = addressData.getProfiles();
 
-        if (addressData == null)
-            addressData = new AddressData();
+        for (PlayerProfile profile : profiles)
+            if (profile.getUuid().equals(uuid))
+                queue.add(profile);
 
-        // TODO: Check for and remove old address entries
+        if (!queue.isEmpty())
+            addressData.setProfiles(ArrayUtils.remove(PlayerProfile[]::new, profiles, queue));
     }
 
-    public void save() { Storage.write(address, Storage.Directory.ADDRESSDATA, addressData); }
+    public void addUserIfNotPresent(UUID uuid, String username) {
+        PlayerProfile[] profiles = addressData.getProfiles();
+
+        for (PlayerProfile profile : profiles)
+            if (profile.getUuid().equals(uuid))
+                return;
+
+        addressData.setProfiles(ArrayUtils.add(profiles, new PlayerProfile(uuid, username)));
+    }
+
+    public void save() {
+        if (addressData.getProfiles().length > 0 || addressData.getMute() != null || addressData.getBan() != null)
+            Storage.write(address, Storage.Directory.ADDRESSDATA, addressData);
+        else
+            Storage.delete(address, Storage.Directory.ADDRESSDATA); // Remove obsolete addresses.
+    }
 
     public void remove() { addresses.remove(this); }
 

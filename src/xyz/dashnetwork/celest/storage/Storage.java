@@ -23,8 +23,8 @@ public class Storage {
     public enum Directory {
 
         PARENT(folder),
-        USERDATA(new File(folder, "userdata")),
-        ADDRESSDATA(new File(folder, "addressdata"));
+        ADDRESSDATA(new File(folder, "addressdata")),
+        USERDATA(new File(folder, "userdata"));
 
         private final File file;
 
@@ -41,6 +41,13 @@ public class Storage {
             if (!file.exists() && !file.mkdirs())
                 Celest.getLogger().error("Failed to create " + directory.name() + " folder");
         }
+    }
+
+    public static void delete(String fileName, Directory directory) {
+        File file = new File(directory.getFile(), fileName + ".json");
+
+        if (file.delete())
+            Celest.getLogger().info("deleted " + fileName + ".json (" + directory.name() + ")");
     }
 
     public static void write(String fileName, Directory directory, Object object) {

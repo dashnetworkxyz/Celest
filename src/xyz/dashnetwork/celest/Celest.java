@@ -35,7 +35,7 @@ import xyz.dashnetwork.celest.vault.api.LuckAPI;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "1.0", authors = {"MasterDash5"})
+@Plugin(id = "celest", name = "Celest", version = "0.4", authors = {"MasterDash5"})
 public class Celest {
 
     private static ProxyServer server;
@@ -75,11 +75,13 @@ public class Celest {
         commandManager.register("test", new CommandTest());
 
         EventManager eventManager = server.getEventManager();
+        eventManager.register(this, new CommandExecuteListener());
         eventManager.register(this, new DisconnectListener());
         eventManager.register(this, new LoginListener());
         eventManager.register(this, new PlayerChatListener());
         eventManager.register(this, new PostLoginListener());
         eventManager.register(this, new ProxyPingListener());
+        eventManager.register(this, new ServerConnectedListener());
         eventManager.register(this, new ServerPreConnectListener());
 
         Scheduler scheduler = server.getScheduler();
@@ -102,6 +104,9 @@ public class Celest {
     public void onProxyShutdown(ProxyShutdownEvent event) {
         for (User user : User.getUsers())
             user.save();
+
+        for (Address address : Address.getAddresses())
+            address.save();
 
         Cache.save();
     }

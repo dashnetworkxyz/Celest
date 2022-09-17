@@ -107,9 +107,19 @@ public class Messages {
         return builder.build();
     }
 
+    public static Component playerCommandSpy(String username, String displayname, String message) {
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&c&lCS&r ");
+        builder.append(displayname).hover("&6" + username);
+        builder.append(" &e&l>&r ");
+        builder.append("&b" + message);
+
+        return builder.build();
+    }
+
     public static Component playerMuted(String reason, String username) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l» &7You have been permanently muted. &7Hover for more information.")
+        builder.append("&6&l»&7 You have been permanently muted. &7Hover for more information.")
                 .hover("&7You were muted by &6" + username
                         + "\n\n&6" + reason);
 
@@ -118,7 +128,7 @@ public class Messages {
 
     public static Component playerMutedTemporary(String reason, String username, String expiration) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l» &7You have been temporarily muted. &7Hover for more information.")
+        builder.append("&6&l»&7 You have been temporarily muted. &7Hover for more information.")
                 .hover("&7You were muted by &6" + username
                         + "\n&7Your mute will expire on &6" + expiration
                         + "\n\n&6" + reason);
@@ -126,9 +136,24 @@ public class Messages {
         return builder.build();
     }
 
+    public static Component playerTablistFooter() {
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("\n&6play.dashnetwork.xyz");
+
+        return builder.build();
+    }
+
+    public static Component playerTablistHeader(String server) {
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&6&lDashNetwork");
+        builder.append("\n&7You are connected to &6" + server + "\n");
+
+        return builder.build();
+    }
+
     public static Component welcome(String username, String displayname) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l» &6Welcome, ");
+        builder.append("&6&l»&6 Welcome, ");
         builder.append(displayname).hover("&6" + username);
         builder.append("&6, to &lDashNetwork");
 

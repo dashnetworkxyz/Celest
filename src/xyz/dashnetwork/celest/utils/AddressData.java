@@ -7,29 +7,31 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import java.util.UUID;
-
 public class AddressData {
 
-    // TODO: Create Address class?
-
-    private UUID[] uuids;
+    private PlayerProfile[] profiles;
     private PunishData ban, mute;
 
-    public AddressData(UUID... uuids) {
-        this.uuids = uuids;
+    public AddressData(PlayerProfile... profiles) {
+        this.profiles = profiles;
         ban = null;
         mute = null;
     }
 
     // User data
 
-    public UUID[] getUuids() { return uuids; }
+    public PlayerProfile[] getProfiles() { return profiles; }
+
+    public void setProfiles(PlayerProfile... profiles) { this.profiles = profiles; }
 
     // Celest data
 
     public PunishData getBan() { return ban; }
 
     public PunishData getMute() { return mute; }
+
+    public void setBan(PunishData ban) { this.ban = ban; }
+
+    public void setMute(PunishData mute) { this.mute = mute; }
 
 }

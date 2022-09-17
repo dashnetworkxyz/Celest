@@ -17,7 +17,7 @@ public enum ChatType {
     ADMIN(UserData::getAdminChat, User::isAdmin, "@ac"),
     STAFF(UserData::getStaffChat, User::isStaff, "@sc"),
     LOCAL(UserData::getLocalChat, User::isOwner, "@lc"),
-    GLOBAL(userdata -> false, user -> true, "@gc");
+    GLOBAL(userdata -> true, user -> true, "@gc");
 
     private final Predicate<UserData> userdata;
     private final Predicate<User> permission;

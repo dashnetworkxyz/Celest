@@ -22,14 +22,21 @@ public class PlayerChatListener {
 
         Player player = event.getPlayer();
         User user = User.getUser(player);
-        UserData data = user.getData();
-        PunishData mute = data.getMute();
+        AddressData addressData = user.getAddress().getAddressData();
+        UserData userData = user.getData();
+        PunishData userMute = userData.getMute();
+        PunishData ipMute = addressData.getMute();
 
-        if (mute != null) {
-            long expiration = mute.getExpiration();
+        if (userMute != null || ipMute != null) {
+            PunishData selectedMute = userMute;
+
+            if (selectedMute == null)
+                selectedMute = ipMute;
+
+            long expiration = selectedMute.getExpiration();
 
             if (expiration == -1 || expiration > System.currentTimeMillis()) {
-                String reason = mute.getReason();
+                String reason = selectedMute.getReason();
                 Component message = expiration == -1 ?
                         Messages.playerMuted(reason, "") : // TODO: Username pulling
                         Messages.playerMutedTemporary(reason, "", ""); // TODO: TimeUtils
@@ -45,7 +52,7 @@ public class PlayerChatListener {
         ChatType type = ChatType.parseTag(message);
 
         if (type == null)
-            type = ChatType.fromUserdata(data);
+            type = ChatType.fromUserdata(userData);
         else if (type.hasPermission(user))
             message = message.substring(3);
         else
