@@ -11,15 +11,15 @@ import java.util.UUID;
 
 public class CacheData {
 
-    private UUID uuid;
-    private String username, address;
-    private long date;
+    private final UUID uuid;
+    private final String username, address;
+    private long accessTime;
 
     public CacheData(UUID uuid, String username, String address) {
         this.uuid = uuid;
         this.username = username;
         this.address = address;
-        this.date = System.currentTimeMillis(); // TODO: Test this isn't overwritten by Gson
+        this.accessTime = System.currentTimeMillis();
     }
 
     public UUID getUUID() { return uuid; }
@@ -28,6 +28,8 @@ public class CacheData {
 
     public String getAddress() { return address; }
 
-    public long getDate() { return date; }
+    public long getAccessTime() { return accessTime; }
+
+    public void setAccessTime(long accessTime) { this.accessTime = accessTime; }
 
 }

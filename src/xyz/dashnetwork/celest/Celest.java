@@ -14,7 +14,6 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
-import com.velocitypowered.api.plugin.PluginManager;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -35,13 +34,15 @@ import xyz.dashnetwork.celest.vault.api.LuckAPI;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "0.4", authors = {"MasterDash5"})
+@Plugin(id = "celest", name = "Celest", version = "0.5", authors = {"MasterDash5"})
 public class Celest {
 
     private static ProxyServer server;
     private static Logger logger;
     private static Path directory;
     private static Vault vault;
+    private static final ClearTask clearTask = new ClearTask();
+    private static final SaveTask saveTask = new SaveTask();
 
     public static ProxyServer getServer() { return server; }
 
@@ -66,10 +67,16 @@ public class Celest {
         Configuration.load();
         ConfigurationList.load(); // TODO: Call this on a config reload command
         Cache.load();
-        Cache.removeOldEntries();
 
         for (Player player : server.getAllPlayers())
             new User(player); // Create User instances for plugin reloads.
+
+        if (server.getPluginManager().isLoaded("luckperms"))
+            vault = new LuckAPI();
+        else {
+            logger.warn("Couldn't find a permissions plugin for Vault, using fallback.");
+            vault = new DummyAPI();
+        }
 
         CommandManager commandManager = server.getCommandManager();
         commandManager.register("test", new CommandTest());
@@ -85,30 +92,14 @@ public class Celest {
         eventManager.register(this, new ServerPreConnectListener());
 
         Scheduler scheduler = server.getScheduler();
-        scheduler.buildTask(this, new SaveTask()).repeat(1, TimeUnit.MINUTES);
-        scheduler.buildTask(this, new ClearTask()).repeat(1, TimeUnit.DAYS);
+        scheduler.buildTask(this, clearTask).repeat(1, TimeUnit.HOURS);
+        scheduler.buildTask(this, saveTask).repeat(1, TimeUnit.MINUTES);
 
-        PluginManager pluginManager = server.getPluginManager();
-
-        if (pluginManager.isLoaded("luckperms"))
-            vault = new LuckAPI();
-        else {
-            logger.warn("Couldn't find a permissions plugin for Vault, using fallback.");
-            vault = new DummyAPI();
-        }
-
+        clearTask.run();
         logger.info("Startup complete. (took " + (System.currentTimeMillis() - start) + "ms)");
     }
 
     @Subscribe
-    public void onProxyShutdown(ProxyShutdownEvent event) {
-        for (User user : User.getUsers())
-            user.save();
-
-        for (Address address : Address.getAddresses())
-            address.save();
-
-        Cache.save();
-    }
+    public void onProxyShutdown(ProxyShutdownEvent event) { saveTask.run(); }
 
 }

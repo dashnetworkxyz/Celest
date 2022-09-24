@@ -37,9 +37,11 @@ public class PlayerChatListener {
 
             if (expiration == -1 || expiration > System.currentTimeMillis()) {
                 String reason = selectedMute.getReason();
+                String banner = ProfileUtils.fromUuid(selectedMute.getBanner()).getUsername();
+
                 Component message = expiration == -1 ?
-                        Messages.playerMuted(reason, "") : // TODO: Username pulling
-                        Messages.playerMutedTemporary(reason, "", ""); // TODO: TimeUtils
+                        Messages.playerMuted(reason, banner) :
+                        Messages.playerMutedTemporary(reason, banner, ""); // TODO: TimeUtils
 
                 MessageUtils.message(player, message);
                 return;
@@ -52,13 +54,11 @@ public class PlayerChatListener {
         ChatType type = ChatType.parseTag(message);
 
         if (type == null)
-            type = ChatType.fromUserdata(userData);
+            type = userData.getChatType();
         else if (type.hasPermission(user))
             message = message.substring(3);
         else
             type = ChatType.GLOBAL;
-
-        // TODO: Find a way to replace User::isOwnerOrOwnerchat, User::isAdminOrAdminchat, & User::isStaffOrStaffchat
 
         switch (type) {
             case OWNER:

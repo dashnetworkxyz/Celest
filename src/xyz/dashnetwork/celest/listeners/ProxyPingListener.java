@@ -11,17 +11,13 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import xyz.dashnetwork.celest.Address;
 import xyz.dashnetwork.celest.User;
-import xyz.dashnetwork.celest.utils.ColorUtils;
-import xyz.dashnetwork.celest.utils.ConfigurationList;
-import xyz.dashnetwork.celest.utils.Variables;
+import xyz.dashnetwork.celest.utils.*;
 
 import java.util.UUID;
 
 public class ProxyPingListener {
-
-    private static final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacyAmpersand();
 
     @Subscribe
     public void onProxyPing(ProxyPingEvent event) {
@@ -33,7 +29,7 @@ public class ProxyPingListener {
             if (!user.getData().getVanish())
                 online++;
 
-        Component description = legacy.deserialize(Variables.parse(ConfigurationList.MOTD_DESCRIPTION));
+        Component description = ColorUtils.toComponent(Variables.parse(ConfigurationList.MOTD_DESCRIPTION));
         String software = ColorUtils.fromAmpersand(Variables.parse(ConfigurationList.MOTD_SOFTWARE));
 
         builder.clearMods().clearSamplePlayers();
@@ -46,13 +42,21 @@ public class ProxyPingListener {
 
         event.setPing(builder.build());
 
-        // TODO: Don't do Pingspy for banned ips.
+        AddressData addressData = Address.getAddress(address).getAddressData();
+        PunishData ban = addressData.getBan();
+
+        if (ban != null) {
+            long expiration = ban.getExpiration();
+
+            if (expiration == -1 || expiration > System.currentTimeMillis())
+                return; // Don't do Pingspy for banned ips.
+        }
 
         for (User user : User.getUsers())
             if (user.getData().getAddress().equals(address))
                 return; // Some clients ping the server while connected (notably Lunar Client)
 
-        // TODO: Add Pingspy
+        // TODO: Pingspy
     }
 
 }

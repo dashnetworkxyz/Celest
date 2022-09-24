@@ -9,37 +9,47 @@ package xyz.dashnetwork.celest.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
-import xyz.dashnetwork.celest.storage.Cache;
-import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.User;
+import xyz.dashnetwork.celest.utils.MessageUtils;
+import xyz.dashnetwork.celest.utils.PlayerProfile;
+import xyz.dashnetwork.celest.utils.PredicateUtils;
+import xyz.dashnetwork.celest.utils.ProfileUtils;
 
 import java.util.UUID;
 
 public class CommandTest implements SimpleCommand {
 
     @Override
+    public boolean hasPermission(Invocation invocation) {
+        return PredicateUtils.permission(User::isOwner, true, invocation.source());
+    }
+
+    @Override
     public void execute(Invocation invocation) {
         CommandSource source = invocation.source();
+        String[] args = invocation.arguments();
 
-        if (source.hasPermission("dashnetwork.owner")) {
-            String[] args = invocation.arguments();
+        if (args.length < 2) {
+            MessageUtils.message(source, "no u");
+            return;
+        }
 
-            if (args.length < 2) {
-                MessageUtils.message(source, "no u");
-                return;
-            }
+        if (args[0].equalsIgnoreCase("username")) {
+            PlayerProfile profile = ProfileUtils.fromUsername(args[1]);
 
-            if (args[0].equalsIgnoreCase("username")) {
-                PlayerProfile profile = MojangUtils.fromUsername(args[1]);
+            if (profile == null)
+                profile = new PlayerProfile(UUID.randomUUID(), "null");
 
-                MessageUtils.message(source, "name: " + profile.getUsername() + " uuid: " + profile.getUuid());
-            }
+            MessageUtils.message(source, "name: " + profile.getUsername() + " uuid: " + profile.getUuid());
+        }
 
-            if (args[0].equalsIgnoreCase("uuid")) {
-                PlayerProfile profile = MojangUtils.fromUuid(UUID.fromString(args[1]));
+        if (args[0].equalsIgnoreCase("uuid")) {
+            PlayerProfile profile = ProfileUtils.fromUuid(UUID.fromString(args[1]));
 
-                MessageUtils.message(source, "name: " + profile.getUsername() + " uuid: " + profile.getUuid());
-            }
+            if (profile == null)
+                profile = new PlayerProfile(UUID.randomUUID(), "null");
+
+            MessageUtils.message(source, "name: " + profile.getUsername() + " uuid: " + profile.getUuid());
         }
     }
 

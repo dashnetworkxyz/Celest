@@ -13,29 +13,22 @@ import java.util.function.Predicate;
 
 public enum ChatType {
 
-    OWNER(UserData::getOwnerChat, User::isOwner, "@oc", "@dc"),
-    ADMIN(UserData::getAdminChat, User::isAdmin, "@ac"),
-    STAFF(UserData::getStaffChat, User::isStaff, "@sc"),
-    LOCAL(UserData::getLocalChat, User::isOwner, "@lc"),
-    GLOBAL(userdata -> true, user -> true, "@gc");
+    OWNER(User::isOwner, "@oc", "@dc"),
+    ADMIN(User::isAdmin, "@ac"),
+    STAFF(User::isStaff, "@sc"),
+    LOCAL(User::isOwner, "@lc"),
+    GLOBAL(user -> true, "@gc");
 
-    private final Predicate<UserData> userdata;
     private final Predicate<User> permission;
     private final String[] selectors;
 
-    ChatType(Predicate<UserData> userdata, Predicate<User> permission, String... selectors) {
-        this.userdata = userdata;
+    ChatType(Predicate<User> permission, String... selectors) {
         this.permission = permission;
         this.selectors = selectors;
     }
 
-    public boolean hasPermission(User user) { return permission.test(user) || userdata.test(user.getData()); }
-
-    public static ChatType fromUserdata(UserData data) {
-        for (ChatType type : values())
-            if (type.userdata.test(data))
-                return type;
-        return ChatType.GLOBAL;
+    public boolean hasPermission(User user) {
+        return permission.test(user) || user.getData().getChatType().equals(this);
     }
 
     public static ChatType parseTag(String message) {

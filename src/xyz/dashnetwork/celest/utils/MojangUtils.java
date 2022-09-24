@@ -21,15 +21,17 @@ public class MojangUtils {
     private static final Gson gson = new GsonBuilder().create();
 
     public static PlayerProfile fromUsername(String username) {
+        if (username.length() > 16)
+            return null;
+
         try {
             URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + username);
             Response response = gson.fromJson(new InputStreamReader(url.openStream()), Response.class);
 
-            return new PlayerProfile(
-                    UUID.fromString(response.id.replaceFirst(
-                            "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
-                            "$1-$2-$3-$4-$5")),
-                    response.name);
+            if (response == null)
+                return null;
+
+            return response.toProfile();
         } catch (IOException exception) {
             Celest.getLogger().warn("Failed to pull response from Mojang API.");
             exception.printStackTrace();
@@ -42,11 +44,10 @@ public class MojangUtils {
             URL url = new URL("https://api.mojang.com/user/profile/" + uuid.toString());
             Response response = gson.fromJson(new InputStreamReader(url.openStream()), Response.class);
 
-            return new PlayerProfile(
-                    UUID.fromString(response.id.replaceFirst(
-                            "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
-                            "$1-$2-$3-$4-$5")),
-                    response.name);
+            if (response == null)
+                return null;
+
+            return response.toProfile();
         } catch (IOException exception) {
             Celest.getLogger().warn("Failed to pull response from Mojang API.");
             exception.printStackTrace();
@@ -57,6 +58,14 @@ public class MojangUtils {
     private static class Response {
 
         private String name, id;
+
+        public PlayerProfile toProfile() {
+            return new PlayerProfile(
+                    UUID.fromString(id.replaceFirst(
+                            "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
+                            "$1-$2-$3-$4-$5")),
+                    name);
+        }
 
     }
 

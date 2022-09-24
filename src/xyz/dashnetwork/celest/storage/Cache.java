@@ -7,13 +7,14 @@
 
 package xyz.dashnetwork.celest.storage;
 
-import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.CacheData;
+import xyz.dashnetwork.celest.utils.UserData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class Cache {
 
@@ -34,29 +35,32 @@ public class Cache {
     }
 
     public static void removeOldEntries() {
-        cache.removeIf(data -> System.currentTimeMillis() - 2592000000L >= data.getDate()); // Remove after 30 days // TODO: TimeUtils
+        cache.removeIf(data -> System.currentTimeMillis() - TimeUnit.DAYS.toMillis(30) >= data.getAccessTime());
     }
 
-    public static void generate(Player player) {
-        UUID uuid = player.getUniqueId();
-        String username = player.getUsername();
-        String address = player.getRemoteAddress().getHostString();
+    public static void generate(UUID uuid, UserData userData) {
+        String username = userData.getUsername();
+        String address = userData.getAddress();
 
-        cache.removeIf(data -> data.getUUID().equals(uuid));
+        cache.removeIf(data -> data.getUUID().equals(uuid) || data.getUsername().equalsIgnoreCase(username));
         cache.add(new CacheData(uuid, username, address));
     }
 
     public static CacheData fromUuid(UUID uuid) {
         for (CacheData each : cache)
-            if (each.getUUID().equals(uuid))
+            if (each.getUUID().equals(uuid)) {
+                each.setAccessTime(System.currentTimeMillis());
                 return each;
+            }
         return null;
     }
 
     public static CacheData fromUsername(String username) {
         for (CacheData each : cache)
-            if (each.getUsername().equalsIgnoreCase(username))
+            if (each.getUsername().equalsIgnoreCase(username)) {
+                each.setAccessTime(System.currentTimeMillis());
                 return each;
+            }
         return null;
     }
 

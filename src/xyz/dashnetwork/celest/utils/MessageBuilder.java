@@ -12,15 +12,13 @@ import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageBuilder {
 
-    private static final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacyAmpersand();
-    private List<Section> sections = new ArrayList<>();
+    private final List<Section> sections = new ArrayList<>();
 
     public Section append(String text) {
         Section section = new Section(text);
@@ -33,10 +31,10 @@ public class MessageBuilder {
         List<TextComponent> components = new ArrayList<>();
 
         for (Section section : sections) {
-            TextComponent component = legacy.deserialize(section.text);
+            TextComponent component = ColorUtils.toComponent(section.text);
 
             if (section.hover != null)
-                component = component.hoverEvent(HoverEvent.showText(legacy.deserialize(section.hover)));
+                component = component.hoverEvent(HoverEvent.showText(ColorUtils.toComponent(section.hover)));
             if (section.click != null)
                 component = component.clickEvent(section.click);
 
@@ -46,9 +44,9 @@ public class MessageBuilder {
         return Component.join(JoinConfiguration.noSeparators(), components);
     }
 
-    public class Section {
+    public static class Section {
 
-        private String text;
+        private final String text;
         private String hover;
         private ClickEvent click;
 

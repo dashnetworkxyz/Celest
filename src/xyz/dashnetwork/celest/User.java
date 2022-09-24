@@ -10,9 +10,7 @@ package xyz.dashnetwork.celest;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.utils.AddressData;
-import xyz.dashnetwork.celest.utils.ArrayUtils;
-import xyz.dashnetwork.celest.utils.PlayerProfile;
+import xyz.dashnetwork.celest.utils.ChatType;
 import xyz.dashnetwork.celest.utils.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
@@ -28,7 +26,7 @@ public class User {
     private final UUID uuid;
     private final String stringUuid;
     private final String stringAddress;
-    private Address address; // TODO
+    private Address address;
     private UserData userData;
 
     public User(Player player) {
@@ -53,7 +51,7 @@ public class User {
 
     private void load() {
         userData = Storage.read(stringUuid, Storage.Directory.USERDATA, UserData.class);
-        address = Address.getAddress(stringAddress);
+        address = new Address(stringAddress, true);
 
         UUID uniqueId = player.getUniqueId();
         String username = player.getUsername();
@@ -71,12 +69,18 @@ public class User {
         userData.setUsername(username);
         address.addUserIfNotPresent(uuid, username);
 
-        Cache.generate(player);
+        Cache.generate(uuid, userData);
     }
 
-    public void save() { Storage.write(stringUuid, Storage.Directory.USERDATA, userData); }
+    public void save() {
+        Storage.write(stringUuid, Storage.Directory.USERDATA, userData);
+        address.save();
+    }
 
-    public void remove() { users.remove(this); }
+    public void remove() {
+        users.remove(this);
+        address.remove();
+    }
 
     public Player getPlayer() { return player; }
 
@@ -113,10 +117,10 @@ public class User {
     // Methods for predicate cleanness
     public boolean isStaffOrVanished() { return isStaff() || userData.getVanish(); }
 
-    public boolean isStaffOrStaffchat() { return isStaff() || userData.getStaffChat(); }
+    public boolean isStaffOrStaffchat() { return isStaff() || userData.getChatType().equals(ChatType.STAFF); }
 
-    public boolean isAdminOrAdminchat() { return isAdmin() || userData.getAdminChat(); }
+    public boolean isAdminOrAdminchat() { return isAdmin() || userData.getChatType().equals(ChatType.ADMIN); }
 
-    public boolean isOwnerOrOwnerchat() { return isOwner() || userData.getOwnerChat(); }
+    public boolean isOwnerOrOwnerchat() { return isOwner() || userData.getChatType().equals(ChatType.OWNER); }
 
 }

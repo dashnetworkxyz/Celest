@@ -13,10 +13,7 @@ import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.User;
-import xyz.dashnetwork.celest.utils.AddressData;
-import xyz.dashnetwork.celest.utils.Messages;
-import xyz.dashnetwork.celest.utils.PunishData;
-import xyz.dashnetwork.celest.utils.UserData;
+import xyz.dashnetwork.celest.utils.*;
 
 public class LoginListener {
 
@@ -39,13 +36,15 @@ public class LoginListener {
 
             if (expiration == -1 || expiration > System.currentTimeMillis()) {
                 String reason = selectedBan.getReason();
+                String banner = ProfileUtils.fromUuid(selectedBan.getBanner()).getUsername();
+
                 Component message = expiration == -1 ?
-                        Messages.loginBanned(reason, "") : // TODO: Username pulling
-                        Messages.loginBannedTemporary(reason, "", ""); // TODO: TimeUtils
+                        Messages.loginBanned(reason, banner) :
+                        Messages.loginBannedTemporary(reason, banner, ""); // TODO: TimeUtils
 
                 event.setResult(ResultedEvent.ComponentResult.denied(message));
 
-                user.remove(); // TODO: Check if this is needed.
+                user.remove();
             }
         }
     }

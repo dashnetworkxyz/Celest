@@ -15,16 +15,19 @@ import xyz.dashnetwork.celest.utils.PlayerProfile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class Address {
 
     private static final List<Address> addresses = new ArrayList<>();
     private final String address;
+    private final boolean manual;
     private AddressData addressData;
-    private long accessTime; // TODO: Remove Addresses from RAM after some amount of time.
+    private long accessTime;
 
-    public Address(String address) {
+    public Address(String address, boolean manual) {
         this.address = address;
+        this.manual = manual;
 
         addressData = Storage.read(address, Storage.Directory.ADDRESSDATA, AddressData.class);
 
@@ -43,7 +46,12 @@ public class Address {
                 each.accessTime = System.currentTimeMillis();
                 return each;
             }
-        return new Address(address);
+        return new Address(address, false);
+    }
+
+    public static void removeOldEntries() {
+        addresses.removeIf(address -> !address.manual &&
+                        System.currentTimeMillis() - TimeUnit.HOURS.toMillis(1) >= address.getAccessTime());
     }
 
     public void removeUserIfPresent(UUID uuid) {
@@ -55,7 +63,7 @@ public class Address {
                 queue.add(profile);
 
         if (!queue.isEmpty())
-            addressData.setProfiles(ArrayUtils.remove(PlayerProfile[]::new, profiles, queue));
+            addressData.setProfiles(ArrayUtils.removeAll(PlayerProfile[]::new, profiles, queue));
     }
 
     public void addUserIfNotPresent(UUID uuid, String username) {

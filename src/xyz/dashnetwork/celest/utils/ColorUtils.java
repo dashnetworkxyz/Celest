@@ -7,10 +7,15 @@
 
 package xyz.dashnetwork.celest.utils;
 
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
 public class ColorUtils {
 
-    public static String fromAmpersand(String string) {
-        return string.replaceAll("&([0-f]|[k-o]|r|x)", "§$1");
-    }
+    private static final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacySection();
+
+    public static String fromAmpersand(String string) { return string.replaceAll("&([0-f]|[k-o]|r|x)", "§$1"); }
+
+    public static TextComponent toComponent(String string) { return legacy.deserialize(fromAmpersand(string)); }
 
 }

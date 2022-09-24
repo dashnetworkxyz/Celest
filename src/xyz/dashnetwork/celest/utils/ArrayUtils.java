@@ -8,7 +8,6 @@
 package xyz.dashnetwork.celest.utils;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.IntFunction;
 
@@ -21,7 +20,7 @@ public class ArrayUtils {
         return list.toArray(array);
     }
 
-    public static <T>T[] remove(IntFunction<T[]> function, T[] array, List<T> objects) {
+    public static <T>T[] removeAll(IntFunction<T[]> function, T[] array, List<T> objects) {
         List<T> list = new ArrayList<>(List.of(array));
         list.removeAll(objects);
 

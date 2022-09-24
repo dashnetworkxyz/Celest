@@ -11,8 +11,8 @@ import java.util.UUID;
 
 public class PlayerProfile {
 
-    private UUID uuid;
-    private String username;
+    private final UUID uuid;
+    private final String username;
 
     public PlayerProfile(UUID uuid, String username) {
         this.uuid = uuid;
@@ -22,9 +22,5 @@ public class PlayerProfile {
     public UUID getUuid() { return uuid; }
 
     public String getUsername() { return username; }
-
-    public void setUuid(UUID uuid) { this.uuid = uuid; }
-
-    public void setUsername(String username) { this.username = username; }
 
 }
