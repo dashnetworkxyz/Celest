@@ -38,10 +38,11 @@ public class PlayerChatListener {
             if (expiration == -1 || expiration > System.currentTimeMillis()) {
                 String reason = selectedMute.getReason();
                 String banner = ProfileUtils.fromUuid(selectedMute.getBanner()).getUsername();
+                String date = TimeUtils.longToDate(expiration);
 
                 Component message = expiration == -1 ?
                         Messages.playerMuted(reason, banner) :
-                        Messages.playerMutedTemporary(reason, banner, ""); // TODO: TimeUtils
+                        Messages.playerMutedTemporary(reason, banner, date);
 
                 MessageUtils.message(player, message);
                 return;

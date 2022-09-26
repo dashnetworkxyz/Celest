@@ -37,10 +37,11 @@ public class LoginListener {
             if (expiration == -1 || expiration > System.currentTimeMillis()) {
                 String reason = selectedBan.getReason();
                 String banner = ProfileUtils.fromUuid(selectedBan.getBanner()).getUsername();
+                String date = TimeUtils.longToDate(expiration);
 
                 Component message = expiration == -1 ?
                         Messages.loginBanned(reason, banner) :
-                        Messages.loginBannedTemporary(reason, banner, ""); // TODO: TimeUtils
+                        Messages.loginBannedTemporary(reason, banner, date);
 
                 event.setResult(ResultedEvent.ComponentResult.denied(message));
 
