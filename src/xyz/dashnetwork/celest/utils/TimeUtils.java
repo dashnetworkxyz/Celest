@@ -15,4 +15,24 @@ public class TimeUtils {
 
     public static String longToDate(long time) { return formatter.format(time); }
 
+    public static long fromTimeArgument(String string) {
+        int length = string.length();
+
+        if (length < 2)
+            return -1;
+
+        String subbed = string.substring(0, length - 1);
+
+        if (!subbed.matches("^\\d+$"))
+            return -1;
+
+        char last = string.toLowerCase().charAt(length - 1);
+
+        for (TimeType type : TimeType.values())
+            if (type.getSelector() == last)
+                return type.toLong() * Long.parseLong(subbed);
+
+        return -1;
+    }
+
 }
