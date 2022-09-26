@@ -8,13 +8,13 @@
 package xyz.dashnetwork.celest.storage;
 
 import xyz.dashnetwork.celest.utils.CacheData;
+import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.UserData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class Cache {
 
@@ -35,7 +35,7 @@ public class Cache {
     }
 
     public static void removeOldEntries() {
-        cache.removeIf(data -> System.currentTimeMillis() - TimeUnit.DAYS.toMillis(30) >= data.getAccessTime());
+        cache.removeIf(data -> System.currentTimeMillis() - TimeType.MONTH.toLong() >= data.getAccessTime());
     }
 
     public static void generate(UUID uuid, UserData userData) {

@@ -11,11 +11,11 @@ import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.utils.AddressData;
 import xyz.dashnetwork.celest.utils.ArrayUtils;
 import xyz.dashnetwork.celest.utils.PlayerProfile;
+import xyz.dashnetwork.celest.utils.TimeType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class Address {
 
@@ -51,7 +51,7 @@ public class Address {
 
     public static void removeOldEntries() {
         addresses.removeIf(address -> !address.manual &&
-                        System.currentTimeMillis() - TimeUnit.HOURS.toMillis(1) >= address.getAccessTime());
+                        System.currentTimeMillis() - TimeType.HOUR.toLong() >= address.getAccessTime());
     }
 
     public void removeUserIfPresent(UUID uuid) {
