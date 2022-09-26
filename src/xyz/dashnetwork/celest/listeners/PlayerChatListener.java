@@ -63,13 +63,16 @@ public class PlayerChatListener {
 
         switch (type) {
             case OWNER:
-                MessageUtils.broadcast(User::isOwnerOrOwnerchat, Messages.playerChatOwner(username, displayname, message));
+                MessageUtils.broadcast(each -> each.isOwner() || each.getData().getChatType().equals(ChatType.OWNER),
+                        Messages.playerChatOwner(username, displayname, message));
                 break;
             case ADMIN:
-                MessageUtils.broadcast(User::isAdminOrAdminchat, Messages.playerChatAdmin(username, displayname, message));
+                MessageUtils.broadcast(each -> each.isAdmin() || each.getData().getChatType().equals(ChatType.ADMIN),
+                        Messages.playerChatAdmin(username, displayname, message));
                 break;
             case STAFF:
-                MessageUtils.broadcast(User::isStaffOrStaffchat, Messages.playerChatStaff(username, displayname, message));
+                MessageUtils.broadcast(each -> each.isStaff() || each.getData().getChatType().equals(ChatType.STAFF),
+                        Messages.playerChatStaff(username, displayname, message));
                 break;
             case LOCAL:
                 player.spoofChatInput(message); // Removes chat signatures

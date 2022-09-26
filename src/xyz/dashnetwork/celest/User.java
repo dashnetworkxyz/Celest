@@ -114,13 +114,4 @@ public class User {
         return prefix + name + suffix;
     }
 
-    // Methods for predicate cleanness
-    public boolean isStaffOrVanished() { return isStaff() || userData.getVanish(); }
-
-    public boolean isStaffOrStaffchat() { return isStaff() || userData.getChatType().equals(ChatType.STAFF); }
-
-    public boolean isAdminOrAdminchat() { return isAdmin() || userData.getChatType().equals(ChatType.ADMIN); }
-
-    public boolean isOwnerOrOwnerchat() { return isOwner() || userData.getChatType().equals(ChatType.OWNER); }
-
 }

@@ -27,7 +27,8 @@ public class DisconnectListener {
         String displayname = user.getDisplayname();
 
         if (data.getVanish())
-            MessageUtils.broadcast(User::isStaffOrVanished, Messages.leaveServerVanished(username, displayname));
+            MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(),
+                    Messages.leaveServerVanished(username, displayname));
         else {
             MessageUtils.broadcast(Messages.leaveServer(username, displayname));
 
