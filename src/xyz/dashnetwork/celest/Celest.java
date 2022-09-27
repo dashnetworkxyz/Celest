@@ -34,7 +34,7 @@ import xyz.dashnetwork.celest.vault.api.LuckAPI;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "0.5", authors = {"MasterDash5"})
+@Plugin(id = "celest", name = "Celest", version = "0.6", authors = {"MasterDash5"})
 public class Celest {
 
     private static ProxyServer server;

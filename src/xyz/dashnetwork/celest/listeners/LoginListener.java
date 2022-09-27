@@ -22,7 +22,7 @@ public class LoginListener {
         Player player = event.getPlayer();
         User user = User.getUser(player);
         UserData userData = user.getData();
-        AddressData addressData = user.getAddress().getAddressData();
+        AddressData addressData = user.getAddress().getData();
         PunishData userBan = userData.getBan();
         PunishData ipBan = addressData.getBan();
 

@@ -85,7 +85,9 @@ public class Address {
 
     public void remove() { addresses.remove(this); }
 
-    public AddressData getAddressData() { return addressData; }
+    public void setData(AddressData addressData) { this.addressData = addressData; }
+
+    public AddressData getData() { return addressData; }
 
     public long getAccessTime() { return accessTime; }
 

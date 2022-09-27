@@ -7,9 +7,11 @@
 
 package xyz.dashnetwork.celest.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 public class LazyUtils {
 
-    public static boolean anyEqualIgnoreCase(String string, String... compare) {
+    public static boolean anyEqualsIgnoreCase(@NotNull String string, @NotNull String... compare) {
         for (String each : compare)
             if (each.equalsIgnoreCase(string))
                 return true;

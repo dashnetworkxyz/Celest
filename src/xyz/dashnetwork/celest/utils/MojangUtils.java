@@ -9,6 +9,7 @@ package xyz.dashnetwork.celest.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class MojangUtils {
 
     private static final Gson gson = new GsonBuilder().create();
 
-    public static PlayerProfile fromUsername(String username) {
+    public static PlayerProfile fromUsername(@NotNull String username) {
         if (username.length() > 16)
             return null;
 
@@ -39,9 +40,9 @@ public class MojangUtils {
         }
     }
 
-    public static PlayerProfile fromUuid(UUID uuid) {
+    public static PlayerProfile fromUuid(@NotNull UUID uuid) {
         try {
-            URL url = new URL("https://api.mojang.com/user/profile/" + uuid.toString());
+            URL url = new URL("https://api.mojang.com/user/profile/" + uuid);
             Response response = gson.fromJson(new InputStreamReader(url.openStream()), Response.class);
 
             if (response == null)

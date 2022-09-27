@@ -7,6 +7,8 @@
 
 package xyz.dashnetwork.celest.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 public class UserData {
 
     private String address, username, nickname;
@@ -65,7 +67,7 @@ public class UserData {
 
     public void setMute(PunishData mute) { this.mute = mute; }
 
-    public void setChatType(ChatType chatType) { this.chatType = chatType; }
+    public void setChatType(@NotNull ChatType chatType) { this.chatType = chatType; }
 
     public void setLastPlayed(long lastPlayed) { this.lastPlayed = lastPlayed; }
 

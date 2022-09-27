@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.network.ProtocolVersion;
+import org.jetbrains.annotations.NotNull;
 
 public enum Variables {
 
@@ -20,7 +21,7 @@ public enum Variables {
 
     public String getReplace() { return replace; }
 
-    public static String parse(String input) {
+    public static String parse(@NotNull String input) {
         for (Variables variable : values())
             input = input.replace("{" + variable.name() + "}", variable.getReplace());
 

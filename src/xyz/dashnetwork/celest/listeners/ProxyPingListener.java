@@ -42,7 +42,7 @@ public class ProxyPingListener {
 
         event.setPing(builder.build());
 
-        AddressData addressData = Address.getAddress(address).getAddressData();
+        AddressData addressData = Address.getAddress(address).getData();
         PunishData ban = addressData.getBan();
 
         if (ban != null) {

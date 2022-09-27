@@ -22,7 +22,7 @@ public class PlayerChatListener {
 
         Player player = event.getPlayer();
         User user = User.getUser(player);
-        AddressData addressData = user.getAddress().getAddressData();
+        AddressData addressData = user.getAddress().getData();
         UserData userData = user.getData();
         PunishData userMute = userData.getMute();
         PunishData ipMute = addressData.getMute();

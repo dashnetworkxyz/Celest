@@ -10,7 +10,6 @@ package xyz.dashnetwork.celest;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.utils.ChatType;
 import xyz.dashnetwork.celest.utils.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
@@ -81,6 +80,8 @@ public class User {
         users.remove(this);
         address.remove();
     }
+
+    public void setData(UserData userData) { this.userData = userData; }
 
     public Player getPlayer() { return player; }
 

@@ -7,6 +7,7 @@
 
 package xyz.dashnetwork.celest.utils;
 
+import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.User;
 
 import java.util.function.Predicate;
@@ -27,11 +28,11 @@ public enum ChatType {
         this.selectors = selectors;
     }
 
-    public boolean hasPermission(User user) {
+    public boolean hasPermission(@NotNull User user) {
         return permission.test(user) || user.getData().getChatType().equals(this);
     }
 
-    public static ChatType parseTag(String message) {
+    public static ChatType parseTag(@NotNull String message) {
         if (message.length() < 4)
             return null;
 

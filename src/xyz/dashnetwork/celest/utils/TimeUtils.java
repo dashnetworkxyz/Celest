@@ -7,6 +7,8 @@
 
 package xyz.dashnetwork.celest.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 
 public class TimeUtils {
@@ -15,7 +17,7 @@ public class TimeUtils {
 
     public static String longToDate(long time) { return formatter.format(time); }
 
-    public static long fromTimeArgument(String string) {
+    public static long fromTimeArgument(@NotNull String string) {
         int length = string.length();
 
         if (length < 2)

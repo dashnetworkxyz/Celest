@@ -7,6 +7,7 @@
 
 package xyz.dashnetwork.celest.utils;
 
+import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.Storage;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
 
 public class ProfileUtils {
 
-    public static PlayerProfile fromUsername(String username) {
+    public static PlayerProfile fromUsername(@NotNull String username) {
         CacheData data = Cache.fromUsername(username);
 
         if (data != null)
@@ -23,7 +24,7 @@ public class ProfileUtils {
         return MojangUtils.fromUsername(username);
     }
 
-    public static PlayerProfile fromUuid(UUID uuid) {
+    public static PlayerProfile fromUuid(@NotNull UUID uuid) {
         CacheData cacheData = Cache.fromUuid(uuid);
 
         if (cacheData != null)
