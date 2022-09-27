@@ -71,9 +71,11 @@ public class User {
         Cache.generate(uuid, userData);
     }
 
-    public void save() {
+    public void save(boolean saveAddress) {
         Storage.write(stringUuid, Storage.Directory.USERDATA, userData);
-        address.save();
+
+        if (saveAddress)
+            address.save();
     }
 
     public void remove() {

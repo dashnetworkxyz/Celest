@@ -35,7 +35,7 @@ public class DisconnectListener {
             data.setLastPlayed(System.currentTimeMillis()); // TODO: Set this variable on /vanish
         }
 
-        user.save();
+        user.save(true);
         user.remove();
     }
 

@@ -117,7 +117,7 @@ public class LegacyParser {
                 User user = User.getUser(player.get());
 
                 user.setData(data);
-                user.save();
+                user.save(false);
             } else
                 Storage.write(uuid.toString(), Storage.Directory.USERDATA, data);
         }

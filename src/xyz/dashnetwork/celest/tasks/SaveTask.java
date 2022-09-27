@@ -15,11 +15,11 @@ public class SaveTask implements Runnable {
 
     @Override
     public void run() {
-        for (User user : User.getUsers())
-            user.save();
-
         for (Address address : Address.getAddresses())
             address.save();
+
+        for (User user : User.getUsers())
+            user.save(false);
 
         Cache.save();
     }
