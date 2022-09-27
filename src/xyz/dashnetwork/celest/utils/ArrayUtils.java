@@ -15,7 +15,7 @@ import java.util.function.IntFunction;
 
 public class ArrayUtils {
 
-    public static <T>T[] add(@NotNull T[] array, @NotNull T object) {
+    public static <T>T[] add(@NotNull T[] array, T object) {
         List<T> list = new ArrayList<>(List.of(array));
         list.add(object);
 
