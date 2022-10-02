@@ -11,7 +11,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
-public class ColorUtils {
+public final class ColorUtils {
 
     private static final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacySection();
 

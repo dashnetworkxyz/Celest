@@ -15,7 +15,7 @@ import xyz.dashnetwork.celest.utils.MessageUtils;
 import xyz.dashnetwork.celest.utils.Messages;
 import xyz.dashnetwork.celest.utils.UserData;
 
-public class PostLoginListener {
+public final class PostLoginListener {
 
     @Subscribe
     public void onPostLogin(PostLoginEvent event) {

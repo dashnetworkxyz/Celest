@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Address {
+public final class Address {
 
     private static final List<Address> addresses = new ArrayList<>();
     private final String address;

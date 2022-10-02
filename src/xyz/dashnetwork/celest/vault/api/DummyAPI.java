@@ -11,7 +11,7 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.vault.Vault;
 
-public class DummyAPI implements Vault {
+public final class DummyAPI implements Vault {
 
     @Override
     public String getPrefix(Player player) {

@@ -10,7 +10,7 @@ package xyz.dashnetwork.celest.tasks;
 import xyz.dashnetwork.celest.Address;
 import xyz.dashnetwork.celest.storage.Cache;
 
-public class ClearTask implements Runnable {
+public final class ClearTask implements Runnable {
 
     @Override
     public void run() {

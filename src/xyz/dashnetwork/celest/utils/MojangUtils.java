@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.UUID;
 
-public class MojangUtils {
+public final class MojangUtils {
 
     private static final Gson gson = new GsonBuilder().create();
 

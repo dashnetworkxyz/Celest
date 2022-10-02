@@ -19,6 +19,7 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
+import xyz.dashnetwork.celest.commands.CommandCelest;
 import xyz.dashnetwork.celest.commands.CommandTest;
 import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.storage.Cache;
@@ -34,8 +35,8 @@ import xyz.dashnetwork.celest.vault.api.LuckAPI;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "0.6", authors = {"MasterDash5"})
-public class Celest {
+@Plugin(id = "celest", name = "Celest", version = "0.7", authors = {"MasterDash5"})
+public final class Celest {
 
     private static ProxyServer server;
     private static Logger logger;
@@ -79,6 +80,7 @@ public class Celest {
         }
 
         CommandManager commandManager = server.getCommandManager();
+        commandManager.register("celest", new CommandCelest());
         commandManager.register("test", new CommandTest());
 
         EventManager eventManager = server.getEventManager();

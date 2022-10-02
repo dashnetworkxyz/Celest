@@ -20,14 +20,18 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class LegacyParser {
+public final class LegacyParser {
 
     private final Yaml yaml = new Yaml();
     private final File folder = new File(Celest.getDirectory().toFile(), "legacy");
     private final Map<UUID, UserData> userDataMap = new HashMap<>();
     private final Map<String, AddressData> addressDataMap = new HashMap<>();
 
-    public LegacyParser() {
+    public Map<UUID, UserData> getUserData() { return userDataMap; }
+
+    public Map<String, AddressData> getAddressData() { return addressDataMap; }
+
+    public void read() {
         Map<String, List<String>> ips = readFile("ips");
         Map<String, Long> lastPlayed = readFile("lastplayed");
         Map<String, String> names = readFile("names");
@@ -93,10 +97,6 @@ public class LegacyParser {
         parseList(pingspy, data -> data.setPingSpy(true));
         parseList(vanish, data -> data.setVanish(true));
     }
-
-    public Map<UUID, UserData> getUserData() { return userDataMap; }
-
-    public Map<String, AddressData> getAddressData() { return addressDataMap; }
 
     public void write() {
         for (Map.Entry<String, AddressData> each : addressDataMap.entrySet()) {

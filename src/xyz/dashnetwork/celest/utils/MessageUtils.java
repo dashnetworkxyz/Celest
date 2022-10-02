@@ -16,7 +16,7 @@ import xyz.dashnetwork.celest.User;
 
 import java.util.function.Predicate;
 
-public class MessageUtils {
+public final class MessageUtils {
 
     private static final ProxyServer server = Celest.getServer();
 

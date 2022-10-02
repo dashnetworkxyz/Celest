@@ -13,7 +13,7 @@ import xyz.dashnetwork.celest.storage.Storage;
 
 import java.util.UUID;
 
-public class ProfileUtils {
+public final class ProfileUtils {
 
     public static PlayerProfile fromUsername(@NotNull String username) {
         CacheData data = Cache.fromUsername(username);

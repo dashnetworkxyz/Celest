@@ -7,7 +7,7 @@
 
 package xyz.dashnetwork.celest.utils;
 
-public class AddressData {
+public final class AddressData {
 
     private PlayerProfile[] profiles;
     private PunishData ban, mute;

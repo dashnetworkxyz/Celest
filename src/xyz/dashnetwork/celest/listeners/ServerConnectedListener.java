@@ -12,7 +12,7 @@ import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.Messages;
 
-public class ServerConnectedListener {
+public final class ServerConnectedListener {
 
     @Subscribe
     public void onServerConnected(ServerConnectedEvent event) {

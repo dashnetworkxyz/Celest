@@ -17,7 +17,7 @@ import xyz.dashnetwork.celest.utils.*;
 
 import java.util.UUID;
 
-public class ProxyPingListener {
+public final class ProxyPingListener {
 
     @Subscribe
     public void onProxyPing(ProxyPingEvent event) {

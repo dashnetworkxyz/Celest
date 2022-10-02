@@ -9,7 +9,7 @@ package xyz.dashnetwork.celest.utils;
 
 import org.jetbrains.annotations.NotNull;
 
-public class UserData {
+public final class UserData {
 
     private String address, username, nickname;
     private PunishData ban, mute;

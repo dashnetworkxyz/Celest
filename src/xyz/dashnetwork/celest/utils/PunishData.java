@@ -9,7 +9,7 @@ package xyz.dashnetwork.celest.utils;
 
 import java.util.UUID;
 
-public class PunishData {
+public final class PunishData {
 
     private UUID banner;
     private String reason;

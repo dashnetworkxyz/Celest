@@ -13,9 +13,10 @@ import xyz.dashnetwork.celest.Celest;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Storage {
+public final class Storage {
 
     private static final Gson gson = new GsonBuilder().create();
     private static final File folder = Celest.getDirectory().toFile();
@@ -79,7 +80,7 @@ public class Storage {
         File[] files = directory.getFile().listFiles();
 
         if (files == null || files.length == 0)
-            return null;
+            return Collections.emptyList();
 
         List<T> list = new ArrayList<>();
 

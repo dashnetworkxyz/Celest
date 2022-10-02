@@ -9,7 +9,7 @@ package xyz.dashnetwork.celest.utils;
 
 import java.util.UUID;
 
-public class CacheData {
+public final class CacheData {
 
     private final UUID uuid;
     private final String username, address;

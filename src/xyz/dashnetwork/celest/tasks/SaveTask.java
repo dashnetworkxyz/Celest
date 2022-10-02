@@ -11,7 +11,7 @@ import xyz.dashnetwork.celest.Address;
 import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.storage.Cache;
 
-public class SaveTask implements Runnable {
+public final class SaveTask implements Runnable {
 
     @Override
     public void run() {

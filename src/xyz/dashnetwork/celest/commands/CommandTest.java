@@ -17,7 +17,7 @@ import xyz.dashnetwork.celest.utils.ProfileUtils;
 
 import java.util.UUID;
 
-public class CommandTest implements SimpleCommand {
+public final class CommandTest implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {

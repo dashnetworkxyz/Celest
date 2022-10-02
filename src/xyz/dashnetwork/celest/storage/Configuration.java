@@ -21,7 +21,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.function.IntFunction;
 
-public class Configuration {
+public final class Configuration {
 
     private static final URL resource = Configuration.class.getClassLoader().getResource("config.yml");
     private static final File file = new File(Celest.getDirectory().toFile(), "config.yml");

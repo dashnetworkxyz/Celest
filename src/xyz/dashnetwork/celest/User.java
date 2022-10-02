@@ -10,6 +10,7 @@ package xyz.dashnetwork.celest;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.Storage;
+import xyz.dashnetwork.celest.utils.PunishData;
 import xyz.dashnetwork.celest.utils.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class User {
+public final class User {
 
     private static final Vault vault = Celest.getVault();
     private static final List<User> users = new ArrayList<>();
@@ -100,6 +101,24 @@ public class User {
     public boolean isDash() { return stringUuid.equals("4f771152-ce61-4d6f-9541-1d2d9e725d0e"); }
 
     public boolean isKevin() { return stringUuid.equals("a948c50c-ede2-4dfa-9b6c-688daf22197c"); }
+
+    public PunishData getBan() {
+        PunishData fromUserData = userData.getBan();
+
+        if (fromUserData != null)
+            return fromUserData;
+
+        return address.getData().getBan();
+    }
+
+    public PunishData getMute() {
+        PunishData fromUserData = userData.getMute();
+
+        if (fromUserData != null)
+            return fromUserData;
+
+        return address.getData().getMute();
+    }
 
     public String getDisplayname() {
         String name = userData.getNickname();

@@ -15,8 +15,9 @@ import xyz.dashnetwork.celest.Celest;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
-public class SelectorUtils {
+public final class SelectorUtils {
 
     private static final ProxyServer server = Celest.getServer();
 

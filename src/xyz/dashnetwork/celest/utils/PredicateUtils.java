@@ -14,7 +14,7 @@ import xyz.dashnetwork.celest.User;
 
 import java.util.function.Predicate;
 
-public class PredicateUtils {
+public final class PredicateUtils {
 
     public static boolean permission(@NotNull Predicate<User> predicate, boolean console, @NotNull PermissionSubject subject) {
         if (subject instanceof Player)

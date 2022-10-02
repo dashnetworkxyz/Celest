@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class Cache {
+public final class Cache {
 
     private static final List<CacheData> cache = new ArrayList<>();
 

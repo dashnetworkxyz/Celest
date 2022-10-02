@@ -16,7 +16,7 @@ import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.utils.MessageUtils;
 import xyz.dashnetwork.celest.utils.Messages;
 
-public class CommandExecuteListener {
+public final class CommandExecuteListener {
 
     @Subscribe
     public void onCommandExecute(CommandExecuteEvent event) {

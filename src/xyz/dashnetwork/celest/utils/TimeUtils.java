@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 
-public class TimeUtils {
+public final class TimeUtils {
 
     private static final SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy, hh:mm a z");
 

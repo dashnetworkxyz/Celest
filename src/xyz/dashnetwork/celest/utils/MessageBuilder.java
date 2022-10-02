@@ -16,7 +16,7 @@ import net.kyori.adventure.text.event.HoverEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageBuilder {
+public final class MessageBuilder {
 
     private final List<Section> sections = new ArrayList<>();
 

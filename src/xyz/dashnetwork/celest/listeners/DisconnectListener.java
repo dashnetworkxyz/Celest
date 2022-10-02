@@ -15,7 +15,7 @@ import xyz.dashnetwork.celest.utils.MessageUtils;
 import xyz.dashnetwork.celest.utils.Messages;
 import xyz.dashnetwork.celest.utils.UserData;
 
-public class DisconnectListener {
+public final class DisconnectListener {
 
     @Subscribe
     public void onDisconnect(DisconnectEvent event) {

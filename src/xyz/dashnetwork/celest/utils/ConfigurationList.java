@@ -9,7 +9,7 @@ package xyz.dashnetwork.celest.utils;
 
 import xyz.dashnetwork.celest.storage.Configuration;
 
-public class ConfigurationList {
+public final class ConfigurationList {
 
     public static String MOTD_DESCRIPTION, MOTD_SOFTWARE;
     public static String[] MOTD_HOVER;

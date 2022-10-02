@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
 
-public class ArrayUtils {
+public final class ArrayUtils {
 
     public static <T>T[] add(@NotNull T[] array, T object) {
         List<T> list = new ArrayList<>(List.of(array));

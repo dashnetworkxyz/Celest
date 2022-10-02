@@ -14,7 +14,7 @@ import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.utils.*;
 
-public class PlayerChatListener {
+public final class PlayerChatListener {
 
     @Subscribe
     public void onPlayerChat(PlayerChatEvent event) {
@@ -22,31 +22,21 @@ public class PlayerChatListener {
 
         Player player = event.getPlayer();
         User user = User.getUser(player);
-        AddressData addressData = user.getAddress().getData();
         UserData userData = user.getData();
-        PunishData userMute = userData.getMute();
-        PunishData ipMute = addressData.getMute();
+        PunishData mute = user.getMute();
 
-        if (userMute != null || ipMute != null) {
-            PunishData selectedMute = userMute;
+        if (PunishUtils.isValid(mute)) {
+            long expiration = mute.getExpiration();
+            String reason = mute.getReason();
+            String banner = ProfileUtils.fromUuid(mute.getBanner()).getUsername();
+            String date = TimeUtils.longToDate(expiration);
 
-            if (selectedMute == null)
-                selectedMute = ipMute;
+            Component message = expiration == -1 ?
+                    Messages.playerMuted(reason, banner) :
+                    Messages.playerMutedTemporary(reason, banner, date);
 
-            long expiration = selectedMute.getExpiration();
-
-            if (expiration == -1 || expiration > System.currentTimeMillis()) {
-                String reason = selectedMute.getReason();
-                String banner = ProfileUtils.fromUuid(selectedMute.getBanner()).getUsername();
-                String date = TimeUtils.longToDate(expiration);
-
-                Component message = expiration == -1 ?
-                        Messages.playerMuted(reason, banner) :
-                        Messages.playerMutedTemporary(reason, banner, date);
-
-                MessageUtils.message(player, message);
-                return;
-            }
+            MessageUtils.message(player, message);
+            return;
         }
 
         String username = player.getUsername();

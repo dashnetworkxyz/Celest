@@ -9,7 +9,16 @@ package xyz.dashnetwork.celest.utils;
 
 import net.kyori.adventure.text.Component;
 
-public class Messages {
+public final class Messages {
+
+    public static Component commandCelestHelp() {
+        MessageBuilder message = new MessageBuilder();
+        message.append("&6&l»&7 /celest legacy-data-import &c(can overwrite modern data)");
+        message.append("\n&6&l»&7 /celest userdata <list|(uuid)>");
+        message.append("\n&6&l»&7 /celest addressdata <list|(ip)>");
+
+        return message.build();
+    }
 
     public static Component joinServer(String username, String displayname) {
         MessageBuilder builder = new MessageBuilder();
@@ -71,7 +80,7 @@ public class Messages {
     public static Component playerChat(String username, String displayname, String message) {
         MessageBuilder builder = new MessageBuilder();
         builder.append(displayname).hover("&6" + username);
-        builder.append("&r &e&l>&r ");
+        builder.append("&r &e&l»&r ");
         builder.append(message);
 
         return builder.build();
@@ -81,7 +90,7 @@ public class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lAdmin&r ");
         builder.append(displayname).hover("&6" + username);
-        builder.append("&r &6&l>&r ");
+        builder.append("&r &6&l»&r ");
         builder.append("&3" + message);
 
         return builder.build();
@@ -91,7 +100,7 @@ public class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lOwner&r ");
         builder.append(displayname).hover("&6" + username);
-        builder.append("&r &6&l>&r ");
+        builder.append("&r &6&l»&r ");
         builder.append("&c" + message);
 
         return builder.build();
@@ -101,7 +110,7 @@ public class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lStaff&r ");
         builder.append(displayname).hover("&6" + username);
-        builder.append("&r &6&l>&r ");
+        builder.append("&r &6&l»&r ");
         builder.append("&6" + message);
 
         return builder.build();
@@ -111,7 +120,7 @@ public class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&c&lCS&r ");
         builder.append(displayname).hover("&6" + username);
-        builder.append(" &e&l>&r ");
+        builder.append(" &e&l»&r ");
         builder.append("&b" + message);
 
         return builder.build();
@@ -147,6 +156,26 @@ public class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&lDashNetwork");
         builder.append("\n&7You are connected to &6" + server + "\n");
+
+        return builder.build();
+    }
+
+    public static Component userdataInfo(String uuid, String address, String username, String nickname,
+                                         String ban, String mute, String chatType, String lastPlayed,
+                                         String altSpy, String commandSpy, String pingSpy, String vanish) {
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&6&l»&7 Hover to view data for &6" + uuid)
+                .hover("&7address: &6" + address
+                        + "\n&7username: &6" + username
+                        + "\n&7nickname: &6" + nickname
+                        + "\n&7ban: &6" + ban
+                        + "\n&7mute: &6" + mute
+                        + "\n&7chatType: &6" + chatType
+                        + "\n&7lastPlayed: &6" + lastPlayed
+                        + "\n&7altSpy: &6" + altSpy
+                        + "\n&7commandSpy: &6" + commandSpy
+                        + "\n&7pingSpy: &6" + pingSpy
+                        + "\n&7vanish: &6" + vanish);
 
         return builder.build();
     }

@@ -10,43 +10,29 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.LoginEvent;
-import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.User;
 import xyz.dashnetwork.celest.utils.*;
 
-public class LoginListener {
+public final class LoginListener {
 
     @Subscribe
     public void onLogin(LoginEvent event) {
-        Player player = event.getPlayer();
-        User user = User.getUser(player);
-        UserData userData = user.getData();
-        AddressData addressData = user.getAddress().getData();
-        PunishData userBan = userData.getBan();
-        PunishData ipBan = addressData.getBan();
+        User user = User.getUser(event.getPlayer());
+        PunishData ban = user.getBan();
 
-        if (userBan != null || ipBan != null) {
-            PunishData selectedBan = userBan;
+        if (PunishUtils.isValid(ban)) {
+            long expiration = ban.getExpiration();
+            String reason = ban.getReason();
+            String banner = ProfileUtils.fromUuid(ban.getBanner()).getUsername();
+            String date = TimeUtils.longToDate(expiration);
 
-            if (selectedBan == null)
-                selectedBan = ipBan;
+            Component message = expiration == -1 ?
+                    Messages.loginBanned(reason, banner) :
+                    Messages.loginBannedTemporary(reason, banner, date);
 
-            long expiration = selectedBan.getExpiration();
-
-            if (expiration == -1 || expiration > System.currentTimeMillis()) {
-                String reason = selectedBan.getReason();
-                String banner = ProfileUtils.fromUuid(selectedBan.getBanner()).getUsername();
-                String date = TimeUtils.longToDate(expiration);
-
-                Component message = expiration == -1 ?
-                        Messages.loginBanned(reason, banner) :
-                        Messages.loginBannedTemporary(reason, banner, date);
-
-                event.setResult(ResultedEvent.ComponentResult.denied(message));
-
-                user.remove();
-            }
+            event.setResult(ResultedEvent.ComponentResult.denied(message));
+            user.remove();
         }
     }
 
