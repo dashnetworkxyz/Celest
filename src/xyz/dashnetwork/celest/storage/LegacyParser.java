@@ -119,7 +119,7 @@ public final class LegacyParser {
                 user.setData(data);
                 user.save(false);
             } else
-                Storage.write(uuid.toString(), Storage.Directory.USERDATA, data);
+                Storage.write(uuid.toString(), Storage.Directory.USER, data);
         }
     }
 

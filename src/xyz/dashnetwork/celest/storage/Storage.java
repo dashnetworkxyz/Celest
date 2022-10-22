@@ -19,13 +19,13 @@ import java.util.List;
 public final class Storage {
 
     private static final Gson gson = new GsonBuilder().create();
-    private static final File folder = Celest.getDirectory().toFile();
+    private static final File folder = new File(Celest.getDirectory().toFile(), "data");
 
     public enum Directory {
 
         PARENT(folder),
-        ADDRESSDATA(new File(folder, "addressdata")),
-        USERDATA(new File(folder, "userdata"));
+        ADDRESS(new File(folder, "address")),
+        USER(new File(folder, "user"));
 
         private final File file;
 

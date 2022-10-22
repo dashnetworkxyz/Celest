@@ -14,6 +14,12 @@ public final class PluginMessageListener {
 
     @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
+        System.out.println("event fired.");
+        System.out.println("\"" + event.getIdentifier().getId() + "\"");
+        System.out.println(new String(event.getData()));
+
+        // IdentifierList class? ex: IdentifierList.DN_ONLINE
+
         /* TODO
         implement dn requests with ServerLoginPluginMessageEvent?
 

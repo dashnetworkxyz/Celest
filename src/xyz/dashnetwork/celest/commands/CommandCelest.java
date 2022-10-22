@@ -16,7 +16,6 @@ import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.utils.*;
 
 import java.util.List;
-import java.util.UUID;
 
 public final class CommandCelest implements SimpleCommand {
 
@@ -36,6 +35,8 @@ public final class CommandCelest implements SimpleCommand {
             return;
         }
 
+        // TODO
+
         switch (args[0].toLowerCase()) {
             case "legacy-data-import": // intentionally annoying argument as this can overwrite modern data.
                 LegacyParser parser = new LegacyParser();
@@ -52,11 +53,11 @@ public final class CommandCelest implements SimpleCommand {
                 if (length == 1) {
                     MessageUtils.message(source, "&6&l» &7Reading userdata...");
 
-                    List<UserData> data = Storage.readAll(Storage.Directory.USERDATA, UserData.class);
+                    List<UserData> data = Storage.readAll(Storage.Directory.USER, UserData.class);
 
                     MessageUtils.message(source, "&6&l» &7Found &6" + data.size() + " &7entries.");
                 } else {
-                    UserData data = Storage.read(args[1], Storage.Directory.USERDATA, UserData.class);
+                    UserData data = Storage.read(args[1], Storage.Directory.USER, UserData.class);
 
                     if (data == null) {
                         MessageUtils.message(source, "&6&l» &7Failed to read &6celest/userdata/" + args[1] + ".json");

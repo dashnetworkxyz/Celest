@@ -17,6 +17,9 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.messages.ChannelRegistrar;
+import com.velocitypowered.api.proxy.messages.LegacyChannelIdentifier;
+import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.commands.CommandCelest;
@@ -79,6 +82,16 @@ public final class Celest {
             vault = new DummyAPI();
         }
 
+        ChannelRegistrar channelRegistrar = server.getChannelRegistrar();
+        channelRegistrar.register(new LegacyChannelIdentifier("MC|Brand"));
+        channelRegistrar.register(new LegacyChannelIdentifier("FML"));
+        channelRegistrar.register(new LegacyChannelIdentifier("FML|HS"));
+        channelRegistrar.register(new LegacyChannelIdentifier("BungeeCord"));
+        channelRegistrar.register(MinecraftChannelIdentifier.from("minecraft:brand"));
+        channelRegistrar.register(MinecraftChannelIdentifier.from("fml:handshake"));
+        channelRegistrar.register(MinecraftChannelIdentifier.from("fml:play"));
+        channelRegistrar.register(MinecraftChannelIdentifier.from("bungeecord:main"));
+
         CommandManager commandManager = server.getCommandManager();
         commandManager.register("celest", new CommandCelest());
         commandManager.register("test", new CommandTest());
@@ -88,6 +101,7 @@ public final class Celest {
         eventManager.register(this, new DisconnectListener());
         eventManager.register(this, new LoginListener());
         eventManager.register(this, new PlayerChatListener());
+        eventManager.register(this, new PluginMessageListener());
         eventManager.register(this, new PostLoginListener());
         eventManager.register(this, new ProxyPingListener());
         eventManager.register(this, new ServerConnectedListener());

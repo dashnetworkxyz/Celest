@@ -29,7 +29,7 @@ public final class Address {
         this.address = address;
         this.manual = manual;
 
-        addressData = Storage.read(address, Storage.Directory.ADDRESSDATA, AddressData.class);
+        addressData = Storage.read(address, Storage.Directory.ADDRESS, AddressData.class);
 
         if (addressData == null)
             addressData = new AddressData();
@@ -78,9 +78,9 @@ public final class Address {
 
     public void save() {
         if (addressData.getProfiles().length > 0 || addressData.getMute() != null || addressData.getBan() != null)
-            Storage.write(address, Storage.Directory.ADDRESSDATA, addressData);
+            Storage.write(address, Storage.Directory.ADDRESS, addressData);
         else
-            Storage.delete(address, Storage.Directory.ADDRESSDATA); // Remove obsolete addresses.
+            Storage.delete(address, Storage.Directory.ADDRESS); // Remove obsolete addresses.
     }
 
     public void remove() { addresses.remove(this); }

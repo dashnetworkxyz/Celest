@@ -30,7 +30,7 @@ public final class ProfileUtils {
         if (cacheData != null)
             return new PlayerProfile(cacheData.getUUID(), cacheData.getUsername());
 
-        UserData userData = Storage.read(uuid.toString(), Storage.Directory.USERDATA, UserData.class);
+        UserData userData = Storage.read(uuid.toString(), Storage.Directory.USER, UserData.class);
 
         if (userData != null) {
             Cache.generate(uuid, userData);

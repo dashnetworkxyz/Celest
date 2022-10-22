@@ -50,7 +50,7 @@ public final class User {
     }
 
     private void load() {
-        userData = Storage.read(stringUuid, Storage.Directory.USERDATA, UserData.class);
+        userData = Storage.read(stringUuid, Storage.Directory.USER, UserData.class);
         address = new Address(stringAddress, true);
 
         UUID uniqueId = player.getUniqueId();
@@ -73,7 +73,7 @@ public final class User {
     }
 
     public void save(boolean saveAddress) {
-        Storage.write(stringUuid, Storage.Directory.USERDATA, userData);
+        Storage.write(stringUuid, Storage.Directory.USER, userData);
 
         if (saveAddress)
             address.save();
@@ -96,11 +96,13 @@ public final class User {
 
     public boolean isAdmin() { return player.hasPermission("dashnetwork.admin") || isOwner(); }
 
-    public boolean isOwner() { return player.hasPermission("dashnetwork.owner") || isDash() || isKevin(); }
+    public boolean isOwner() { return player.hasPermission("dashnetwork.owner") || isDash() || isKevin() || isGolden(); }
 
     public boolean isDash() { return stringUuid.equals("4f771152-ce61-4d6f-9541-1d2d9e725d0e"); }
 
     public boolean isKevin() { return stringUuid.equals("a948c50c-ede2-4dfa-9b6c-688daf22197c"); }
+
+    public boolean isGolden() { return stringUuid.equals("bbeb983a-3111-4722-bcf0-e6aafbd5f7d2"); }
 
     public PunishData getBan() {
         PunishData fromUserData = userData.getBan();
