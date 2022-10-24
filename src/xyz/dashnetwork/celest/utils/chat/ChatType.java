@@ -5,10 +5,10 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.utils.chat;
 
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.User;
+import xyz.dashnetwork.celest.utils.User;
 
 import java.util.function.Predicate;
 

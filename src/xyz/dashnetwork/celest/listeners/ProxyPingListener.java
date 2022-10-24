@@ -11,9 +11,12 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import net.kyori.adventure.text.Component;
-import xyz.dashnetwork.celest.Address;
-import xyz.dashnetwork.celest.User;
+import xyz.dashnetwork.celest.utils.Address;
+import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.utils.chat.ColorUtils;
+import xyz.dashnetwork.celest.utils.data.AddressData;
+import xyz.dashnetwork.celest.utils.data.PunishData;
 
 import java.util.UUID;
 

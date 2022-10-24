@@ -5,15 +5,15 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.utils.data;
 
 import java.util.UUID;
 
 public final class PunishData {
 
-    private UUID banner;
-    private String reason;
-    private long expiration;
+    private final UUID banner;
+    private final String reason;
+    private final long expiration;
 
     public PunishData(UUID banner, String reason, long expiration) {
         this.banner = banner;

@@ -5,13 +5,14 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest;
+package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.utils.PunishData;
-import xyz.dashnetwork.celest.utils.UserData;
+import xyz.dashnetwork.celest.utils.data.PunishData;
+import xyz.dashnetwork.celest.utils.data.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
 import java.util.ArrayList;

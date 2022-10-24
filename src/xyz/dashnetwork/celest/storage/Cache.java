@@ -7,9 +7,9 @@
 
 package xyz.dashnetwork.celest.storage;
 
-import xyz.dashnetwork.celest.utils.CacheData;
+import xyz.dashnetwork.celest.utils.data.CacheData;
 import xyz.dashnetwork.celest.utils.TimeType;
-import xyz.dashnetwork.celest.utils.UserData;
+import xyz.dashnetwork.celest.utils.data.UserData;
 
 import java.util.ArrayList;
 import java.util.Arrays;

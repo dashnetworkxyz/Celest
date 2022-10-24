@@ -5,14 +5,14 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.utils.chat;
 
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.User;
+import xyz.dashnetwork.celest.utils.User;
 
 import java.util.function.Predicate;
 

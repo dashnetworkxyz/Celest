@@ -1,15 +1,17 @@
 /*
- * Copyright (C) 2022 Andrew Bell - All Rights Reserved
+ * Copyright (C) 2022 Andrew Bell. - All Rights Reserved
  *
  * Unauthorized copying or redistribution of this file in source and binary forms via any medium
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.utils.profile;
 
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.Storage;
+import xyz.dashnetwork.celest.utils.data.CacheData;
+import xyz.dashnetwork.celest.utils.data.UserData;
 
 import java.util.UUID;
 

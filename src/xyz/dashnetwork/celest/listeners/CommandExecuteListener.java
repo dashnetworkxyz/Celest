@@ -12,9 +12,9 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.command.CommandExecuteEvent;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
-import xyz.dashnetwork.celest.User;
-import xyz.dashnetwork.celest.utils.MessageUtils;
-import xyz.dashnetwork.celest.utils.Messages;
+import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.Messages;
 
 public final class CommandExecuteListener {
 

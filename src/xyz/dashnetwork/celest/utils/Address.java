@@ -5,13 +5,11 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest;
+package xyz.dashnetwork.celest.utils;
 
 import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.utils.AddressData;
-import xyz.dashnetwork.celest.utils.ArrayUtils;
-import xyz.dashnetwork.celest.utils.PlayerProfile;
-import xyz.dashnetwork.celest.utils.TimeType;
+import xyz.dashnetwork.celest.utils.data.AddressData;
+import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 
 import java.util.ArrayList;
 import java.util.List;

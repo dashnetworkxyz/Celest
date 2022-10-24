@@ -7,8 +7,8 @@
 
 package xyz.dashnetwork.celest.tasks;
 
-import xyz.dashnetwork.celest.Address;
-import xyz.dashnetwork.celest.User;
+import xyz.dashnetwork.celest.utils.Address;
+import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.storage.Cache;
 
 public final class SaveTask implements Runnable {

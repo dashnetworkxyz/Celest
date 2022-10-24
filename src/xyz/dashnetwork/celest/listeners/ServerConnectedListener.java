@@ -10,7 +10,7 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.Messages;
+import xyz.dashnetwork.celest.utils.chat.Messages;
 
 public final class ServerConnectedListener {
 

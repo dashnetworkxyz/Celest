@@ -11,7 +11,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import xyz.dashnetwork.celest.User;
+import xyz.dashnetwork.celest.utils.User;
 
 import java.util.Optional;
 

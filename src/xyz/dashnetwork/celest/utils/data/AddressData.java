@@ -5,7 +5,9 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.utils.data;
+
+import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 
 public final class AddressData {
 

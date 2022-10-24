@@ -10,10 +10,10 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.User;
-import xyz.dashnetwork.celest.utils.MessageUtils;
-import xyz.dashnetwork.celest.utils.Messages;
-import xyz.dashnetwork.celest.utils.UserData;
+import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.utils.data.UserData;
 
 public final class DisconnectListener {
 

@@ -7,7 +7,7 @@
 
 package xyz.dashnetwork.celest.tasks;
 
-import xyz.dashnetwork.celest.Address;
+import xyz.dashnetwork.celest.utils.Address;
 import xyz.dashnetwork.celest.storage.Cache;
 
 public final class ClearTask implements Runnable {

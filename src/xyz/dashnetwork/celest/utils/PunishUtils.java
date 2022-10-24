@@ -7,6 +7,8 @@
 
 package xyz.dashnetwork.celest.utils;
 
+import xyz.dashnetwork.celest.utils.data.PunishData;
+
 public final class PunishUtils {
 
     public static boolean isValid(PunishData data) {

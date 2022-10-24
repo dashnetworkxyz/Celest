@@ -31,6 +31,7 @@ import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.tasks.ClearTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
+import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.vault.Vault;
 import xyz.dashnetwork.celest.vault.api.DummyAPI;
 import xyz.dashnetwork.celest.vault.api.LuckAPI;

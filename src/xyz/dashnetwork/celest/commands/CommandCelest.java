@@ -10,10 +10,13 @@ package xyz.dashnetwork.celest.commands;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import net.kyori.adventure.text.Component;
-import xyz.dashnetwork.celest.User;
+import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.storage.LegacyParser;
 import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.utils.data.UserData;
 
 import java.util.List;
 

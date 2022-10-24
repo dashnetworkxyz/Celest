@@ -11,8 +11,14 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
-import xyz.dashnetwork.celest.User;
+import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.utils.data.PunishData;
+import xyz.dashnetwork.celest.utils.data.UserData;
+import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 
 public final class PlayerChatListener {
 

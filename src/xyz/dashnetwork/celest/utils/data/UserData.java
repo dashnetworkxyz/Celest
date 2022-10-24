@@ -5,9 +5,10 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.utils.data;
 
 import org.jetbrains.annotations.NotNull;
+import xyz.dashnetwork.celest.utils.chat.ChatType;
 
 public final class UserData {
 

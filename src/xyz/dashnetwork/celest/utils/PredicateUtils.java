@@ -10,7 +10,6 @@ package xyz.dashnetwork.celest.utils;
 import com.velocitypowered.api.permission.PermissionSubject;
 import com.velocitypowered.api.proxy.Player;
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.User;
 
 import java.util.function.Predicate;
 

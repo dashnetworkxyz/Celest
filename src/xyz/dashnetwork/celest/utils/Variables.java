@@ -23,7 +23,7 @@ public enum Variables {
 
     public static String parse(@NotNull String input) {
         for (Variables variable : values())
-            input = input.replace("{" + variable.name() + "}", variable.getReplace());
+            input = input.replace("{$" + variable.name() + "}", variable.getReplace());
 
         return input;
     }
