@@ -44,13 +44,13 @@ public final class MessageBuilder {
         return Component.join(JoinConfiguration.noSeparators(), components);
     }
 
-    public static class Section {
+    public static final class Section {
 
         private final String text;
         private String hover;
         private ClickEvent click;
 
-        public Section(String text) {
+        private Section(String text) {
             this.text = text;
             this.hover = null;
             this.click = null;
