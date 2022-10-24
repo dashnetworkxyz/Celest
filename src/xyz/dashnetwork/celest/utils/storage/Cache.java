@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.storage;
+package xyz.dashnetwork.celest.utils.storage;
 
 import xyz.dashnetwork.celest.utils.data.CacheData;
 import xyz.dashnetwork.celest.utils.TimeType;

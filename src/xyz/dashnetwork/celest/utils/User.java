@@ -9,8 +9,8 @@ package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.storage.Cache;
-import xyz.dashnetwork.celest.storage.Storage;
+import xyz.dashnetwork.celest.utils.storage.Cache;
+import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.utils.data.PunishData;
 import xyz.dashnetwork.celest.utils.data.UserData;
 import xyz.dashnetwork.celest.vault.Vault;

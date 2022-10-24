@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.storage;
+package xyz.dashnetwork.celest.utils.storage;
 
 import com.velocitypowered.api.proxy.Player;
 import org.yaml.snakeyaml.Yaml;

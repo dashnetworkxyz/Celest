@@ -7,7 +7,7 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import xyz.dashnetwork.celest.storage.Configuration;
+import xyz.dashnetwork.celest.utils.storage.Configuration;
 
 public final class ConfigurationList {
 
