@@ -58,7 +58,7 @@ public final class Configuration {
     public static <T>T get(Class<T> type, String node) { return (T) config.getNode(node).getValue(type); }
 
     @SuppressWarnings("unchecked")
-    public static <T>T[] getArray(IntFunction<T[]> function, String node) {
+    public static <T>T[] get(IntFunction<T[]> function, String node) {
         Class<?> type = function.apply(0).getClass();
 
         return ((ArrayList<T>) config.getNode(node).getValue(type)).toArray(function);

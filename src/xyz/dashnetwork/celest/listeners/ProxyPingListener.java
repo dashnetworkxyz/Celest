@@ -12,9 +12,11 @@ import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.utils.Address;
+import xyz.dashnetwork.celest.utils.ConfigurationList;
 import xyz.dashnetwork.celest.utils.User;
-import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.utils.Variables;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
+import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.data.AddressData;
 import xyz.dashnetwork.celest.utils.data.PunishData;
 
@@ -32,7 +34,8 @@ public final class ProxyPingListener {
             if (!user.getData().getVanish())
                 online++;
 
-        Component description = ColorUtils.toComponent(Variables.parse(ConfigurationList.MOTD_DESCRIPTION));
+        // TODO: Put Variables.parse() inside the ConfigurationList entry.
+        Component description = ComponentUtils.toComponent(Variables.parse(ConfigurationList.MOTD_DESCRIPTION));
         String software = ColorUtils.fromAmpersand(Variables.parse(ConfigurationList.MOTD_SOFTWARE));
 
         builder.clearMods().clearSamplePlayers();

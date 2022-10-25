@@ -17,21 +17,20 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
-import com.velocitypowered.api.proxy.messages.ChannelRegistrar;
-import com.velocitypowered.api.proxy.messages.LegacyChannelIdentifier;
-import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
+import xyz.dashnetwork.celest.channel.Channel;
+import xyz.dashnetwork.celest.channel.in.ChannelInSubscribe;
 import xyz.dashnetwork.celest.commands.CommandCelest;
 import xyz.dashnetwork.celest.commands.CommandTest;
 import xyz.dashnetwork.celest.listeners.*;
-import xyz.dashnetwork.celest.utils.storage.Cache;
-import xyz.dashnetwork.celest.utils.storage.Configuration;
-import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.tasks.ClearTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
 import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.storage.Cache;
+import xyz.dashnetwork.celest.utils.storage.Configuration;
+import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.vault.Vault;
 import xyz.dashnetwork.celest.vault.api.DummyAPI;
 import xyz.dashnetwork.celest.vault.api.LuckAPI;
@@ -83,15 +82,7 @@ public final class Celest {
             vault = new DummyAPI();
         }
 
-        ChannelRegistrar channelRegistrar = server.getChannelRegistrar();
-        channelRegistrar.register(new LegacyChannelIdentifier("MC|Brand"));
-        channelRegistrar.register(new LegacyChannelIdentifier("FML"));
-        channelRegistrar.register(new LegacyChannelIdentifier("FML|HS"));
-        channelRegistrar.register(new LegacyChannelIdentifier("BungeeCord"));
-        channelRegistrar.register(MinecraftChannelIdentifier.from("minecraft:brand"));
-        channelRegistrar.register(MinecraftChannelIdentifier.from("fml:handshake"));
-        channelRegistrar.register(MinecraftChannelIdentifier.from("fml:play"));
-        channelRegistrar.register(MinecraftChannelIdentifier.from("bungeecord:main"));
+        Channel.registerInbound("subscribe", ChannelInSubscribe::new);
 
         CommandManager commandManager = server.getCommandManager();
         commandManager.register("celest", new CommandCelest());

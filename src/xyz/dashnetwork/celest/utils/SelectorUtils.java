@@ -15,7 +15,6 @@ import xyz.dashnetwork.celest.Celest;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public final class SelectorUtils {
 

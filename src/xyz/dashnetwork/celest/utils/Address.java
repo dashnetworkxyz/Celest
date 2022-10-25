@@ -7,9 +7,9 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.utils.data.AddressData;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
+import xyz.dashnetwork.celest.utils.storage.Storage;
 
 import java.util.ArrayList;
 import java.util.List;

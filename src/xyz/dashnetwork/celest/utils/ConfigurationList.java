@@ -17,7 +17,7 @@ public final class ConfigurationList {
     public static void load() {
         MOTD_DESCRIPTION = Configuration.get(String.class, "motd.description");
         MOTD_SOFTWARE = Configuration.get(String.class, "motd.software");
-        MOTD_HOVER = Configuration.getArray(String[]::new, "motd.hover");
+        MOTD_HOVER = Configuration.get(String[]::new, "motd.hover");
     }
 
 }

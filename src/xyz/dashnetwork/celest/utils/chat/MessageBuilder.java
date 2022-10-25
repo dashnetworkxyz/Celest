@@ -31,10 +31,10 @@ public final class MessageBuilder {
         List<TextComponent> components = new ArrayList<>();
 
         for (Section section : sections) {
-            TextComponent component = ColorUtils.toComponent(section.text);
+            TextComponent component = ComponentUtils.toComponent(section.text);
 
             if (section.hover != null)
-                component = component.hoverEvent(HoverEvent.showText(ColorUtils.toComponent(section.hover)));
+                component = component.hoverEvent(HoverEvent.showText(ComponentUtils.toComponent(section.hover)));
             if (section.click != null)
                 component = component.clickEvent(section.click);
 

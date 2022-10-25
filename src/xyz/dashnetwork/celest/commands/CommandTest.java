@@ -9,10 +9,10 @@ package xyz.dashnetwork.celest.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
+import xyz.dashnetwork.celest.utils.PredicateUtils;
 import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
-import xyz.dashnetwork.celest.utils.PredicateUtils;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 
 import java.util.UUID;

@@ -20,15 +20,15 @@ public final class MessageUtils {
 
     private static final ProxyServer server = Celest.getServer();
 
-    public static void message(@NotNull Audience audience, @NotNull String message) { message(audience, ColorUtils.toComponent(message)); }
+    public static void message(@NotNull Audience audience, @NotNull String message) { message(audience, ComponentUtils.toComponent(message)); }
 
     public static void message(@NotNull Audience audience, @NotNull Component component) { audience.sendMessage(component); }
 
-    public static void broadcast(@NotNull String message) { broadcast(ColorUtils.toComponent(message)); }
+    public static void broadcast(@NotNull String message) { broadcast(ComponentUtils.toComponent(message)); }
 
     public static void broadcast(@NotNull Component component) { server.sendMessage(component); }
 
-    public static void broadcast(@NotNull Predicate<User> predicate, @NotNull String message) { broadcast(predicate, ColorUtils.toComponent(message)); }
+    public static void broadcast(@NotNull Predicate<User> predicate, @NotNull String message) { broadcast(predicate, ComponentUtils.toComponent(message)); }
 
     public static void broadcast(@NotNull Predicate<User> predicate, @NotNull Component component) {
         for (User user : User.getUsers())

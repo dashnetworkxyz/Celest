@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.utils.chat;
 
 import org.jetbrains.annotations.NotNull;
+import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.User;
 
 import java.util.function.Predicate;
@@ -18,7 +19,8 @@ public enum ChatType {
     ADMIN(User::isAdmin, "@ac"),
     STAFF(User::isStaff, "@sc"),
     LOCAL(User::isOwner, "@lc"),
-    GLOBAL(user -> true, "@gc");
+    GLOBAL(user -> LazyUtils.anyEquals(user.getData().getChatType(), OWNER, ADMIN, STAFF, LOCAL)
+                    || user.isStaff(), "@gc");
 
     private final Predicate<User> permission;
     private final String[] selectors;
@@ -37,9 +39,8 @@ public enum ChatType {
             return null;
 
         for (ChatType type : values())
-            for (String selector : type.selectors)
-                if (message.substring(0, 3).equalsIgnoreCase(selector))
-                    return type;
+            if (LazyUtils.anyEqualsIgnoreCase(message.substring(0, 3), type.selectors))
+                return type;
 
         return null;
     }
