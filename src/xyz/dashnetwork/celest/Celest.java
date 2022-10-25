@@ -23,7 +23,10 @@ import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.channel.in.ChannelInSubscribe;
 import xyz.dashnetwork.celest.commands.CommandCelest;
 import xyz.dashnetwork.celest.commands.CommandTest;
+import xyz.dashnetwork.celest.inject.Injector;
 import xyz.dashnetwork.celest.listeners.*;
+import xyz.dashnetwork.celest.packet.Packet;
+import xyz.dashnetwork.celest.packet.packets.PacketPlayerInfo;
 import xyz.dashnetwork.celest.tasks.ClearTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
@@ -38,7 +41,7 @@ import xyz.dashnetwork.celest.vault.api.LuckAPI;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "0.7", authors = {"MasterDash5"})
+@Plugin(id = "celest", name = "Celest", version = "0.8", authors = {"MasterDash5"})
 public final class Celest {
 
     private static ProxyServer server;
@@ -65,6 +68,7 @@ public final class Celest {
 
     @Subscribe
     public void onProxyInitialize(ProxyInitializeEvent event) {
+        logger.info("Starting...");
         long start = System.currentTimeMillis();
 
         Storage.mkdir();
@@ -82,12 +86,19 @@ public final class Celest {
             vault = new DummyAPI();
         }
 
+        logger.info("Injecting packet listener...");
+        if (Injector.injectPacketListener())
+            Packet.register(0x37, PacketPlayerInfo::new);
+
+        logger.info("Registering channels...");
         Channel.registerInbound("subscribe", ChannelInSubscribe::new);
 
+        logger.info("Registering commands...");
         CommandManager commandManager = server.getCommandManager();
         commandManager.register("celest", new CommandCelest());
         commandManager.register("test", new CommandTest());
 
+        logger.info("Registering events...");
         EventManager eventManager = server.getEventManager();
         eventManager.register(this, new CommandExecuteListener());
         eventManager.register(this, new DisconnectListener());
@@ -99,6 +110,7 @@ public final class Celest {
         eventManager.register(this, new ServerConnectedListener());
         eventManager.register(this, new ServerPreConnectListener());
 
+        logger.info("Registering tasks...");
         Scheduler scheduler = server.getScheduler();
         scheduler.buildTask(this, clearTask).repeat(1, TimeUnit.HOURS);
         scheduler.buildTask(this, saveTask).repeat(1, TimeUnit.MINUTES);

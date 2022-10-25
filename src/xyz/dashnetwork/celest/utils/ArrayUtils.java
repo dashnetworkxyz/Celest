@@ -10,6 +10,7 @@ package xyz.dashnetwork.celest.utils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.IntFunction;
 
@@ -22,7 +23,28 @@ public final class ArrayUtils {
         return list.toArray(array);
     }
 
-    public static <T>T[] removeAll(@NotNull IntFunction<T[]> function, @NotNull T[] array, @NotNull List<T> objects) {
+    public static <T>T[] addAll(@NotNull T[] array, Collection<T> objects) {
+        List<T> list = new ArrayList<>(List.of(array));
+        list.addAll(objects);
+
+        return list.toArray(array);
+    }
+
+    public static <T>T[] remove(@NotNull IntFunction<T[]> function, @NotNull T[] array, T object) {
+        List<T> list = new ArrayList<>(List.of(array));
+        list.remove(object);
+
+        return list.toArray(function);
+    }
+
+    public static <T>T[] remove(@NotNull IntFunction<T[]> function, @NotNull T[] array, int position) {
+        List<T> list = new ArrayList<>(List.of(array));
+        list.remove(position);
+
+        return list.toArray(function);
+    }
+
+    public static <T>T[] removeAll(@NotNull IntFunction<T[]> function, @NotNull T[] array, @NotNull Collection<T> objects) {
         List<T> list = new ArrayList<>(List.of(array));
         list.removeAll(objects);
 
