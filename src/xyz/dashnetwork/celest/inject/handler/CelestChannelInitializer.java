@@ -32,8 +32,7 @@ public final class CelestChannelInitializer extends ChannelInitializer<Channel> 
     @Override
     protected void initChannel(Channel channel) throws InvocationTargetException, IllegalAccessException {
         initChannel.invoke(original, channel);
-
-        channel.pipeline().addFirst("celest-listener", new DecodeHandler());
+        channel.pipeline().addBefore("minecraft-encoder", "celest-listener", new DecodeHandler());
     }
 
 }

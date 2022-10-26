@@ -19,18 +19,15 @@ import java.util.List;
 public final class DecodeHandler extends MessageToMessageDecoder<ByteBuf> {
 
     @Override
-    protected void decode(ChannelHandlerContext context, ByteBuf buffer, List<Object> list) {
-        System.out.println("test");
+    protected void decode(ChannelHandlerContext context, ByteBuf buf, List<Object> out) {
+        out.add(buf.copy());
 
-        ByteBuf copy = buffer.copy(); // copy buffer so Velocity can use it.
+        int id = BufUtils.readVarInt(buf);
 
-        int packetId = BufUtils.readVarInt(buffer);
-        // Packet.handle(phase, packetId, buffer);
+        System.out.println("test: " + id);
 
-        System.out.println(packetId);
-
-        // TODO: event.setCancelled(true) ????
-        list.add(copy);
+        if (id == 0x37)
+            System.out.println("player info found");
     }
 
 }

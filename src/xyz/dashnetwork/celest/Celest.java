@@ -25,8 +25,6 @@ import xyz.dashnetwork.celest.commands.CommandCelest;
 import xyz.dashnetwork.celest.commands.CommandTest;
 import xyz.dashnetwork.celest.inject.Injector;
 import xyz.dashnetwork.celest.listeners.*;
-import xyz.dashnetwork.celest.packet.Packet;
-import xyz.dashnetwork.celest.packet.packets.PacketPlayerInfo;
 import xyz.dashnetwork.celest.tasks.ClearTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
@@ -86,9 +84,7 @@ public final class Celest {
             vault = new DummyAPI();
         }
 
-        logger.info("Injecting packet listener...");
-        if (Injector.injectPacketListener())
-            Packet.register(0x37, PacketPlayerInfo::new);
+        Injector.injectPacketListener();
 
         logger.info("Registering channels...");
         Channel.registerInbound("subscribe", ChannelInSubscribe::new);

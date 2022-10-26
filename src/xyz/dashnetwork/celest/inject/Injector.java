@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.inject;
 
 import com.velocitypowered.api.proxy.ProxyServer;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.handler.CelestChannelInitializer;
@@ -21,16 +22,16 @@ public final class Injector {
         ProxyServer server = Celest.getServer();
 
         try {
-            Field field = server.getClass().getDeclaredField("cm");
-            field.setAccessible(true);
+            Field cm = server.getClass().getDeclaredField("cm");
+            cm.setAccessible(true);
 
-            Object connectionManager = field.get(server);
+            Object connectionManager = cm.get(server);
             Object channelInitializerHolder = connectionManager.getClass().getDeclaredMethod("getBackendChannelInitializer").invoke(connectionManager);
             ChannelInitializer<?> channelInitializer = (ChannelInitializer<?>) channelInitializerHolder.getClass().getDeclaredMethod("get").invoke(channelInitializerHolder);
 
-            // This is a deprecated method. Hopefully it isn't removed.
-            Method method = channelInitializerHolder.getClass().getMethod("set", ChannelInitializer.class);
-            method.invoke(channelInitializerHolder, new CelestChannelInitializer(channelInitializer));
+            Field initializer = channelInitializerHolder.getClass().getDeclaredField("initializer");
+            initializer.setAccessible(true);
+            initializer.set(channelInitializerHolder, new CelestChannelInitializer(channelInitializer));
 
             return true; // Injection successful.
         } catch (Exception exception) {
