@@ -84,6 +84,7 @@ public final class Celest {
             vault = new DummyAPI();
         }
 
+        logger.info("Injecting packet listener...");
         Injector.injectPacketListener();
 
         logger.info("Registering channels...");

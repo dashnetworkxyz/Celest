@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 
 public final class Injector {
 
-    public static boolean injectPacketListener() {
+    public static void injectPacketListener() {
         ProxyServer server = Celest.getServer();
 
         try {
@@ -26,18 +26,15 @@ public final class Injector {
             cm.setAccessible(true);
 
             Object connectionManager = cm.get(server);
-            Object channelInitializerHolder = connectionManager.getClass().getDeclaredMethod("getBackendChannelInitializer").invoke(connectionManager);
+            Class<?> connectionManagerClass = connectionManager.getClass();
+            Object channelInitializerHolder = connectionManagerClass.getDeclaredMethod("getServerChannelInitializer").invoke(connectionManager);
             ChannelInitializer<?> channelInitializer = (ChannelInitializer<?>) channelInitializerHolder.getClass().getDeclaredMethod("get").invoke(channelInitializerHolder);
 
             Field initializer = channelInitializerHolder.getClass().getDeclaredField("initializer");
             initializer.setAccessible(true);
             initializer.set(channelInitializerHolder, new CelestChannelInitializer(channelInitializer));
-
-            return true; // Injection successful.
         } catch (Exception exception) {
             Celest.getLogger().error("Failed to inject packet listener. API change?");
-
-            return false;
         }
     }
 
