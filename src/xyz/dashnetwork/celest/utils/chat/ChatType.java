@@ -19,8 +19,8 @@ public enum ChatType {
     ADMIN(User::isAdmin, "@ac"),
     STAFF(User::isStaff, "@sc"),
     LOCAL(User::isOwner, "@lc"),
-    GLOBAL(user -> LazyUtils.anyEquals(user.getData().getChatType(), OWNER, ADMIN, STAFF, LOCAL)
-                    || user.isStaff(), "@gc");
+    GLOBAL(user -> user.isStaff() ||
+            LazyUtils.anyEquals(user.getData().getChatType(), OWNER, ADMIN, STAFF, LOCAL), "@gc");
 
     private final Predicate<User> permission;
     private final String[] selectors;

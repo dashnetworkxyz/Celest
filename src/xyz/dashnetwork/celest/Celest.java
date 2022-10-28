@@ -15,7 +15,6 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
-import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
@@ -28,7 +27,6 @@ import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.tasks.ClearTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
-import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.Configuration;
 import xyz.dashnetwork.celest.utils.storage.Storage;
@@ -70,12 +68,9 @@ public final class Celest {
         long start = System.currentTimeMillis();
 
         Storage.mkdir();
-        Configuration.load();
-        ConfigurationList.load(); // TODO: Call this on a config reload command
+        Configuration.load(); // TODO: Call this on a config reload command
+        ConfigurationList.load(); // ^ and this
         Cache.load();
-
-        for (Player player : server.getAllPlayers())
-            new User(player); // Create User instances for plugin reloads.
 
         if (server.getPluginManager().isLoaded("luckperms"))
             vault = new LuckAPI();
@@ -84,8 +79,8 @@ public final class Celest {
             vault = new DummyAPI();
         }
 
-        logger.info("Injecting packet listener...");
-        Injector.injectPacketListener();
+        logger.info("Injecting session listener...");
+        Injector.injectSessionListener();
 
         logger.info("Registering channels...");
         Channel.registerInbound("subscribe", ChannelInSubscribe::new);

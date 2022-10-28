@@ -7,34 +7,23 @@
 
 package xyz.dashnetwork.celest.inject;
 
-import com.velocitypowered.api.proxy.ProxyServer;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.handler.CelestChannelInitializer;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import xyz.dashnetwork.celest.utils.ReflectionUtils;
 
 public final class Injector {
 
-    public static void injectPacketListener() {
-        ProxyServer server = Celest.getServer();
-
+    public static void injectSessionListener() {
         try {
-            Field cm = server.getClass().getDeclaredField("cm");
-            cm.setAccessible(true);
+            Object connectionManager = ReflectionUtils.getDeclaredField(Celest.getServer(), "cm");
+            Object channelInitializerHolder = ReflectionUtils.invokeDeclaredMethod(connectionManager, "getServerChannelInitializer");
+            ChannelInitializer<?> channelInitializer = (ChannelInitializer<?>) ReflectionUtils.invokeDeclaredMethod(channelInitializerHolder, "get");
 
-            Object connectionManager = cm.get(server);
-            Class<?> connectionManagerClass = connectionManager.getClass();
-            Object channelInitializerHolder = connectionManagerClass.getDeclaredMethod("getServerChannelInitializer").invoke(connectionManager);
-            ChannelInitializer<?> channelInitializer = (ChannelInitializer<?>) channelInitializerHolder.getClass().getDeclaredMethod("get").invoke(channelInitializerHolder);
-
-            Field initializer = channelInitializerHolder.getClass().getDeclaredField("initializer");
-            initializer.setAccessible(true);
-            initializer.set(channelInitializerHolder, new CelestChannelInitializer(channelInitializer));
-        } catch (Exception exception) {
-            Celest.getLogger().error("Failed to inject packet listener. API change?");
+            ReflectionUtils.setDeclaredField(channelInitializerHolder, "initializer", new CelestChannelInitializer(channelInitializer));
+        } catch (ReflectiveOperationException | RuntimeException exception) {
+            Celest.getLogger().error("Failed to inject packet listener. Printing stacktrace...");
+            exception.printStackTrace();
         }
     }
 
