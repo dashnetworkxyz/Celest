@@ -92,6 +92,7 @@ public final class Celest {
 
         logger.info("Registering events...");
         EventManager eventManager = server.getEventManager();
+        eventManager.register(this, new CelestHandshakeListener());
         eventManager.register(this, new CommandExecuteListener());
         eventManager.register(this, new DisconnectListener());
         eventManager.register(this, new LoginListener());

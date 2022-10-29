@@ -10,17 +10,20 @@ package xyz.dashnetwork.celest.inject;
 import io.netty.channel.ChannelInitializer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.handler.CelestChannelInitializer;
-import xyz.dashnetwork.celest.utils.ReflectionUtils;
+import xyz.dashnetwork.celest.utils.reflection.ReflectedConnectionManager;
+import xyz.dashnetwork.celest.utils.reflection.ReflectedServerChannelInitializerHolder;
+import xyz.dashnetwork.celest.utils.reflection.ReflectedVelocityServer;
 
 public final class Injector {
 
     public static void injectSessionListener() {
         try {
-            Object connectionManager = ReflectionUtils.getDeclaredField(Celest.getServer(), "cm");
-            Object channelInitializerHolder = ReflectionUtils.invokeDeclaredMethod(connectionManager, "getServerChannelInitializer");
-            ChannelInitializer<?> channelInitializer = (ChannelInitializer<?>) ReflectionUtils.invokeDeclaredMethod(channelInitializerHolder, "get");
+            ReflectedVelocityServer server = new ReflectedVelocityServer(Celest.getServer());
+            ReflectedConnectionManager connectionManager = server.getConnectionManager();
+            ReflectedServerChannelInitializerHolder holder = connectionManager.getServerChannelInitializer();
+            ChannelInitializer<?> initializer = holder.get();
 
-            ReflectionUtils.setDeclaredField(channelInitializerHolder, "initializer", new CelestChannelInitializer(channelInitializer));
+            holder.set(new CelestChannelInitializer(initializer));
         } catch (ReflectiveOperationException | RuntimeException exception) {
             Celest.getLogger().error("Failed to inject packet listener. Printing stacktrace...");
             exception.printStackTrace();
