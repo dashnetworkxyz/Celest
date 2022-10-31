@@ -9,12 +9,10 @@ package xyz.dashnetwork.celest.inject.handler;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
-import xyz.dashnetwork.celest.utils.reflection.ReflectedHandshakeSessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.ReflectedMinecraftConnection;
-import xyz.dashnetwork.celest.utils.reflection.ReflectedMinecraftSessionHandler;
+import xyz.dashnetwork.celest.utils.reflection.connection.ReflectedMinecraftConnection;
+import xyz.dashnetwork.celest.utils.reflection.connection.client.ReflectedHandshakeSessionHandler;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 public final class CelestChannelInitializer extends ChannelInitializer<Channel> {
 
@@ -39,11 +37,7 @@ public final class CelestChannelInitializer extends ChannelInitializer<Channel> 
         ReflectedMinecraftConnection connection = new ReflectedMinecraftConnection(channel.pipeline().get("handler"));
         ReflectedHandshakeSessionHandler handler = new ReflectedHandshakeSessionHandler(connection.getSessionHandler());
 
-        connection.setSessionHandler(Proxy.newProxyInstance(
-                ReflectedMinecraftSessionHandler.loader(),
-                ReflectedMinecraftSessionHandler.array(),
-                new CelestHandshakeHandler(handler, connection)
-        ));
+        connection.setSessionHandler(new CelestHandshakeHandler(handler, connection));
     }
 
 }

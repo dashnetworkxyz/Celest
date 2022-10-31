@@ -9,11 +9,13 @@ package xyz.dashnetwork.celest.inject.handler;
 
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.events.CelestHandshakeEvent;
-import xyz.dashnetwork.celest.utils.reflection.*;
+import xyz.dashnetwork.celest.utils.reflection.connection.ReflectedMinecraftConnection;
+import xyz.dashnetwork.celest.utils.reflection.connection.client.ReflectedHandshakeSessionHandler;
+import xyz.dashnetwork.celest.utils.reflection.connection.client.ReflectedStatusSessionHandler;
+import xyz.dashnetwork.celest.utils.reflection.protocol.packet.ReflectedHandshake;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.Arrays;
 
 public final class CelestHandshakeHandler implements InvocationHandler {
@@ -52,11 +54,7 @@ public final class CelestHandshakeHandler implements InvocationHandler {
             if (handshake.getNextStatus() == 1) {
                 ReflectedStatusSessionHandler statusHandler = new ReflectedStatusSessionHandler(connection.getSessionHandler());
 
-                connection.setSessionHandler(Proxy.newProxyInstance(
-                        ReflectedMinecraftSessionHandler.loader(),
-                        ReflectedMinecraftSessionHandler.array(),
-                        new CelestStatusHandler(statusHandler, connection)
-                ));
+                connection.setSessionHandler(new CelestStatusHandler(statusHandler, connection));
             }
 
             return true;

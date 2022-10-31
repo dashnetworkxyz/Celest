@@ -79,8 +79,8 @@ public final class Celest {
             vault = new DummyAPI();
         }
 
-        logger.info("Injecting session listener...");
-        Injector.injectSessionListener();
+        logger.info("Injecting session initializer...");
+        Injector.injectSessionInitializer();
 
         logger.info("Registering channels...");
         Channel.registerInbound("subscribe", ChannelInSubscribe::new);

@@ -5,7 +5,9 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.reflection;
+package xyz.dashnetwork.celest.utils.reflection.connection.client;
+
+import xyz.dashnetwork.celest.utils.reflection.connection.ReflectedMinecraftSessionHandler;
 
 import java.lang.reflect.Method;
 

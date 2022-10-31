@@ -10,13 +10,15 @@ package xyz.dashnetwork.celest.inject;
 import io.netty.channel.ChannelInitializer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.handler.CelestChannelInitializer;
-import xyz.dashnetwork.celest.utils.reflection.ReflectedConnectionManager;
-import xyz.dashnetwork.celest.utils.reflection.ReflectedServerChannelInitializerHolder;
 import xyz.dashnetwork.celest.utils.reflection.ReflectedVelocityServer;
+import xyz.dashnetwork.celest.utils.reflection.network.ReflectedConnectionManager;
+import xyz.dashnetwork.celest.utils.reflection.network.ReflectedServerChannelInitializerHolder;
 
 public final class Injector {
 
-    public static void injectSessionListener() {
+    // Velocity API is very lacking, so I get to add an API myself.
+    // Not the best way to do this, but ideally this will become obsolete as the API improves.
+    public static void injectSessionInitializer() {
         try {
             ReflectedVelocityServer server = new ReflectedVelocityServer(Celest.getServer());
             ReflectedConnectionManager connectionManager = server.getConnectionManager();

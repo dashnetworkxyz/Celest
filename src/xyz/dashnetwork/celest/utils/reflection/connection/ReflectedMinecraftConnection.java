@@ -5,9 +5,11 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.reflection;
+package xyz.dashnetwork.celest.utils.reflection.connection;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 public final class ReflectedMinecraftConnection {
 
@@ -32,8 +34,12 @@ public final class ReflectedMinecraftConnection {
         return new ReflectedMinecraftSessionHandler(getSessionHandler.invoke(original));
     }
 
-    public void setSessionHandler(Object object) throws ReflectiveOperationException {
-        setSessionHandler.invoke(original, object);
+    public void setSessionHandler(InvocationHandler handler) throws ReflectiveOperationException {
+        setSessionHandler.invoke(original, Proxy.newProxyInstance(
+                ReflectedMinecraftSessionHandler.loader(),
+                ReflectedMinecraftSessionHandler.array(),
+                handler
+        ));
     }
 
 }

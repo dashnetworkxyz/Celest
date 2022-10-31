@@ -7,9 +7,9 @@
 
 package xyz.dashnetwork.celest.inject.handler;
 
-import xyz.dashnetwork.celest.utils.reflection.ReflectedMinecraftConnection;
-import xyz.dashnetwork.celest.utils.reflection.ReflectedStatusRequest;
-import xyz.dashnetwork.celest.utils.reflection.ReflectedStatusSessionHandler;
+import xyz.dashnetwork.celest.utils.reflection.connection.ReflectedMinecraftConnection;
+import xyz.dashnetwork.celest.utils.reflection.connection.client.ReflectedStatusSessionHandler;
+import xyz.dashnetwork.celest.utils.reflection.protocol.packet.ReflectedStatusRequest;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

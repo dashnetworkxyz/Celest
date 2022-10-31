@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.reflection;
+package xyz.dashnetwork.celest.utils.reflection.protocol.packet;
 
 public final class ReflectedStatusRequest {
 

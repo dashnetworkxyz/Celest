@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.utils.reflection;
 
 import com.velocitypowered.api.proxy.ProxyServer;
+import xyz.dashnetwork.celest.utils.reflection.network.ReflectedConnectionManager;
 
 import java.lang.reflect.Field;
 

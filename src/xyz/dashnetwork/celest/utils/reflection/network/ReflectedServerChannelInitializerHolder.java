@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.reflection;
+package xyz.dashnetwork.celest.utils.reflection.network;
 
 import io.netty.channel.ChannelInitializer;
 
