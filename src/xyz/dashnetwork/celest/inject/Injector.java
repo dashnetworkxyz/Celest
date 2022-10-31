@@ -10,9 +10,9 @@ package xyz.dashnetwork.celest.inject;
 import io.netty.channel.ChannelInitializer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.handler.CelestChannelInitializer;
-import xyz.dashnetwork.celest.utils.reflection.ReflectedVelocityServer;
-import xyz.dashnetwork.celest.utils.reflection.network.ReflectedConnectionManager;
-import xyz.dashnetwork.celest.utils.reflection.network.ReflectedServerChannelInitializerHolder;
+import xyz.dashnetwork.celest.utils.reflection.velocity.ReflectedVelocityServer;
+import xyz.dashnetwork.celest.utils.reflection.velocity.network.ReflectedConnectionManager;
+import xyz.dashnetwork.celest.utils.reflection.velocity.network.ReflectedServerChannelInitializerHolder;
 
 public final class Injector {
 

@@ -7,9 +7,10 @@
 
 package xyz.dashnetwork.celest.inject.handler;
 
-import xyz.dashnetwork.celest.utils.reflection.connection.ReflectedMinecraftConnection;
-import xyz.dashnetwork.celest.utils.reflection.connection.client.ReflectedStatusSessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.protocol.packet.ReflectedStatusRequest;
+import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
+import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedInitialInboundConnection;
+import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedStatusSessionHandler;
+import xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.ReflectedStatusRequest;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -20,8 +21,8 @@ public final class CelestStatusHandler implements InvocationHandler {
     private final ReflectedStatusSessionHandler handler;
     private final ReflectedMinecraftConnection connection;
 
-    public CelestStatusHandler(ReflectedStatusSessionHandler handler, ReflectedMinecraftConnection connection) {
-        this.handler = handler;
+    public CelestStatusHandler(ReflectedInitialInboundConnection inbound, ReflectedMinecraftConnection connection) throws ReflectiveOperationException {
+        this.handler = new ReflectedStatusSessionHandler(inbound);
         this.connection = connection;
     }
 
@@ -32,8 +33,6 @@ public final class CelestStatusHandler implements InvocationHandler {
 
         if (name.equals("handle") && Arrays.equals(types, ReflectedStatusRequest.array())) {
             // TODO: override method for custom json element.
-
-            System.out.println("request handle invoked");
         }
 
         return handler.passOriginalMethod(method, args);

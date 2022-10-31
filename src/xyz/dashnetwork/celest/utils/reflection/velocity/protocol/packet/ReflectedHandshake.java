@@ -5,9 +5,10 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.protocol.packet;
+package xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet;
 
 import com.velocitypowered.api.network.ProtocolVersion;
+import xyz.dashnetwork.celest.utils.reflection.ClassList;
 
 import java.lang.reflect.Method;
 
@@ -20,7 +21,7 @@ public final class ReflectedHandshake {
 
     static {
         try {
-            clazz = Class.forName("com.velocitypowered.proxy.protocol.packet.Handshake");
+            clazz = ClassList.HANDSHAKE;
             array = new Class<?>[] { clazz };
 
             getProtocolVersion = clazz.getMethod("getProtocolVersion");
@@ -35,6 +36,8 @@ public final class ReflectedHandshake {
     public static Class<?>[] array() { return array; }
 
     public ReflectedHandshake(Object original) { this.original = original; }
+
+    public Object original() { return original; }
 
     public ProtocolVersion getProtocolVersion() throws ReflectiveOperationException {
         return (ProtocolVersion) getProtocolVersion.invoke(original);

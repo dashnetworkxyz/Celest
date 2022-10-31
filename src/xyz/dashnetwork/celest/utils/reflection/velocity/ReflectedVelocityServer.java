@@ -5,10 +5,11 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.reflection;
+package xyz.dashnetwork.celest.utils.reflection.velocity;
 
 import com.velocitypowered.api.proxy.ProxyServer;
-import xyz.dashnetwork.celest.utils.reflection.network.ReflectedConnectionManager;
+import xyz.dashnetwork.celest.utils.reflection.ClassList;
+import xyz.dashnetwork.celest.utils.reflection.velocity.network.ReflectedConnectionManager;
 
 import java.lang.reflect.Field;
 
@@ -16,15 +17,15 @@ public final class ReflectedVelocityServer {
 
     private static final Class<?> clazz;
     private static final Field cm;
-    private ProxyServer original;
+    private final ProxyServer original;
 
     static {
         try {
-            clazz = Class.forName("com.velocitypowered.proxy.VelocityServer");
+            clazz = ClassList.VELOCITY_SERVER;
 
             cm = clazz.getDeclaredField("cm");
             cm.setAccessible(true);
-        } catch (ReflectiveOperationException exception) {
+        } catch (NoSuchFieldException exception) {
             throw new RuntimeException(exception);
         }
     }

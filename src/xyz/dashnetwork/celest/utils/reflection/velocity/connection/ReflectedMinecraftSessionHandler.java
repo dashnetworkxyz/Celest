@@ -5,7 +5,9 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.connection;
+package xyz.dashnetwork.celest.utils.reflection.velocity.connection;
+
+import xyz.dashnetwork.celest.utils.reflection.ClassList;
 
 public final class ReflectedMinecraftSessionHandler {
 
@@ -15,16 +17,10 @@ public final class ReflectedMinecraftSessionHandler {
     private final Object original;
 
     static {
-        try {
-            clazz = Class.forName("com.velocitypowered.proxy.connection.MinecraftSessionHandler");
-            loader = clazz.getClassLoader();
-            array = new Class<?>[] { clazz };
-        } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
-        }
+        clazz = ClassList.MINECRAFT_SESSION_HANDLER;
+        loader = clazz.getClassLoader();
+        array = new Class<?>[] { clazz };
     }
-
-    public static Class<?> clazz() { return clazz; }
 
     public static ClassLoader loader() { return loader; }
 

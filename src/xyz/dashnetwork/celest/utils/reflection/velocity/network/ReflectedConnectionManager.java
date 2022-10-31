@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.network;
+package xyz.dashnetwork.celest.utils.reflection.velocity.network;
 
 import java.lang.reflect.Method;
 

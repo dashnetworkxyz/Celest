@@ -7,12 +7,14 @@
 
 package xyz.dashnetwork.celest.inject.handler;
 
+import com.velocitypowered.api.network.ProtocolVersion;
+import com.velocitypowered.api.proxy.InboundConnection;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.events.CelestHandshakeEvent;
-import xyz.dashnetwork.celest.utils.reflection.connection.ReflectedMinecraftConnection;
-import xyz.dashnetwork.celest.utils.reflection.connection.client.ReflectedHandshakeSessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.connection.client.ReflectedStatusSessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.protocol.packet.ReflectedHandshake;
+import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
+import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedHandshakeSessionHandler;
+import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedInitialInboundConnection;
+import xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.ReflectedHandshake;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -35,27 +37,42 @@ public final class CelestHandshakeHandler implements InvocationHandler {
 
         if (name.equals("handle") && Arrays.equals(types, ReflectedHandshake.array())) {
             ReflectedHandshake handshake = new ReflectedHandshake(args[0]);
+            String address = handshake.getServerAddress();
+            ProtocolVersion version = handshake.getProtocolVersion();
+            int next = handshake.getNextStatus();
+
+            String cleaned = handler.cleanVhost(address);
+            ReflectedInitialInboundConnection inbound = new ReflectedInitialInboundConnection(connection, cleaned, handshake);
+            Enum<?> state = (Enum<?>) handler.getStateForProtocol(next);
+
+            if (state == null)
+                connection.close(true);
+            else {
+                connection.setState(state);
+                connection.setProtocolVersion(version);
+                connection.setAssociation(inbound);
+
+                switch (state.name()) {
+                    case "STATUS":
+                        connection.setSessionHandler(new CelestStatusHandler(inbound, connection));
+                        break;
+                    case "LOGIN":
+                        handler.handleLogin(handshake, inbound);
+                        break;
+                    default:
+                        throw new AssertionError("getStateForProtocol provided invalid state!");
+                }
+            }
+
             CelestHandshakeEvent event = new CelestHandshakeEvent(
-                    null, // TODO: add InboundConnection (will require overriding the entire method)
-                    handshake.getProtocolVersion(),
-                    handshake.getServerAddress(),
+                    (InboundConnection) inbound.original(),
+                    version,
+                    address,
                     handshake.getPort(),
-                    handshake.getNextStatus()
+                    next
             );
 
-            Celest.getServer().getEventManager().fire(event);
-
-            if (!event.getResult().isAllowed()) {
-                // TODO
-            }
-
-            handler.passOriginalMethod(method, args);
-
-            if (handshake.getNextStatus() == 1) {
-                ReflectedStatusSessionHandler statusHandler = new ReflectedStatusSessionHandler(connection.getSessionHandler());
-
-                connection.setSessionHandler(new CelestStatusHandler(statusHandler, connection));
-            }
+            Celest.getServer().getEventManager().fireAndForget(event);
 
             return true;
         } else

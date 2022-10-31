@@ -7,13 +7,11 @@
 
 package xyz.dashnetwork.celest.events;
 
-import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.InboundConnection;
 
-public final class CelestHandshakeEvent implements ResultedEvent<ResultedEvent.GenericResult> {
+public final class CelestHandshakeEvent {
 
-    private GenericResult result = GenericResult.allowed();
     private final InboundConnection connection;
     private final ProtocolVersion version;
     private final String address;
@@ -37,11 +35,5 @@ public final class CelestHandshakeEvent implements ResultedEvent<ResultedEvent.G
     public int getPort() { return port; }
 
     public int getNextState() { return next; }
-
-    @Override
-    public GenericResult getResult() { return result; }
-
-    @Override
-    public void setResult(GenericResult result) { this.result = result; }
 
 }

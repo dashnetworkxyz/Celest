@@ -11,14 +11,11 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import net.kyori.adventure.text.Component;
-import xyz.dashnetwork.celest.utils.Address;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
 import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.Variables;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
-import xyz.dashnetwork.celest.utils.data.AddressData;
-import xyz.dashnetwork.celest.utils.data.PunishData;
 
 import java.util.UUID;
 
@@ -26,7 +23,7 @@ public final class ProxyPingListener {
 
     @Subscribe
     public void onProxyPing(ProxyPingEvent event) {
-        String address = event.getConnection().getRemoteAddress().getHostString();
+        // InboundConnection connection = event.getConnection();
         ServerPing.Builder builder = event.getPing().asBuilder();
         int online = 0;
 
@@ -48,21 +45,29 @@ public final class ProxyPingListener {
 
         event.setPing(builder.build());
 
-        AddressData addressData = Address.getAddress(address).getData();
-        PunishData ban = addressData.getBan();
+        /*
+        TODO: Pingspy
 
-        if (ban != null) {
-            long expiration = ban.getExpiration();
+        final String hostname = connection.getRemoteAddress().getHostString();
+        final ProtocolVersion version = connection.getProtocolVersion();
 
-            if (expiration == -1 || expiration > System.currentTimeMillis())
-                return; // Don't do Pingspy for banned ips.
-        }
+        new Thread(() -> {
+            Address address = Address.getAddress(hostname);
+            AddressData data = address.getData();
+            PlayerProfile[] profiles = data.getProfiles();
 
-        for (User user : User.getUsers())
-            if (user.getData().getAddress().equals(address))
-                return; // Some clients ping the server while connected (notably Lunar Client)
+            if (profiles.length == 0)
+                return; // Skip server pingers.
 
-        // TODO: Pingspy
+            if (address.isManual())
+                return; // Skip players already logged in.
+
+            if (PunishUtils.isValid(data.getBan()))
+                return; // Skip banned ips.
+
+        }).start();
+
+         */
     }
 
 }

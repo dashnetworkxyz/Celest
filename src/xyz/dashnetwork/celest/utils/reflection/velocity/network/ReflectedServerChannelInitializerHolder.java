@@ -5,9 +5,10 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.network;
+package xyz.dashnetwork.celest.utils.reflection.velocity.network;
 
 import io.netty.channel.ChannelInitializer;
+import xyz.dashnetwork.celest.utils.reflection.ClassList;
 
 import java.lang.reflect.Field;
 
@@ -19,7 +20,7 @@ public final class ReflectedServerChannelInitializerHolder {
 
     static {
         try {
-            clazz = Class.forName("com.velocitypowered.proxy.network.ServerChannelInitializerHolder");
+            clazz = ClassList.SERVER_CHANNEL_INITIALIZER_HOLDER;
 
             initializer = clazz.getDeclaredField("initializer");
             initializer.setAccessible(true);

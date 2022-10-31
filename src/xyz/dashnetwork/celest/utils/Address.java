@@ -21,6 +21,8 @@ public final class Address {
     private final String address;
     private final boolean manual;
     private AddressData addressData;
+    private String inputServerAddress;
+    private int inputServerPort;
     private long accessTime;
 
     public Address(String address, boolean manual) {
@@ -32,6 +34,8 @@ public final class Address {
         if (addressData == null)
             addressData = new AddressData();
 
+        inputServerAddress = null;
+        inputServerPort = -1;
         accessTime = System.currentTimeMillis();
         addresses.add(this);
     }
@@ -83,9 +87,19 @@ public final class Address {
 
     public void remove() { addresses.remove(this); }
 
+    public boolean isManual() { return manual; }
+
     public void setData(AddressData addressData) { this.addressData = addressData; }
 
     public AddressData getData() { return addressData; }
+
+    public void setInputServerAddress(String inputServerAddress) { this.inputServerAddress = inputServerAddress; }
+
+    public String getInputServerAddress() { return inputServerAddress; }
+
+    public void setInputServerPort(int inputServerPort) { this.inputServerPort = inputServerPort; }
+
+    public int getInputServerPort() { return inputServerPort; }
 
     public long getAccessTime() { return accessTime; }
 
