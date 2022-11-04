@@ -41,6 +41,11 @@ public final class CelestHandshakeHandler implements InvocationHandler {
             ProtocolVersion version = handshake.getProtocolVersion();
             int next = handshake.getNextStatus();
 
+            if (!address.toLowerCase().contains("dashnetwork")) {
+                connection.close(true);
+                return true;
+            }
+
             String cleaned = handler.cleanVhost(address);
             ReflectedInitialInboundConnection inbound = new ReflectedInitialInboundConnection(connection, cleaned, handshake);
             Enum<?> state = (Enum<?>) handler.getStateForProtocol(next);
