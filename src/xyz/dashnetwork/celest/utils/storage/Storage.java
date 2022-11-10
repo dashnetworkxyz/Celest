@@ -94,7 +94,7 @@ public final class Storage {
         byte[] data;
 
         try {
-            DataInputStream input = new DataInputStream(new FileInputStream(file));
+            FileInputStream input = new FileInputStream(file);
             data = input.readAllBytes();
             input.close();
         } catch (IOException exception) {
