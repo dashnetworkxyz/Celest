@@ -1,8 +1,15 @@
+<!--
+  ~ Copyright (C) 2022 Andrew Bell - All Rights Reserved
+  ~
+  ~ Unauthorized copying or redistribution of this file in source and binary forms via any medium
+  ~ is strictly prohibited.
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
     <groupId>xyz.dashnetwork</groupId>
     <artifactId>Celest</artifactId>
-    <version>1.0</version>
+    <version>0.8</version>
     <build>
         <sourceDirectory>src</sourceDirectory>
         <resources>
@@ -23,15 +30,15 @@
     </build>
     <repositories>
         <repository>
-            <id>velocity</id>
-            <url>https://repo.velocitypowered.com/snapshots/</url>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
     </repositories>
     <dependencies>
         <dependency>
             <groupId>com.velocitypowered</groupId>
             <artifactId>velocity-api</artifactId>
-            <version>3.1.0</version>
+            <version>3.1.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -43,12 +50,12 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport</artifactId>
-            <version>4.1.82.Final</version>
+            <version>4.1.84.Final</version>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-codec</artifactId>
-            <version>4.1.82.Final</version>
+            <version>4.1.84.Final</version>
         </dependency>
     </dependencies>
 </project>
