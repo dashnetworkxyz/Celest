@@ -40,12 +40,15 @@ import java.util.concurrent.TimeUnit;
 @Plugin(id = "celest", name = "Celest", version = "0.8", authors = {"MasterDash5"})
 public final class Celest {
 
+    private static Celest instance;
     private static ProxyServer server;
     private static Logger logger;
     private static Path directory;
     private static Vault vault;
     private static final ClearTask clearTask = new ClearTask();
     private static final SaveTask saveTask = new SaveTask();
+
+    public static Celest getInstance() { return instance; }
 
     public static ProxyServer getServer() { return server; }
 
@@ -57,6 +60,7 @@ public final class Celest {
 
     @Inject
     public Celest(ProxyServer server, Logger logger, @DataDirectory Path directory) {
+        Celest.instance = this;
         Celest.server = server;
         Celest.logger = logger;
         Celest.directory = directory;

@@ -9,13 +9,16 @@ package xyz.dashnetwork.celest.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
+import com.velocitypowered.api.network.ProtocolVersion;
+import com.velocitypowered.api.proxy.InboundConnection;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import net.kyori.adventure.text.Component;
-import xyz.dashnetwork.celest.utils.ConfigurationList;
-import xyz.dashnetwork.celest.utils.User;
-import xyz.dashnetwork.celest.utils.Variables;
+import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.utils.*;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
+import xyz.dashnetwork.celest.utils.data.AddressData;
+import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 
 import java.util.UUID;
 
@@ -23,7 +26,6 @@ public final class ProxyPingListener {
 
     @Subscribe
     public void onProxyPing(ProxyPingEvent event) {
-        // InboundConnection connection = event.getConnection();
         ServerPing.Builder builder = event.getPing().asBuilder();
         int online = 0;
 
@@ -45,13 +47,14 @@ public final class ProxyPingListener {
 
         event.setPing(builder.build());
 
-        /*
-        TODO: Pingspy
+        // TODO: Pingspy
 
+        InboundConnection connection = event.getConnection();
         final String hostname = connection.getRemoteAddress().getHostString();
         final ProtocolVersion version = connection.getProtocolVersion();
 
-        new Thread(() -> {
+        // Run async so Pingspy doesn't hold up the status response.
+        Celest.getServer().getScheduler().buildTask(Celest.getInstance(), () -> {
             Address address = Address.getAddress(hostname);
             AddressData data = address.getData();
             PlayerProfile[] profiles = data.getProfiles();
@@ -65,9 +68,7 @@ public final class ProxyPingListener {
             if (PunishUtils.isValid(data.getBan()))
                 return; // Skip banned ips.
 
-        }).start();
-
-         */
+        }).schedule();
     }
 
 }

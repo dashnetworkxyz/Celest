@@ -19,15 +19,15 @@ public final class Address {
 
     private static final List<Address> addresses = new ArrayList<>();
     private final String address;
-    private final boolean manual;
+    private boolean manual;
     private AddressData addressData;
     private String inputServerAddress;
     private int inputServerPort;
     private long accessTime;
 
-    public Address(String address, boolean manual) {
+    private Address(String address) {
         this.address = address;
-        this.manual = manual;
+        this.manual = false;
 
         addressData = Storage.read(address, Storage.Directory.ADDRESS, AddressData.class);
 
@@ -48,7 +48,7 @@ public final class Address {
                 each.accessTime = System.currentTimeMillis();
                 return each;
             }
-        return new Address(address, false);
+        return new Address(address);
     }
 
     public static void removeOldEntries() {
@@ -88,6 +88,8 @@ public final class Address {
     public void remove() { addresses.remove(this); }
 
     public boolean isManual() { return manual; }
+
+    public void setManual(boolean manual) { this.manual = manual; }
 
     public void setData(AddressData addressData) { this.addressData = addressData; }
 

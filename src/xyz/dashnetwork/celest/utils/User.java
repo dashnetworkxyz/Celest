@@ -30,7 +30,7 @@ public final class User {
     private Address address;
     private UserData userData;
 
-    public User(Player player) {
+    private User(Player player) {
         this.player = player;
         this.uuid = player.getUniqueId();
         this.stringUuid = uuid.toString();
@@ -52,7 +52,7 @@ public final class User {
 
     private void load() {
         userData = Storage.read(stringUuid, Storage.Directory.USER, UserData.class);
-        address = new Address(stringAddress, true);
+        address = Address.getAddress(stringAddress);
 
         UUID uniqueId = player.getUniqueId();
         String username = player.getUsername();
@@ -68,6 +68,7 @@ public final class User {
 
         userData.setAddress(stringAddress);
         userData.setUsername(username);
+        address.setManual(true);
         address.addUserIfNotPresent(uuid, username);
 
         Cache.generate(uuid, userData);
