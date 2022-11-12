@@ -11,6 +11,8 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
+import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.events.CelestChatEvent;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.User;
@@ -77,6 +79,8 @@ public final class PlayerChatListener {
             default:
                 MessageUtils.broadcast(Messages.playerChat(username, displayname, message));
         }
+
+        Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(user, type, message));
     }
 
 }

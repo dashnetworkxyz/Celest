@@ -14,9 +14,10 @@ public final class ClassList {
             MINECRAFT_CONNECTION, MINECRAFT_CONNECTION_ASSOCIATION, MINECRAFT_SESSION_HANDLER,
             VELOCITY_INBOUND_CONNECTION,
             HANDSHAKE_SESSION_HANDLER, INITIAL_INBOUND_CONNECTION, STATUS_SESSION_HANDLER,
+            SERVER_LIST_PING_HANDLER,
             CONNECTION_MANAGER, SERVER_CHANNEL_INITIALIZER_HOLDER,
             STATE_REGISTRY,
-            HANDSHAKE, STATUS_REQUEST;
+            HANDSHAKE, STATUS_REQUEST, STATUS_RESPONSE;
 
     static {
         try {
@@ -28,11 +29,13 @@ public final class ClassList {
             HANDSHAKE_SESSION_HANDLER = Class.forName("com.velocitypowered.proxy.connection.client.HandshakeSessionHandler");
             INITIAL_INBOUND_CONNECTION = Class.forName("com.velocitypowered.proxy.connection.client.InitialInboundConnection");
             STATUS_SESSION_HANDLER = Class.forName("com.velocitypowered.proxy.connection.client.StatusSessionHandler");
+            SERVER_LIST_PING_HANDLER = Class.forName("com.velocitypowered.proxy.connection.util.ServerListPingHandler");
             CONNECTION_MANAGER = Class.forName("com.velocitypowered.proxy.network.ConnectionManager");
             SERVER_CHANNEL_INITIALIZER_HOLDER = Class.forName("com.velocitypowered.proxy.network.ServerChannelInitializerHolder");
             STATE_REGISTRY = Class.forName("com.velocitypowered.proxy.protocol.StateRegistry");
             HANDSHAKE = Class.forName("com.velocitypowered.proxy.protocol.packet.Handshake");
             STATUS_REQUEST = Class.forName("com.velocitypowered.proxy.protocol.packet.StatusRequest");
+            STATUS_RESPONSE = Class.forName("com.velocitypowered.proxy.protocol.packet.StatusResponse");
         } catch (ClassNotFoundException exception) {
             throw new RuntimeException(exception);
         }

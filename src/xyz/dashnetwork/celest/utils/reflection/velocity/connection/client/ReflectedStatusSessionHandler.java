@@ -9,15 +9,16 @@ package xyz.dashnetwork.celest.utils.reflection.velocity.connection.client;
 
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.reflection.ClassList;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftSessionHandler;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public final class ReflectedStatusSessionHandler {
 
     private static final Class<?> clazz;
     private static final Constructor<?> constructor;
+    private static final Field pingReceived;
     private final Object original;
 
     static {
@@ -26,6 +27,9 @@ public final class ReflectedStatusSessionHandler {
 
             constructor = clazz.getDeclaredConstructor(ClassList.VELOCITY_SERVER, ClassList.VELOCITY_INBOUND_CONNECTION);
             constructor.setAccessible(true);
+
+            pingReceived = clazz.getDeclaredField("pingReceived");
+            pingReceived.setAccessible(true);
         } catch (ReflectiveOperationException exception) {
             throw new RuntimeException(exception);
         }
@@ -37,6 +41,14 @@ public final class ReflectedStatusSessionHandler {
 
     public Object passOriginalMethod(Method method, Object[] args) throws ReflectiveOperationException {
         return clazz.getMethod(method.getName(), method.getParameterTypes()).invoke(original, args);
+    }
+
+    public boolean getPingReceived() throws ReflectiveOperationException {
+        return pingReceived.getBoolean(original);
+    }
+
+    public void setPingReceived(boolean received) throws ReflectiveOperationException {
+        pingReceived.set(original, received);
     }
 
 }
