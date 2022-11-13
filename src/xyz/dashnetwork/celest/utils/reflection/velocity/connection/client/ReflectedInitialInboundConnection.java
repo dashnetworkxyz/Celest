@@ -13,7 +13,7 @@ import xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.Reflecte
 
 import java.lang.reflect.Constructor;
 
-public class ReflectedInitialInboundConnection {
+public final class ReflectedInitialInboundConnection {
 
     private static final Class<?> clazz;
     private static final Constructor<?> constructor;

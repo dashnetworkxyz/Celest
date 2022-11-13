@@ -12,14 +12,14 @@ import com.velocitypowered.api.util.Favicon;
 import com.velocitypowered.api.util.ModInfo;
 import net.kyori.adventure.text.Component;
 
-public class CelestServerPing {
+public final class CelestServerPing {
 
     private final ServerPing.Version version;
     private final ServerPing.Players players;
     private final Component description;
     private final Favicon favicon;
     private final ModInfo modinfo;
-    private Boolean preventsChatReports;
+    private final boolean preventsChatReports;
 
     public CelestServerPing(ServerPing original) {
         this.version = original.getVersion();
@@ -27,13 +27,7 @@ public class CelestServerPing {
         this.description = original.getDescriptionComponent();
         this.favicon = original.getFavicon().orElse(null);
         this.modinfo = original.getModinfo().orElse(null);
-    }
-
-    public void preventsChatReports(boolean option) {
-        if (option)
-            preventsChatReports = true;
-        else
-            preventsChatReports = null;
+        this.preventsChatReports = true;
     }
 
 }

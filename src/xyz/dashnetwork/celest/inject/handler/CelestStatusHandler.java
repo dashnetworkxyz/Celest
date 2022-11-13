@@ -8,7 +8,6 @@
 package xyz.dashnetwork.celest.inject.handler;
 
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
-import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.InboundConnection;
 import com.velocitypowered.api.proxy.ProxyServer;
 import xyz.dashnetwork.celest.Celest;
@@ -55,12 +54,8 @@ public final class CelestStatusHandler implements InvocationHandler {
                                 try {
                                     StringBuilder json = new StringBuilder();
                                     CelestServerPing ping = new CelestServerPing(event.getPing());
-                                    ProtocolVersion version = connection.getProtocolVersion();
-
-                                    if (version.getProtocol() > 758)
-                                        ping.preventsChatReports(true);
-
                                     ReflectedVelocityServer.getPingGsonInstance(connection.getProtocolVersion()).toJson(ping, json);
+
                                     connection.write(new ReflectedStatusResponse(json));
                                 } catch (ReflectiveOperationException exception) {
                                     exception.printStackTrace();

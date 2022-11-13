@@ -11,7 +11,7 @@ import xyz.dashnetwork.celest.utils.reflection.ClassList;
 
 import java.lang.reflect.Constructor;
 
-public class ReflectedStatusResponse {
+public final class ReflectedStatusResponse {
 
     private static final Class<?> clazz;
     private static final Constructor<?> constructor;

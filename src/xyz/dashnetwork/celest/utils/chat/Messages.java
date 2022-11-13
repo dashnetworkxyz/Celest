@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.utils.chat;
 
 import net.kyori.adventure.text.Component;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 
 public final class Messages {
 

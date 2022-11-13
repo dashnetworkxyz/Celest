@@ -14,7 +14,7 @@ import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.Reflec
 import java.lang.reflect.Method;
 import java.util.concurrent.CompletableFuture;
 
-public class ReflectedServerListPingHandler {
+public final class ReflectedServerListPingHandler {
 
     private static final Class<?> clazz;
     private static final Method getInitialPing;
