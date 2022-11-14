@@ -9,7 +9,7 @@ package xyz.dashnetwork.celest.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
-import xyz.dashnetwork.celest.utils.PredicateUtils;
+import xyz.dashnetwork.celest.utils.PermissionUtils;
 import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
@@ -21,7 +21,7 @@ public final class CommandTest implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return PredicateUtils.permission(User::isOwner, true, invocation.source());
+        return PermissionUtils.checkSource(invocation.source(), User::isOwner, true);
     }
 
     @Override

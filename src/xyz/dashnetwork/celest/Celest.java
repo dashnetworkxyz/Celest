@@ -20,7 +20,8 @@ import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.channel.in.ChannelInSubscribe;
-import xyz.dashnetwork.celest.commands.CommandCelest;
+import xyz.dashnetwork.celest.commands.CommandClearChat;
+import xyz.dashnetwork.celest.commands.CommandMattsArmorStands;
 import xyz.dashnetwork.celest.commands.CommandTest;
 import xyz.dashnetwork.celest.inject.Injector;
 import xyz.dashnetwork.celest.listeners.*;
@@ -91,7 +92,8 @@ public final class Celest {
 
         logger.info("Registering commands...");
         CommandManager commandManager = server.getCommandManager();
-        commandManager.register("celest", new CommandCelest());
+        commandManager.register("clearchat", new CommandClearChat(), "cc");
+        commandManager.register("mattsarmorstands", new CommandMattsArmorStands());
         commandManager.register("test", new CommandTest());
 
         logger.info("Registering events...");

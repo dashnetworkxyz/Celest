@@ -13,12 +13,19 @@ import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 public final class Messages {
 
     public static Component commandCelestHelp() {
-        MessageBuilder message = new MessageBuilder();
-        message.append("&6&l»&7 /celest legacy-data-import &c(can overwrite modern data)");
-        message.append("\n&6&l»&7 /celest userdata <list|(uuid)>");
-        message.append("\n&6&l»&7 /celest addressdata <list|(ip)>");
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&6&l»&7 /celest legacy-data-import &c(can overwrite modern data)");
+        builder.append("\n&6&l»&7 /celest userdata <list|(uuid)>");
+        builder.append("\n&6&l»&7 /celest addressdata <list|(ip)>");
 
-        return message.build();
+        return builder.build();
+    }
+
+    public static Component commandUsage(String alias, String arguments) {
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&6&l»&7 /" + alias + " " + arguments);
+
+        return builder.build();
     }
 
     public static Component joinServer(String username, String displayname) {

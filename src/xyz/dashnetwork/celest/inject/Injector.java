@@ -27,7 +27,7 @@ public final class Injector {
 
             holder.set(new CelestChannelInitializer(initializer));
         } catch (ReflectiveOperationException | RuntimeException exception) {
-            Celest.getLogger().error("Failed to inject packet listener. Printing stacktrace...");
+            Celest.getLogger().error("Failed to inject session initializer. Printing stacktrace...");
             exception.printStackTrace();
         }
     }

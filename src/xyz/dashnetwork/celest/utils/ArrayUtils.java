@@ -16,19 +16,6 @@ import java.util.function.IntFunction;
 
 public final class ArrayUtils {
 
-    public static String unsplit(char spliterator, @NotNull String[] array) {
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < array.length; i++) {
-            if (i > 0)
-                builder.append(spliterator);
-
-            builder.append(array[i]);
-        }
-
-        return builder.toString();
-    }
-
     public static <T>T[] add(@NotNull T[] array, T object) {
         List<T> list = new ArrayList<>(List.of(array));
         list.add(object);
