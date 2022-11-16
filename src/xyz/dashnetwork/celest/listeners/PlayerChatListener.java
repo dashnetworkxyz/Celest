@@ -55,9 +55,14 @@ public final class PlayerChatListener {
 
         if (type == null)
             type = userData.getChatType();
-        else if (type.hasPermission(user))
+        else if (type.hasPermission(user)) {
             message = message.substring(3);
-        else
+
+            if (message.isBlank()) { // TODO: Add to Messages?
+                MessageUtils.message(player, "&6&l» &cUsage: " + type.getSelectors()[0] + "<message>");
+                return;
+            }
+        } else
             type = ChatType.GLOBAL;
 
         switch (type) {

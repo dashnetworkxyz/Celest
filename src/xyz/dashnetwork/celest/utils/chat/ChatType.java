@@ -34,8 +34,10 @@ public enum ChatType {
         return permission.test(user) || user.getData().getChatType().equals(this);
     }
 
+    public String[] getSelectors() { return selectors; }
+
     public static ChatType parseTag(@NotNull String message) {
-        if (message.length() < 4)
+        if (message.length() < 3)
             return null;
 
         for (ChatType type : values())
