@@ -14,6 +14,7 @@ import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
+import xyz.dashnetwork.celest.utils.storage.LegacyParser;
 
 import java.util.UUID;
 
@@ -32,6 +33,16 @@ public final class CommandTest implements SimpleCommand {
         if (args.length < 2) {
             MessageUtils.message(source, "no u");
             return;
+        }
+
+        if (args[0].equalsIgnoreCase("import-legacy")) {
+            LegacyParser parser = new LegacyParser();
+
+            MessageUtils.message(source, "reading...");
+            parser.read();
+
+            MessageUtils.message(source, "writing...");
+            parser.write();
         }
 
         if (args[0].equalsIgnoreCase("username")) {

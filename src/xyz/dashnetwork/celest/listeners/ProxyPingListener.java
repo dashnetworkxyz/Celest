@@ -11,7 +11,9 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.InboundConnection;
+import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.ServerPing;
+import com.velocitypowered.api.scheduler.Scheduler;
 import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.*;
@@ -24,6 +26,8 @@ import java.util.UUID;
 
 public final class ProxyPingListener {
 
+    private static final Scheduler scheduler = Celest.getServer().getScheduler();
+
     @Subscribe
     public void onProxyPing(ProxyPingEvent event) {
         ServerPing.Builder builder = event.getPing().asBuilder();
@@ -33,9 +37,8 @@ public final class ProxyPingListener {
             if (!user.getData().getVanish())
                 online++;
 
-        // TODO: Put Variables.parse() inside the ConfigurationList entry.
-        Component description = ComponentUtils.toComponent(Variables.parse(ConfigurationList.MOTD_DESCRIPTION));
-        String software = ColorUtils.fromAmpersand(Variables.parse(ConfigurationList.MOTD_SOFTWARE));
+        Component description = ComponentUtils.toComponent(ConfigurationList.MOTD_DESCRIPTION);
+        String software = ColorUtils.fromAmpersand(ConfigurationList.MOTD_SOFTWARE);
 
         builder.clearMods().clearSamplePlayers();
         builder.onlinePlayers(online);
@@ -43,7 +46,7 @@ public final class ProxyPingListener {
         builder.version(new ServerPing.Version(builder.getVersion().getProtocol(), software));
 
         for (String line : ConfigurationList.MOTD_HOVER)
-            builder.samplePlayers(new ServerPing.SamplePlayer(ColorUtils.fromAmpersand(Variables.parse(line)), UUID.randomUUID()));
+            builder.samplePlayers(new ServerPing.SamplePlayer(line, UUID.randomUUID()));
 
         event.setPing(builder.build());
 
@@ -54,7 +57,7 @@ public final class ProxyPingListener {
         final ProtocolVersion version = connection.getProtocolVersion();
 
         // Run async so Pingspy doesn't hold up the status response.
-        Celest.getServer().getScheduler().buildTask(Celest.getInstance(), () -> {
+        scheduler.buildTask(Celest.getInstance(), () -> {
             Address address = Address.getAddress(hostname);
             AddressData data = address.getData();
             PlayerProfile[] profiles = data.getProfiles();
@@ -68,7 +71,8 @@ public final class ProxyPingListener {
             if (PunishUtils.isValid(data.getBan()))
                 return; // Skip banned ips.
 
-
+            // TODO: 1min cooldown (reset on login)
+            // TODO: List<Player> List<String> List<UUID> -> string of usernames
         }).schedule();
     }
 

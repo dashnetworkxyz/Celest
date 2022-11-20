@@ -111,8 +111,8 @@ public final class Celest {
 
         logger.info("Registering tasks...");
         Scheduler scheduler = server.getScheduler();
-        scheduler.buildTask(this, clearTask).repeat(1, TimeUnit.HOURS);
-        scheduler.buildTask(this, saveTask).repeat(1, TimeUnit.MINUTES);
+        scheduler.buildTask(this, clearTask).repeat(1, TimeUnit.HOURS).schedule();
+        scheduler.buildTask(this, saveTask).repeat(1, TimeUnit.MINUTES).schedule();
 
         clearTask.run();
         logger.info("Startup complete. (took " + (System.currentTimeMillis() - start) + "ms)");

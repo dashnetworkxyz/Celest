@@ -11,13 +11,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import xyz.dashnetwork.celest.Celest;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public final class Storage {
 
@@ -48,21 +48,18 @@ public final class Storage {
     }
 
     public static void delete(String fileName, Directory directory) {
-        File file = new File(directory.getFile(), fileName + ".json");
-
-        if (file.delete())
-            Celest.getLogger().info("deleted " + fileName + ".json (" + directory.name() + ")");
+        new File(directory.getFile(), fileName + ".json.gz").delete();
     }
 
     public static void write(String fileName, Directory directory, Object object) {
-        File file = new File(directory.getFile(), fileName + ".json");
+        File file = new File(directory.getFile(), fileName + ".json.gz");
         String json = gson.toJson(object);
 
         try {
-            if (file.createNewFile())
-                Celest.getLogger().info("created " + fileName + ".json (" + directory.name() + ")");
+            file.createNewFile();
 
-            FileWriter writer = new FileWriter(file);
+            GZIPOutputStream stream = new GZIPOutputStream(new FileOutputStream(file));
+            OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
             writer.write(json);
             writer.close();
         } catch (IOException exception) {
@@ -71,12 +68,12 @@ public final class Storage {
     }
 
     public static <T>T read(String fileName, Directory directory, Class<T> clazz) {
-        File file = new File(directory.getFile(), fileName + ".json");
+        File file = new File(directory.getFile(), fileName + ".json.gz");
 
         if (!file.exists())
             return null;
 
-        return gson.fromJson(new String(readFile(file)), clazz);
+        return gson.fromJson(new String(readFile(file), StandardCharsets.UTF_8), clazz);
     }
 
     public static <T>List<T> readAll(Directory directory, Class<T> clazz) {
@@ -88,7 +85,7 @@ public final class Storage {
         List<T> list = new ArrayList<>();
 
         for (File file : files)
-            list.add(gson.fromJson(new String(readFile(file)), clazz));
+            list.add(gson.fromJson(new String(readFile(file), StandardCharsets.UTF_8), clazz));
 
         return list;
     }
@@ -97,9 +94,9 @@ public final class Storage {
         byte[] data;
 
         try {
-            FileInputStream input = new FileInputStream(file);
-            data = input.readAllBytes();
-            input.close();
+            GZIPInputStream stream = new GZIPInputStream(new FileInputStream(file));
+            data = stream.readAllBytes();
+            stream.close();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
