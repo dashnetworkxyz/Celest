@@ -24,9 +24,7 @@ public final class ConfigurationList {
         MOTD_HOVER = parse(Configuration.get(String[]::new, "motd.hover"));
     }
 
-    private static String parse(String string) {
-        return ColorUtils.fromAmpersand(Variables.parse(string));
-    }
+    private static String parse(String string) { return ColorUtils.fromAmpersand(Variables.parse(string)); }
 
     private static String[] parse(String[] array) {
         List<String> list = new ArrayList<>();

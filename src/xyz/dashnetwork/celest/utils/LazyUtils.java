@@ -9,20 +9,26 @@ package xyz.dashnetwork.celest.utils;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Predicate;
+
 public final class LazyUtils {
 
-    public static boolean anyEquals(@NotNull Object object, Object... compare) {
-        for (Object each : compare)
-            if (each.equals(object))
+    @SafeVarargs // This could do unsafe things, so be careful when using this.
+    public static <T>boolean anyTrue(Predicate<T> predicate, T... objects) {
+        for (T each : objects)
+            if (predicate.test(each))
                 return true;
         return false;
     }
 
+    // Deprecate?
+    public static boolean anyEquals(@NotNull Object object, Object... compare) {
+        return anyTrue(check -> check.equals(object), compare);
+    }
+
+    // Deprecate?
     public static boolean anyEqualsIgnoreCase(@NotNull String string, @NotNull String... compare) {
-        for (String each : compare)
-            if (each.equalsIgnoreCase(string))
-                return true;
-        return false;
+        return anyTrue(check -> check.equalsIgnoreCase(string), compare);
     }
 
 }

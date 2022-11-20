@@ -21,9 +21,12 @@ import java.util.UUID;
 public final class Arguments {
 
     private final List<Object> objects = new ArrayList<>();
+    private final int size;
 
     public Arguments(CommandSource source, String[] text, ArgumentType... types) {
-        if (text.length < types.length)
+        size = types.length;
+
+        if (text.length < size)
             return;
 
         String self = null;
@@ -31,7 +34,7 @@ public final class Arguments {
         if (source instanceof Player)
             self = ((Player) source).getUniqueId().toString();
 
-        for (int i = 0; i < types.length; i++) {
+        for (int i = 0; i < size; i++) {
             ArgumentType type = types[i];
             String arg = text[i];
 
@@ -48,7 +51,7 @@ public final class Arguments {
         }
     }
 
-    public boolean isEmpty() { return objects.isEmpty(); }
+    public boolean isMissing() { return objects.isEmpty() || objects.size() < size; }
 
     public Player getPlayer() {
         Player player = (Player) objects.get(0);

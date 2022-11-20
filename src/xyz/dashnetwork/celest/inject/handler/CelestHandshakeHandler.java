@@ -7,6 +7,7 @@
 
 package xyz.dashnetwork.celest.inject.handler;
 
+import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.InboundConnection;
 import xyz.dashnetwork.celest.Celest;
@@ -22,6 +23,7 @@ import java.util.Arrays;
 
 public final class CelestHandshakeHandler implements InvocationHandler {
 
+    private static final EventManager eventManager = Celest.getServer().getEventManager();
     private final ReflectedHandshakeSessionHandler handler;
     private final ReflectedMinecraftConnection connection;
 
@@ -63,21 +65,21 @@ public final class CelestHandshakeHandler implements InvocationHandler {
                         break;
                     case "LOGIN":
                         handler.handleLogin(handshake, inbound);
+
+                        System.out.println(connection.getSessionHandler().original().getClass().getName());
                         break;
                     default:
                         throw new AssertionError("getStateForProtocol provided invalid state!");
                 }
             }
 
-            CelestHandshakeEvent event = new CelestHandshakeEvent(
+            eventManager.fireAndForget(new CelestHandshakeEvent(
                     (InboundConnection) inbound.original(),
                     version,
                     address,
                     handshake.getPort(),
                     next
-            );
-
-            Celest.getServer().getEventManager().fireAndForget(event);
+            ));
 
             return true;
         } else

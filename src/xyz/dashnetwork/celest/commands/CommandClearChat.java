@@ -10,6 +10,7 @@ package xyz.dashnetwork.celest.commands;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.PermissionUtils;
 import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.arguments.ArgumentType;
@@ -35,19 +36,23 @@ public final class CommandClearChat implements SimpleCommand {
         Arguments arguments = new Arguments(source, invocation.arguments(),
                 ArgumentType.PLAYER_LIST);
 
-        if (arguments.isEmpty()) {
+        if (arguments.isMissing()) {
             MessageUtils.message(source, Messages.commandUsage(invocation.alias(),
                     "<players>"));
             return;
         }
 
+        NamedSource named = new NamedSource(source);
         List<Player> players = arguments.getPlayerList();
         MessageBuilder builder = new MessageBuilder();
 
-        for (int i = 0; i < 99; i++)
+        // TODO: Add to Messages class?
+
+        for (int i = 0; i < 98; i++)
             builder.append("\n");
 
-        builder.append("&6&l» &7Chat was cleared by &6TODO: impl"); // TODO: NameUtils?
+        builder.append("&6&l» &7Chat was cleared by ");
+        builder.append(named.getDisplayname()).hover("&6" + named.getUsername());
 
         for (Player player : players)
             MessageUtils.message(player, builder.build());

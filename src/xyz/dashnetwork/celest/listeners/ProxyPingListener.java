@@ -11,13 +11,14 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.InboundConnection;
-import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.api.scheduler.Scheduler;
 import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.*;
-import xyz.dashnetwork.celest.utils.chat.ColorUtils;
+import xyz.dashnetwork.celest.utils.Address;
+import xyz.dashnetwork.celest.utils.ConfigurationList;
+import xyz.dashnetwork.celest.utils.PunishUtils;
+import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.data.AddressData;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
@@ -38,7 +39,7 @@ public final class ProxyPingListener {
                 online++;
 
         Component description = ComponentUtils.toComponent(ConfigurationList.MOTD_DESCRIPTION);
-        String software = ColorUtils.fromAmpersand(ConfigurationList.MOTD_SOFTWARE);
+        String software = ConfigurationList.MOTD_SOFTWARE;
 
         builder.clearMods().clearSamplePlayers();
         builder.onlinePlayers(online);

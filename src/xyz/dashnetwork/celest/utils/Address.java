@@ -14,10 +14,11 @@ import xyz.dashnetwork.celest.utils.storage.Storage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class Address {
 
-    private static final List<Address> addresses = new ArrayList<>();
+    private static final List<Address> addresses = new CopyOnWriteArrayList<>();
     private final String address;
     private boolean manual;
     private AddressData addressData;
@@ -79,7 +80,7 @@ public final class Address {
     }
 
     public void save() {
-        if (addressData.getProfiles().length > 0 || addressData.getMute() != null || addressData.getBan() != null)
+        if (addressData.getProfiles().length > 0 || LazyUtils.anyTrue(PunishUtils::isValid, addressData.getMute(), addressData.getBan()))
             Storage.write(address, Storage.Directory.ADDRESS, addressData);
         else
             Storage.delete(address, Storage.Directory.ADDRESS); // Remove obsolete addresses.
