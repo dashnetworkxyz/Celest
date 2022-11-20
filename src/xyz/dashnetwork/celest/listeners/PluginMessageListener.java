@@ -9,14 +9,12 @@ package xyz.dashnetwork.celest.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
-import com.velocitypowered.api.proxy.ServerConnection;
-import com.velocitypowered.api.proxy.messages.ChannelMessageSource;
-import xyz.dashnetwork.celest.channel.Channel;
 
 public final class PluginMessageListener {
 
     @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
+        /*
         ChannelMessageSource source = event.getSource();
 
         if (source instanceof ServerConnection) {
@@ -26,6 +24,8 @@ public final class PluginMessageListener {
             if (inbound != null)
                 inbound.read(connection.getServerInfo().getName(), event.dataAsDataStream());
         }
+
+         */
 
         // IdentifierList class? ex: IdentifierList.DN_ONLINE
 

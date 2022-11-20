@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.inject.handler;
+package xyz.dashnetwork.celest.inject.server.handler;
 
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.InboundConnection;

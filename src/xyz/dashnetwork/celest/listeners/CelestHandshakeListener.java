@@ -15,11 +15,13 @@ public final class CelestHandshakeListener {
 
     @Subscribe
     public void onCelestHandshake(CelestHandshakeEvent event) {
-        String hostname = event.getInboundConnection().getRemoteAddress().getHostString();
-        Address address = Address.getAddress(hostname);
+        if (event.getNextState() == 0) { // Server Ping
+            String hostname = event.getInboundConnection().getRemoteAddress().getHostString();
+            Address address = Address.getAddress(hostname);
 
-        address.setInputServerAddress(event.getServerAddress());
-        address.setInputServerPort(event.getPort());
+            address.setInputServerAddress(event.getServerAddress());
+            address.setInputServerPort(event.getPort());
+        }
     }
 
 }

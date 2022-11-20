@@ -18,8 +18,6 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
-import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.channel.in.ChannelInSubscribe;
 import xyz.dashnetwork.celest.commands.CommandClearChat;
 import xyz.dashnetwork.celest.commands.CommandMattsArmorStands;
 import xyz.dashnetwork.celest.commands.CommandTest;
@@ -84,17 +82,8 @@ public final class Celest {
             vault = new DummyAPI();
         }
 
-        logger.info("Injecting session initializer...");
-        Injector.injectSessionInitializer();
-
-        logger.info("Registering channels...");
-        Channel.registerInbound("subscribe", ChannelInSubscribe::new);
-
-        logger.info("Registering commands...");
-        CommandManager commandManager = server.getCommandManager();
-        commandManager.register("clearchat", new CommandClearChat(), "cc");
-        commandManager.register("mattsarmorstands", new CommandMattsArmorStands());
-        commandManager.register("test", new CommandTest());
+        logger.info("Injecting channel initializer...");
+        Injector.injectChannelInitializer(server);
 
         logger.info("Registering events...");
         EventManager eventManager = server.getEventManager();
@@ -107,7 +96,14 @@ public final class Celest {
         eventManager.register(this, new PostLoginListener());
         eventManager.register(this, new ProxyPingListener());
         eventManager.register(this, new ServerConnectedListener());
+        eventManager.register(this, new ServerPostConnectListener());
         eventManager.register(this, new ServerPreConnectListener());
+
+        logger.info("Registering commands...");
+        CommandManager commandManager = server.getCommandManager();
+        commandManager.register("clearchat", new CommandClearChat(), "cc");
+        commandManager.register("mattsarmorstands", new CommandMattsArmorStands());
+        commandManager.register("test", new CommandTest());
 
         logger.info("Registering tasks...");
         Scheduler scheduler = server.getScheduler();

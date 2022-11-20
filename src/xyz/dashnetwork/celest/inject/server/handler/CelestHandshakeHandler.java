@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.inject.handler;
+package xyz.dashnetwork.celest.inject.server.handler;
 
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.network.ProtocolVersion;
@@ -52,9 +52,10 @@ public final class CelestHandshakeHandler implements InvocationHandler {
             ReflectedInitialInboundConnection inbound = new ReflectedInitialInboundConnection(connection, cleaned, handshake);
             Enum<?> state = (Enum<?>) handler.getStateForProtocol(next);
 
-            if (state == null)
+            if (state == null) {
                 connection.close(true);
-            else {
+                return true;
+            } else {
                 connection.setState(state);
                 connection.setProtocolVersion(version);
                 connection.setAssociation(inbound);
@@ -65,8 +66,6 @@ public final class CelestHandshakeHandler implements InvocationHandler {
                         break;
                     case "LOGIN":
                         handler.handleLogin(handshake, inbound);
-
-                        System.out.println(connection.getSessionHandler().original().getClass().getName());
                         break;
                     default:
                         throw new AssertionError("getStateForProtocol provided invalid state!");
