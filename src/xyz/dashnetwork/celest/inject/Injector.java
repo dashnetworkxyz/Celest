@@ -23,9 +23,11 @@ import xyz.dashnetwork.celest.utils.reflection.velocity.network.ReflectedServerC
 
 public final class Injector {
 
-    // Velocity API is very lacking, so I get to add an API myself.
-    // Not the best way to do this, but ideally this will become obsolete as the API improves.
-
+    /*
+        Hook into Handshake and Server Ping.
+        Allows me to see client specified address and port from handshake. (CelestHandshakeEvent)
+        Allows custom ServerPing response for custom entry preventsChatReports:true (CelestServerPing)
+    */
     public static void injectChannelInitializer(ProxyServer proxy) {
         try {
             ReflectedVelocityServer velocity = new ReflectedVelocityServer(proxy);
@@ -39,6 +41,10 @@ public final class Injector {
         }
     }
 
+    /*
+        Hacky workaround for issue #804. (https://github.com/PaperMC/Velocity/issues/804)
+        This completely disables chat signatures.
+     */
     public static void injectPlaySessionHandler(Player player) {
         try {
             ReflectedConnectedPlayer connected = new ReflectedConnectedPlayer(player);
