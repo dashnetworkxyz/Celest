@@ -19,7 +19,7 @@ public final class SaveTask implements Runnable {
             address.save();
 
         for (User user : User.getUsers())
-            user.save(false);
+            user.save();
 
         Cache.save();
     }

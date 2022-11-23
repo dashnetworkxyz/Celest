@@ -10,6 +10,7 @@ package xyz.dashnetwork.celest.utils.storage;
 import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.data.CacheData;
 import xyz.dashnetwork.celest.utils.data.UserData;
+import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public final class Cache {
     }
 
     public static void removeOldEntries() {
-        cache.removeIf(data -> System.currentTimeMillis() - TimeType.MONTH.toLong() >= data.getAccessTime());
+        cache.removeIf(data -> System.currentTimeMillis() - TimeType.MONTH.toMillis() >= data.getAccessTime());
     }
 
     public static void generate(UUID uuid, UserData userData) {
@@ -46,21 +47,27 @@ public final class Cache {
         cache.add(new CacheData(uuid, username, address));
     }
 
-    public static CacheData fromUuid(UUID uuid) {
-        for (CacheData each : cache)
+    public static CacheData fromUuid(UUID uuid, boolean updateAccessTime) {
+        for (CacheData each : cache) {
             if (each.getUUID().equals(uuid)) {
-                each.setAccessTime(System.currentTimeMillis());
+                if (updateAccessTime)
+                    each.setAccessTime(System.currentTimeMillis());
+
                 return each;
             }
+        }
         return null;
     }
 
-    public static CacheData fromUsername(String username) {
-        for (CacheData each : cache)
+    public static CacheData fromUsername(String username, boolean updateAccessTime) {
+        for (CacheData each : cache) {
             if (each.getUsername().equalsIgnoreCase(username)) {
-                each.setAccessTime(System.currentTimeMillis());
+                if (updateAccessTime)
+                    each.setAccessTime(System.currentTimeMillis());
+
                 return each;
             }
+        }
         return null;
     }
 
@@ -70,6 +77,17 @@ public final class Cache {
         for (CacheData each : cache)
             if (each.getAddress().equals(address))
                 list.add(each);
+
+        return list;
+    }
+
+    public static List<CacheData> fromPlayerProfiles(PlayerProfile... profiles) {
+        List<CacheData> list = new ArrayList<>();
+
+        for (PlayerProfile profile : profiles)
+            for (CacheData each : cache)
+                if (profile.getUuid().equals(each.getUUID()))
+                    list.add(each);
 
         return list;
     }

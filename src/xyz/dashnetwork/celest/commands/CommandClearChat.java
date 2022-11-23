@@ -10,6 +10,7 @@ package xyz.dashnetwork.celest.commands;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.PermissionUtils;
 import xyz.dashnetwork.celest.utils.User;
@@ -56,6 +57,10 @@ public final class CommandClearChat implements SimpleCommand {
 
         for (Player player : players)
             MessageUtils.message(player, builder.build());
+
+        if (ListUtils.containsOtherThan(players, source)) {
+            // TODO
+        }
 
         // TODO: Send message to source with players affected.
     }

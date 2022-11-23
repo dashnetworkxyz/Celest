@@ -11,8 +11,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.command.CommandExecuteEvent;
 import com.velocitypowered.api.proxy.Player;
-import net.kyori.adventure.text.Component;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 
@@ -23,13 +22,14 @@ public final class CommandExecuteListener {
         CommandSource source = event.getCommandSource();
 
         if (source instanceof Player) {
-            Player player = (Player) source;
-            String displayname = User.getUser(player).getDisplayname();
-            String username = player.getUsername();
+            NamedSource named = new NamedSource(source);
+            String displayname = named.getDisplayname();
+            String username = named.getUsername();
             String message = "/" + event.getCommand();
 
-            Component component = Messages.playerCommandSpy(username, displayname, message);
-            MessageUtils.broadcast(user -> user.getData().getCommandSpy(), component);
+            MessageUtils.broadcast(user -> user.getData().getCommandSpy(), Messages.playerCommandSpy(
+                    username, displayname, message)
+            );
         }
     }
 

@@ -24,9 +24,9 @@ public final class ReflectedMinecraftConnection {
     private final Object original;
 
     static {
-        try {
-            clazz = ClassList.MINECRAFT_CONNECTION;
+        clazz = ClassList.MINECRAFT_CONNECTION;
 
+        try {
             close = clazz.getMethod("close", boolean.class);
             write = clazz.getMethod("write", Object.class);
             eventLoop = clazz.getMethod("eventLoop");

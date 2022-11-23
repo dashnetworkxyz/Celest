@@ -20,9 +20,9 @@ public final class ReflectedHandshakeSessionHandler {
     private final Object original;
 
     static {
-        try {
-            clazz = ClassList.HANDSHAKE_SESSION_HANDLER;
+        clazz = ClassList.HANDSHAKE_SESSION_HANDLER;
 
+        try {
             cleanVhost = clazz.getDeclaredMethod("cleanVhost", String.class);
             getStateForProtocol = clazz.getDeclaredMethod("getStateForProtocol", int.class);
             handleLogin = clazz.getDeclaredMethod("handleLogin", ClassList.HANDSHAKE, ClassList.INITIAL_INBOUND_CONNECTION);

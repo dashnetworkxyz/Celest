@@ -13,16 +13,16 @@ import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMine
 
 import java.lang.reflect.Field;
 
-public class ReflectedBackendPlaySessionHandler {
+public final class ReflectedBackendPlaySessionHandler {
 
     private static final Class<?> clazz;
     private static final Field playerConnection;
     private final Object original;
 
     static {
-        try {
-            clazz = ClassList.BACKEND_PLAY_SESSION_HANDLER;
+        clazz = ClassList.BACKEND_PLAY_SESSION_HANDLER;
 
+        try {
             playerConnection = clazz.getDeclaredField("playerConnection");
             playerConnection.setAccessible(true);
         } catch (ReflectiveOperationException exception) {

@@ -36,7 +36,7 @@ import xyz.dashnetwork.celest.vault.api.LuckAPI;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "0.8", authors = {"MasterDash5"})
+@Plugin(id = "celest", name = "Celest", version = "0.9", authors = {"MasterDash5"})
 public final class Celest {
 
     private static Celest instance;
@@ -107,7 +107,7 @@ public final class Celest {
 
         logger.info("Registering tasks...");
         Scheduler scheduler = server.getScheduler();
-        scheduler.buildTask(this, clearTask).repeat(1, TimeUnit.HOURS).schedule();
+        scheduler.buildTask(this, clearTask).repeat(5, TimeUnit.MINUTES).schedule();
         scheduler.buildTask(this, saveTask).repeat(1, TimeUnit.MINUTES).schedule();
 
         clearTask.run();

@@ -18,36 +18,64 @@ import xyz.dashnetwork.celest.vault.Vault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class User {
 
     private static final Vault vault = Celest.getVault();
-    private static final List<User> users = new ArrayList<>();
-    private final Player player;
+    private static final List<User> users = new CopyOnWriteArrayList<>();
     private final UUID uuid;
     private final String stringUuid;
     private final String stringAddress;
     private Address address;
     private UserData userData;
+    private Player player;
+    private long queuedTime;
 
     private User(Player player) {
         this.player = player;
         this.uuid = player.getUniqueId();
         this.stringUuid = uuid.toString();
         this.stringAddress = player.getRemoteAddress().getHostString();
+        this.queuedTime = -1;
 
         load();
 
         users.add(this);
     }
 
-    public static List<User> getUsers() { return users; }
+    public static List<User> getUsers() {
+        List<User> list = new ArrayList<>();
+
+        for (User user : users)
+            if (user.player.isActive())
+                list.add(user);
+
+        return list;
+    }
 
     public static User getUser(Player player) {
-        for (User user : users)
-            if (user.uuid.equals(player.getUniqueId()))
+        for (User user : users) {
+            if (user.uuid.equals(player.getUniqueId())) {
+                if (!user.player.equals(player))
+                    user.player = player;
+
                 return user;
+            }
+        }
+
         return new User(player);
+    }
+
+    public static void removeOldEntries() {
+        for (User user : users) {
+            if (!user.player.isActive() && !TimeUtils.isRecent(user.queuedTime, TimeType.MINUTE.toMillis(5))) {
+                users.remove(user);
+
+                user.save();
+                user.getAddress().setManual(false);
+            }
+        }
     }
 
     private void load() {
@@ -74,17 +102,13 @@ public final class User {
         Cache.generate(uuid, userData);
     }
 
-    public void save(boolean saveAddress) {
+    public void save() {
         Storage.write(stringUuid, Storage.Directory.USER, userData);
-
-        if (saveAddress)
-            address.save();
     }
 
-    public void remove() {
-        users.remove(this);
-        address.remove();
-    }
+    public void queueRemoval() { queuedTime = System.currentTimeMillis(); }
+
+    public boolean isQueuedForRemoval() { return queuedTime != -1;}
 
     public void setData(UserData userData) { this.userData = userData; }
 

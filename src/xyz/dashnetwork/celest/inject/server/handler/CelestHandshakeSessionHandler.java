@@ -21,13 +21,13 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-public final class CelestHandshakeHandler implements InvocationHandler {
+public final class CelestHandshakeSessionHandler implements InvocationHandler {
 
     private static final EventManager eventManager = Celest.getServer().getEventManager();
     private final ReflectedHandshakeSessionHandler handler;
     private final ReflectedMinecraftConnection connection;
 
-    public CelestHandshakeHandler(ReflectedHandshakeSessionHandler handler, ReflectedMinecraftConnection connection) {
+    public CelestHandshakeSessionHandler(ReflectedHandshakeSessionHandler handler, ReflectedMinecraftConnection connection) {
         this.handler = handler;
         this.connection = connection;
     }
@@ -62,7 +62,7 @@ public final class CelestHandshakeHandler implements InvocationHandler {
 
                 switch (state.name()) {
                     case "STATUS":
-                        connection.setSessionHandler(new CelestStatusHandler(inbound, connection));
+                        connection.setSessionHandler(new CelestStatusSessionHandler(inbound, connection));
                         break;
                     case "LOGIN":
                         handler.handleLogin(handshake, inbound);

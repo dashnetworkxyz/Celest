@@ -24,7 +24,7 @@ public final class Address {
     private AddressData addressData;
     private String inputServerAddress;
     private int inputServerPort;
-    private long accessTime;
+    private long serverPingTime, accessTime;
 
     private Address(String address) {
         this.address = address;
@@ -37,6 +37,7 @@ public final class Address {
 
         inputServerAddress = null;
         inputServerPort = -1;
+        serverPingTime = -1;
         accessTime = System.currentTimeMillis();
         addresses.add(this);
     }
@@ -44,17 +45,23 @@ public final class Address {
     public static List<Address> getAddresses() { return addresses; }
 
     public static Address getAddress(String address) {
-        for (Address each : addresses)
+        for (Address each : addresses) {
             if (each.address.equals(address)) {
                 each.accessTime = System.currentTimeMillis();
                 return each;
             }
+        }
         return new Address(address);
     }
 
     public static void removeOldEntries() {
-        addresses.removeIf(address -> !address.manual &&
-                        System.currentTimeMillis() - TimeType.HOUR.toLong() >= address.getAccessTime());
+        for (Address address : addresses) {
+            if (!address.manual && TimeUtils.isRecent(address.getAccessTime(), TimeType.MINUTE.toMillis(5))) {
+                addresses.remove(address);
+
+                address.save();
+            }
+        }
     }
 
     public void removeUserIfPresent(UUID uuid) {
@@ -86,8 +93,6 @@ public final class Address {
             Storage.delete(address, Storage.Directory.ADDRESS); // Remove obsolete addresses.
     }
 
-    public void remove() { addresses.remove(this); }
-
     public boolean isManual() { return manual; }
 
     public void setManual(boolean manual) { this.manual = manual; }
@@ -103,6 +108,10 @@ public final class Address {
     public void setInputServerPort(int inputServerPort) { this.inputServerPort = inputServerPort; }
 
     public int getInputServerPort() { return inputServerPort; }
+
+    public void setServerPingTime(long serverPingTime) { this.serverPingTime = serverPingTime; }
+
+    public long getServerPingTime() { return serverPingTime; }
 
     public long getAccessTime() { return accessTime; }
 

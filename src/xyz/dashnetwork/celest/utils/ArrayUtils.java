@@ -12,9 +12,23 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.IntFunction;
 
 public final class ArrayUtils {
+
+    public static <T>String convertToString(@NotNull Function<T, String> function, @NotNull T[] objects) {
+        StringBuilder builder = new StringBuilder();
+
+        for (T each : objects) {
+            if (builder.length() > 0)
+                builder.append(", ");
+
+            builder.append(function.apply(each));
+        }
+
+        return builder.toString();
+    }
 
     public static <T>T[] add(@NotNull T[] array, T object) {
         List<T> list = new ArrayList<>(List.of(array));
@@ -23,7 +37,7 @@ public final class ArrayUtils {
         return list.toArray(array);
     }
 
-    public static <T>T[] addAll(@NotNull T[] array, Collection<T> objects) {
+    public static <T>T[] addAll(@NotNull T[] array, @NotNull Collection<T> objects) {
         List<T> list = new ArrayList<>(List.of(array));
         list.addAll(objects);
 

@@ -35,8 +35,7 @@ public final class DisconnectListener {
             data.setLastPlayed(System.currentTimeMillis()); // TODO: Set this variable on /vanish
         }
 
-        user.save(true);
-        user.remove();
+        user.queueRemoval();
     }
 
 }

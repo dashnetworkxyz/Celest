@@ -23,7 +23,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-public final class CelestStatusHandler implements InvocationHandler {
+public final class CelestStatusSessionHandler implements InvocationHandler {
 
     private static final ProxyServer server = Celest.getServer();
     private static final ReflectedVelocityServer velocity = new ReflectedVelocityServer(server);
@@ -31,7 +31,7 @@ public final class CelestStatusHandler implements InvocationHandler {
     private final ReflectedInitialInboundConnection inbound;
     private final ReflectedMinecraftConnection connection;
 
-    public CelestStatusHandler(ReflectedInitialInboundConnection inbound, ReflectedMinecraftConnection connection) throws ReflectiveOperationException {
+    public CelestStatusSessionHandler(ReflectedInitialInboundConnection inbound, ReflectedMinecraftConnection connection) throws ReflectiveOperationException {
         this.handler = new ReflectedStatusSessionHandler(inbound);
         this.inbound = inbound;
         this.connection = connection;

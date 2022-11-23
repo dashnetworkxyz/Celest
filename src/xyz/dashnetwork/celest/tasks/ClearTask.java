@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.tasks;
 
 import xyz.dashnetwork.celest.utils.Address;
+import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 
 public final class ClearTask implements Runnable {
@@ -15,6 +16,7 @@ public final class ClearTask implements Runnable {
     @Override
     public void run() {
         Cache.removeOldEntries();
+        User.removeOldEntries();
         Address.removeOldEntries();
     }
 

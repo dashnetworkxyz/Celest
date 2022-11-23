@@ -9,24 +9,26 @@ package xyz.dashnetwork.celest.utils;
 
 public enum TimeType {
 
-    SECOND('s', 1000),
-    MINUTE('m', SECOND.toLong() * 60),
-    HOUR('h', MINUTE.toLong() * 60),
-    DAY('d', HOUR.toLong() * 24),
-    WEEK('w', DAY.toLong() * 7),
-    MONTH('m', DAY.toLong() * 30),
-    YEAR('y', MONTH.toLong() * 12);
+    SECOND(1000, "s", "sec", "second"),
+    MINUTE(SECOND.toMillis(60), "m", "min", "minute"),
+    HOUR(MINUTE.toMillis(60), "h", "hour"),
+    DAY(HOUR.toMillis(24), "d", "day"),
+    WEEK(DAY.toMillis(7), "w", "week"),
+    MONTH(DAY.toMillis(30), "month"),
+    YEAR(MONTH.toMillis(12), "y", "year");
 
-    private final char selector;
     private final long time;
+    private final String[] selector;
 
-    TimeType(char selector, long time) {
-        this.selector = selector;
+    TimeType(long time, String... selector) {
         this.time = time;
+        this.selector = selector;
     }
 
-    public long toLong() { return time; }
+    public long toMillis() { return time; }
 
-    public char getSelector() { return selector; }
+    public long toMillis(long multiplier) { return time * multiplier; }
+
+    public String[] getSelectors() { return selector; }
 
 }

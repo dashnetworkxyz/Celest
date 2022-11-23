@@ -15,7 +15,7 @@ public final class CelestHandshakeListener {
 
     @Subscribe
     public void onCelestHandshake(CelestHandshakeEvent event) {
-        if (event.getNextState() == 0) { // Server Ping
+        if (event.getNextState() == 1) { // Server Ping
             String hostname = event.getInboundConnection().getRemoteAddress().getHostString();
             Address address = Address.getAddress(hostname);
 

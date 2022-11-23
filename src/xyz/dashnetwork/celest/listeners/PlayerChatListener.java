@@ -34,6 +34,9 @@ public final class PlayerChatListener {
         UserData userData = user.getData();
         PunishData mute = user.getMute();
 
+        if (!PunishUtils.isValid(mute))
+            mute = user.getAddress().getData().getMute();
+
         if (PunishUtils.isValid(mute)) {
             long expiration = mute.getExpiration();
             String reason = mute.getReason();
@@ -58,8 +61,8 @@ public final class PlayerChatListener {
         else if (type.hasPermission(user)) {
             message = message.substring(3);
 
-            if (message.isBlank()) { // TODO: Add to Messages?
-                MessageUtils.message(player, "&6&l» &cUsage: " + type.getSelectors()[0] + "<message>");
+            if (message.isBlank()) {
+                MessageUtils.message(player, "&6&l»&c Usage:&7 " + type.getSelectors()[0] + "<message>");
                 return;
             }
         } else

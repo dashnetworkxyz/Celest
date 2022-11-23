@@ -19,11 +19,9 @@ public enum Variables {
 
     Variables(String replace) { this.replace = replace; }
 
-    public String getReplace() { return replace; }
-
     public static String parse(@NotNull String input) {
         for (Variables variable : values())
-            input = input.replace("{$" + variable.name() + "}", variable.getReplace());
+            input = input.replace("{$" + variable.name() + "}", variable.replace);
 
         return input;
     }

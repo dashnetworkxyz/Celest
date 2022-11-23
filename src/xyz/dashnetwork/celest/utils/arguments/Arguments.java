@@ -22,9 +22,11 @@ public final class Arguments {
 
     private final List<Object> objects = new ArrayList<>();
     private final int size;
+    private int index;
 
     public Arguments(CommandSource source, String[] text, ArgumentType... types) {
         size = types.length;
+        index = 0;
 
         if (text.length < size)
             return;
@@ -51,63 +53,30 @@ public final class Arguments {
         }
     }
 
+    private int getIndex() {
+        int current = index;
+        index++;
+
+        return current;
+    }
+
     public boolean isMissing() { return objects.isEmpty() || objects.size() < size; }
 
-    public Player getPlayer() {
-        Player player = (Player) objects.get(0);
-        objects.remove(0);
-
-        return player;
-    }
+    public Player getPlayer() { return (Player) objects.get(getIndex()); }
 
     @SuppressWarnings("unchecked")
-    public List<Player> getPlayerList() {
-        List<Player> list = (List<Player>) objects.get(0);
-        objects.remove(0);
+    public List<Player> getPlayerList() { return (List<Player>) objects.get(getIndex()); }
 
-        return list;
-    }
+    public RegisteredServer getServer() { return (RegisteredServer) objects.get(getIndex()); }
 
-    public RegisteredServer getServer() {
-        RegisteredServer server = (RegisteredServer) objects.get(0);
-        objects.remove(0);
+    public ChatType getChatType() { return (ChatType) objects.get(getIndex()); }
 
-        return server;
-    }
+    public UUID getUniqueId() { return (UUID) objects.get(getIndex()); }
 
-    public ChatType getChatType() {
-        ChatType type = (ChatType) objects.get(0);
-        objects.remove(0);
+    public Integer getInteger() { return (Integer) objects.get(getIndex()); }
 
-        return type;
-    }
+    public Long getLong() { return (Long) objects.get(getIndex()); }
 
-    public UUID getUniqueId() {
-        UUID uuid = (UUID) objects.get(0);
-        objects.remove(0);
-
-        return uuid;
-    }
-
-    public Integer getInteger() {
-        Integer integer = (Integer) objects.get(0);
-        objects.remove(0);
-
-        return integer;
-    }
-
-    public Long getLong() {
-        Long number = (Long) objects.get(0);
-        objects.remove(0);
-
-        return number;
-    }
-
-    public String getString() {
-        String string = (String) objects.get(0);
-        objects.remove(0);
-
-        return string;
-    }
+    public String getString() { return (String) objects.get(getIndex()); }
 
 }

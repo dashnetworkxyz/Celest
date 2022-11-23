@@ -12,19 +12,31 @@ import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMine
 
 import java.lang.reflect.Method;
 
-public class ReflectedClientPlaySessionHandler {
+public final class ReflectedClientPlaySessionHandler {
 
     private static final Class<?> clazz;
+    private static final Method validateChat;
     private final Object original;
 
     static {
         clazz = ClassList.CLIENT_PLAY_SESSION_HANDLER;
+
+        try {
+            validateChat = clazz.getDeclaredMethod("validateChat", String.class);
+            validateChat.setAccessible(true);
+        } catch (ReflectiveOperationException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     public ReflectedClientPlaySessionHandler(ReflectedMinecraftSessionHandler handler) { this.original = handler.original(); }
 
     public Object passOriginalMethod(Method method, Object[] args) throws ReflectiveOperationException {
         return clazz.getMethod(method.getName(), method.getParameterTypes()).invoke(original, args);
+    }
+
+    public boolean validateChat(String message) throws ReflectiveOperationException {
+        return (boolean) validateChat.invoke(original, message);
     }
 
 }

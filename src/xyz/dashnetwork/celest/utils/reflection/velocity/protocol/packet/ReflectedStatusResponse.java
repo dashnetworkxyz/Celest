@@ -18,9 +18,9 @@ public final class ReflectedStatusResponse {
     private final Object original;
 
     static {
-        try {
-            clazz = ClassList.STATUS_RESPONSE;
+        clazz = ClassList.STATUS_RESPONSE;
 
+        try {
             constructor = clazz.getConstructor(CharSequence.class);
         } catch (ReflectiveOperationException exception) {
             throw new RuntimeException(exception);

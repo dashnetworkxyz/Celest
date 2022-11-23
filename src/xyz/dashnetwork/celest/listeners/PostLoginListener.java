@@ -34,6 +34,8 @@ public final class PostLoginListener {
         else
             MessageUtils.broadcast(Messages.joinServer(username, displayname));
 
+        user.getAddress().setServerPingTime(-1); // Reset for PingSpy
+
         // TODO: Altspy
     }
 

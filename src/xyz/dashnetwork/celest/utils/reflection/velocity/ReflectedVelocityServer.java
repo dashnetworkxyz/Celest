@@ -25,9 +25,9 @@ public final class ReflectedVelocityServer {
     private final ProxyServer original;
 
     static {
-        try {
-            clazz = ClassList.VELOCITY_SERVER;
+        clazz = ClassList.VELOCITY_SERVER;
 
+        try {
             cm = clazz.getDeclaredField("cm");
             cm.setAccessible(true);
 

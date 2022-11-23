@@ -12,18 +12,9 @@ import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 
 public final class Messages {
 
-    public static Component commandCelestHelp() {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&7 /celest legacy-data-import &c(can overwrite modern data)");
-        builder.append("\n&6&l»&7 /celest userdata <list|(uuid)>");
-        builder.append("\n&6&l»&7 /celest addressdata <list|(ip)>");
-
-        return builder.build();
-    }
-
     public static Component commandUsage(String alias, String arguments) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&7 /" + alias + " " + arguments);
+        builder.append("&6&l»&c Usage:&7 /" + alias + " " + arguments);
 
         return builder.build();
     }
@@ -98,7 +89,7 @@ public final class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lAdmin&r ");
         builder.append(displayname).hover("&6" + username);
-        builder.append("&r &6&l»&r ");
+        builder.append("&r &3&l»&r ");
         builder.append("&3" + message);
 
         return builder.build();
@@ -108,7 +99,7 @@ public final class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lOwner&r ");
         builder.append(displayname).hover("&6" + username);
-        builder.append("&r &6&l»&r ");
+        builder.append("&r &c&l»&r ");
         builder.append("&c" + message);
 
         return builder.build();
@@ -126,9 +117,9 @@ public final class Messages {
 
     public static Component playerCommandSpy(String username, String displayname, String message) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&c&lCS&r ");
+        builder.append("&c&lCmd&r ");
         builder.append(displayname).hover("&6" + username);
-        builder.append(" &e&l»&r ");
+        builder.append("&r &e&l»&r ");
         builder.append("&b" + message);
 
         return builder.build();
@@ -136,7 +127,7 @@ public final class Messages {
 
     public static Component playerMuted(String reason, String username) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&7 You have been permanently muted. &7Hover for more information.")
+        builder.append("&6&l»&7 You have been permanently muted. Hover for more information.")
                 .hover("&7You were muted by &6" + username
                         + "\n\n&6" + reason);
 
@@ -145,10 +136,25 @@ public final class Messages {
 
     public static Component playerMutedTemporary(String reason, String username, String expiration) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&7 You have been temporarily muted. &7Hover for more information.")
+        builder.append("&6&l»&7 You have been temporarily muted. Hover for more information.")
                 .hover("&7You were muted by &6" + username
                         + "\n&7Your mute will expire on &6" + expiration
                         + "\n\n&6" + reason);
+
+        return builder.build();
+    }
+
+    public static Component playerPingSpy(String name, String clientAddress,
+                                          String serverAddress, String serverPort,
+                                          String version, String protocol,
+                                          String profiles) {
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&c&lPing&6 " + name + "&7 pinged the server.")
+                .hover("&6" + clientAddress
+                        + "\n&7Server Address: &6" + serverAddress
+                        + "\n&7Server Port: &6" + serverPort
+                        + "\n&7Version: &6" + version + "&7 (" + protocol + ")"
+                        + "\n&7Profiles: &6" + profiles);
 
         return builder.build();
     }
@@ -168,6 +174,7 @@ public final class Messages {
         return builder.build();
     }
 
+    // TODO
     public static Component userdataInfo(String uuid, String address, String username, String nickname,
                                          String ban, String mute, String chatType, String lastPlayed,
                                          String altSpy, String commandSpy, String pingSpy, String vanish) {

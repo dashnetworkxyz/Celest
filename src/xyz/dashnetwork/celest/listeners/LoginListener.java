@@ -25,6 +25,9 @@ public final class LoginListener {
         User user = User.getUser(event.getPlayer());
         PunishData ban = user.getBan();
 
+        if (!PunishUtils.isValid(ban))
+            ban = user.getAddress().getData().getBan();
+
         if (PunishUtils.isValid(ban)) {
             long expiration = ban.getExpiration();
             String reason = ban.getReason();
@@ -36,7 +39,7 @@ public final class LoginListener {
                     Messages.loginBannedTemporary(reason, banner, date);
 
             event.setResult(ResultedEvent.ComponentResult.denied(message));
-            user.remove();
+            user.queueRemoval();
         }
     }
 

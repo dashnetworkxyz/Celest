@@ -9,7 +9,7 @@ package xyz.dashnetwork.celest.inject.server;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
-import xyz.dashnetwork.celest.inject.server.handler.CelestHandshakeHandler;
+import xyz.dashnetwork.celest.inject.server.handler.CelestHandshakeSessionHandler;
 import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
 import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedHandshakeSessionHandler;
 
@@ -38,7 +38,7 @@ public final class CelestServerChannelInitializer extends ChannelInitializer<Cha
         ReflectedMinecraftConnection connection = new ReflectedMinecraftConnection(channel.pipeline().get("handler"));
         ReflectedHandshakeSessionHandler handler = new ReflectedHandshakeSessionHandler(connection.getSessionHandler());
 
-        connection.setSessionHandler(new CelestHandshakeHandler(handler, connection));
+        connection.setSessionHandler(new CelestHandshakeSessionHandler(handler, connection));
     }
 
 }

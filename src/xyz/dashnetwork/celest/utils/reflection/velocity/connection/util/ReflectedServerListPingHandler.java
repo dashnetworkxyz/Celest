@@ -21,9 +21,9 @@ public final class ReflectedServerListPingHandler {
     private final Object original;
 
     static {
-        try {
-            clazz = ClassList.SERVER_LIST_PING_HANDLER;
+        clazz = ClassList.SERVER_LIST_PING_HANDLER;
 
+        try {
             getInitialPing = clazz.getMethod("getInitialPing", ClassList.VELOCITY_INBOUND_CONNECTION);
         } catch (ReflectiveOperationException exception) {
             throw new RuntimeException(exception);

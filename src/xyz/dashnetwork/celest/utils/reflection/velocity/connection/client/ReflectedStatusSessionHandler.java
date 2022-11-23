@@ -22,9 +22,9 @@ public final class ReflectedStatusSessionHandler {
     private final Object original;
 
     static {
-        try {
-            clazz = ClassList.STATUS_SESSION_HANDLER;
+        clazz = ClassList.STATUS_SESSION_HANDLER;
 
+        try {
             constructor = clazz.getDeclaredConstructor(ClassList.VELOCITY_SERVER, ClassList.VELOCITY_INBOUND_CONNECTION);
             constructor.setAccessible(true);
 

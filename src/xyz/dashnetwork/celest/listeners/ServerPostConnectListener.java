@@ -11,12 +11,12 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import xyz.dashnetwork.celest.inject.Injector;
 
-public class ServerPostConnectListener {
+public final class ServerPostConnectListener {
 
     @SuppressWarnings("UnstableApiUsage")
     @Subscribe
     public void onServerPostConnect(ServerPostConnectEvent event) {
-        Injector.injectPlaySessionHandler(event.getPlayer());
+        Injector.injectClientPlaySessionHandler(event.getPlayer());
     }
 
 }

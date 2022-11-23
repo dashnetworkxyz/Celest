@@ -18,7 +18,7 @@ import java.util.UUID;
 public final class ProfileUtils {
 
     public static PlayerProfile fromUsername(@NotNull String username) {
-        CacheData data = Cache.fromUsername(username);
+        CacheData data = Cache.fromUsername(username, true);
 
         if (data != null)
             return new PlayerProfile(data.getUUID(), data.getUsername());
@@ -27,7 +27,7 @@ public final class ProfileUtils {
     }
 
     public static PlayerProfile fromUuid(@NotNull UUID uuid) {
-        CacheData cacheData = Cache.fromUuid(uuid);
+        CacheData cacheData = Cache.fromUuid(uuid, true);
 
         if (cacheData != null)
             return new PlayerProfile(cacheData.getUUID(), cacheData.getUsername());
@@ -41,6 +41,26 @@ public final class ProfileUtils {
         }
 
         return MojangUtils.fromUuid(uuid);
+    }
+
+    // TODO: Move this to Cache?
+    public static PlayerProfile findMostRecent(@NotNull PlayerProfile... profiles) {
+        long time = -1;
+        CacheData selected = null;
+
+        for (CacheData data : Cache.fromPlayerProfiles(profiles)) {
+            long compare = data.getAccessTime();
+
+            if (time < compare) {
+                selected = data;
+                time = compare;
+            }
+        }
+
+        if (selected == null)
+            return null;
+
+        return new PlayerProfile(selected.getUUID(), selected.getUsername());
     }
 
 }

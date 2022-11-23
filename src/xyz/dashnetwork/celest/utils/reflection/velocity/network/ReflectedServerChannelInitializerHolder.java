@@ -19,9 +19,9 @@ public final class ReflectedServerChannelInitializerHolder {
     private final Object original;
 
     static {
-        try {
-            clazz = ClassList.SERVER_CHANNEL_INITIALIZER_HOLDER;
+        clazz = ClassList.SERVER_CHANNEL_INITIALIZER_HOLDER;
 
+        try {
             initializer = clazz.getDeclaredField("initializer");
             initializer.setAccessible(true);
         } catch (ReflectiveOperationException exception) {

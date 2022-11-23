@@ -7,6 +7,8 @@
 
 package xyz.dashnetwork.celest.utils.reflection.velocity.network;
 
+import xyz.dashnetwork.celest.utils.reflection.ClassList;
+
 import java.lang.reflect.Method;
 
 public final class ReflectedConnectionManager {
@@ -16,8 +18,9 @@ public final class ReflectedConnectionManager {
     private final Object original;
 
     static {
+        clazz = ClassList.CONNECTION_MANAGER;
+
         try {
-            clazz = Class.forName("com.velocitypowered.proxy.network.ConnectionManager");
             getServerChannelInitializer = clazz.getMethod("getServerChannelInitializer");
         } catch (ReflectiveOperationException exception) {
             throw new RuntimeException(exception);

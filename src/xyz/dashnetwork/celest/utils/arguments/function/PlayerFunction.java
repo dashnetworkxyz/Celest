@@ -22,7 +22,7 @@ public final class PlayerFunction implements Function<String, Player> {
 
     @Override
     public Player apply(String string) {
-        if (string == null)
+        if (string == null) // Useful for PlayerListFunction
             return null;
 
         Optional<Player> optional;

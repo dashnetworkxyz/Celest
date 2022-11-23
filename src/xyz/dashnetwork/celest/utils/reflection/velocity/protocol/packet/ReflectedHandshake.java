@@ -20,10 +20,10 @@ public final class ReflectedHandshake {
     private final Object original;
 
     static {
-        try {
-            clazz = ClassList.HANDSHAKE;
-            array = new Class<?>[] { clazz };
+        clazz = ClassList.HANDSHAKE;
+        array = new Class<?>[] { clazz };
 
+        try {
             getProtocolVersion = clazz.getMethod("getProtocolVersion");
             getServerAddress = clazz.getMethod("getServerAddress");
             getPort = clazz.getMethod("getPort");

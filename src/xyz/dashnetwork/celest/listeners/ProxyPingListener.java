@@ -15,13 +15,13 @@ import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.api.scheduler.Scheduler;
 import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.Address;
-import xyz.dashnetwork.celest.utils.ConfigurationList;
-import xyz.dashnetwork.celest.utils.PunishUtils;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.*;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
+import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.data.AddressData;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
+import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 
 import java.util.UUID;
 
@@ -51,11 +51,9 @@ public final class ProxyPingListener {
 
         event.setPing(builder.build());
 
-        // TODO: Pingspy
-
         InboundConnection connection = event.getConnection();
         final String hostname = connection.getRemoteAddress().getHostString();
-        final ProtocolVersion version = connection.getProtocolVersion();
+        final ProtocolVersion protocolVersion = connection.getProtocolVersion();
 
         // Run async so Pingspy doesn't hold up the status response.
         scheduler.buildTask(Celest.getInstance(), () -> {
@@ -72,8 +70,28 @@ public final class ProxyPingListener {
             if (PunishUtils.isValid(data.getBan()))
                 return; // Skip banned ips.
 
-            // TODO: 1min cooldown (reset on login)
-            // TODO: List<Player> List<String> List<UUID> -> string of usernames
+            if (TimeUtils.isRecent(address.getServerPingTime(), TimeType.MINUTE))
+                return; // Skip ping spammers.
+
+            address.setServerPingTime(System.currentTimeMillis());
+
+            // TODO: Detect and remove cloudflare proxy from input address.
+
+            String name = hostname;
+            String inputAddress = address.getInputServerAddress();
+            String inputPort = String.valueOf(address.getInputServerPort());
+            String version = VersionUtils.getVersionString(protocolVersion);
+            String protocol = String.valueOf(protocolVersion.getProtocol());
+            String usernames = ArrayUtils.convertToString(PlayerProfile::getUsername, profiles);
+
+            PlayerProfile recent = ProfileUtils.findMostRecent(profiles);
+
+            if (recent != null)
+                name = recent.getUsername();
+
+            MessageUtils.broadcast(user -> user.getData().getPingSpy(), Messages.playerPingSpy(
+                    name, hostname, inputAddress, inputPort, version, protocol, usernames
+            ));
         }).schedule();
     }
 

@@ -12,15 +12,16 @@ import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMine
 
 import java.lang.reflect.Method;
 
-public class ReflectedVelocityServerConnection {
+public final class ReflectedVelocityServerConnection {
 
     private static final Class<?> clazz;
     private static final Method ensureConnected;
     private final Object original;
 
     static {
+        clazz = ClassList.VELOCITY_SERVER_CONNECTION;
+
         try {
-            clazz = ClassList.VELOCITY_SERVER_CONNECTION;
             ensureConnected = clazz.getMethod("ensureConnected");
         } catch (ReflectiveOperationException exception) {
             throw new RuntimeException(exception);

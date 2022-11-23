@@ -17,22 +17,21 @@ public final class TimeUtils {
 
     public static String longToDate(long time) { return formatter.format(time); }
 
+    public static boolean isRecent(long time, long compare) { return compare > System.currentTimeMillis() - time; }
+
+    public static boolean isRecent(long time, TimeType compare) { return isRecent(time, compare.toMillis()); }
+
     public static long fromTimeArgument(@NotNull String string) {
-        int length = string.length();
-
-        if (length < 2)
+        if (!string.matches("(\\d{1,18})([A-z]+)"))
             return -1;
 
-        String subbed = string.substring(0, length - 1);
-
-        if (!subbed.matches("^\\d+$"))
-            return -1;
-
-        char last = string.toLowerCase().charAt(length - 1);
+        String first = string.replaceAll("[A-z]", "");
+        String last = string.replaceAll("\\d", "");
 
         for (TimeType type : TimeType.values())
-            if (type.getSelector() == last)
-                return type.toLong() * Long.parseLong(subbed);
+            for (String selector : type.getSelectors())
+                if (selector.equalsIgnoreCase(last))
+                    return type.toMillis(Long.parseLong(first));
 
         return -1;
     }

@@ -10,6 +10,7 @@ package xyz.dashnetwork.celest.utils.profile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 import xyz.dashnetwork.celest.Celest;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 public final class MojangUtils {
 
+    private static final Logger logger = Celest.getLogger();
     private static final Gson gson = new GsonBuilder().create();
 
     public static PlayerProfile fromUsername(@NotNull String username) {
@@ -34,7 +36,7 @@ public final class MojangUtils {
 
             return response.toProfile();
         } catch (IOException exception) {
-            Celest.getLogger().warn("Failed to pull response from Mojang API.");
+            logger.warn("Failed to pull response from Mojang API.");
             exception.printStackTrace();
             return null;
         }
@@ -50,7 +52,7 @@ public final class MojangUtils {
 
             return response.toProfile();
         } catch (IOException exception) {
-            Celest.getLogger().warn("Failed to pull response from Mojang API.");
+            logger.warn("Failed to pull response from Mojang API.");
             exception.printStackTrace();
             return null;
         }
