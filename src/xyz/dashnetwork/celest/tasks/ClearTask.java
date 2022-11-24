@@ -12,8 +12,6 @@ import xyz.dashnetwork.celest.utils.storage.Cache;
 public final class ClearTask implements Runnable {
 
     @Override
-    public void run() {
-        Cache.removeOldEntries();
-    }
+    public void run() { Cache.removeOldEntries(); }
 
 }

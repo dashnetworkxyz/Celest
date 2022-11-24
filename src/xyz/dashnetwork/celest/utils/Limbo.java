@@ -7,7 +7,6 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.ScheduledTask;
 import com.velocitypowered.api.scheduler.Scheduler;
 import xyz.dashnetwork.celest.Celest;
@@ -25,11 +24,13 @@ public final class Limbo<T> implements Runnable {
     private static final List<Limbo<?>> limbos = new CopyOnWriteArrayList<>();
     private final T object;
     private final Consumer<T> save;
+    private boolean shouldSave;
     private ScheduledTask scheduledTask;
 
     public Limbo(T object, Consumer<T> save) {
         this.object = object;
         this.save = save;
+        this.shouldSave = true;
         this.scheduledTask = scheduler.buildTask(celest, this).delay(10, TimeUnit.MINUTES).schedule();
 
         limbos.add(this);
@@ -48,11 +49,18 @@ public final class Limbo<T> implements Runnable {
 
     public T getObject() { return object; }
 
-    public void save() { save.accept(object); }
+    public void save() {
+        if (shouldSave) {
+            save.accept(object);
+            shouldSave = false;
+        }
+    }
 
     public void reset() {
         scheduledTask.cancel();
         scheduledTask = scheduler.buildTask(celest, this).delay(10, TimeUnit.MINUTES).schedule();
+
+        shouldSave = true;
     }
 
     public void cancel() {

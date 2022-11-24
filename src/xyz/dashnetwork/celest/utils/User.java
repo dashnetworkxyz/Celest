@@ -88,10 +88,7 @@ public final class User {
         Cache.generate(uuid, userData);
     }
 
-    public void save() {
-        Storage.write(stringUuid, Storage.Directory.USER, userData);
-        address.save();
-    }
+    public void save() { Storage.write(stringUuid, Storage.Directory.USER, userData); }
 
     public void remove() {
         users.remove(this);

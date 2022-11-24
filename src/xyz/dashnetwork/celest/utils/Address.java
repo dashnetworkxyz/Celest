@@ -52,7 +52,10 @@ public final class Address {
         Limbo<Address> limbo = Limbo.getLimbo(Address.class, each -> each.address.equals(name));
 
         if (limbo != null) {
-            limbo.reset();
+            if (shouldLimbo)
+                limbo.reset();
+            else
+                limbo.cancel();
 
             return limbo.getObject();
         }

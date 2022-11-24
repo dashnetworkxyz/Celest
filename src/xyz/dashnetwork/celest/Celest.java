@@ -26,7 +26,6 @@ import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.tasks.ClearTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
-import xyz.dashnetwork.celest.utils.Limbo;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.Configuration;
 import xyz.dashnetwork.celest.utils.storage.Storage;
@@ -108,7 +107,7 @@ public final class Celest {
 
         logger.info("Registering tasks...");
         Scheduler scheduler = server.getScheduler();
-        scheduler.buildTask(this, clearTask).repeat(5, TimeUnit.MINUTES).schedule();
+        scheduler.buildTask(this, clearTask).repeat(1, TimeUnit.HOURS).schedule();
         scheduler.buildTask(this, saveTask).repeat(1, TimeUnit.MINUTES).schedule();
 
         clearTask.run();
@@ -116,8 +115,6 @@ public final class Celest {
     }
 
     @Subscribe
-    public void onProxyShutdown(ProxyShutdownEvent event) {
-        saveTask.run();
-    }
+    public void onProxyShutdown(ProxyShutdownEvent event) { saveTask.run(); }
 
 }
