@@ -7,7 +7,7 @@
 
 package xyz.dashnetwork.celest.tasks;
 
-import xyz.dashnetwork.celest.utils.Address;
+import xyz.dashnetwork.celest.utils.Limbo;
 import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 
@@ -15,11 +15,11 @@ public final class SaveTask implements Runnable {
 
     @Override
     public void run() {
-        for (Address address : Address.getAddresses())
-            address.save();
-
         for (User user : User.getUsers())
             user.save();
+
+        for (Limbo<?> limbo : Limbo.getLimbos())
+            limbo.save();
 
         Cache.save();
     }

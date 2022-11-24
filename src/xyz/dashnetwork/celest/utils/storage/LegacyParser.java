@@ -107,7 +107,7 @@ public final class LegacyParser {
         for (Map.Entry<String, AddressData> each : addressDataMap.entrySet()) {
             String address = each.getKey();
             AddressData data = each.getValue();
-            Address instance = Address.getAddress(address);
+            Address instance = Address.getAddress(address, true);
 
             instance.setData(data);
             instance.save();

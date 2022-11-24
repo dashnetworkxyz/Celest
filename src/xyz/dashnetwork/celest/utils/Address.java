@@ -14,21 +14,19 @@ import xyz.dashnetwork.celest.utils.storage.Storage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class Address {
 
-    private static final List<Address> addresses = new CopyOnWriteArrayList<>();
     private final String address;
     private boolean manual;
     private AddressData addressData;
     private String inputServerAddress;
     private int inputServerPort;
-    private long serverPingTime, accessTime;
+    private long serverPingTime;
 
-    private Address(String address) {
+    private Address(String address, boolean limbo) {
         this.address = address;
-        this.manual = false;
+        this.manual = !limbo;
 
         addressData = Storage.read(address, Storage.Directory.ADDRESS, AddressData.class);
 
@@ -38,30 +36,28 @@ public final class Address {
         inputServerAddress = null;
         inputServerPort = -1;
         serverPingTime = -1;
-        accessTime = System.currentTimeMillis();
-        addresses.add(this);
+
+        if (limbo)
+            new Limbo<>(this, Address::save);
     }
 
-    public static List<Address> getAddresses() { return addresses; }
+    public static Address getAddress(String name, boolean shouldLimbo) {
+        for (User user : User.getUsers()) {
+            Address address = user.getAddress();
 
-    public static Address getAddress(String address) {
-        for (Address each : addresses) {
-            if (each.address.equals(address)) {
-                each.accessTime = System.currentTimeMillis();
-                return each;
-            }
+            if (address.address.equals(name))
+                return address;
         }
-        return new Address(address);
-    }
 
-    public static void removeOldEntries() {
-        for (Address address : addresses) {
-            if (!address.manual && TimeUtils.isRecent(address.getAccessTime(), TimeType.MINUTE.toMillis(5))) {
-                addresses.remove(address);
+        Limbo<Address> limbo = Limbo.getLimbo(Address.class, each -> each.address.equals(name));
 
-                address.save();
-            }
+        if (limbo != null) {
+            limbo.reset();
+
+            return limbo.getObject();
         }
+
+        return new Address(name, shouldLimbo);
     }
 
     public void removeUserIfPresent(UUID uuid) {
@@ -112,7 +108,5 @@ public final class Address {
     public void setServerPingTime(long serverPingTime) { this.serverPingTime = serverPingTime; }
 
     public long getServerPingTime() { return serverPingTime; }
-
-    public long getAccessTime() { return accessTime; }
 
 }

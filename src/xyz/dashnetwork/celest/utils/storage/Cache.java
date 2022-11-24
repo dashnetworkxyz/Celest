@@ -81,6 +81,7 @@ public final class Cache {
         return list;
     }
 
+    // TODO: Move to ProfileUtils?
     public static List<CacheData> fromPlayerProfiles(PlayerProfile... profiles) {
         List<CacheData> list = new ArrayList<>();
 

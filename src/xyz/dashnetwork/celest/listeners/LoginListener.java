@@ -39,7 +39,7 @@ public final class LoginListener {
                     Messages.loginBannedTemporary(reason, banner, date);
 
             event.setResult(ResultedEvent.ComponentResult.denied(message));
-            user.queueRemoval();
+            user.remove();
         }
     }
 

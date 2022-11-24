@@ -26,6 +26,7 @@ import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.tasks.ClearTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
+import xyz.dashnetwork.celest.utils.Limbo;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.Configuration;
 import xyz.dashnetwork.celest.utils.storage.Storage;
@@ -115,6 +116,8 @@ public final class Celest {
     }
 
     @Subscribe
-    public void onProxyShutdown(ProxyShutdownEvent event) { saveTask.run(); }
+    public void onProxyShutdown(ProxyShutdownEvent event) {
+        saveTask.run();
+    }
 
 }

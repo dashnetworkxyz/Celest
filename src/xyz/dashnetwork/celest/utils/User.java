@@ -15,7 +15,6 @@ import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.vault.Vault;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -30,57 +29,44 @@ public final class User {
     private Address address;
     private UserData userData;
     private Player player;
-    private long queuedTime;
 
     private User(Player player) {
         this.player = player;
         this.uuid = player.getUniqueId();
         this.stringUuid = uuid.toString();
         this.stringAddress = player.getRemoteAddress().getHostString();
-        this.queuedTime = -1;
 
         load();
 
         users.add(this);
     }
 
-    public static List<User> getUsers() {
-        List<User> list = new ArrayList<>();
-
-        for (User user : users)
-            if (user.player.isActive())
-                list.add(user);
-
-        return list;
-    }
+    public static List<User> getUsers() { return List.copyOf(users); } // return Immutable list
 
     public static User getUser(Player player) {
-        for (User user : users) {
-            if (user.uuid.equals(player.getUniqueId())) {
-                if (!user.player.equals(player))
-                    user.player = player;
+        UUID uuid = player.getUniqueId();
 
+        for (User user : users)
+            if (user.uuid.equals(uuid))
                 return user;
-            }
+
+        Limbo<User> limbo = Limbo.getLimbo(User.class, each -> each.uuid.equals(uuid));
+
+        if (limbo != null) {
+            limbo.cancel();
+
+            User user = limbo.getObject();
+            user.player = player;
+
+            return user;
         }
 
         return new User(player);
     }
 
-    public static void removeOldEntries() {
-        for (User user : users) {
-            if (!user.player.isActive() && !TimeUtils.isRecent(user.queuedTime, TimeType.MINUTE.toMillis(5))) {
-                users.remove(user);
-
-                user.save();
-                user.getAddress().setManual(false);
-            }
-        }
-    }
-
     private void load() {
         userData = Storage.read(stringUuid, Storage.Directory.USER, UserData.class);
-        address = Address.getAddress(stringAddress);
+        address = Address.getAddress(stringAddress, false);
 
         UUID uniqueId = player.getUniqueId();
         String username = player.getUsername();
@@ -91,7 +77,7 @@ public final class User {
             String old = userData.getAddress();
 
             if (!old.equals(stringAddress))
-                Address.getAddress(old).removeUserIfPresent(uniqueId);
+                Address.getAddress(old, true).removeUserIfPresent(uniqueId);
         }
 
         userData.setAddress(stringAddress);
@@ -104,11 +90,16 @@ public final class User {
 
     public void save() {
         Storage.write(stringUuid, Storage.Directory.USER, userData);
+        address.save();
     }
 
-    public void queueRemoval() { queuedTime = System.currentTimeMillis(); }
+    public void remove() {
+        users.remove(this);
+        address.setManual(false);
 
-    public boolean isQueuedForRemoval() { return queuedTime != -1;}
+        new Limbo<>(this, User::save);
+        new Limbo<>(address, Address::save);
+    }
 
     public void setData(UserData userData) { this.userData = userData; }
 

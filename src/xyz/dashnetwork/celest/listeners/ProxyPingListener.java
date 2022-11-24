@@ -57,7 +57,7 @@ public final class ProxyPingListener {
 
         // Run async so Pingspy doesn't hold up the status response.
         scheduler.buildTask(Celest.getInstance(), () -> {
-            Address address = Address.getAddress(hostname);
+            Address address = Address.getAddress(hostname, true);
             AddressData data = address.getData();
             PlayerProfile[] profiles = data.getProfiles();
 
