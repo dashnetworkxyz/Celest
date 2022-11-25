@@ -30,8 +30,8 @@ public enum ChatType {
         this.selectors = selectors;
     }
 
-    public boolean hasPermission(@NotNull User user) {
-        return permission.test(user) || user.getData().getChatType().equals(this);
+    public boolean hasPermission(User user) {
+        return user == null || permission.test(user) || user.getData().getChatType().equals(this);
     }
 
     public String[] getSelectors() { return selectors; }

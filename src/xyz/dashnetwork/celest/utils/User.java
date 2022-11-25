@@ -25,7 +25,7 @@ public final class User {
     private static final List<User> users = new CopyOnWriteArrayList<>();
     private final UUID uuid;
     private final String stringUuid;
-    private final String stringAddress;
+    private String stringAddress;
     private Address address;
     private UserData userData;
     private Player player;
@@ -34,9 +34,8 @@ public final class User {
         this.player = player;
         this.uuid = player.getUniqueId();
         this.stringUuid = uuid.toString();
-        this.stringAddress = player.getRemoteAddress().getHostString();
 
-        load();
+        load(true);
 
         users.add(this);
     }
@@ -57,6 +56,7 @@ public final class User {
 
             User user = limbo.getObject();
             user.player = player;
+            user.load(false);
 
             return user;
         }
@@ -64,8 +64,11 @@ public final class User {
         return new User(player);
     }
 
-    private void load() {
-        userData = Storage.read(stringUuid, Storage.Directory.USER, UserData.class);
+    private void load(boolean readFile) {
+        if (readFile)
+            userData = Storage.read(stringUuid, Storage.Directory.USER, UserData.class);
+
+        stringAddress = player.getRemoteAddress().getHostString();
         address = Address.getAddress(stringAddress, false);
 
         UUID uniqueId = player.getUniqueId();
@@ -101,6 +104,10 @@ public final class User {
     public void setData(UserData userData) { this.userData = userData; }
 
     public Player getPlayer() { return player; }
+
+    public String getUsername() { return player.getUsername(); }
+
+    public UUID getUuid() { return uuid; }
 
     public UserData getData() { return userData; }
 

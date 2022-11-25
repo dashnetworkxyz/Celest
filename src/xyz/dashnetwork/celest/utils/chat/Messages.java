@@ -8,51 +8,56 @@
 package xyz.dashnetwork.celest.utils.chat;
 
 import net.kyori.adventure.text.Component;
+import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 
 public final class Messages {
 
-    public static Component commandUsage(String alias, String arguments) {
+    public static Component commandUsage(String alias, String... arguments) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&c Usage:&7 /" + alias + " " + arguments);
+        builder.append("&6&l»&c Usage:&7 /" + alias);
 
-        return builder.build();
+        for (String argument : arguments)
+            builder.append(" &7<" + argument + ">");
+
+        return builder.build(null);
     }
 
-    public static Component joinServer(String username, String displayname) {
+    public static Component joinServer(User user, Format player) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&a&l»&r ");
-        builder.append(displayname).hover("&6" + username);
-        builder.append("&a joined the server.");
+        builder.append(player);
+        builder.append("&a joined.");
 
-        return builder.build();
+        return builder.build(user);
     }
 
-    public static Component joinServerVanished(String username, String displayname) {
+    public static Component joinServerVanished(User user, Format player) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&3&l»&r ");
-        builder.append(displayname).hover("&6" + username);
-        builder.append("&3 silently joined the server.");
+        builder.append(player);
+        builder.append("&3 silently joined.");
 
-        return builder.build();
+        return builder.build(user);
     }
 
-    public static Component leaveServer(String username, String displayname) {
+    public static Component leaveServer(User user, Format player) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&c&l»&r ");
-        builder.append(displayname).hover("&6" + username);
-        builder.append("&c left the server.");
+        builder.append(player);
+        builder.append("&c left.");
 
-        return builder.build();
+        return builder.build(user);
     }
 
-    public static Component leaveServerVanished(String username, String displayname) {
+    public static Component leaveServerVanished(User user, Format player) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&3&l»&r ");
-        builder.append(displayname).hover("&6" + username);
-        builder.append("&3 silently left the server.");
+        builder.append(player);
+        builder.append("&3 silently left.");
 
-        return builder.build();
+        return builder.build(user);
     }
 
     public static Component loginBanned(String reason, String username) {
@@ -62,7 +67,7 @@ public final class Messages {
         builder.append("\n&7You were banned by &6" + username);
         builder.append("\n\n&6" + reason);
 
-        return builder.build();
+        return builder.build(null);
     }
 
     public static Component loginBannedTemporary(String reason, String username, String expiration) {
@@ -73,56 +78,56 @@ public final class Messages {
         builder.append("\n&7Your ban will expire on &6" + expiration);
         builder.append("\n\n&6" + reason);
 
-        return builder.build();
+        return builder.build(null);
     }
 
-    public static Component playerChat(String username, String displayname, String message) {
+    public static Component playerChat(User user, Format player, String message) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append(displayname).hover("&6" + username);
+        builder.append(player);
         builder.append("&r &e&l»&r ");
         builder.append(message);
 
-        return builder.build();
+        return builder.build(user);
     }
 
-    public static Component playerChatAdmin(String username, String displayname, String message) {
+    public static Component playerChatAdmin(User user, Format player, String message) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lAdmin&r ");
-        builder.append(displayname).hover("&6" + username);
+        builder.append(player);
         builder.append("&r &3&l»&r ");
         builder.append("&3" + message);
 
-        return builder.build();
+        return builder.build(user);
     }
 
-    public static Component playerChatOwner(String username, String displayname, String message) {
+    public static Component playerChatOwner(User user, Format player, String message) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lOwner&r ");
-        builder.append(displayname).hover("&6" + username);
+        builder.append(player);
         builder.append("&r &c&l»&r ");
         builder.append("&c" + message);
 
-        return builder.build();
+        return builder.build(user);
     }
 
-    public static Component playerChatStaff(String username, String displayname, String message) {
+    public static Component playerChatStaff(User user, Format player, String message) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lStaff&r ");
-        builder.append(displayname).hover("&6" + username);
+        builder.append(player);
         builder.append("&r &6&l»&r ");
         builder.append("&6" + message);
 
-        return builder.build();
+        return builder.build(user);
     }
 
-    public static Component playerCommandSpy(String username, String displayname, String message) {
+    public static Component playerCommandSpy(User user, Format player, String message) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&c&lCmd&r ");
-        builder.append(displayname).hover("&6" + username);
-        builder.append("&r &e&l»&r ");
+        builder.append(player);
+        builder.append("&r &b&l»&r ");
         builder.append("&b" + message);
 
-        return builder.build();
+        return builder.build(user);
     }
 
     public static Component playerMuted(String reason, String username) {
@@ -131,7 +136,7 @@ public final class Messages {
                 .hover("&7You were muted by &6" + username
                         + "\n\n&6" + reason);
 
-        return builder.build();
+        return builder.build(null);
     }
 
     public static Component playerMutedTemporary(String reason, String username, String expiration) {
@@ -141,7 +146,7 @@ public final class Messages {
                         + "\n&7Your mute will expire on &6" + expiration
                         + "\n\n&6" + reason);
 
-        return builder.build();
+        return builder.build(null);
     }
 
     public static Component playerPingSpy(String name, String clientAddress,
@@ -156,14 +161,14 @@ public final class Messages {
                         + "\n&7Version: &6" + version + "&7 (" + protocol + ")"
                         + "\n&7Profiles: &6" + profiles);
 
-        return builder.build();
+        return builder.build(null);
     }
 
     public static Component playerTablistFooter() {
         MessageBuilder builder = new MessageBuilder();
         builder.append("\n&6play.dashnetwork.xyz");
 
-        return builder.build();
+        return builder.build(null);
     }
 
     public static Component playerTablistHeader(String server) {
@@ -171,7 +176,7 @@ public final class Messages {
         builder.append("&6&lDashNetwork");
         builder.append("\n&7You are connected to &6" + server + "\n");
 
-        return builder.build();
+        return builder.build(null);
     }
 
     // TODO
@@ -192,16 +197,16 @@ public final class Messages {
                         + "\n&7pingSpy: &6" + pingSpy
                         + "\n&7vanish: &6" + vanish);
 
-        return builder.build();
+        return builder.build(null);
     }
 
-    public static Component welcome(String username, String displayname) {
+    public static Component welcome(User user, Format player) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&6 Welcome, ");
-        builder.append(displayname).hover("&6" + username);
+        builder.append(player);
         builder.append("&6, to &lDashNetwork");
 
-        return builder.build();
+        return builder.build(user);
     }
 
 }

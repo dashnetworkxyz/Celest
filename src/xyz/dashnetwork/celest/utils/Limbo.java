@@ -31,7 +31,8 @@ public final class Limbo<T> implements Runnable {
         this.object = object;
         this.save = save;
         this.shouldSave = true;
-        this.scheduledTask = scheduler.buildTask(celest, this).delay(10, TimeUnit.MINUTES).schedule();
+
+        schedule();
 
         limbos.add(this);
     }
@@ -47,6 +48,10 @@ public final class Limbo<T> implements Runnable {
         return null;
     }
 
+    private void schedule() {
+        scheduledTask = scheduler.buildTask(celest, this).delay(10, TimeUnit.MINUTES).schedule();
+    }
+
     public T getObject() { return object; }
 
     public void save() {
@@ -58,9 +63,9 @@ public final class Limbo<T> implements Runnable {
 
     public void reset() {
         scheduledTask.cancel();
-        scheduledTask = scheduler.buildTask(celest, this).delay(10, TimeUnit.MINUTES).schedule();
-
         shouldSave = true;
+        
+        schedule();
     }
 
     public void cancel() {

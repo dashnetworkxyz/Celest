@@ -8,21 +8,59 @@
 package xyz.dashnetwork.celest.utils.chat.builder;
 
 import net.kyori.adventure.text.event.ClickEvent;
+import xyz.dashnetwork.celest.utils.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
 public final class Section {
 
-    final String text;
-    String hover;
-    ClickEvent click;
+    public static class Hover {
 
-    Section(String text) {
-        this.text = text;
-        this.hover = null;
-        this.click = null;
+        final String text;
+        Predicate<User> predicate;
+
+        public Hover(String text, Predicate<User> predicate) {
+            this.text = text;
+            this.predicate = predicate;
+        }
+
     }
 
-    public void hover(String hover) { this.hover = hover; }
+    final String text;
+    List<Hover> hovers;
+    ClickEvent click;
+    Predicate<User> predicate;
 
-    public void click(ClickEvent click) { this.click = click; }
+    public Section(String text, Hover[] hover, ClickEvent click, Predicate<User> predicate) {
+        this.text = text;
+        this.hovers = new ArrayList<>();
+        this.click = click;
+        this.predicate = predicate;
+
+        if (hover != null)
+            hovers.addAll(List.of(hover));
+    }
+
+    public Section hover(String hover) {
+        hovers.add(new Hover(hover, null));
+        return this;
+    }
+
+    public Section hover(String hover, Predicate<User> predicate) {
+        hovers.add(new Hover(hover, predicate));
+        return this;
+    }
+
+    public Section click(ClickEvent click) {
+        this.click = click;
+        return this;
+    }
+
+    public Section onlyIf(Predicate<User> predicate) {
+        this.predicate = predicate;
+        return this;
+    }
 
 }

@@ -5,17 +5,18 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.arguments.function;
+package xyz.dashnetwork.celest.command.arguments.parser;
 
+import com.velocitypowered.api.command.CommandSource;
+import xyz.dashnetwork.celest.utils.FunctionPair;
 import xyz.dashnetwork.celest.utils.StringUtils;
 
 import java.util.UUID;
-import java.util.function.Function;
 
-public final class UniqueIdFunction implements Function<String, UUID> {
+public final class UniqueIdParser implements FunctionPair<CommandSource, String, UUID> {
 
     @Override
-    public UUID apply(String string) {
+    public UUID apply(CommandSource source, String string) {
         if (StringUtils.matchesUuid(string))
             return UUID.fromString(string);
 

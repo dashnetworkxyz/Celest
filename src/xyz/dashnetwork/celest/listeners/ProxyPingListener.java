@@ -82,7 +82,7 @@ public final class ProxyPingListener {
             String inputPort = String.valueOf(address.getInputServerPort());
             String version = VersionUtils.getVersionString(protocolVersion);
             String protocol = String.valueOf(protocolVersion.getProtocol());
-            String usernames = ArrayUtils.convertToString(PlayerProfile::getUsername, profiles);
+            String usernames = ArrayUtils.convertToString(profiles, PlayerProfile::getUsername, "&6, ");
 
             PlayerProfile recent = ProfileUtils.findMostRecent(profiles);
 

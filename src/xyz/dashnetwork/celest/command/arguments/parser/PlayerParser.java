@@ -5,25 +5,26 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.arguments.function;
+package xyz.dashnetwork.celest.command.arguments.parser;
 
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.utils.FunctionPair;
 import xyz.dashnetwork.celest.utils.StringUtils;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
 
-public final class PlayerFunction implements Function<String, Player> {
+public final class PlayerParser implements FunctionPair<CommandSource, String, Player> {
 
     private static final ProxyServer server = Celest.getServer();
 
     @Override
-    public Player apply(String string) {
-        if (string == null) // Useful for PlayerListFunction
-            return null;
+    public Player apply(CommandSource source, String string) {
+        if (string.matches("@[ps]") && source instanceof Player)
+            return (Player) source;
 
         Optional<Player> optional;
 

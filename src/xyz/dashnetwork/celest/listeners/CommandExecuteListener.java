@@ -14,6 +14,7 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 
 public final class CommandExecuteListener {
 
@@ -23,12 +24,10 @@ public final class CommandExecuteListener {
 
         if (source instanceof Player) {
             NamedSource named = new NamedSource(source);
-            String displayname = named.getDisplayname();
-            String username = named.getUsername();
             String message = "/" + event.getCommand();
 
-            MessageUtils.broadcast(user -> user.getData().getCommandSpy(), Messages.playerCommandSpy(
-                    username, displayname, message)
+            MessageUtils.broadcast(user -> user.getData().getCommandSpy(), user -> Messages.playerCommandSpy(
+                    user, new PlayerFormat(named), message)
             );
         }
     }

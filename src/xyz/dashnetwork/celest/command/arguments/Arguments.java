@@ -5,12 +5,11 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.arguments;
+package xyz.dashnetwork.celest.command.arguments;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 
@@ -21,7 +20,7 @@ import java.util.UUID;
 public final class Arguments {
 
     private final List<Object> objects = new ArrayList<>();
-    private final int size;
+    private int size;
     private int index;
 
     public Arguments(CommandSource source, String[] text, ArgumentType... types) {
@@ -31,22 +30,14 @@ public final class Arguments {
         if (text.length < size)
             return;
 
-        String self = null;
-
-        if (source instanceof Player)
-            self = ((Player) source).getUniqueId().toString();
-
         for (int i = 0; i < size; i++) {
             ArgumentType type = types[i];
             String arg = text[i];
 
-            if (self != null && LazyUtils.anyEquals(type, ArgumentType.PLAYER, ArgumentType.PLAYER_LIST))
-                arg = arg.replaceAll("@[ps]", self);
-
             if (type.equals(ArgumentType.MESSAGE))
                 arg = StringUtils.unsplit(i, ' ', text);
 
-            Object object = type.apply(arg);
+            Object object = type.parse(source, arg);
 
             if (object != null)
                 objects.add(object);

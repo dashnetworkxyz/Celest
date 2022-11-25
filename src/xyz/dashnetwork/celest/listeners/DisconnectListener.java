@@ -13,6 +13,8 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.utils.chat.builder.Format;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.data.UserData;
 
 public final class DisconnectListener {
@@ -22,15 +24,13 @@ public final class DisconnectListener {
         Player player = event.getPlayer();
         User user = User.getUser(player);
         UserData data = user.getData();
-
-        String username = player.getUsername();
-        String displayname = user.getDisplayname();
+        Format format = new PlayerFormat(user);
 
         if (data.getVanish())
-            MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(),
-                    Messages.leaveServerVanished(username, displayname));
+            MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(), each ->
+                    Messages.leaveServerVanished(each, format));
         else {
-            MessageUtils.broadcast(Messages.leaveServer(username, displayname));
+            MessageUtils.broadcast(each -> Messages.leaveServer(each, format));
 
             data.setLastPlayed(System.currentTimeMillis()); // TODO: Set this variable on /vanish
         }

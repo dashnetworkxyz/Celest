@@ -19,6 +19,8 @@ import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.utils.chat.builder.Format;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.data.PunishData;
 import xyz.dashnetwork.celest.utils.data.UserData;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
@@ -51,8 +53,6 @@ public final class PlayerChatListener {
             return;
         }
 
-        String username = player.getUsername();
-        String displayname = user.getDisplayname();
         String message = event.getMessage();
         ChatType type = ChatType.parseTag(message);
 
@@ -68,27 +68,30 @@ public final class PlayerChatListener {
         } else
             type = ChatType.GLOBAL;
 
+        final String finalMessage = message;
+        Format format = new PlayerFormat(user);
+
         switch (type) {
             case OWNER:
-                MessageUtils.broadcast(each -> each.isOwner() || each.getData().getChatType().equals(ChatType.OWNER),
-                        Messages.playerChatOwner(username, displayname, message));
+                MessageUtils.broadcast(each -> each.isOwner() || each.getData().getChatType().equals(ChatType.OWNER), each ->
+                        Messages.playerChatOwner(each, format, finalMessage));
                 break;
             case ADMIN:
-                MessageUtils.broadcast(each -> each.isAdmin() || each.getData().getChatType().equals(ChatType.ADMIN),
-                        Messages.playerChatAdmin(username, displayname, message));
+                MessageUtils.broadcast(each -> each.isAdmin() || each.getData().getChatType().equals(ChatType.ADMIN), each ->
+                        Messages.playerChatAdmin(each, format, finalMessage));
                 break;
             case STAFF:
-                MessageUtils.broadcast(each -> each.isStaff() || each.getData().getChatType().equals(ChatType.STAFF),
-                        Messages.playerChatStaff(username, displayname, message));
+                MessageUtils.broadcast(each -> each.isStaff() || each.getData().getChatType().equals(ChatType.STAFF), each ->
+                        Messages.playerChatStaff(each, format, finalMessage));
                 break;
             case LOCAL:
                 player.spoofChatInput(message); // Removes chat signatures
                 break;
             default:
-                MessageUtils.broadcast(Messages.playerChat(username, displayname, message));
+                MessageUtils.broadcast(each -> Messages.playerChat(each, format, finalMessage));
         }
 
-        Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(user, type, message));
+        Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(user, type, finalMessage));
     }
 
 }

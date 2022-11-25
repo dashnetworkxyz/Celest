@@ -5,16 +5,16 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.arguments.function;
+package xyz.dashnetwork.celest.command.arguments.parser;
 
+import com.velocitypowered.api.command.CommandSource;
+import xyz.dashnetwork.celest.utils.FunctionPair;
 import xyz.dashnetwork.celest.utils.StringUtils;
 
-import java.util.function.Function;
-
-public final class IntegerFunction implements Function<String, Integer> {
+public final class IntegerParser implements FunctionPair<CommandSource, String, Integer> {
 
     @Override
-    public Integer apply(String string) {
+    public Integer apply(CommandSource source, String string) {
         if (StringUtils.matchesInteger(string)) {
             try {
                 return Integer.parseInt(string);

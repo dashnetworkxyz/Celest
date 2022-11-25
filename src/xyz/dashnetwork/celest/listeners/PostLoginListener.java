@@ -13,6 +13,8 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.utils.chat.builder.Format;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.data.UserData;
 
 public final class PostLoginListener {
@@ -22,17 +24,15 @@ public final class PostLoginListener {
         Player player = event.getPlayer();
         User user = User.getUser(player);
         UserData data = user.getData();
-
-        String username = player.getUsername();
-        String displayname = user.getDisplayname();
+        Format format = new PlayerFormat(player);
 
         if (data.getVanish())
-            MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(),
-                    Messages.joinServerVanished(username, displayname));
+            MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(), each ->
+                    Messages.joinServerVanished(each, format));
         else if (data.getLastPlayed() == -1)
-            MessageUtils.broadcast(Messages.welcome(username, displayname));
+            MessageUtils.broadcast(each -> Messages.welcome(each, format));
         else
-            MessageUtils.broadcast(Messages.joinServer(username, displayname));
+            MessageUtils.broadcast(each -> Messages.joinServer(each, format));
 
         user.getAddress().setServerPingTime(-1); // Reset for PingSpy
 

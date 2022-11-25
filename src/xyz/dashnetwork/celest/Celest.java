@@ -8,7 +8,6 @@
 package xyz.dashnetwork.celest;
 
 import com.google.inject.Inject;
-import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -18,9 +17,9 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
-import xyz.dashnetwork.celest.commands.CommandClearChat;
-import xyz.dashnetwork.celest.commands.CommandMattsArmorStands;
-import xyz.dashnetwork.celest.commands.CommandTest;
+import xyz.dashnetwork.celest.command.commands.CommandClearChat;
+import xyz.dashnetwork.celest.command.commands.CommandMattsArmorStands;
+import xyz.dashnetwork.celest.command.commands.CommandTest;
 import xyz.dashnetwork.celest.inject.Injector;
 import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.tasks.ClearTask;
@@ -100,10 +99,9 @@ public final class Celest {
         eventManager.register(this, new ServerPreConnectListener());
 
         logger.info("Registering commands...");
-        CommandManager commandManager = server.getCommandManager();
-        commandManager.register("clearchat", new CommandClearChat(), "cc");
-        commandManager.register("mattsarmorstands", new CommandMattsArmorStands());
-        commandManager.register("test", new CommandTest());
+        new CommandClearChat();
+        new CommandMattsArmorStands();
+        new CommandTest();
 
         logger.info("Registering tasks...");
         Scheduler scheduler = server.getScheduler();

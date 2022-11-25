@@ -17,12 +17,12 @@ import java.util.function.IntFunction;
 
 public final class ArrayUtils {
 
-    public static <T>String convertToString(@NotNull Function<T, String> function, @NotNull T[] objects) {
+    public static <T>String convertToString(@NotNull T[] array, @NotNull Function<T, String> function, String separator) {
         StringBuilder builder = new StringBuilder();
 
-        for (T each : objects) {
+        for (T each : array) {
             if (builder.length() > 0)
-                builder.append(", ");
+                builder.append(separator);
 
             builder.append(function.apply(each));
         }

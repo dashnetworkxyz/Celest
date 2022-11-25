@@ -92,6 +92,8 @@ public final class Address {
             Storage.delete(address, Storage.Directory.ADDRESS); // Remove obsolete addresses.
     }
 
+    public String getString() { return address; }
+
     public boolean isManual() { return manual; }
 
     public void setManual(boolean manual) { this.manual = manual; }

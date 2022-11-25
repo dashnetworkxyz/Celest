@@ -5,11 +5,12 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.commands;
+package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
-import com.velocitypowered.api.command.SimpleCommand;
-import xyz.dashnetwork.celest.utils.PermissionUtils;
+import xyz.dashnetwork.celest.command.Command;
+import xyz.dashnetwork.celest.command.arguments.ArgumentType;
+import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
@@ -18,17 +19,18 @@ import xyz.dashnetwork.celest.utils.storage.LegacyParser;
 
 import java.util.UUID;
 
-public final class CommandTest implements SimpleCommand {
+public final class CommandTest extends Command {
 
-    @Override
-    public boolean hasPermission(Invocation invocation) {
-        return PermissionUtils.checkSource(invocation.source(), User::isOwner, true);
+    public CommandTest() {
+        super("test");
+
+        arguments(ArgumentType.MESSAGE);
+        permission(User::isOwner, true);
     }
 
     @Override
-    public void execute(Invocation invocation) {
-        CommandSource source = invocation.source();
-        String[] args = invocation.arguments();
+    public void execute(CommandSource source, Arguments arguments) {
+        String[] args = arguments.getString().split(" ");
 
         if (args.length < 2) {
             MessageUtils.message(source, "no u");
