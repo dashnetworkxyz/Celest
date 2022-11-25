@@ -11,6 +11,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.utils.FunctionPair;
 
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ import java.util.List;
 public final class PlayerListParser implements FunctionPair<CommandSource, String, List<Player>> {
 
     private static final ProxyServer server = Celest.getServer();
-    private static final PlayerParser function = new PlayerParser();
 
     @Override
     public List<Player> apply(CommandSource source, String string) {
@@ -29,10 +29,10 @@ public final class PlayerListParser implements FunctionPair<CommandSource, Strin
             list.addAll(server.getAllPlayers());
         else {
             for (String each : string.split(",")) {
-                Player player = function.apply(source, each);
+                Object player = ArgumentType.PLAYER.parse(source, each);
 
                 if (player != null)
-                    list.add(player);
+                    list.add((Player) player);
             }
         }
 

@@ -23,11 +23,11 @@ public final class PermissionUtils {
         return console;
     }
 
-    public static void filterVanished(@NotNull User user, @NotNull List<Player> players) {
-        if (user.isStaff() || user.getData().getVanish())
-            return;
+    public static boolean checkVanished(User user, @NotNull User check) {
+        if (user == null)
+            return true;
 
-        players.removeIf(player -> User.getUser(player).getData().getVanish());
+        return user.isStaff() || !check.getData().getVanish() || user.getData().getVanish();
     }
 
 }

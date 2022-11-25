@@ -74,19 +74,19 @@ public abstract class Command implements SimpleCommand {
 
     @Override
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
+        CommandSource source = invocation.source();
         String[] args = invocation.arguments();
-        int length = args.length;
 
-        if (length == 0)
+        if (types.length == 0)
             return CompletableFuture.completedFuture(Collections.emptyList());
 
-        String selected = args[length - 1];
-        ArgumentType type = ArgumentType.PLAYER;
+        if (args.length == 0)
+            return CompletableFuture.completedFuture(types[0].suggest(source, ""));
 
-        if (types.length >= length)
-            type = types[length - 1];
+        if (types.length >= args.length)
+            return CompletableFuture.completedFuture(types[args.length - 1].suggest(source, args[args.length - 1]));
 
-        return CompletableFuture.completedFuture(type.suggest(invocation.source(), selected));
+        return CompletableFuture.completedFuture(Collections.emptyList());
     }
 
 }
