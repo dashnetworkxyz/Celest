@@ -30,12 +30,12 @@ public final class CommandClearChat extends Command {
     public CommandClearChat() {
         super("clearchat", "cc");
 
-        arguments(ArgumentType.PLAYER_LIST);
+        arguments(true, ArgumentType.PLAYER_LIST);
         permission(User::isStaff, true);
     }
 
     @Override
-    public void execute(CommandSource source, Arguments arguments) {
+    protected void execute(CommandSource source, Arguments arguments) {
         NamedSource named = new NamedSource(source);
         List<Player> players = arguments.getPlayerList();
         MessageBuilder builder = new MessageBuilder();

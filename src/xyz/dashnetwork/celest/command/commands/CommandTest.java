@@ -24,12 +24,17 @@ public final class CommandTest extends Command {
     public CommandTest() {
         super("test");
 
-        arguments(ArgumentType.MESSAGE);
+        arguments(false, ArgumentType.MESSAGE);
         permission(User::isOwner, true);
     }
 
     @Override
-    public void execute(CommandSource source, Arguments arguments) {
+    protected void execute(CommandSource source, Arguments arguments) {
+        if (arguments.size() == 0) {
+            MessageUtils.message(source, "no u");
+            return;
+        }
+
         String[] args = arguments.getString().split(" ");
 
         if (args.length < 2) {

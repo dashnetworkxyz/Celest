@@ -20,22 +20,20 @@ import java.util.UUID;
 public final class Arguments {
 
     private final List<Object> objects = new ArrayList<>();
-    private int size;
     private int index;
 
     public Arguments(CommandSource source, String[] text, ArgumentType... types) {
-        size = types.length;
         index = 0;
 
-        if (text.length < size)
+        if (types.length < text.length)
             return;
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < text.length; i++) {
             ArgumentType type = types[i];
             String arg = text[i];
 
             if (type.equals(ArgumentType.MESSAGE))
-                arg = StringUtils.unsplit(i, ' ', text);
+                arg = StringUtils.unsplit(i, " ", text);
 
             Object object = type.parse(source, arg);
 
@@ -51,7 +49,7 @@ public final class Arguments {
         return current;
     }
 
-    public boolean isMissing() { return objects.isEmpty() || objects.size() < size; }
+    public int size() { return objects.size(); }
 
     public Player getPlayer() { return (Player) objects.get(getIndex()); }
 

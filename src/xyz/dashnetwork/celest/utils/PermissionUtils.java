@@ -17,16 +17,24 @@ import java.util.function.Predicate;
 public final class PermissionUtils {
 
     public static boolean checkSource(@NotNull CommandSource source, @NotNull Predicate<User> predicate, boolean console) {
-        if (source instanceof Player)
-            return predicate.test(User.getUser((Player) source));
+        User user = CastUtils.toUser(source);
+
+        if (user != null)
+            return predicate.test(user);
 
         return console;
     }
 
-    public static boolean checkVanished(User user, @NotNull User check) {
-        if (user == null)
+    public static boolean checkSource(@NotNull CommandSource source, @NotNull Predicate<User> predicate, @NotNull String permission) {
+        User user = CastUtils.toUser(source);
+
+        if (user != null && predicate.test(user))
             return true;
 
+        return source.hasPermission(permission);
+    }
+
+    public static boolean checkVanished(@NotNull User user, @NotNull User check) {
         return user.isStaff() || !check.getData().getVanish() || user.getData().getVanish();
     }
 

@@ -7,22 +7,23 @@
 
 package xyz.dashnetwork.celest.command.arguments.suggester;
 
-import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.utils.FunctionPair;
+import xyz.dashnetwork.celest.utils.ListUtils;
+import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.chat.ChatType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PlayerSuggester implements FunctionPair<User, String, List<String>> {
+public final class ChatTypeSuggester implements FunctionPair<User, String, List<String>> {
 
     @Override
     public List<String> apply(User user, String input) {
         List<String> list = new ArrayList<>();
 
-        ListUtils.addIfStarts(list, input, "@s");
-
-        for (User each : User.getUsers())
-            if (PermissionUtils.checkVanished(user, each))
-                ListUtils.addIfStarts(list, input, user.getUsername());
+        for (ChatType type : ChatType.values())
+            if (type.hasPermission(user))
+                ListUtils.addIfStarts(list, input, type.name().toLowerCase());
 
         return list;
     }

@@ -7,33 +7,38 @@
 
 package xyz.dashnetwork.celest.command.arguments.suggester;
 
-import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
-import xyz.dashnetwork.celest.utils.FunctionPair;
-import xyz.dashnetwork.celest.utils.ListUtils;
+import xyz.dashnetwork.celest.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-public class PlayerListSuggester implements FunctionPair<CommandSource, String, List<String>> {
+public final class PlayerListSuggester implements FunctionPair<User, String, List<String>> {
 
     @Override
-    public List<String> apply(CommandSource source, String input) {
-        List<String> list = new CopyOnWriteArrayList<>();
+    public List<String> apply(User user, String input) {
+        List<String> list = new ArrayList<>();
         String[] split = input.split(",");
-        int length = split.length;
-        String last = split[length - 1];
+        int length = split.length - 1;
+
+        if (length < 0)
+            return list;
+
+        boolean ends = input.endsWith(",");
+        String last = split[length];
+        String remaining = StringUtils.unsplit(ends ? 0 : -1, ",", split);
+
+        if (!remaining.isBlank())
+            remaining += ",";
+
+        if (ends)
+            last = "";
 
         ListUtils.addIfStarts(list, input, "@a");
-        list.addAll(ArgumentType.PLAYER.suggest(source, last));
+        List<String> playerSuggest = ArgumentType.PLAYER.suggest(user, last);
 
-        if (length > 1) {
-            for (int i = length - 1; i >= 0; i--) {
-                final int index = i;
-                list.forEach(string -> string = split[index] + string);
-            }
-        }
+        for (String entry : playerSuggest)
+            ListUtils.addIfStarts(list, input, remaining + entry);
 
         return list;
     }

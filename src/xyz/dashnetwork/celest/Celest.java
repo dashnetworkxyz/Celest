@@ -17,6 +17,7 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
+import xyz.dashnetwork.celest.command.commands.CommandChat;
 import xyz.dashnetwork.celest.command.commands.CommandClearChat;
 import xyz.dashnetwork.celest.command.commands.CommandMattsArmorStands;
 import xyz.dashnetwork.celest.command.commands.CommandTest;
@@ -99,6 +100,7 @@ public final class Celest {
         eventManager.register(this, new ServerPreConnectListener());
 
         logger.info("Registering commands...");
+        new CommandChat();
         new CommandClearChat();
         new CommandMattsArmorStands();
         new CommandTest();

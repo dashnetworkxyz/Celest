@@ -11,15 +11,17 @@ import org.jetbrains.annotations.NotNull;
 
 public final class StringUtils {
 
-    public static String unsplit(int index, char spliterator, @NotNull String[] array) {
+    // negative index can be used as a reverse index.
+    public static String unsplit(int index, @NotNull String spliterator, @NotNull String[] array) {
         StringBuilder builder = new StringBuilder();
+        int length = array.length;
 
-        for (int i = index; i < array.length; i++) {
-            if (i > index)
-                builder.append(spliterator);
-
-            builder.append(array[i]);
+        if (index < 0) {
+            length += index;
+            index = 0;
         }
+
+        append(builder, index, length, spliterator, array);
 
         return builder.toString();
     }
@@ -30,6 +32,15 @@ public final class StringUtils {
 
     public static boolean matchesInteger(@NotNull String string) {
         return string.matches("\\b(?<!\\.)\\d+(?!\\.)\\b");
+    }
+
+    private static void append(StringBuilder builder, int index, int length, String spliterator, String[] array) {
+        for (int i = index; i < length; i++) {
+            if (i > index)
+                builder.append(spliterator);
+
+            builder.append(array[i]);
+        }
     }
 
 }
