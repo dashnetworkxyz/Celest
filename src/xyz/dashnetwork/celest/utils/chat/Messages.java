@@ -19,7 +19,7 @@ public final class Messages {
         builder.append("&6&l»&c Usage:&7 /" + alias);
 
         for (String argument : arguments)
-            builder.append(" &7<" + argument + ">");
+            builder.append(" &7" + argument + "");
 
         return builder.build(null);
     }
@@ -122,7 +122,7 @@ public final class Messages {
 
     public static Component playerCommandSpy(User user, Format player, String message) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&c&lCmd&r ");
+        builder.append("&9&lCmd&r ");
         builder.append(player);
         builder.append("&r &b&l»&r ");
         builder.append("&b" + message);
@@ -154,7 +154,7 @@ public final class Messages {
                                           String version, String protocol,
                                           String profiles) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&c&lPing&6 " + name + "&7 pinged the server.")
+        builder.append("&6&l»&6 " + name + "&7 pinged the server.")
                 .hover("&6" + clientAddress
                         + "\n&7Server Address: &6" + serverAddress
                         + "\n&7Server Port: &6" + serverPort

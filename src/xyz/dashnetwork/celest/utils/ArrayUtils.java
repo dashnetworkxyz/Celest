@@ -17,7 +17,7 @@ import java.util.function.IntFunction;
 
 public final class ArrayUtils {
 
-    public static <T>String convertToString(@NotNull T[] array, @NotNull Function<T, String> function, String separator) {
+    public static <T>String convertToString(@NotNull T[] array, @NotNull Function<T, String> function, @NotNull String separator) {
         StringBuilder builder = new StringBuilder();
 
         for (T each : array) {

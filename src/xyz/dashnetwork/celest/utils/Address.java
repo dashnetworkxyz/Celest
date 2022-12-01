@@ -18,7 +18,6 @@ import java.util.UUID;
 public final class Address {
 
     private final String address;
-    private boolean manual;
     private AddressData addressData;
     private String inputServerAddress;
     private int inputServerPort;
@@ -26,7 +25,6 @@ public final class Address {
 
     private Address(String address, boolean limbo) {
         this.address = address;
-        this.manual = !limbo;
 
         addressData = Storage.read(address, Storage.Directory.ADDRESS, AddressData.class);
 
@@ -93,10 +91,6 @@ public final class Address {
     }
 
     public String getString() { return address; }
-
-    public boolean isManual() { return manual; }
-
-    public void setManual(boolean manual) { this.manual = manual; }
 
     public void setData(AddressData addressData) { this.addressData = addressData; }
 

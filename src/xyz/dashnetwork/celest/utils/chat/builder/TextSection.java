@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public final class Section {
+public final class TextSection {
 
     public static class Hover {
 
@@ -33,7 +33,7 @@ public final class Section {
     ClickEvent click;
     Predicate<User> predicate;
 
-    public Section(String text, Hover[] hover, ClickEvent click, Predicate<User> predicate) {
+    public TextSection(String text, Hover[] hover, ClickEvent click, Predicate<User> predicate) {
         this.text = text;
         this.hovers = new ArrayList<>();
         this.click = click;
@@ -43,22 +43,22 @@ public final class Section {
             hovers.addAll(List.of(hover));
     }
 
-    public Section hover(String hover) {
+    public TextSection hover(String hover) {
         hovers.add(new Hover(hover, null));
         return this;
     }
 
-    public Section hover(String hover, Predicate<User> predicate) {
+    public TextSection hover(String hover, Predicate<User> predicate) {
         hovers.add(new Hover(hover, predicate));
         return this;
     }
 
-    public Section click(ClickEvent click) {
+    public TextSection click(ClickEvent click) {
         this.click = click;
         return this;
     }
 
-    public Section onlyIf(Predicate<User> predicate) {
+    public TextSection onlyIf(Predicate<User> predicate) {
         this.predicate = predicate;
         return this;
     }

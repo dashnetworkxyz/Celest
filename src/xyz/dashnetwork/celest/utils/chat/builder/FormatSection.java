@@ -14,14 +14,12 @@ import java.util.function.Predicate;
 
 public final class FormatSection {
 
-    private final List<Section> sections;
+    private final List<TextSection> sections;
 
-    public FormatSection(List<Section> sections) {
-        this.sections = sections;
-    }
+    public FormatSection(List<TextSection> sections) { this.sections = sections; }
 
     public void onlyIf(Predicate<User> predicate) {
-        for (Section section : sections) {
+        for (TextSection section : sections) {
             if (section.predicate == null)
                 section.predicate = predicate;
             else

@@ -85,7 +85,6 @@ public final class User {
 
         userData.setAddress(stringAddress);
         userData.setUsername(username);
-        address.setManual(true);
         address.addUserIfNotPresent(uuid, username);
 
         Cache.generate(uuid, userData);
@@ -95,7 +94,6 @@ public final class User {
 
     public void remove() {
         users.remove(this);
-        address.setManual(false);
 
         new Limbo<>(this, User::save);
         new Limbo<>(address, Address::save);

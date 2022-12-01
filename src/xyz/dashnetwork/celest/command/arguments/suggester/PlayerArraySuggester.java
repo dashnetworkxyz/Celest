@@ -8,12 +8,15 @@
 package xyz.dashnetwork.celest.command.arguments.suggester;
 
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
-import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.utils.FunctionPair;
+import xyz.dashnetwork.celest.utils.ListUtils;
+import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PlayerListSuggester implements FunctionPair<User, String, List<String>> {
+public final class PlayerArraySuggester implements FunctionPair<User, String, List<String>> {
 
     @Override
     public List<String> apply(User user, String input) {

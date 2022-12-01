@@ -17,12 +17,12 @@ import xyz.dashnetwork.celest.utils.FunctionPair;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PlayerListParser implements FunctionPair<CommandSource, String, List<Player>> {
+public final class PlayerArrayParser implements FunctionPair<CommandSource, String, Player[]> {
 
     private static final ProxyServer server = Celest.getServer();
 
     @Override
-    public List<Player> apply(CommandSource source, String string) {
+    public Player[] apply(CommandSource source, String string) {
         List<Player> list = new ArrayList<>();
 
         if (string.equalsIgnoreCase("@a"))
@@ -39,7 +39,7 @@ public final class PlayerListParser implements FunctionPair<CommandSource, Strin
         if (list.isEmpty())
             return null;
 
-        return list;
+        return list.toArray(Player[]::new);
     }
 
 }

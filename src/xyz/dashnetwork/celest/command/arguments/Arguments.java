@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Andrew Bell - All Rights Reserved
+ * Copyright (C) 2022 Andrew Bell. - All Rights Reserved
  *
  * Unauthorized copying or redistribution of this file in source and binary forms via any medium
  * is strictly prohibited.
@@ -8,64 +8,49 @@
 package xyz.dashnetwork.celest.command.arguments;
 
 import com.velocitypowered.api.command.CommandSource;
-import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.server.RegisteredServer;
-import xyz.dashnetwork.celest.utils.StringUtils;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 public final class Arguments {
 
-    private final List<Object> objects = new ArrayList<>();
-    private int index;
+    private final List<Object> parsed = new ArrayList<>();
+    private int index = 0;
 
-    public Arguments(CommandSource source, String[] text, ArgumentType... types) {
-        index = 0;
+    public Arguments(CommandSource source, String[] array, List<ArgumentSection> sections) {
+        List<ArgumentType> list = ArgumentsUtils.typesFromSections(source, sections);
+        int size = MathUtils.getLowest(array.length, list.size());
 
-        if (types.length < text.length)
-            return;
+        for (int i = 0; i < size; i++) {
+            ArgumentType argument = list.get(i);
+            String string = argument == ArgumentType.MESSAGE ?
+                    StringUtils.unsplit(i, " ", array) :
+                    array[i];
 
-        for (int i = 0; i < text.length; i++) {
-            ArgumentType type = types[i];
-            String arg = text[i];
-
-            if (type.equals(ArgumentType.MESSAGE))
-                arg = StringUtils.unsplit(i, " ", text);
-
-            Object object = type.parse(source, arg);
+            Object object = argument.parse(source, string);
 
             if (object != null)
-                objects.add(object);
+                parsed.add(object);
         }
     }
 
-    private int getIndex() {
-        int current = index;
-        index++;
-
-        return current;
-    }
-
-    public int size() { return objects.size(); }
-
-    public Player getPlayer() { return (Player) objects.get(getIndex()); }
+    public int available() { return parsed.size() - index; }
 
     @SuppressWarnings("unchecked")
-    public List<Player> getPlayerList() { return (List<Player>) objects.get(getIndex()); }
+    public <T>Optional<T> get(Class<T> clazz) {
+        if (parsed.size() <= index)
+            return Optional.empty();
 
-    public RegisteredServer getServer() { return (RegisteredServer) objects.get(getIndex()); }
+        Object object = parsed.get(index);
 
-    public ChatType getChatType() { return (ChatType) objects.get(getIndex()); }
+        if (clazz.isInstance(object)) {
+            index++;
+            return Optional.of((T) object);
+        }
 
-    public UUID getUniqueId() { return (UUID) objects.get(getIndex()); }
-
-    public Integer getInteger() { return (Integer) objects.get(getIndex()); }
-
-    public Long getLong() { return (Long) objects.get(getIndex()); }
-
-    public String getString() { return (String) objects.get(getIndex()); }
+        return Optional.empty();
+    }
 
 }

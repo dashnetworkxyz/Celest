@@ -17,6 +17,7 @@ import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 import xyz.dashnetwork.celest.utils.storage.LegacyParser;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public final class CommandTest extends Command {
@@ -24,18 +25,20 @@ public final class CommandTest extends Command {
     public CommandTest() {
         super("test");
 
-        arguments(false, ArgumentType.MESSAGE);
-        permission(User::isOwner, true);
+        setPermission(User::isOwner, true);
+        addArguments(ArgumentType.MESSAGE);
     }
 
     @Override
-    protected void execute(CommandSource source, Arguments arguments) {
-        if (arguments.size() == 0) {
+    protected void execute(CommandSource source, String label, Arguments arguments) {
+        Optional<String> optional = arguments.get(String.class);
+
+        if (optional.isEmpty()) {
             MessageUtils.message(source, "no u");
             return;
         }
 
-        String[] args = arguments.getString().split(" ");
+        String[] args = optional.get().split(" ");
 
         if (args.length < 2) {
             MessageUtils.message(source, "no u");

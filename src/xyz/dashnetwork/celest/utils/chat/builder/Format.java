@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface Format {
 
-    List<Section> sections();
+    List<TextSection> sections();
 
 }

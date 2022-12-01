@@ -17,7 +17,7 @@ public final class CommandMattsArmorStands extends Command {
     public CommandMattsArmorStands() { super("mattsarmorstands"); }
 
     @Override
-    protected void execute(CommandSource source, Arguments arguments) {
+    protected void execute(CommandSource source, String label, Arguments arguments) {
         MessageUtils.message(source, "&c&lMattsArmorStands &6&l>> &6Developed by MM5. Version &cv1.0");
     }
 

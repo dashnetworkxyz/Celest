@@ -21,10 +21,10 @@ import java.util.function.Predicate;
 
 public final class MessageBuilder {
 
-    private final List<Section> sections = new ArrayList<>();
+    private final List<TextSection> sections = new ArrayList<>();
 
-    public Section append(@NotNull String text) {
-        Section section = new Section(text, null, null, user -> true);
+    public TextSection append(@NotNull String text) {
+        TextSection section = new TextSection(text, null, null, null);
         sections.add(section);
 
         return section;
@@ -38,8 +38,8 @@ public final class MessageBuilder {
     public Component build(User user) {
         List<TextComponent> components = new ArrayList<>();
 
-        for (Section section : sections) {
-            if (!check(user, section.predicate))
+        for (TextSection section : sections) {
+            if (!checkPredicate(user, section.predicate))
                 continue;
 
             TextComponent component = ComponentUtils.toComponent(section.text);
@@ -47,8 +47,8 @@ public final class MessageBuilder {
             if (!section.hovers.isEmpty()) {
                 StringBuilder builder = new StringBuilder();
 
-                for (Section.Hover hover : section.hovers)
-                    if (check(user, hover.predicate))
+                for (TextSection.Hover hover : section.hovers)
+                    if (checkPredicate(user, hover.predicate))
                         builder.append(hover.text);
 
                 component = component.hoverEvent(HoverEvent.showText(ComponentUtils.toComponent(builder.toString())));
@@ -61,7 +61,7 @@ public final class MessageBuilder {
         return Component.join(JoinConfiguration.noSeparators(), components);
     }
 
-    private boolean check(User user, Predicate<User> predicate) {
+    private boolean checkPredicate(User user, Predicate<User> predicate) {
         if (user == null || predicate == null)
             return true;
 

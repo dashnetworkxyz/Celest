@@ -9,6 +9,8 @@ package xyz.dashnetwork.celest.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
+import com.velocitypowered.api.network.ProtocolVersion;
+import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.inject.Injector;
 
 public final class ServerPostConnectListener {
@@ -16,7 +18,10 @@ public final class ServerPostConnectListener {
     @SuppressWarnings("UnstableApiUsage")
     @Subscribe
     public void onServerPostConnect(ServerPostConnectEvent event) {
-        Injector.injectClientPlaySessionHandler(event.getPlayer());
+        Player player = event.getPlayer();
+
+        if (player.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19) >= 0)
+            Injector.injectClientPlaySessionHandler(event.getPlayer());
     }
 
 }

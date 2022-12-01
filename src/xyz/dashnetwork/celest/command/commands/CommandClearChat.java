@@ -16,11 +16,13 @@ import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerListFormat;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public final class CommandClearChat extends Command {
@@ -30,14 +32,21 @@ public final class CommandClearChat extends Command {
     public CommandClearChat() {
         super("clearchat", "cc");
 
-        arguments(true, ArgumentType.PLAYER_LIST);
-        permission(User::isStaff, true);
+        setPermission(User::isStaff, true);
+        addArguments(ArgumentType.PLAYER_ARRAY);
     }
 
     @Override
-    protected void execute(CommandSource source, Arguments arguments) {
+    protected void execute(CommandSource source, String label, Arguments arguments) {
+        Optional<Player[]> optionalPlayers = arguments.get(Player[].class);
+
+        if (optionalPlayers.isEmpty()) {
+            MessageUtils.message(source, Messages.commandUsage(label, "<player-list>"));
+            return;
+        }
+
         NamedSource named = new NamedSource(source);
-        List<Player> players = arguments.getPlayerList();
+        List<Player> players = List.of(optionalPlayers.get());
         MessageBuilder builder = new MessageBuilder();
         Predicate<User> sendSelf = user -> players.size() == 1 || !user.getPlayer().equals(source);
 

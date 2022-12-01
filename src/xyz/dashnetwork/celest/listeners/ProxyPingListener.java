@@ -64,9 +64,6 @@ public final class ProxyPingListener {
             if (profiles.length == 0)
                 return; // Skip server pingers.
 
-            if (address.isManual())
-                return; // Skip players already logged in.
-
             if (PunishUtils.isValid(data.getBan()))
                 return; // Skip banned ips.
 

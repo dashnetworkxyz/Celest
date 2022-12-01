@@ -10,7 +10,7 @@ package xyz.dashnetwork.celest.command.arguments;
 import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.arguments.parser.*;
 import xyz.dashnetwork.celest.command.arguments.suggester.ChatTypeSuggester;
-import xyz.dashnetwork.celest.command.arguments.suggester.PlayerListSuggester;
+import xyz.dashnetwork.celest.command.arguments.suggester.PlayerArraySuggester;
 import xyz.dashnetwork.celest.command.arguments.suggester.PlayerSuggester;
 import xyz.dashnetwork.celest.utils.FunctionPair;
 import xyz.dashnetwork.celest.utils.User;
@@ -23,7 +23,7 @@ public enum ArgumentType {
     CHAT_TYPE(new ChatTypeParser(), new ChatTypeSuggester()),
     INTEGER(new IntegerParser(), (source, string) -> Collections.emptyList()),
     LONG(new LongParser(), (source, string) -> Collections.emptyList()),
-    PLAYER_LIST(new PlayerListParser(), new PlayerListSuggester()),
+    PLAYER_ARRAY(new PlayerArrayParser(), new PlayerArraySuggester()),
     PLAYER(new PlayerParser(), new PlayerSuggester()),
     SERVER(new ServerParser(), (source, string) -> Collections.emptyList()),
     UNIQUE_ID(new UniqueIdParser(), (source, string) -> Collections.emptyList()),

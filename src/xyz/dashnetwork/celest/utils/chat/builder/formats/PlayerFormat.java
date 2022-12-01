@@ -11,14 +11,14 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
-import xyz.dashnetwork.celest.utils.chat.builder.Section;
+import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class PlayerFormat implements Format {
 
-    private final List<Section> sections = new ArrayList<>();
+    private final List<TextSection> sections = new ArrayList<>();
 
     public PlayerFormat(Player player) {
         setup(player.getUsername(), User.getUser(player).getDisplayname(), player.getRemoteAddress().getHostString());
@@ -42,7 +42,7 @@ public final class PlayerFormat implements Format {
     }
 
     private void setup(String username, String displayname, String address) {
-        Section section = new Section(displayname, null, null, null);
+        TextSection section = new TextSection(displayname, null, null, null);
         section.hover("&6" + username);
 
         if (address != null)
@@ -52,6 +52,6 @@ public final class PlayerFormat implements Format {
     }
 
     @Override
-    public List<Section> sections() { return sections; }
+    public List<TextSection> sections() { return sections; }
 
 }

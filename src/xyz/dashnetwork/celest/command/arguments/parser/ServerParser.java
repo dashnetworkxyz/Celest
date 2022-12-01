@@ -13,7 +13,6 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.CastUtils;
 import xyz.dashnetwork.celest.utils.FunctionPair;
-import xyz.dashnetwork.celest.utils.PermissionUtils;
 import xyz.dashnetwork.celest.utils.User;
 
 import java.util.Optional;
@@ -31,8 +30,9 @@ public final class ServerParser implements FunctionPair<CommandSource, String, R
         
         RegisteredServer server = optional.get();
         String name = server.getServerInfo().getName().toLowerCase();
+        User user = CastUtils.toUser(source);
 
-        if (PermissionUtils.checkSource(source, User::isOwner, "dashnetwork.server." + name))
+        if (source.hasPermission("dashnetwork.server." + name) || (user != null && user.isOwner()))
             return server;
 
         return null;

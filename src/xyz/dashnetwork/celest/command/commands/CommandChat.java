@@ -13,38 +13,40 @@ import xyz.dashnetwork.celest.command.Command;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ArrayUtils;
+import xyz.dashnetwork.celest.utils.User;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 
-import java.util.List;
+import java.util.Optional;
 
 public final class CommandChat extends Command {
 
     public CommandChat() {
         super("chat");
 
-        arguments(1, ArgumentType.CHAT_TYPE, ArgumentType.PLAYER_LIST);
-        permission(ChatType.GLOBAL::hasPermission, true);
+        setPermission(ChatType.GLOBAL::hasPermission, true);
+        addArguments(ArgumentType.CHAT_TYPE);
+        addArguments(User::isAdmin, true, ArgumentType.PLAYER_ARRAY);
     }
 
     @Override
-    protected void execute(CommandSource source, Arguments arguments) {
-        ChatType type = arguments.getChatType();
-        List<Player> list;
+    protected void execute(CommandSource source, String label, Arguments arguments) {
+        Optional<ChatType> chatType = arguments.get(ChatType.class);
+        Optional<Player[]> playerArray = arguments.get(Player[].class);
 
-        // TODO: Util for this if if-else else. We'll need it in other places.
-        if (arguments.size() > 1)
-            list = arguments.getPlayerList();
-        else if (source instanceof Player)
-            list = List.of((Player) source);
-        else {
-            // TODO: Console
-            MessageUtils.message(source, "hi console");
+        if (chatType.isEmpty()) {
+            MessageUtils.message(source, "bro");
             return;
         }
 
-        MessageUtils.message(source, "Chat Type: " + type);
-        MessageUtils.message(source, "Players: " + ArrayUtils.convertToString(list.toArray(Player[]::new), Player::getUsername, ", "));
+        if (playerArray.isEmpty()) {
+            // TODO: Console
+            MessageUtils.message(source, "bro x2");
+            return;
+        }
+
+        MessageUtils.message(source, "Chat Type: " + chatType.get());
+        MessageUtils.message(source, "Players: " + ArrayUtils.convertToString(playerArray.get(), Player::getUsername, ", "));
 
     }
 
