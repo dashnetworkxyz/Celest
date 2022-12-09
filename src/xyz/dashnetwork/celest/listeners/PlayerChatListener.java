@@ -42,7 +42,7 @@ public final class PlayerChatListener {
         if (PunishUtils.isValid(mute)) {
             long expiration = mute.getExpiration();
             String reason = mute.getReason();
-            String banner = ProfileUtils.fromUuid(mute.getBanner()).getUsername();
+            String banner = ProfileUtils.fromUuid(mute.getJudge()).getUsername();
             String date = TimeUtils.longToDate(expiration);
 
             Component message = expiration == -1 ?

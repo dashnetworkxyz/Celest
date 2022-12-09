@@ -61,7 +61,7 @@ public final class LoginListener {
         if (PunishUtils.isValid(ban)) {
             long expiration = ban.getExpiration();
             String reason = ban.getReason();
-            String banner = ProfileUtils.fromUuid(ban.getBanner()).getUsername();
+            String banner = ProfileUtils.fromUuid(ban.getJudge()).getUsername();
             String date = TimeUtils.longToDate(expiration);
 
             Component message = expiration == -1 ?
