@@ -8,11 +8,11 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
-import xyz.dashnetwork.celest.command.Command;
+import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 
-public final class CommandMattsArmorStands extends Command {
+public final class CommandMattsArmorStands extends CelestCommand {
 
     public CommandMattsArmorStands() { super("mattsarmorstands"); }
 

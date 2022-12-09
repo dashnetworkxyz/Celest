@@ -1,13 +1,18 @@
 /*
- * Copyright (C) 2022 Andrew Bell. - All Rights Reserved
+ * Copyright (C) 2022 Andrew Bell - All Rights Reserved
  *
  * Unauthorized copying or redistribution of this file in source and binary forms via any medium
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.utils.connection;
 
-import xyz.dashnetwork.celest.utils.data.AddressData;
+import xyz.dashnetwork.celest.utils.ArrayUtils;
+import xyz.dashnetwork.celest.utils.LazyUtils;
+import xyz.dashnetwork.celest.utils.PunishUtils;
+import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
+import xyz.dashnetwork.celest.utils.Savable;
+import xyz.dashnetwork.celest.utils.storage.data.AddressData;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.storage.Storage;
 
@@ -15,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class Address {
+public final class Address implements Savable {
 
     private final String address;
     private AddressData addressData;
@@ -36,7 +41,7 @@ public final class Address {
         serverPingTime = -1;
 
         if (limbo)
-            new Limbo<>(this, Address::save);
+            new Limbo<>(this);
     }
 
     public static Address getAddress(String name, boolean shouldLimbo) {
@@ -83,6 +88,7 @@ public final class Address {
         addressData.setProfiles(ArrayUtils.add(profiles, new PlayerProfile(uuid, username)));
     }
 
+    @Override
     public void save() {
         if (addressData.getProfiles().length > 0 || LazyUtils.anyTrue(PunishUtils::isValid, addressData.getMute(), addressData.getBan()))
             Storage.write(address, Storage.Directory.ADDRESS, addressData);

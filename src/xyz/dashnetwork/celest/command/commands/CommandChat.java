@@ -9,17 +9,17 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.command.Command;
+import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ArrayUtils;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 
 import java.util.Optional;
 
-public final class CommandChat extends Command {
+public final class CommandChat extends CelestCommand {
 
     public CommandChat() {
         super("chat");

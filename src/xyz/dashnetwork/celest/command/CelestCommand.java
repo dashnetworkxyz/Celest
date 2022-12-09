@@ -15,9 +15,9 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.ArgumentSection;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.ArgumentsUtils;
+import xyz.dashnetwork.celest.utils.ArgumentUtils;
 import xyz.dashnetwork.celest.utils.CastUtils;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,14 +25,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
-public abstract class Command implements SimpleCommand {
+public abstract class CelestCommand implements SimpleCommand {
 
     private static final CommandManager commandManager = Celest.getServer().getCommandManager();
     private final List<ArgumentSection> sections;
     private Predicate<User> predicate;
     private boolean console;
 
-    public Command(String label, String... aliases) {
+    public CelestCommand(String label, String... aliases) {
         sections = new ArrayList<>();
         predicate = user -> true;
         console = true;
@@ -78,7 +78,7 @@ public abstract class Command implements SimpleCommand {
     @Override
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
         CommandSource source = invocation.source();
-        List<ArgumentType> list = ArgumentsUtils.typesFromSections(source, sections);
+        List<ArgumentType> list = ArgumentUtils.typesFromSections(source, sections);
         String[] args = invocation.arguments();
         int length = args.length;
         int size = list.size();

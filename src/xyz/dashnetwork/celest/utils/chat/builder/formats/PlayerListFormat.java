@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class PlayerListFormat implements Format {
+public final class PlayerListFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
+
+    public PlayerListFormat(Player... players) { this(List.of(players)); }
 
     public PlayerListFormat(Collection<Player> players) {
         for (Player player : players) {
@@ -27,8 +29,6 @@ public class PlayerListFormat implements Format {
             sections.addAll(new PlayerFormat(player).sections());
         }
     }
-
-    public PlayerListFormat(Player... players) { this(List.of(players)); }
 
     @Override
     public List<TextSection> sections() { return sections; }

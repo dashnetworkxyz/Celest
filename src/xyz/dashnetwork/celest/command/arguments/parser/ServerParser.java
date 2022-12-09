@@ -13,7 +13,7 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.CastUtils;
 import xyz.dashnetwork.celest.utils.FunctionPair;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.Optional;
 

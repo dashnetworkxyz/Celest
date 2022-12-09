@@ -10,7 +10,7 @@ package xyz.dashnetwork.celest.utils;
 public final class MathUtils {
 
     public static int getLowest(int... integers) {
-        int selected = Integer.MAX_VALUE;
+        int selected = integers[0];
 
         for (int each : integers)
             if (each < selected)

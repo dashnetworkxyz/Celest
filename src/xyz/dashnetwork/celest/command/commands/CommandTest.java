@@ -8,10 +8,10 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
-import xyz.dashnetwork.celest.command.Command;
+import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
@@ -20,7 +20,7 @@ import xyz.dashnetwork.celest.utils.storage.LegacyParser;
 import java.util.Optional;
 import java.util.UUID;
 
-public final class CommandTest extends Command {
+public final class CommandTest extends CelestCommand {
 
     public CommandTest() {
         super("test");

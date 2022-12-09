@@ -9,7 +9,7 @@ package xyz.dashnetwork.celest.command.arguments.suggester;
 
 import xyz.dashnetwork.celest.utils.FunctionPair;
 import xyz.dashnetwork.celest.utils.ListUtils;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;

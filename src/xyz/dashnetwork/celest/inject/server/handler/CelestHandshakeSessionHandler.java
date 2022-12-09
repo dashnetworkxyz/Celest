@@ -11,7 +11,7 @@ import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.InboundConnection;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.events.CelestHandshakeEvent;
+import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
 import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedHandshakeSessionHandler;
 import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedInitialInboundConnection;
@@ -39,16 +39,16 @@ public final class CelestHandshakeSessionHandler implements InvocationHandler {
 
         if (name.equals("handle") && Arrays.equals(types, ReflectedHandshake.array())) {
             ReflectedHandshake handshake = new ReflectedHandshake(args[0]);
-            String address = handshake.getServerAddress();
+            String server = handshake.getServerAddress();
             ProtocolVersion version = handshake.getProtocolVersion();
             int next = handshake.getNextStatus();
 
-            if (!address.toLowerCase().contains("dashnetwork")) {
+            if (!server.toLowerCase().contains("dashnetwork")) {
                 connection.close(true);
                 return true;
             }
 
-            String cleaned = handler.cleanVhost(address);
+            String cleaned = handler.cleanVhost(server);
             ReflectedInitialInboundConnection inbound = new ReflectedInitialInboundConnection(connection, cleaned, handshake);
             Enum<?> state = (Enum<?>) handler.getStateForProtocol(next);
 
@@ -56,6 +56,12 @@ public final class CelestHandshakeSessionHandler implements InvocationHandler {
                 connection.close(true);
                 return true;
             } else {
+                String hostname = ((InboundConnection) inbound.original()).getRemoteAddress().getHostString();
+                Address address = Address.getAddress(hostname, true);
+
+                address.setInputServerAddress(server);
+                address.setInputServerPort(handshake.getPort());
+
                 connection.setState(state);
                 connection.setProtocolVersion(version);
                 connection.setAssociation(inbound);
@@ -71,14 +77,6 @@ public final class CelestHandshakeSessionHandler implements InvocationHandler {
                         throw new AssertionError("getStateForProtocol provided invalid state!");
                 }
             }
-
-            eventManager.fireAndForget(new CelestHandshakeEvent(
-                    (InboundConnection) inbound.original(),
-                    version,
-                    address,
-                    handshake.getPort(),
-                    next
-            ));
 
             return true;
         } else

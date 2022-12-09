@@ -10,11 +10,12 @@ package xyz.dashnetwork.celest.utils;
 import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.arguments.ArgumentSection;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ArgumentsUtils {
+public final class ArgumentUtils {
 
     public static List<ArgumentType> typesFromSections(CommandSource source, List<ArgumentSection> sections) {
         List<ArgumentType> list = new ArrayList<>();

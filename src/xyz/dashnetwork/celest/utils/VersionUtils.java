@@ -14,16 +14,13 @@ import java.util.List;
 public final class VersionUtils {
 
     public static String getVersionString(ProtocolVersion version) {
-        StringBuilder builder = new StringBuilder();
-        List<String> list = version.getVersionsSupportedBy();
-        int size = list.size();
+        String earliest = version.getVersionIntroducedIn();
+        String latest = version.getMostRecentSupportedVersion();
 
-        builder.append(list.get(0));
+        if (earliest.equals(latest))
+            return latest;
 
-        if (size > 1)
-            builder.append("-").append(list.get(size - 1));
-
-        return builder.toString();
+        return earliest + "-" + latest;
     }
 
 }

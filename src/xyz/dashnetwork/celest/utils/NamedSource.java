@@ -9,41 +9,33 @@ package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.utils.connection.Address;
+import xyz.dashnetwork.celest.utils.connection.User;
 
-public final class NamedSource {
+public interface NamedSource {
 
-    private final CommandSource source;
-    private boolean console;
-    private String username;
-    private String displayname;
+    NamedSource console = new NamedSource() {
+        @Override
+        public String getDisplayname() { return "&4&lServer &6Console"; }
 
-    public NamedSource(CommandSource source) {
-        this.source = source;
+        @Override
+        public String getUsername() { return "@CONSOLE"; }
 
+        @Override
+        public Address getAddress() { return null; }
+    };
+
+    static NamedSource of(CommandSource source) {
         if (source instanceof Player)
-            setupPlayer((Player) source);
-        else
-            setupConsole();
+            return User.getUser((Player) source);
+
+        return console;
     }
 
-    private void setupPlayer(Player player) {
-        console = false;
-        username = player.getUsername();
-        displayname = User.getUser(player).getDisplayname();
-    }
+    String getDisplayname();
 
-    private void setupConsole() {
-        console = true;
-        username = "@CONSOLE";
-        displayname = "&4&lServer&6 CONSOLE";
-    }
+    String getUsername();
 
-    public CommandSource getSource() { return source; }
-
-    public boolean isConsole() { return console; }
-
-    public String getUsername() { return username; }
-
-    public String getDisplayname() { return displayname; }
+    Address getAddress();
 
 }

@@ -1,16 +1,19 @@
 /*
- * Copyright (C) 2022 Andrew Bell. - All Rights Reserved
+ * Copyright (C) 2022 Andrew Bell - All Rights Reserved
  *
  * Unauthorized copying or redistribution of this file in source and binary forms via any medium
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.utils.connection;
 
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.data.PunishData;
-import xyz.dashnetwork.celest.utils.data.UserData;
+import xyz.dashnetwork.celest.utils.NamedSource;
+import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
+import xyz.dashnetwork.celest.utils.Savable;
+import xyz.dashnetwork.celest.utils.storage.data.PunishData;
+import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.vault.Vault;
@@ -19,25 +22,22 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public final class User {
+public final class User implements Savable, NamedSource {
 
     private static final Vault vault = Celest.getVault();
     private static final List<User> users = new CopyOnWriteArrayList<>();
     private final UUID uuid;
     private final String stringUuid;
-    private String stringAddress;
+    private Player player;
     private Address address;
     private UserData userData;
-    private Player player;
 
     private User(Player player) {
-        this.player = player;
         this.uuid = player.getUniqueId();
         this.stringUuid = uuid.toString();
+        this.player = player;
 
         load(true);
-
-        users.add(this);
     }
 
     public static List<User> getUsers() { return List.copyOf(users); } // return Immutable list
@@ -68,7 +68,7 @@ public final class User {
         if (readFile)
             userData = Storage.read(stringUuid, Storage.Directory.USER, UserData.class);
 
-        stringAddress = player.getRemoteAddress().getHostString();
+        String stringAddress = player.getRemoteAddress().getHostString();
         address = Address.getAddress(stringAddress, false);
 
         UUID uniqueId = player.getUniqueId();
@@ -88,28 +88,30 @@ public final class User {
         address.addUserIfNotPresent(uuid, username);
 
         Cache.generate(uuid, userData);
+
+        users.add(this);
     }
 
+    @Override
     public void save() { Storage.write(stringUuid, Storage.Directory.USER, userData); }
 
     public void remove() {
         users.remove(this);
 
-        new Limbo<>(this, User::save);
-        new Limbo<>(address, Address::save);
+        new Limbo<>(this);
+        new Limbo<>(address);
     }
 
     public void setData(UserData userData) { this.userData = userData; }
 
     public Player getPlayer() { return player; }
 
-    public String getUsername() { return player.getUsername(); }
-
     public UUID getUuid() { return uuid; }
 
-    public UserData getData() { return userData; }
-
+    @Override
     public Address getAddress() { return address; }
+
+    public UserData getData() { return userData; }
 
     public boolean isStaff() { return player.hasPermission("dashnetwork.staff") || isAdmin(); }
 
@@ -141,6 +143,7 @@ public final class User {
         return address.getData().getMute();
     }
 
+    @Override
     public String getDisplayname() {
         String name = userData.getNickname();
         String prefix = vault.getPrefix(player);
@@ -151,10 +154,14 @@ public final class User {
 
         if (!prefix.isBlank())
             prefix += " ";
+
         if (!suffix.isBlank())
             suffix = " " + suffix;
 
         return prefix + name + suffix;
     }
+
+    @Override
+    public String getUsername() { return player.getUsername(); }
 
 }

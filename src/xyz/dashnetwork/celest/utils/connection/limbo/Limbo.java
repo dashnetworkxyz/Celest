@@ -5,31 +5,29 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.utils.connection.limbo;
 
 import com.velocitypowered.api.scheduler.ScheduledTask;
 import com.velocitypowered.api.scheduler.Scheduler;
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.utils.Savable;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public final class Limbo<T> implements Runnable {
+public final class Limbo<T extends Savable> implements Runnable {
 
     private static final Celest celest = Celest.getInstance();
     private static final Scheduler scheduler = Celest.getServer().getScheduler();
     private static final List<Limbo<?>> limbos = new CopyOnWriteArrayList<>();
     private final T object;
-    private final Consumer<T> save;
     private boolean shouldSave;
     private ScheduledTask scheduledTask;
 
-    public Limbo(T object, Consumer<T> save) {
+    public Limbo(T object) {
         this.object = object;
-        this.save = save;
         this.shouldSave = true;
 
         schedule();
@@ -40,7 +38,7 @@ public final class Limbo<T> implements Runnable {
     public static List<Limbo<?>> getLimbos() { return limbos; }
 
     @SuppressWarnings("unchecked")
-    public static <T>Limbo<T> getLimbo(Class<T> clazz, Predicate<T> predicate) {
+    public static <T extends Savable> Limbo<T> getLimbo(Class<T> clazz, Predicate<T> predicate) {
         for (Limbo<?> limbo : limbos)
             if (clazz.isInstance(limbo.object) && predicate.test((T) limbo.object))
                 return (Limbo<T>) limbo;
@@ -56,7 +54,7 @@ public final class Limbo<T> implements Runnable {
 
     public void save() {
         if (shouldSave) {
-            save.accept(object);
+            object.save();
             shouldSave = false;
         }
     }

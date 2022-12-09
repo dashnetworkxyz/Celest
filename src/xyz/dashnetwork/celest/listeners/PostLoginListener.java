@@ -10,12 +10,12 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
-import xyz.dashnetwork.celest.utils.data.UserData;
+import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 public final class PostLoginListener {
 

@@ -15,14 +15,14 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
-import xyz.dashnetwork.celest.utils.data.PunishData;
-import xyz.dashnetwork.celest.utils.data.UserData;
+import xyz.dashnetwork.celest.utils.storage.data.PunishData;
+import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 
 public final class PlayerChatListener {
@@ -54,7 +54,7 @@ public final class PlayerChatListener {
         }
 
         String message = event.getMessage();
-        ChatType type = ChatType.parseTag(message);
+        ChatType type = ChatType.parseSelector(message);
 
         if (type == null)
             type = userData.getChatType();
@@ -69,7 +69,7 @@ public final class PlayerChatListener {
             type = ChatType.GLOBAL;
 
         final String finalMessage = message;
-        Format format = new PlayerFormat(user);
+        final Format format = new PlayerFormat(user);
 
         switch (type) {
             case OWNER:

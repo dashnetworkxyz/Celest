@@ -8,8 +8,9 @@
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 
@@ -20,33 +21,18 @@ public final class PlayerFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 
-    public PlayerFormat(Player player) {
-        setup(player.getUsername(), User.getUser(player).getDisplayname(), player.getRemoteAddress().getHostString());
-    }
-
-    public PlayerFormat(User user) {
-        setup(user.getUsername(), user.getDisplayname(), user.getAddress().getString());
-    }
+    public PlayerFormat(Player player) { this(NamedSource.of(player)); }
 
     public PlayerFormat(NamedSource source) {
         String username = source.getUsername();
         String displayname = source.getDisplayname();
+        Address address = source.getAddress();
 
-        if (source.isConsole())
-            setup(username, displayname, null);
-        else {
-            String address = ((Player) source.getSource()).getRemoteAddress().getHostString();
-
-            setup(username, displayname, address);
-        }
-    }
-
-    private void setup(String username, String displayname, String address) {
         TextSection section = new TextSection(displayname, null, null, null);
         section.hover("&6" + username);
 
         if (address != null)
-            section.hover("\n&7Address: &6" + address, User::isAdmin);
+            section.hover("\n&7Address: &6" + address.getString(), User::isAdmin);
 
         sections.add(section);
     }

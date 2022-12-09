@@ -16,8 +16,12 @@ public final class ComponentUtils {
 
     private static final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacySection();
 
-    public static TextComponent toComponent(@NotNull String string) { return legacy.deserialize(ColorUtils.fromAmpersand(string)); }
+    public static TextComponent toComponent(@NotNull String string) {
+        return legacy.deserialize(ColorUtils.fromAmpersand(string));
+    }
 
-    public static String fromComponent(@NotNull Component component) { return legacy.serialize(component); }
+    public static String fromComponent(@NotNull Component component) {
+        return legacy.serialize(component);
+    }
 
 }

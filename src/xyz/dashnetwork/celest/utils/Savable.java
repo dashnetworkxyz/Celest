@@ -5,10 +5,10 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.chat.builder;
+package xyz.dashnetwork.celest.utils;
 
-public final class PagedMessage {
+public interface Savable {
 
-    // TODO
+    void save();
 
 }

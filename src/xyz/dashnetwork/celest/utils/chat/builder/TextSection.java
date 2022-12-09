@@ -8,7 +8,7 @@
 package xyz.dashnetwork.celest.utils.chat.builder;
 
 import net.kyori.adventure.text.event.ClickEvent;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;

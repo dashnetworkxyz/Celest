@@ -8,7 +8,7 @@
 package xyz.dashnetwork.celest.utils.chat;
 
 import net.kyori.adventure.text.Component;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 
@@ -160,21 +160,6 @@ public final class Messages {
                         + "\n&7Server Port: &6" + serverPort
                         + "\n&7Version: &6" + version + "&7 (" + protocol + ")"
                         + "\n&7Profiles: &6" + profiles);
-
-        return builder.build(null);
-    }
-
-    public static Component playerTablistFooter() {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("\n&6play.dashnetwork.xyz");
-
-        return builder.build(null);
-    }
-
-    public static Component playerTablistHeader(String server) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&lDashNetwork");
-        builder.append("\n&7You are connected to &6" + server + "\n");
 
         return builder.build(null);
     }

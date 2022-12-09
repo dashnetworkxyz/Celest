@@ -8,7 +8,7 @@
 package xyz.dashnetwork.celest.vault.api;
 
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.vault.Vault;
 
 public final class DummyAPI implements Vault {

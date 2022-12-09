@@ -7,10 +7,8 @@
 
 package xyz.dashnetwork.celest.listeners;
 
-import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.command.CommandExecuteEvent;
-import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
@@ -20,16 +18,14 @@ public final class CommandExecuteListener {
 
     @Subscribe
     public void onCommandExecute(CommandExecuteEvent event) {
-        CommandSource source = event.getCommandSource();
+        // TODO: toggle command spy messages from console
 
-        if (source instanceof Player) {
-            NamedSource named = new NamedSource(source);
-            String message = "/" + event.getCommand();
+        NamedSource named = NamedSource.of(event.getCommandSource());
+        String message = "/" + event.getCommand();
 
-            MessageUtils.broadcast(user -> user.getData().getCommandSpy(), user -> Messages.playerCommandSpy(
-                    user, new PlayerFormat(named), message)
-            );
-        }
+        MessageUtils.broadcast(user -> user.getData().getCommandSpy(), user -> Messages.playerCommandSpy(
+                user, new PlayerFormat(named), message)
+        );
     }
 
 }

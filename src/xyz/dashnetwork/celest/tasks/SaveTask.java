@@ -7,8 +7,8 @@
 
 package xyz.dashnetwork.celest.tasks;
 
-import xyz.dashnetwork.celest.utils.Limbo;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 
 public final class SaveTask implements Runnable {

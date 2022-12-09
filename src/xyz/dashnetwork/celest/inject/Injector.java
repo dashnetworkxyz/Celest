@@ -24,7 +24,7 @@ import xyz.dashnetwork.celest.utils.reflection.velocity.network.ReflectedServerC
 public final class Injector {
 
     // Hook into Handshake and Server Ping.
-    // Allows me to see client specified address and port from handshake. (CelestHandshakeEvent)
+    // Allows me to see client specified address and port from handshake.
     // Allows custom ServerPing response for custom entry preventsChatReports:true (CelestServerPing)
     public static void injectChannelInitializer(ProxyServer proxy) {
         try {
@@ -34,14 +34,14 @@ public final class Injector {
 
             holder.set(new CelestServerChannelInitializer(holder.get()));
         } catch (ReflectiveOperationException | RuntimeException exception) {
-            Celest.getLogger().error("Failed to inject channel initializer. Printing stacktrace...");
+            Celest.getLogger().error("Failed to inject server channel initializer. Printing stacktrace...");
             exception.printStackTrace();
         }
     }
 
     // Hacky workaround for issue #804. (https://github.com/PaperMC/Velocity/issues/804)
     // This completely disables chat signatures.
-    public static void injectClientPlaySessionHandler(Player player) {
+    public static void injectSessionHandler(Player player) {
         try {
             ReflectedConnectedPlayer connected = new ReflectedConnectedPlayer(player);
             ReflectedVelocityServerConnection server = connected.getConnectedServer();

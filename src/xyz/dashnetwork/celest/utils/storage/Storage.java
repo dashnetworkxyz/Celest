@@ -56,8 +56,10 @@ public final class Storage {
         String json = gson.toJson(object);
 
         try {
-            file.createNewFile();
+            if (!file.exists())
+                file.createNewFile();
 
+            // GZIP because we have more CPU power than SSD power.
             GZIPOutputStream stream = new GZIPOutputStream(new FileOutputStream(file));
             OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
             writer.write(json);
@@ -67,7 +69,7 @@ public final class Storage {
         }
     }
 
-    public static <T>T read(String fileName, Directory directory, Class<T> clazz) {
+    public static <T> T read(String fileName, Directory directory, Class<T> clazz) {
         File file = new File(directory.getFile(), fileName + ".json.gz");
 
         if (!file.exists())
@@ -76,7 +78,7 @@ public final class Storage {
         return gson.fromJson(new String(readFile(file), StandardCharsets.UTF_8), clazz);
     }
 
-    public static <T>List<T> readAll(Directory directory, Class<T> clazz) {
+    public static <T> List<T> readAll(Directory directory, Class<T> clazz) {
         File[] files = directory.getFile().listFiles();
 
         if (files == null || files.length == 0)

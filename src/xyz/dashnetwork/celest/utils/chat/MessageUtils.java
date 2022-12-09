@@ -11,9 +11,10 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.CastUtils;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -42,7 +43,7 @@ public final class MessageUtils {
         server.sendMessage(component);
     }
 
-    public static void broadcast(@NotNull Function<User, Component> function) {
+    public static void broadcast(@NotNull Function<@Nullable User, Component> function) {
         for (User user : User.getUsers())
             message(user.getPlayer(), function.apply(user));
 
@@ -61,7 +62,7 @@ public final class MessageUtils {
         server.getConsoleCommandSource().sendMessage(component);
     }
 
-    public static void broadcast(@NotNull Predicate<User> predicate, @NotNull Function<User, Component> function) {
+    public static void broadcast(@NotNull Predicate<User> predicate, @NotNull Function<@Nullable User, Component> function) {
         for (User user : User.getUsers())
             if (predicate.test(user))
                 message(user.getPlayer(), function.apply(user));

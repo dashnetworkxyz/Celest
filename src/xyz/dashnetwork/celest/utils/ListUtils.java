@@ -14,7 +14,7 @@ import java.util.function.Function;
 
 public final class ListUtils {
 
-    public static <T>String convertToString(@NotNull List<T> list, @NotNull Function<T, String> function, @NotNull String separator) {
+    public static <T> String convertToString(@NotNull List<T> list, @NotNull Function<T, String> function, @NotNull String separator) {
         StringBuilder builder = new StringBuilder();
 
         for (T each : list) {

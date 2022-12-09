@@ -19,10 +19,13 @@ import xyz.dashnetwork.celest.utils.*;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
-import xyz.dashnetwork.celest.utils.data.AddressData;
+import xyz.dashnetwork.celest.utils.connection.Address;
+import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.storage.data.AddressData;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 
+import java.util.Calendar;
 import java.util.UUID;
 
 public final class ProxyPingListener {
@@ -43,6 +46,7 @@ public final class ProxyPingListener {
 
         builder.clearMods().clearSamplePlayers();
         builder.onlinePlayers(online);
+        builder.maximumPlayers(Calendar.getInstance().get(Calendar.YEAR));
         builder.description(description);
         builder.version(new ServerPing.Version(builder.getVersion().getProtocol(), software));
 
@@ -55,7 +59,7 @@ public final class ProxyPingListener {
         final String hostname = connection.getRemoteAddress().getHostString();
         final ProtocolVersion protocolVersion = connection.getProtocolVersion();
 
-        // Run async so Pingspy doesn't hold up the status response.
+        // Run async so PingSpy doesn't hold up the status response.
         scheduler.buildTask(Celest.getInstance(), () -> {
             Address address = Address.getAddress(hostname, true);
             AddressData data = address.getData();
@@ -79,7 +83,7 @@ public final class ProxyPingListener {
             String inputPort = String.valueOf(address.getInputServerPort());
             String version = VersionUtils.getVersionString(protocolVersion);
             String protocol = String.valueOf(protocolVersion.getProtocol());
-            String usernames = ArrayUtils.convertToString(profiles, PlayerProfile::getUsername, "&6, ");
+            String usernames = ArrayUtils.convertToString(profiles, PlayerProfile::getUsername, ", ");
 
             PlayerProfile recent = ProfileUtils.findMostRecent(profiles);
 

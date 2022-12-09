@@ -31,12 +31,12 @@ import xyz.dashnetwork.celest.utils.storage.Configuration;
 import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.vault.Vault;
 import xyz.dashnetwork.celest.vault.api.DummyAPI;
-import xyz.dashnetwork.celest.vault.api.LuckAPI;
+import xyz.dashnetwork.celest.vault.api.LuckPermsAPI;
 
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "0.9", authors = {"MasterDash5"})
+@Plugin(id = "celest", name = "Celest", version = "0.10", authors = {"MasterDash5"})
 public final class Celest {
 
     private static Celest instance;
@@ -76,7 +76,7 @@ public final class Celest {
         Cache.load();
 
         if (server.getPluginManager().isLoaded("luckperms"))
-            vault = new LuckAPI();
+            vault = new LuckPermsAPI();
         else {
             logger.warn("Couldn't find a permissions plugin for Vault, using fallback.");
             vault = new DummyAPI();
@@ -87,7 +87,6 @@ public final class Celest {
 
         logger.info("Registering events...");
         EventManager eventManager = server.getEventManager();
-        eventManager.register(this, new CelestHandshakeListener());
         eventManager.register(this, new CommandExecuteListener());
         eventManager.register(this, new DisconnectListener());
         eventManager.register(this, new LoginListener());

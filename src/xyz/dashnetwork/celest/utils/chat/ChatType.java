@@ -9,7 +9,7 @@ package xyz.dashnetwork.celest.utils.chat;
 
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.LazyUtils;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.function.Predicate;
 
@@ -36,7 +36,7 @@ public enum ChatType {
 
     public String[] getSelectors() { return selectors; }
 
-    public static ChatType parseTag(@NotNull String message) {
+    public static ChatType parseSelector(@NotNull String message) {
         if (message.length() < 3)
             return null;
 

@@ -15,7 +15,7 @@ import xyz.dashnetwork.celest.vault.Vault;
 
 import java.util.UUID;
 
-public final class LuckAPI implements Vault {
+public final class LuckPermsAPI implements Vault {
 
     private final UserManager manager = LuckPermsProvider.get().getUserManager();
 

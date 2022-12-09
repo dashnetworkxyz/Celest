@@ -10,7 +10,7 @@ package xyz.dashnetwork.celest.command.arguments.parser;
 import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.utils.CastUtils;
 import xyz.dashnetwork.celest.utils.FunctionPair;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 
 public final class ChatTypeParser implements FunctionPair<CommandSource, String, ChatType> {

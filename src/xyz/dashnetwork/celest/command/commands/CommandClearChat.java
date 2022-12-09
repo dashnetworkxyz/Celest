@@ -9,23 +9,22 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.command.Command;
+import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.ListUtils;
+import xyz.dashnetwork.celest.utils.ArrayUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerListFormat;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public final class CommandClearChat extends Command {
+public final class CommandClearChat extends CelestCommand {
 
     // TODO: Tab Completion
 
@@ -38,17 +37,17 @@ public final class CommandClearChat extends Command {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<Player[]> optionalPlayers = arguments.get(Player[].class);
+        Optional<Player[]> optional = arguments.get(Player[].class);
 
-        if (optionalPlayers.isEmpty()) {
+        if (optional.isEmpty()) {
             MessageUtils.message(source, Messages.commandUsage(label, "<player-list>"));
             return;
         }
 
-        NamedSource named = new NamedSource(source);
-        List<Player> players = List.of(optionalPlayers.get());
+        NamedSource named = NamedSource.of(source);
+        Player[] players = optional.get();
         MessageBuilder builder = new MessageBuilder();
-        Predicate<User> sendSelf = user -> players.size() == 1 || !user.getPlayer().equals(source);
+        Predicate<User> sendSelf = user -> players.length == 1 || !user.getPlayer().equals(source);
 
         for (int i = 0; i < 99; i++)
             builder.append("\n");
@@ -59,7 +58,7 @@ public final class CommandClearChat extends Command {
         for (Player player : players)
             MessageUtils.message(player, builder::build);
 
-        if (ListUtils.containsOtherThan(players, source)) {
+        if (ArrayUtils.containsOtherThan(players, source)) {
             builder = new MessageBuilder();
             builder.append("&6&l» &7Chat was cleared for ");
             builder.append(new PlayerListFormat(players));

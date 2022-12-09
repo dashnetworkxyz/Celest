@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.data;
+package xyz.dashnetwork.celest.utils.storage.data;
 
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.chat.ChatType;

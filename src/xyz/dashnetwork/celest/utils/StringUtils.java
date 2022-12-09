@@ -21,7 +21,12 @@ public final class StringUtils {
             index = 0;
         }
 
-        append(builder, index, length, spliterator, array);
+        for (int i = index; i < length; i++) {
+            if (i > index)
+                builder.append(spliterator);
+
+            builder.append(array[i]);
+        }
 
         return builder.toString();
     }
@@ -32,15 +37,6 @@ public final class StringUtils {
 
     public static boolean matchesInteger(@NotNull String string) {
         return string.matches("\\b(?<!\\.)\\d+(?!\\.)\\b");
-    }
-
-    private static void append(StringBuilder builder, int index, int length, String spliterator, String[] array) {
-        for (int i = index; i < length; i++) {
-            if (i > index)
-                builder.append(spliterator);
-
-            builder.append(array[i]);
-        }
     }
 
 }

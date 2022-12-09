@@ -10,12 +10,12 @@ package xyz.dashnetwork.celest.utils.storage;
 import com.velocitypowered.api.proxy.Player;
 import org.yaml.snakeyaml.Yaml;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.Address;
+import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.ConsumerPair;
-import xyz.dashnetwork.celest.utils.User;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
-import xyz.dashnetwork.celest.utils.data.AddressData;
-import xyz.dashnetwork.celest.utils.data.UserData;
+import xyz.dashnetwork.celest.utils.storage.data.AddressData;
+import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 
@@ -128,7 +128,7 @@ public final class LegacyParser {
         }
     }
 
-    private <T>void parseMap(Map<String, T> map, ConsumerPair<UserData, T> consumer) {
+    private <T> void parseMap(Map<String, T> map, ConsumerPair<UserData, T> consumer) {
         if (map == null)
             return;
 
@@ -152,7 +152,7 @@ public final class LegacyParser {
         }
     }
 
-    private <T>T readFile(String name) {
+    private <T> T readFile(String name) {
         File file = new File(folder, name + ".yml");
 
         if (!file.exists())

@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.data;
+package xyz.dashnetwork.celest.utils.storage.data;
 
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 

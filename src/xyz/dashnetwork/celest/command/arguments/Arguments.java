@@ -20,7 +20,7 @@ public final class Arguments {
     private int index = 0;
 
     public Arguments(CommandSource source, String[] array, List<ArgumentSection> sections) {
-        List<ArgumentType> list = ArgumentsUtils.typesFromSections(source, sections);
+        List<ArgumentType> list = ArgumentUtils.typesFromSections(source, sections);
         int size = MathUtils.getLowest(array.length, list.size());
 
         for (int i = 0; i < size; i++) {
@@ -36,10 +36,8 @@ public final class Arguments {
         }
     }
 
-    public int available() { return parsed.size() - index; }
-
     @SuppressWarnings("unchecked")
-    public <T>Optional<T> get(Class<T> clazz) {
+    public <T> Optional<T> get(Class<T> clazz) {
         if (parsed.size() <= index)
             return Optional.empty();
 

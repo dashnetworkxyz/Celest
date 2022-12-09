@@ -5,24 +5,23 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.data;
+package xyz.dashnetwork.celest.utils.storage.data;
 
 import java.util.UUID;
 
 public final class PunishData {
 
-    private final UUID banner;
+    private final UUID judge;
     private final String reason;
     private final long expiration;
 
-    public PunishData(UUID banner, String reason, long expiration) {
-        this.banner = banner;
+    public PunishData(UUID judge, String reason, long expiration) {
+        this.judge = judge;
         this.reason = reason;
         this.expiration = expiration;
     }
 
-    // TODO: Better name?
-    public UUID getBanner() { return banner; }
+    public UUID getJudge() { return judge; }
 
     public String getReason() { return reason; }
 

@@ -21,7 +21,7 @@ public final class ServerPostConnectListener {
         Player player = event.getPlayer();
 
         if (player.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19) >= 0)
-            Injector.injectClientPlaySessionHandler(event.getPlayer());
+            Injector.injectSessionHandler(player);
     }
 
 }

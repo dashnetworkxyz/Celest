@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 public final class CastUtils {
 
