@@ -32,7 +32,7 @@ public final class ArgumentUtils {
         return list;
     }
 
-    public static Player playerOrSelf(Arguments arguments, CommandSource source) {
+    public static Player playerOrSelf(CommandSource source, Arguments arguments) {
         Optional<Player> optional = arguments.get(Player.class);
 
         if (optional.isEmpty()) {
@@ -45,7 +45,7 @@ public final class ArgumentUtils {
         return optional.get();
     }
 
-    public static List<Player> playerListOrSelf(Arguments arguments, CommandSource source) {
+    public static List<Player> playerListOrSelf(CommandSource source, Arguments arguments) {
         List<Player> list = new ArrayList<>();
         Optional<Player[]> optional = arguments.get(Player[].class);
 

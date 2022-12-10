@@ -30,18 +30,6 @@ public final class LoginListener {
     public void onLogin(LoginEvent event) {
         Player player = event.getPlayer();
         ProtocolVersion version = player.getProtocolVersion();
-        ResultedEvent.ComponentResult result = event.getResult();
-
-        if (!result.isAllowed()) {
-            Optional<Component> optional = result.getReasonComponent();
-
-            if (optional.isPresent()) {
-                Component component = ComponentUtils.toComponent("&6&lDashNetwork\n\n&7").append(optional.get());
-                event.setResult(ResultedEvent.ComponentResult.denied(component));
-            }
-
-            return;
-        }
 
         if (LazyUtils.anyEquals(version, ProtocolVersion.MINECRAFT_1_7_2, ProtocolVersion.MINECRAFT_1_7_6)) {
             event.setResult(ResultedEvent.ComponentResult.denied(ComponentUtils.toComponent(

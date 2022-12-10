@@ -40,14 +40,14 @@ public final class MessageBuilder {
         List<TextComponent> components = new ArrayList<>();
 
         for (TextSection section : sections) {
-            if (user == null || checkPredicate(user, section.predicate)) {
+            if (checkPredicate(user, section.predicate)) {
                 TextComponent component = ComponentUtils.toComponent(section.text);
 
                 if (!section.hovers.isEmpty()) {
                     StringBuilder builder = new StringBuilder();
 
                     for (TextSection.Hover hover : section.hovers)
-                        if (user != null && checkPredicate(user, hover.predicate))
+                        if (checkPredicate(user, hover.predicate))
                             builder.append(hover.text);
 
                     if (builder.length() > 0)
@@ -63,7 +63,7 @@ public final class MessageBuilder {
     }
 
     private boolean checkPredicate(User user, Predicate<User> predicate) {
-        if (predicate == null)
+        if (user == null || predicate == null)
             return true;
 
         return predicate.test(user);

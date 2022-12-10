@@ -17,10 +17,7 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
-import xyz.dashnetwork.celest.command.commands.CommandChat;
-import xyz.dashnetwork.celest.command.commands.CommandClearChat;
-import xyz.dashnetwork.celest.command.commands.CommandMattsArmorStands;
-import xyz.dashnetwork.celest.command.commands.CommandTest;
+import xyz.dashnetwork.celest.command.commands.*;
 import xyz.dashnetwork.celest.inject.Injector;
 import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.tasks.ClearTask;
@@ -99,10 +96,15 @@ public final class Celest {
         eventManager.register(this, new ServerPreConnectListener());
 
         logger.info("Registering commands...");
+        new CommandBigMistakeBuddy();
         new CommandChat();
         new CommandClearChat();
+        new CommandDiscord();
         new CommandMattsArmorStands();
+        new CommandMommy();
+        new CommandPing();
         new CommandTest();
+        new CommandTheFurpySong();
 
         logger.info("Registering tasks...");
         Scheduler scheduler = server.getScheduler();

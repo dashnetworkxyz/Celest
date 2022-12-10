@@ -20,7 +20,7 @@ public interface NamedSource {
         public String getDisplayname() { return "&4&lServer&6 Velocity"; }
 
         @Override
-        public String getUsername() { return VersionUtils.getProxyName() + " " + VersionUtils.getProxyVersion(); }
+        public String getUsername() { return VersionUtils.getProxyName() + "\n" + VersionUtils.getProxyVersion(); }
 
         @Override
         public Address getAddress() { return null; }

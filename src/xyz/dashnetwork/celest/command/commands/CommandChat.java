@@ -41,7 +41,7 @@ public final class CommandChat extends CelestCommand {
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
         Optional<ChatType> optional = arguments.get(ChatType.class);
-        List<Player> players = ArgumentUtils.playerListOrSelf(arguments, source);
+        List<Player> players = ArgumentUtils.playerListOrSelf(source, arguments);
 
         if (optional.isEmpty() || players.isEmpty()) {
             sendUsage(source, label);
