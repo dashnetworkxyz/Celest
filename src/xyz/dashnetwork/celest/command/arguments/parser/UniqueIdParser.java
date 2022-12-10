@@ -7,16 +7,16 @@
 
 package xyz.dashnetwork.celest.command.arguments.parser;
 
-import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.utils.FunctionPair;
 import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.UUID;
 
-public final class UniqueIdParser implements FunctionPair<CommandSource, String, UUID> {
+public final class UniqueIdParser implements FunctionPair<User, String, UUID> {
 
     @Override
-    public UUID apply(CommandSource source, String string) {
+    public UUID apply(User user, String string) {
         if (StringUtils.matchesUuid(string))
             return UUID.fromString(string);
 

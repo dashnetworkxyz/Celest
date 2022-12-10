@@ -7,14 +7,14 @@
 
 package xyz.dashnetwork.celest.command.arguments.parser;
 
-import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.utils.FunctionPair;
 import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.connection.User;
 
-public final class IntegerParser implements FunctionPair<CommandSource, String, Integer> {
+public final class IntegerParser implements FunctionPair<User, String, Integer> {
 
     @Override
-    public Integer apply(CommandSource source, String string) {
+    public Integer apply(User user, String string) {
         if (StringUtils.matchesInteger(string)) {
             try {
                 return Integer.parseInt(string);

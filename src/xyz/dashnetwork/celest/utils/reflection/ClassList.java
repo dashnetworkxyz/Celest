@@ -9,7 +9,7 @@ package xyz.dashnetwork.celest.utils.reflection;
 
 public final class ClassList {
 
-    public static final Class<?>
+    public static Class<?>
             VELOCITY_SERVER,
             MINECRAFT_CONNECTION, MINECRAFT_CONNECTION_ASSOCIATION, MINECRAFT_SESSION_HANDLER,
             BACKEND_PLAY_SESSION_HANDLER, VELOCITY_SERVER_CONNECTION,
@@ -17,7 +17,7 @@ public final class ClassList {
             SERVER_LIST_PING_HANDLER, VELOCITY_INBOUND_CONNECTION,
             CONNECTION_MANAGER, SERVER_CHANNEL_INITIALIZER_HOLDER,
             STATE_REGISTRY,
-            PLAYER_CHAT,
+            SESSION_PLAYER_CHAT,
             HANDSHAKE, STATUS_REQUEST, STATUS_RESPONSE;
 
     static {
@@ -38,12 +38,12 @@ public final class ClassList {
             CONNECTION_MANAGER = Class.forName("com.velocitypowered.proxy.network.ConnectionManager");
             SERVER_CHANNEL_INITIALIZER_HOLDER = Class.forName("com.velocitypowered.proxy.network.ServerChannelInitializerHolder");
             STATE_REGISTRY = Class.forName("com.velocitypowered.proxy.protocol.StateRegistry");
-            PLAYER_CHAT = Class.forName("com.velocitypowered.proxy.protocol.packet.chat.PlayerChat");
+            SESSION_PLAYER_CHAT = Class.forName("com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerChat");
             HANDSHAKE = Class.forName("com.velocitypowered.proxy.protocol.packet.Handshake");
             STATUS_REQUEST = Class.forName("com.velocitypowered.proxy.protocol.packet.StatusRequest");
             STATUS_RESPONSE = Class.forName("com.velocitypowered.proxy.protocol.packet.StatusResponse");
         } catch (ClassNotFoundException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

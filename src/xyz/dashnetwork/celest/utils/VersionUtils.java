@@ -8,10 +8,14 @@
 package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.network.ProtocolVersion;
+import com.velocitypowered.api.util.ProxyVersion;
+import xyz.dashnetwork.celest.Celest;
 
 import java.util.List;
 
 public final class VersionUtils {
+
+    private static final ProxyVersion version = Celest.getServer().getVersion();
 
     public static String getVersionString(ProtocolVersion version) {
         String earliest = version.getVersionIntroducedIn();
@@ -22,5 +26,9 @@ public final class VersionUtils {
 
         return earliest + "-" + latest;
     }
+
+    public static String getProxyName() { return version.getName(); }
+
+    public static String getProxyVersion() { return version.getVersion(); }
 
 }

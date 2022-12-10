@@ -11,12 +11,17 @@ import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
+import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.ArgumentSection;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ArgumentUtils;
 import xyz.dashnetwork.celest.utils.CastUtils;
+import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.AliasesFormat;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.ArgumentSectionFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
@@ -29,32 +34,47 @@ public abstract class CelestCommand implements SimpleCommand {
 
     private static final CommandManager commandManager = Celest.getServer().getCommandManager();
     private final List<ArgumentSection> sections;
+    private final List<String> labels;
     private Predicate<User> predicate;
     private boolean console;
 
     public CelestCommand(String label, String... aliases) {
         sections = new ArrayList<>();
+        labels = new ArrayList<>();
         predicate = user -> true;
         console = true;
 
         CommandMeta.Builder builder = commandManager.metaBuilder(label);
         builder.plugin(Celest.getInstance());
 
-        if (aliases.length > 0)
+        labels.add(label);
+
+        if (aliases.length > 0) {
             builder.aliases(aliases);
+            labels.addAll(List.of(aliases));
+        }
 
         commandManager.register(builder.build(), this);
     }
 
-    protected void addArguments(ArgumentType... types) { addArguments(user -> true, true, types); }
+    protected void addArguments(@NotNull ArgumentType... types) { addArguments(user -> true, true, types); }
 
-    protected void addArguments(Predicate<User> predicate, boolean console, ArgumentType... types) {
+    protected void addArguments(@NotNull Predicate<User> predicate, boolean console, @NotNull ArgumentType... types) {
         sections.add(new ArgumentSection(predicate, console, types));
     }
 
-    protected void setPermission(Predicate<User> predicate, boolean console) {
+    protected void setPermission(@NotNull Predicate<User> predicate, boolean console) {
         this.predicate = predicate;
         this.console = console;
+    }
+
+    protected void sendUsage(CommandSource source, String label) {
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&6&l»&c Usage: ");
+        builder.append(new AliasesFormat(label, labels));
+        builder.append(new ArgumentSectionFormat(source, sections));
+
+        MessageUtils.message(source, builder::build);
     }
 
     protected abstract void execute(CommandSource source, String label, Arguments arguments);
@@ -78,6 +98,11 @@ public abstract class CelestCommand implements SimpleCommand {
     @Override
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
         CommandSource source = invocation.source();
+        User user = CastUtils.toUser(source);
+
+        if (user == null)
+            return CompletableFuture.completedFuture(Collections.emptyList());
+
         List<ArgumentType> list = ArgumentUtils.typesFromSections(source, sections);
         String[] args = invocation.arguments();
         int length = args.length;
@@ -85,10 +110,11 @@ public abstract class CelestCommand implements SimpleCommand {
 
         if (size > 0 && size >= length) {
             String selected = length == 0 ? "" : args[length - 1];
-            User user = CastUtils.toUser(source);
 
-            if (user != null)
-                return CompletableFuture.completedFuture(list.get(length).suggest(user, selected));
+            if (length > 0)
+                length--;
+
+            return CompletableFuture.completedFuture(list.get(length).suggest(user, selected));
         }
 
         return CompletableFuture.completedFuture(Collections.emptyList());

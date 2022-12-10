@@ -8,12 +8,16 @@
 package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.arguments.ArgumentSection;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
+import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public final class ArgumentUtils {
 
@@ -24,6 +28,34 @@ public final class ArgumentUtils {
         for (ArgumentSection section : sections)
             if (user == null ? section.allowsConsole() : section.getPredicate().test(user))
                 list.addAll(List.of(section.getArgumentTypes()));
+
+        return list;
+    }
+
+    public static Player playerOrSelf(Arguments arguments, CommandSource source) {
+        Optional<Player> optional = arguments.get(Player.class);
+
+        if (optional.isEmpty()) {
+            if (source instanceof Player)
+                return (Player) source;
+
+            return null;
+        }
+
+        return optional.get();
+    }
+
+    public static List<Player> playerListOrSelf(Arguments arguments, CommandSource source) {
+        List<Player> list = new ArrayList<>();
+        Optional<Player[]> optional = arguments.get(Player[].class);
+
+        if (optional.isEmpty()) {
+            if (source instanceof Player)
+                list.add((Player) source);
+            return list;
+        }
+
+        list.addAll(List.of(optional.get()));
 
         return list;
     }

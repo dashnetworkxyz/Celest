@@ -9,6 +9,7 @@ package xyz.dashnetwork.celest.command.arguments;
 
 import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public final class Arguments {
     private int index = 0;
 
     public Arguments(CommandSource source, String[] array, List<ArgumentSection> sections) {
+        User user = CastUtils.toUser(source);
         List<ArgumentType> list = ArgumentUtils.typesFromSections(source, sections);
         int size = MathUtils.getLowest(array.length, list.size());
 
@@ -29,7 +31,7 @@ public final class Arguments {
                     StringUtils.unsplit(i, " ", array) :
                     array[i];
 
-            Object object = argument.parse(source, string);
+            Object object = argument.parse(user, string);
 
             if (object != null)
                 parsed.add(object);

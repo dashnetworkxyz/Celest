@@ -102,6 +102,8 @@ public final class User implements Savable, NamedSource {
         new Limbo<>(address);
     }
 
+    public boolean canSee(User user) { return isStaff() || !user.getData().getVanish() || getData().getVanish(); }
+
     public void setData(UserData userData) { this.userData = userData; }
 
     public Player getPlayer() { return player; }

@@ -7,29 +7,27 @@
 
 package xyz.dashnetwork.celest.command.arguments.parser;
 
-import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
-import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.utils.FunctionPair;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PlayerArrayParser implements FunctionPair<CommandSource, String, Player[]> {
-
-    private static final ProxyServer server = Celest.getServer();
+public final class PlayerListParser implements FunctionPair<User, String, Player[]> {
 
     @Override
-    public Player[] apply(CommandSource source, String string) {
+    public Player[] apply(User user, String string) {
         List<Player> list = new ArrayList<>();
 
-        if (string.equalsIgnoreCase("@a"))
-            list.addAll(server.getAllPlayers());
-        else {
+        if (string.equalsIgnoreCase("@a")) {
+            for (User each : User.getUsers())
+                if (user == null || user.canSee(each))
+                    list.add(each.getPlayer());
+        } else {
             for (String each : string.split(",")) {
-                Object player = ArgumentType.PLAYER.parse(source, each);
+                Object player = ArgumentType.PLAYER.parse(user, each);
 
                 if (player != null)
                     list.add((Player) player);

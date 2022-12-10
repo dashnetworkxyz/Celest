@@ -7,6 +7,8 @@
 
 package xyz.dashnetwork.celest.command.arguments.suggester;
 
+import com.velocitypowered.api.proxy.server.RegisteredServer;
+import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.FunctionPair;
 import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -14,17 +16,18 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PlayerSuggester implements FunctionPair<User, String, List<String>> {
+public class ServerSuggester implements FunctionPair<User, String, List<String>> {
 
     @Override
     public List<String> apply(User user, String input) {
         List<String> list = new ArrayList<>();
 
-        ListUtils.addIfStarts(list, input, "@s");
+        for (RegisteredServer server : Celest.getServer().getAllServers()) {
+            String name = server.getServerInfo().getName();
 
-        for (User each : User.getUsers())
-            if (user.canSee(each))
-                ListUtils.addIfStarts(list, input, each.getUsername());
+            if (user.isOwner() || user.getPlayer().hasPermission("dashnetwork.server." + name))
+                ListUtils.addIfStarts(list, input, name);
+        }
 
         return list;
     }

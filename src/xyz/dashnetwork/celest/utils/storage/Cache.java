@@ -16,10 +16,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class Cache {
 
-    private static final List<CacheData> cache = new ArrayList<>();
+    private static final List<CacheData> cache = new CopyOnWriteArrayList<>();
 
     public static List<CacheData> getCache() { return cache; }
 

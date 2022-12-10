@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.utils.chat;
 
 import org.jetbrains.annotations.NotNull;
+import xyz.dashnetwork.celest.utils.GrammarUtils;
 import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
@@ -29,6 +30,8 @@ public enum ChatType {
         this.permission = permission;
         this.selectors = selectors;
     }
+
+    public String getName() { return GrammarUtils.capitalization(name().toLowerCase()); }
 
     public boolean hasPermission(User user) {
         return user == null || permission.test(user) || user.getData().getChatType().equals(this);

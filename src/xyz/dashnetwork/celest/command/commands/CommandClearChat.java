@@ -32,7 +32,7 @@ public final class CommandClearChat extends CelestCommand {
         super("clearchat", "cc");
 
         setPermission(User::isStaff, true);
-        addArguments(ArgumentType.PLAYER_ARRAY);
+        addArguments(ArgumentType.PLAYER_LIST);
     }
 
     @Override
@@ -40,7 +40,7 @@ public final class CommandClearChat extends CelestCommand {
         Optional<Player[]> optional = arguments.get(Player[].class);
 
         if (optional.isEmpty()) {
-            MessageUtils.message(source, Messages.commandUsage(label, "<player-list>"));
+            sendUsage(source, label);
             return;
         }
 

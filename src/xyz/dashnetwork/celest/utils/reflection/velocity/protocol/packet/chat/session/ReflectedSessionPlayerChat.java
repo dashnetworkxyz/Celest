@@ -5,13 +5,13 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.chat;
+package xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.chat.session;
 
 import xyz.dashnetwork.celest.utils.reflection.ClassList;
 
 import java.lang.reflect.Field;
 
-public final class ReflectedPlayerChat {
+public final class ReflectedSessionPlayerChat {
 
     private static final Class<?> clazz;
     private static final Class<?>[] array;
@@ -19,11 +19,11 @@ public final class ReflectedPlayerChat {
     private final Object original;
 
     static {
-        clazz = ClassList.PLAYER_CHAT;
+        clazz = ClassList.SESSION_PLAYER_CHAT;
         array = new Class<?>[] { clazz };
 
         try {
-            unsigned = clazz.getDeclaredField("unsigned");
+            unsigned = clazz.getDeclaredField("signed");
             unsigned.setAccessible(true);
         } catch (ReflectiveOperationException exception) {
             throw new RuntimeException(exception);
@@ -32,11 +32,11 @@ public final class ReflectedPlayerChat {
 
     public static Class<?>[] array() { return array; }
 
-    public ReflectedPlayerChat(Object original) { this.original = original; }
+    public ReflectedSessionPlayerChat(Object original) { this.original = original; }
 
     public Object original() { return original; }
 
-    public void setUnsigned(boolean value) throws ReflectiveOperationException {
+    public void setSigned(boolean value) throws ReflectiveOperationException {
         unsigned.set(original, value);
     }
 

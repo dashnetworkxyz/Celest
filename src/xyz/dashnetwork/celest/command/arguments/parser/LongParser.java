@@ -7,15 +7,15 @@
 
 package xyz.dashnetwork.celest.command.arguments.parser;
 
-import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.utils.FunctionPair;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
+import xyz.dashnetwork.celest.utils.connection.User;
 
-public final class LongParser implements FunctionPair<CommandSource, String, Long> {
+public final class LongParser implements FunctionPair<User, String, Long> {
 
     @Override
-    public Long apply(CommandSource source, String string) {
+    public Long apply(User user, String string) {
         long parsed = TimeUtils.fromTimeArgument(string);
 
         if (parsed != -1)

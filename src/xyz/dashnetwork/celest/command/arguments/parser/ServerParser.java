@@ -7,32 +7,26 @@
 
 package xyz.dashnetwork.celest.command.arguments.parser;
 
-import com.velocitypowered.api.command.CommandSource;
-import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.CastUtils;
 import xyz.dashnetwork.celest.utils.FunctionPair;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.Optional;
 
-public final class ServerParser implements FunctionPair<CommandSource, String, RegisteredServer> {
-
-    private static final ProxyServer proxy = Celest.getServer();
+public final class ServerParser implements FunctionPair<User, String, RegisteredServer> {
 
     @Override
-    public RegisteredServer apply(CommandSource source, String string) {
-        Optional<RegisteredServer> optional = proxy.getServer(string);
+    public RegisteredServer apply(User user, String string) {
+        Optional<RegisteredServer> optional = Celest.getServer().getServer(string);
 
         if (optional.isEmpty())
             return null;
         
         RegisteredServer server = optional.get();
         String name = server.getServerInfo().getName().toLowerCase();
-        User user = CastUtils.toUser(source);
 
-        if (source.hasPermission("dashnetwork.server." + name) || (user != null && user.isOwner()))
+        if (user == null || user.isOwner() ||  user.getPlayer().hasPermission("dashnetwork.server." + name))
             return server;
 
         return null;

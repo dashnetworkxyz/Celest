@@ -8,7 +8,7 @@
 package xyz.dashnetwork.celest.inject.backend.handler;
 
 import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedClientPlaySessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.chat.ReflectedPlayerChat;
+import xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.chat.session.ReflectedSessionPlayerChat;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -27,9 +27,9 @@ public final class CelestClientPlaySessionHandler implements InvocationHandler {
         String name = method.getName();
         Class<?>[] types = method.getParameterTypes();
 
-        if (name.equals("handle") && Arrays.equals(types, ReflectedPlayerChat.array())) {
-            ReflectedPlayerChat chat = new ReflectedPlayerChat(args[0]);
-            chat.setUnsigned(true);
+        if (name.equals("handle") && Arrays.equals(types, ReflectedSessionPlayerChat.array())) {
+            ReflectedSessionPlayerChat chat = new ReflectedSessionPlayerChat(args[0]);
+            chat.setSigned(false);
 
             args[0] = chat.original();
         }

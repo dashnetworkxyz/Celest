@@ -40,11 +40,6 @@ public final class CommandTest extends CelestCommand {
 
         String[] args = optional.get().split(" ");
 
-        if (args.length < 2) {
-            MessageUtils.message(source, "no u");
-            return;
-        }
-
         if (args[0].equalsIgnoreCase("import-legacy")) {
             LegacyParser parser = new LegacyParser();
 
@@ -53,6 +48,11 @@ public final class CommandTest extends CelestCommand {
 
             MessageUtils.message(source, "writing...");
             parser.write();
+        }
+
+        if (args.length < 2) {
+            MessageUtils.message(source, "no u");
+            return;
         }
 
         if (args[0].equalsIgnoreCase("username")) {

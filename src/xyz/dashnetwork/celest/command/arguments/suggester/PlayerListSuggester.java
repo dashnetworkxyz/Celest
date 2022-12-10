@@ -16,7 +16,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PlayerArraySuggester implements FunctionPair<User, String, List<String>> {
+public final class PlayerListSuggester implements FunctionPair<User, String, List<String>> {
 
     @Override
     public List<String> apply(User user, String input) {
