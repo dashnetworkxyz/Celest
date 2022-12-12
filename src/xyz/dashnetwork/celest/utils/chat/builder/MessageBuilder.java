@@ -9,12 +9,11 @@ package xyz.dashnetwork.celest.utils.chat.builder;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.HoverEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public final class MessageBuilder {
     private final List<TextSection> sections = new ArrayList<>();
 
     public TextSection append(@NotNull String text) {
-        TextSection section = new TextSection(text, null, null, null);
+        TextSection section = new TextSection(text, null, null);
         sections.add(section);
 
         return section;
@@ -37,11 +36,11 @@ public final class MessageBuilder {
     }
 
     public Component build(@Nullable User user) {
-        List<TextComponent> components = new ArrayList<>();
+        List<Component> components = new ArrayList<>();
 
         for (TextSection section : sections) {
             if (checkPredicate(user, section.predicate)) {
-                TextComponent component = ComponentUtils.toComponent(section.text);
+                Component component = ComponentUtils.toComponent(section.text);
 
                 if (!section.hovers.isEmpty()) {
                     StringBuilder builder = new StringBuilder();

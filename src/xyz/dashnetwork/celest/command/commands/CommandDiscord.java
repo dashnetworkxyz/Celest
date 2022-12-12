@@ -14,7 +14,7 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 
-public class CommandDiscord extends CelestCommand {
+public final class CommandDiscord extends CelestCommand {
 
     public CommandDiscord() { super("discord"); }
 

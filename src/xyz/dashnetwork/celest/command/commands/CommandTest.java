@@ -8,17 +8,13 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import xyz.dashnetwork.celest.command.CelestCommand;
-import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
-import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
-import xyz.dashnetwork.celest.utils.storage.LegacyParser;
-
-import java.util.Optional;
-import java.util.UUID;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 public final class CommandTest extends CelestCommand {
 
@@ -26,52 +22,19 @@ public final class CommandTest extends CelestCommand {
         super("test");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.MESSAGE);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<String> optional = arguments.get(String.class);
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&atest");
+        builder.append("&atest");
 
-        if (optional.isEmpty()) {
-            MessageUtils.message(source, "no u");
-            return;
-        }
+        Component component = builder.build(null);
+        String json = GsonComponentSerializer.gson().serialize(component);
 
-        String[] args = optional.get().split(" ");
-
-        if (args[0].equalsIgnoreCase("import-legacy")) {
-            LegacyParser parser = new LegacyParser();
-
-            MessageUtils.message(source, "reading...");
-            parser.read();
-
-            MessageUtils.message(source, "writing...");
-            parser.write();
-        }
-
-        if (args.length < 2) {
-            MessageUtils.message(source, "no u");
-            return;
-        }
-
-        if (args[0].equalsIgnoreCase("username")) {
-            PlayerProfile profile = ProfileUtils.fromUsername(args[1]);
-
-            if (profile == null)
-                profile = new PlayerProfile(UUID.randomUUID(), "null");
-
-            MessageUtils.message(source, "name: " + profile.getUsername() + " uuid: " + profile.getUuid());
-        }
-
-        if (args[0].equalsIgnoreCase("uuid")) {
-            PlayerProfile profile = ProfileUtils.fromUuid(UUID.fromString(args[1]));
-
-            if (profile == null)
-                profile = new PlayerProfile(UUID.randomUUID(), "null");
-
-            MessageUtils.message(source, "name: " + profile.getUsername() + " uuid: " + profile.getUuid());
-        }
+        MessageUtils.message(source, component);
+        MessageUtils.message(source, json);
     }
 
 }

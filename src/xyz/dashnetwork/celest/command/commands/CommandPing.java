@@ -17,7 +17,7 @@ import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 
-public class CommandPing extends CelestCommand {
+public final class CommandPing extends CelestCommand {
 
     public CommandPing() {
         super("ping", "p");

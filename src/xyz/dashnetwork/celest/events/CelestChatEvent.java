@@ -7,8 +7,8 @@
 
 package xyz.dashnetwork.celest.events;
 
-import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 public final class CelestChatEvent {
 

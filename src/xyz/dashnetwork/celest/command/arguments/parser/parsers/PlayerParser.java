@@ -1,28 +1,28 @@
 /*
- * Copyright (C) 2022 Andrew Bell - All Rights Reserved
+ * Copyright (C) 2022 Andrew Bell. - All Rights Reserved
  *
  * Unauthorized copying or redistribution of this file in source and binary forms via any medium
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.command.arguments.parser;
+package xyz.dashnetwork.celest.command.arguments.parser.parsers;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.FunctionPair;
+import xyz.dashnetwork.celest.command.arguments.parser.ArgumentParser;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public final class PlayerParser implements FunctionPair<User, String, Player> {
+public final class PlayerParser implements ArgumentParser {
 
     private static final ProxyServer server = Celest.getServer();
 
     @Override
-    public Player apply(User user, String string) {
+    public Object parse(User user, String string) {
         if (string.matches("@[PpSs]") && user != null)
             return user.getPlayer();
 

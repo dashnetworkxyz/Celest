@@ -14,14 +14,14 @@ import java.util.function.Predicate;
 public final class LazyUtils {
 
     @SafeVarargs
-    public static <T> boolean anyTrue(@NotNull Predicate<T> predicate, T... objects) {
+    public static <T> boolean anyTrue(@NotNull Predicate<T> predicate, @NotNull T... objects) {
         for (T each : objects)
             if (predicate.test(each))
                 return true;
         return false;
     }
 
-    public static boolean anyEquals(@NotNull Object object, Object... compare) {
+    public static boolean anyEquals(@NotNull Object object, @NotNull Object... compare) {
         return anyTrue(check -> check.equals(object), compare);
     }
 

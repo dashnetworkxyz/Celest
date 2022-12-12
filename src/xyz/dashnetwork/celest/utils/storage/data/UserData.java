@@ -16,7 +16,7 @@ public final class UserData {
     private PunishData ban, mute;
     private ChatType chatType;
     private long lastPlayed;
-    private boolean altSpy, commandSpy, pingSpy, vanish;
+    private boolean altSpy, commandSpy, pingSpy, vanish, sensitiveData;
 
     public UserData() {
         ban = null;
@@ -30,6 +30,7 @@ public final class UserData {
         commandSpy = false;
         pingSpy = false;
         vanish = false;
+        sensitiveData = true;
     }
 
     // User data
@@ -62,6 +63,8 @@ public final class UserData {
 
     public boolean getVanish() { return vanish; }
 
+    public boolean getSensitiveData() { return sensitiveData; }
+
     public void setNickname(String nickname) { this.nickname = nickname; }
 
     public void setBan(PunishData ban) { this.ban = ban; }
@@ -79,5 +82,7 @@ public final class UserData {
     public void setPingSpy(boolean pingSpy) { this.pingSpy = pingSpy; }
 
     public void setVanish(boolean vanish) { this.vanish = vanish; }
+
+    public void setSensitiveData(boolean sensitiveData) { this.sensitiveData = sensitiveData; }
 
 }

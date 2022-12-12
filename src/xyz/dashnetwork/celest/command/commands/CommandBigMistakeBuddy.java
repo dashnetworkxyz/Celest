@@ -19,7 +19,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.Optional;
 
-public class CommandBigMistakeBuddy extends CelestCommand {
+public final class CommandBigMistakeBuddy extends CelestCommand {
 
     public CommandBigMistakeBuddy() {
         super("bigmistakebuddynowwehaveyourgamefiles", "bigmistakebuddy", "bmb");
@@ -44,6 +44,8 @@ public class CommandBigMistakeBuddy extends CelestCommand {
             player.sendTitlePart(TitlePart.SUBTITLE, subtitle);
             player.sendTitlePart(TitlePart.TITLE, title);
         }
+
+        // TODO: Send message to source.
     }
 
 }

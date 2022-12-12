@@ -10,12 +10,12 @@ package xyz.dashnetwork.celest.utils.connection;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.Savable;
-import xyz.dashnetwork.celest.utils.storage.data.PunishData;
-import xyz.dashnetwork.celest.utils.storage.data.UserData;
+import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.Storage;
+import xyz.dashnetwork.celest.utils.storage.data.PunishData;
+import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
 import java.util.List;
@@ -110,7 +110,6 @@ public final class User implements Savable, NamedSource {
 
     public UUID getUuid() { return uuid; }
 
-    @Override
     public Address getAddress() { return address; }
 
     public UserData getData() { return userData; }

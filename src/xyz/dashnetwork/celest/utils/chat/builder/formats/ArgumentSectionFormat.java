@@ -15,13 +15,14 @@ import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class ArgumentSectionFormat implements Format {
+public final class ArgumentSectionFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 
-    public ArgumentSectionFormat(CommandSource source, List<ArgumentSection> list) {
+    public ArgumentSectionFormat(CommandSource source, Collection<ArgumentSection> list) {
         boolean required = true;
 
         for (ArgumentSection each : list) {
@@ -39,7 +40,7 @@ public class ArgumentSectionFormat implements Format {
             TextSection text = new ArgumentTypeFormat(required, type).sections().get(0);
             text.onlyIf(section.getPredicate());
 
-            sections.add(new TextSection(" ", null, null, section.getPredicate()));
+            sections.add(new TextSection(" ", null, section.getPredicate()));
             sections.add(text);
         }
     }

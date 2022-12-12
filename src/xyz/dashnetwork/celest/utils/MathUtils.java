@@ -12,9 +12,9 @@ public final class MathUtils {
     public static int getLowest(int... integers) {
         int selected = integers[0];
 
-        for (int each : integers)
-            if (each < selected)
-                selected = each;
+        for (int i = 1; i < integers.length; i++)
+            if (integers[i] < selected)
+                selected = integers[i];
 
         return selected;
     }

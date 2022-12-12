@@ -9,8 +9,6 @@ package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 public interface NamedSource {
@@ -20,10 +18,7 @@ public interface NamedSource {
         public String getDisplayname() { return "&4&lServer&6 Velocity"; }
 
         @Override
-        public String getUsername() { return VersionUtils.getProxyName() + "\n" + VersionUtils.getProxyVersion(); }
-
-        @Override
-        public Address getAddress() { return null; }
+        public String getUsername() { return VersionUtils.getProxyVersion(); }
     };
 
     static NamedSource of(CommandSource source) {
@@ -36,7 +31,5 @@ public interface NamedSource {
     String getDisplayname();
 
     String getUsername();
-
-    Address getAddress();
 
 }

@@ -1,24 +1,24 @@
 /*
- * Copyright (C) 2022 Andrew Bell - All Rights Reserved
+ * Copyright (C) 2022 Andrew Bell. - All Rights Reserved
  *
  * Unauthorized copying or redistribution of this file in source and binary forms via any medium
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.command.arguments.parser;
+package xyz.dashnetwork.celest.command.arguments.parser.parsers;
 
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
-import xyz.dashnetwork.celest.utils.FunctionPair;
+import xyz.dashnetwork.celest.command.arguments.parser.ArgumentParser;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PlayerListParser implements FunctionPair<User, String, Player[]> {
+public final class PlayerListParser implements ArgumentParser {
 
     @Override
-    public Player[] apply(User user, String string) {
+    public Object parse(User user, String string) {
         List<Player> list = new ArrayList<>();
 
         if (string.equalsIgnoreCase("@a")) {

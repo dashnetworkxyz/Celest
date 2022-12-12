@@ -68,7 +68,7 @@ public abstract class CelestCommand implements SimpleCommand {
         this.console = console;
     }
 
-    protected void sendUsage(CommandSource source, String label) {
+    protected void sendUsage(@NotNull CommandSource source, @NotNull String label) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&c Usage: ");
         builder.append(new AliasesFormat(label, labels));

@@ -10,14 +10,14 @@ package xyz.dashnetwork.celest.utils.storage;
 import com.velocitypowered.api.proxy.Player;
 import org.yaml.snakeyaml.Yaml;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.ConsumerPair;
-import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
-import xyz.dashnetwork.celest.utils.storage.data.AddressData;
-import xyz.dashnetwork.celest.utils.storage.data.UserData;
+import xyz.dashnetwork.celest.utils.connection.Address;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
+import xyz.dashnetwork.celest.utils.storage.data.AddressData;
+import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.io.File;
 import java.io.FileReader;

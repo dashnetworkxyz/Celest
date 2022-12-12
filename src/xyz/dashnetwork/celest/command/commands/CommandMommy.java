@@ -17,7 +17,7 @@ import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class CommandMommy extends CelestCommand {
+public final class CommandMommy extends CelestCommand {
 
     private final String[] mommies = { "Dash", "Kevin", "Golden", "Matt", "Furp", "Skull", "Hannah", "Crit" };
 

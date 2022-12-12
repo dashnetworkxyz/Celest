@@ -10,11 +10,11 @@ package xyz.dashnetwork.celest.utils.connection;
 import xyz.dashnetwork.celest.utils.ArrayUtils;
 import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.PunishUtils;
-import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.Savable;
-import xyz.dashnetwork.celest.utils.storage.data.AddressData;
+import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.storage.Storage;
+import xyz.dashnetwork.celest.utils.storage.data.AddressData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,6 @@ public final class Address implements Savable {
 
     private final String address;
     private AddressData addressData;
-    private String inputServerAddress;
-    private int inputServerPort;
     private long serverPingTime;
 
     private Address(String address, boolean limbo) {
@@ -36,8 +34,6 @@ public final class Address implements Savable {
         if (addressData == null)
             addressData = new AddressData();
 
-        inputServerAddress = null;
-        inputServerPort = -1;
         serverPingTime = -1;
 
         if (limbo)
@@ -101,14 +97,6 @@ public final class Address implements Savable {
     public void setData(AddressData addressData) { this.addressData = addressData; }
 
     public AddressData getData() { return addressData; }
-
-    public void setInputServerAddress(String inputServerAddress) { this.inputServerAddress = inputServerAddress; }
-
-    public String getInputServerAddress() { return inputServerAddress; }
-
-    public void setInputServerPort(int inputServerPort) { this.inputServerPort = inputServerPort; }
-
-    public int getInputServerPort() { return inputServerPort; }
 
     public void setServerPingTime(long serverPingTime) { this.serverPingTime = serverPingTime; }
 

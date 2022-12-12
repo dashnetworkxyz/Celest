@@ -8,7 +8,10 @@
 package xyz.dashnetwork.celest.command.arguments;
 
 import com.velocitypowered.api.command.CommandSource;
-import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.utils.ArgumentUtils;
+import xyz.dashnetwork.celest.utils.CastUtils;
+import xyz.dashnetwork.celest.utils.MathUtils;
+import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;

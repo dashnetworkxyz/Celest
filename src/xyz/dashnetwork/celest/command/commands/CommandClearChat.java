@@ -14,11 +14,10 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ArrayUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerListFormat;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -46,13 +45,13 @@ public final class CommandClearChat extends CelestCommand {
         NamedSource named = NamedSource.of(source);
         Player[] players = optional.get();
         MessageBuilder builder = new MessageBuilder();
-        Predicate<User> sendSelf = user -> players.length == 1 || !user.getPlayer().equals(source);
+        Predicate<User> notSelf = user -> players.length == 1 || !user.getPlayer().equals(source);
 
         for (int i = 0; i < 99; i++)
             builder.append("\n");
 
-        builder.append("&6&l» &7Chat was cleared by ").onlyIf(sendSelf);
-        builder.append(new PlayerFormat(named)).onlyIf(sendSelf);
+        builder.append("&6&l» &7Chat was cleared by ").onlyIf(notSelf);
+        builder.append(new PlayerFormat(named)).onlyIf(notSelf);
 
         for (Player player : players)
             MessageUtils.message(player, builder::build);
@@ -60,7 +59,7 @@ public final class CommandClearChat extends CelestCommand {
         if (ArrayUtils.containsOtherThan(players, source)) {
             builder = new MessageBuilder();
             builder.append("&6&l» &7Chat was cleared for ");
-            builder.append(new PlayerListFormat(players));
+            builder.append(new PlayerFormat(players));
 
             MessageUtils.message(source, builder::build);
         }

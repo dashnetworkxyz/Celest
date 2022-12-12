@@ -21,11 +21,13 @@ import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.storage.data.AddressData;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
+import xyz.dashnetwork.celest.utils.storage.data.AddressData;
 
+import java.net.InetSocketAddress;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.UUID;
 
 public final class ProxyPingListener {
@@ -35,11 +37,13 @@ public final class ProxyPingListener {
     @Subscribe
     public void onProxyPing(ProxyPingEvent event) {
         ServerPing.Builder builder = event.getPing().asBuilder();
+        final int protocol = builder.getVersion().getProtocol();
         int online = 0;
 
         for (User user : User.getUsers())
             if (!user.getData().getVanish())
                 online++;
+
 
         Component description = ComponentUtils.toComponent(ConfigurationList.MOTD_DESCRIPTION);
         String software = ConfigurationList.MOTD_SOFTWARE;
@@ -48,20 +52,30 @@ public final class ProxyPingListener {
         builder.onlinePlayers(online);
         builder.maximumPlayers(Calendar.getInstance().get(Calendar.YEAR));
         builder.description(description);
-        builder.version(new ServerPing.Version(builder.getVersion().getProtocol(), software));
+        builder.version(new ServerPing.Version(protocol, software));
 
         for (String line : ConfigurationList.MOTD_HOVER)
             builder.samplePlayers(new ServerPing.SamplePlayer(line, UUID.randomUUID()));
 
         event.setPing(builder.build());
 
-        InboundConnection connection = event.getConnection();
-        final String hostname = connection.getRemoteAddress().getHostString();
-        final ProtocolVersion protocolVersion = connection.getProtocolVersion();
+        final InboundConnection connection = event.getConnection();
 
         // Run async so PingSpy doesn't hold up the status response.
         scheduler.buildTask(Celest.getInstance(), () -> {
-            Address address = Address.getAddress(hostname, true);
+            String hoststring = connection.getRemoteAddress().getHostString();
+            ProtocolVersion protocolVersion = connection.getProtocolVersion();
+            Optional<InetSocketAddress> virtual = connection.getVirtualHost();
+            String inputAddress = "N/A";
+            String inputPort = "N/A";
+
+            if (virtual.isPresent()) {
+                InetSocketAddress socket = virtual.get();
+                inputAddress = socket.getHostString();
+                inputPort = String.valueOf(socket.getPort());
+            }
+
+            Address address = Address.getAddress(hoststring, true);
             AddressData data = address.getData();
             PlayerProfile[] profiles = data.getProfiles();
 
@@ -76,22 +90,18 @@ public final class ProxyPingListener {
 
             address.setServerPingTime(System.currentTimeMillis());
 
-            // TODO: Detect and remove cloudflare proxy from input address.
-
-            String name = hostname;
-            String inputAddress = address.getInputServerAddress();
-            String inputPort = String.valueOf(address.getInputServerPort());
+            String name = profiles[0].getUsername();
             String version = VersionUtils.getVersionString(protocolVersion);
-            String protocol = String.valueOf(protocolVersion.getProtocol());
+            String stringProtocol = String.valueOf(protocol);
             String usernames = ArrayUtils.convertToString(profiles, PlayerProfile::getUsername, ", ");
-
             PlayerProfile recent = ProfileUtils.findMostRecent(profiles);
 
             if (recent != null)
                 name = recent.getUsername();
 
+            // TODO: Hide Address on sensitiveData setting
             MessageUtils.broadcast(user -> user.getData().getPingSpy(), Messages.playerPingSpy(
-                    name, hostname, inputAddress, inputPort, version, protocol, usernames
+                    name, hoststring, inputAddress, inputPort, version, stringProtocol, usernames
             ));
         }).schedule();
     }

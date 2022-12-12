@@ -12,7 +12,7 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 
-public class CommandTheFurpySong extends CelestCommand {
+public final class CommandTheFurpySong extends CelestCommand {
 
     public CommandTheFurpySong() { super("thefurpysong", "furpysong"); }
 

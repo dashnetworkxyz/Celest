@@ -13,12 +13,12 @@ import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AliasesFormat implements Format {
+public final class AliasesFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 
     public AliasesFormat(String label, List<String> aliases) {
-        TextSection text = new TextSection("&7/" + label, null, null, null);
+        TextSection text = new TextSection("&7/" + label, null, null);
         List<String> copy = new ArrayList<>(aliases);
         copy.remove(label);
 

@@ -33,14 +33,14 @@ public final class TextSection {
     ClickEvent click;
     Predicate<User> predicate;
 
-    public TextSection(String text, Hover[] hover, ClickEvent click, Predicate<User> predicate) {
+    public TextSection(String text, String hover, Predicate<User> predicate) {
         this.text = text;
         this.hovers = new ArrayList<>();
-        this.click = click;
+        this.click = null;
         this.predicate = predicate;
 
         if (hover != null)
-            hovers.addAll(List.of(hover));
+            hover(hover);
     }
 
     public TextSection hover(String hover) {

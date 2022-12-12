@@ -7,13 +7,12 @@
 
 package xyz.dashnetwork.celest.command.arguments;
 
-import xyz.dashnetwork.celest.command.arguments.parser.*;
-import xyz.dashnetwork.celest.command.arguments.suggester.*;
-import xyz.dashnetwork.celest.utils.FunctionPair;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.command.arguments.parser.ArgumentParser;
+import xyz.dashnetwork.celest.command.arguments.parser.parsers.*;
+import xyz.dashnetwork.celest.command.arguments.suggester.ArugmentSuggester;
+import xyz.dashnetwork.celest.command.arguments.suggester.suggesters.*;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,16 +28,16 @@ public enum ArgumentType {
     STRING((user, string) -> string, (user, string) -> Collections.emptyList()),
     MESSAGE((user, string) -> string, (user, string) -> Collections.emptyList());
 
-    private final FunctionPair<User, String, ?> parser;
-    private final FunctionPair<User, String, List<String>> suggester;
+    private final ArgumentParser parser;
+    private final ArugmentSuggester suggester;
 
-    ArgumentType(FunctionPair<User, String, ?> parser, FunctionPair<User, String, List<String>> suggester) {
+    ArgumentType(ArgumentParser parser, ArugmentSuggester suggester) {
         this.parser = parser;
         this.suggester = suggester;
     }
 
-    public Object parse(User user, String text) { return parser.apply(user, text); }
+    public Object parse(User user, String text) { return parser.parse(user, text); }
 
-    public List<String> suggest(User user, String input) { return suggester.apply(user, input); }
+    public List<String> suggest(User user, String input) { return suggester.suggest(user, input); }
 
 }

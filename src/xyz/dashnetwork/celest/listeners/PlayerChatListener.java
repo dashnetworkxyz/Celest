@@ -15,15 +15,15 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
-import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
+import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
-import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 
 public final class PlayerChatListener {
 

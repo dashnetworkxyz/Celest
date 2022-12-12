@@ -15,7 +15,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArgumentTypeFormat implements Format {
+public final class ArgumentTypeFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class ArgumentTypeFormat implements Format {
         String open = required ? "<" : "(";
         String close = required ? ">" : ")";
 
-        TextSection section = new TextSection("&7" + open + name + close, null, null, null);
+        TextSection section = new TextSection("&7" + open + name + close, null, null);
 
         if (!required)
             section.hover("&6Optional ");

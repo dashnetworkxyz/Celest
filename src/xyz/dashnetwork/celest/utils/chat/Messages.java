@@ -8,9 +8,9 @@
 package xyz.dashnetwork.celest.utils.chat;
 
 import net.kyori.adventure.text.Component;
-import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 public final class Messages {
 

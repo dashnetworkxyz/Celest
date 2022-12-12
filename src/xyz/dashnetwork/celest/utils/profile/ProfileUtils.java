@@ -8,10 +8,10 @@
 package xyz.dashnetwork.celest.utils.profile;
 
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.utils.storage.data.CacheData;
-import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.Storage;
+import xyz.dashnetwork.celest.utils.storage.data.CacheData;
+import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.UUID;
 
