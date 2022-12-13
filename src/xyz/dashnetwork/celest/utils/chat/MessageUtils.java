@@ -24,7 +24,7 @@ public final class MessageUtils {
     private static final ProxyServer server = Celest.getServer();
 
     public static void message(@NotNull Audience audience, @NotNull String message) {
-        message(audience, ComponentUtils.toComponent(message));
+        message(audience, ComponentUtils.fromLegacyString(message));
     }
 
     public static void message(@NotNull Audience audience, @NotNull Component component) {
@@ -35,13 +35,9 @@ public final class MessageUtils {
         message(audience, function.apply(CastUtils.toUser(audience)));
     }
 
-    public static void broadcast(@NotNull String message) {
-        broadcast(ComponentUtils.toComponent(message));
-    }
+    public static void broadcast(@NotNull String message) { broadcast(ComponentUtils.fromLegacyString(message)); }
 
-    public static void broadcast(@NotNull Component component) {
-        server.sendMessage(component);
-    }
+    public static void broadcast(@NotNull Component component) { server.sendMessage(component); }
 
     public static void broadcast(@NotNull Function<@Nullable User, Component> function) {
         for (User user : User.getUsers())
@@ -51,7 +47,7 @@ public final class MessageUtils {
     }
 
     public static void broadcast(@NotNull Predicate<User> predicate, @NotNull String message) {
-        broadcast(predicate, ComponentUtils.toComponent(message));
+        broadcast(predicate, ComponentUtils.fromLegacyString(message));
     }
 
     public static void broadcast(@NotNull Predicate<User> predicate, @NotNull Component component) {

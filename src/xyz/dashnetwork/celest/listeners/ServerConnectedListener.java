@@ -10,18 +10,26 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
+import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 public final class ServerConnectedListener {
 
     @Subscribe
     public void onServerConnected(ServerConnectedEvent event) {
         Player player = event.getPlayer();
-        String server = event.getServer().getServerInfo().getName();
+        User user = User.getUser(player);
+        RegisteredServer server = event.getServer();
+        String name = server.getServerInfo().getName();
+
+        Channel.callOut("vanish", server, user);
+        Channel.callOut("displayname", server, user);
 
         player.sendPlayerListHeaderAndFooter(
-                ComponentUtils.toComponent("&6&lDashNetwork\n&7You are connected to &6" + server + "\n"),
-                ComponentUtils.toComponent("\n&6play.dashnetwork.xyz"));
+                ComponentUtils.fromLegacyString("&6&lDashNetwork&7\nYou are connected to &6" + name + "\n"),
+                ComponentUtils.fromLegacyString("&6\nplay.dashnetwork.xyz"));
     }
 
 }

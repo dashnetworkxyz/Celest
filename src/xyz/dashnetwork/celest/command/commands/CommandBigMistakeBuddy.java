@@ -37,8 +37,8 @@ public final class CommandBigMistakeBuddy extends CelestCommand {
             return;
         }
 
-        Component title = ComponentUtils.toComponent("&6Big mistake, buddy");
-        Component subtitle = ComponentUtils.toComponent("&cNow we have your game files");
+        Component title = ComponentUtils.fromLegacyString("&6Big mistake, buddy");
+        Component subtitle = ComponentUtils.fromLegacyString("&cNow we have your game files");
 
         for (Player player : optional.get()) {
             player.sendTitlePart(TitlePart.SUBTITLE, subtitle);

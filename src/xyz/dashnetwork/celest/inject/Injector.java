@@ -23,8 +23,7 @@ import xyz.dashnetwork.celest.utils.reflection.velocity.network.ReflectedServerC
 
 public final class Injector {
 
-    // Hook into Handshake and Server Ping.
-    // Allows me to see client specified address and port from handshake.
+    // Hook into Server Ping.
     // Allows custom ServerPing response for custom entry preventsChatReports:true (CelestServerPing)
     public static void injectChannelInitializer(ProxyServer proxy) {
         try {

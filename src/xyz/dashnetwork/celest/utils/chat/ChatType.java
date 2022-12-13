@@ -10,16 +10,17 @@ package xyz.dashnetwork.celest.utils.chat;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.GrammarUtils;
 import xyz.dashnetwork.celest.utils.LazyUtils;
+import xyz.dashnetwork.celest.utils.PermissionType;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.function.Predicate;
 
 public enum ChatType {
 
-    OWNER(User::isOwner, "@oc", "@dc"),
-    ADMIN(User::isAdmin, "@ac"),
-    STAFF(User::isStaff, "@sc"),
-    LOCAL(User::isOwner, "@lc"),
+    OWNER(PermissionType.OWNER.getPermission(), "@oc", "@dc"),
+    ADMIN(PermissionType.ADMIN.getPermission(), "@ac"),
+    STAFF(PermissionType.STAFF.getPermission(), "@sc"),
+    LOCAL(PermissionType.OWNER.getPermission(), "@lc"),
     GLOBAL(user -> user.isStaff() ||
             LazyUtils.anyEquals(user.getData().getChatType(), OWNER, ADMIN, STAFF, LOCAL), "@gc");
 

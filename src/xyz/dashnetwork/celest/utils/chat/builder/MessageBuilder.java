@@ -75,7 +75,7 @@ public final class MessageBuilder {
     }
 
     private Component toComponent(User user, TextSection section) {
-        Component component = ComponentUtils.toComponent(section.text);
+        Component component = ComponentUtils.fromLegacyString(section.text);
 
         if (!section.hovers.isEmpty()) {
             StringBuilder builder = new StringBuilder();
@@ -85,7 +85,7 @@ public final class MessageBuilder {
                     builder.append(hover.text);
 
             if (builder.length() > 0)
-                component = component.hoverEvent(HoverEvent.showText(ComponentUtils.toComponent(builder.toString())));
+                component = component.hoverEvent(HoverEvent.showText(ComponentUtils.fromLegacyString(builder.toString())));
         } if (section.click != null && user != null)
             component = component.clickEvent(section.click);
 

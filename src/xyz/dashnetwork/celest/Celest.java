@@ -17,6 +17,11 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
+import xyz.dashnetwork.celest.channel.Channel;
+import xyz.dashnetwork.celest.channel.channels.input.ChannelBroadcast;
+import xyz.dashnetwork.celest.channel.channels.input.ChannelOnline;
+import xyz.dashnetwork.celest.channel.channels.output.ChannelDisplayName;
+import xyz.dashnetwork.celest.channel.channels.output.ChannelVanish;
 import xyz.dashnetwork.celest.command.commands.*;
 import xyz.dashnetwork.celest.inject.Injector;
 import xyz.dashnetwork.celest.listeners.*;
@@ -82,6 +87,12 @@ public final class Celest {
         logger.info("Injecting channel initializer...");
         Injector.injectChannelInitializer(server);
 
+        logger.info("Registering channels...");
+        Channel.registerIn("broadcast", ChannelBroadcast::new);
+        Channel.registerIn("online", ChannelOnline::new);
+        Channel.registerOut("displayname", ChannelDisplayName::new);
+        Channel.registerOut("vanish", ChannelVanish::new);
+
         logger.info("Registering events...");
         EventManager eventManager = server.getEventManager();
         eventManager.register(this, new CommandExecuteListener());
@@ -95,9 +106,6 @@ public final class Celest {
         eventManager.register(this, new ServerConnectedListener());
         eventManager.register(this, new ServerPostConnectListener());
         eventManager.register(this, new ServerPreConnectListener());
-
-        logger.info("Registering channels...");
-
 
         logger.info("Registering commands...");
         new CommandBigMistakeBuddy();

@@ -57,6 +57,8 @@ public abstract class CelestCommand implements SimpleCommand {
         commandManager.register(builder.build(), this);
     }
 
+    protected abstract void execute(CommandSource source, String label, Arguments arguments);
+
     protected void addArguments(@NotNull ArgumentType... types) { addArguments(user -> true, true, types); }
 
     protected void addArguments(@NotNull Predicate<User> predicate, boolean console, @NotNull ArgumentType... types) {
@@ -76,8 +78,6 @@ public abstract class CelestCommand implements SimpleCommand {
 
         MessageUtils.message(source, builder::build);
     }
-
-    protected abstract void execute(CommandSource source, String label, Arguments arguments);
 
     @Override
     public void execute(Invocation invocation) {

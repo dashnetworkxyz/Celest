@@ -8,18 +8,21 @@
 package xyz.dashnetwork.celest.utils.chat;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
 public final class ComponentUtils {
 
     private static final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacySection();
+    private static final GsonComponentSerializer gson = GsonComponentSerializer.gson();
 
-    public static TextComponent toComponent(@NotNull String string) {
+    public static Component fromLegacyString(@NotNull String string) {
          return legacy.deserialize(ColorUtils.fromAmpersand(string));
     }
 
-    public static String fromComponent(@NotNull Component component) { return legacy.serialize(component); }
+    public static String toLegacyString(@NotNull Component component) { return legacy.serialize(component); }
+
+    public static Component fromJson(@NotNull String json) { return gson.deserialize(json); }
 
 }

@@ -9,45 +9,20 @@ package xyz.dashnetwork.celest.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
+import com.velocitypowered.api.proxy.messages.ChannelMessageSink;
+import xyz.dashnetwork.celest.channel.Channel;
 
 public final class PluginMessageListener {
 
     @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
-        /*
-        ChannelMessageSource source = event.getSource();
+        if (event.getSource() instanceof ChannelMessageSink) {
+            ChannelMessageSink sink = (ChannelMessageSink) event.getSource();
+            boolean handled = Channel.callIn(event.getIdentifier(), sink, event.dataAsDataStream());
 
-        if (source instanceof ServerConnection) {
-            ServerConnection connection = (ServerConnection) source;
-            Channel.Inbound inbound = Channel.getInbound(event.getIdentifier());
-
-            if (inbound != null)
-                inbound.read(connection.getServerInfo().getName(), event.dataAsDataStream());
+            if (handled)
+                event.setResult(PluginMessageEvent.ForwardResult.handled());
         }
-
-         */
-
-        // IdentifierList class? ex: IdentifierList.DN_ONLINE
-
-        /* TODO
-        implement dn requests with ServerLoginPluginMessageEvent?
-
-        wdl:init -> respond with wdl:control
-        minecraft:brand -> replace brand name
-        bungeecord:main & BungeeCord -> replace PlayerCount to exclude vanished players.
-
-        dn:broadcast - read data with (byte: permissionType, String: message, boolean: json)
-        dn:online -> respond to backend with dn:online(int: total, int: vanished).
-
-        PermissionType ids:
-        0 - NONE
-        1 - STAFF
-        2 - ADMIN
-        3 - OWNER
-
-        I don't believe anything uses dn:broadcast anyway, so maybe don't implement?
-        Lobby plugin requires dn:online
-        */
     }
 
 }
