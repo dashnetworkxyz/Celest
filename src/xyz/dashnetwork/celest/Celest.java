@@ -96,6 +96,9 @@ public final class Celest {
         eventManager.register(this, new ServerPostConnectListener());
         eventManager.register(this, new ServerPreConnectListener());
 
+        logger.info("Registering channels...");
+
+
         logger.info("Registering commands...");
         new CommandBigMistakeBuddy();
         new CommandChat();

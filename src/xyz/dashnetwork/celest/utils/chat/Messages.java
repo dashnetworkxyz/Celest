@@ -19,7 +19,7 @@ public final class Messages {
         builder.append("&6&l»&c Usage:&7 /" + alias);
 
         for (String argument : arguments)
-            builder.append(" &7" + argument + "");
+            builder.append(" " + argument + "");
 
         return builder.build(null);
     }
@@ -65,7 +65,7 @@ public final class Messages {
         builder.append("&6&lDashNetwork");
         builder.append("\n&7You have been permanently banned");
         builder.append("\n&7You were banned by &6" + username);
-        builder.append("\n\n&6" + reason);
+        builder.append("\n\n" + reason);
 
         return builder.build(null);
     }
@@ -76,7 +76,7 @@ public final class Messages {
         builder.append("\n&7You have been temporarily banned");
         builder.append("\n&7You were banned by &6" + username);
         builder.append("\n&7Your ban will expire on &6" + expiration);
-        builder.append("\n\n&6" + reason);
+        builder.append("\n\n" + reason);
 
         return builder.build(null);
     }
@@ -94,8 +94,8 @@ public final class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lAdmin&r ");
         builder.append(player);
-        builder.append("&r &3&l»&r ");
-        builder.append("&3" + message);
+        builder.append("&r &3&l»&3 ");
+        builder.append(message);
 
         return builder.build(user);
     }
@@ -104,8 +104,8 @@ public final class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lOwner&r ");
         builder.append(player);
-        builder.append("&r &c&l»&r ");
-        builder.append("&c" + message);
+        builder.append("&r &c&l»&c ");
+        builder.append(message);
 
         return builder.build(user);
     }
@@ -114,8 +114,8 @@ public final class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lStaff&r ");
         builder.append(player);
-        builder.append("&r &6&l»&r ");
-        builder.append("&6" + message);
+        builder.append("&r &6&l»&6 ");
+        builder.append(message);
 
         return builder.build(user);
     }
@@ -124,8 +124,8 @@ public final class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lCmd&r ");
         builder.append(player);
-        builder.append("&r &b&l»&r ");
-        builder.append("&b" + message);
+        builder.append("&r &b&l»&b ");
+        builder.append(message);
 
         return builder.build(user);
     }
@@ -134,7 +134,7 @@ public final class Messages {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&7 You have been permanently muted. Hover for more information.")
                 .hover("&7You were muted by &6" + username
-                        + "\n\n&6" + reason);
+                        + "\n\n" + reason);
 
         return builder.build(null);
     }
@@ -144,7 +144,7 @@ public final class Messages {
         builder.append("&6&l»&7 You have been temporarily muted. Hover for more information.")
                 .hover("&7You were muted by &6" + username
                         + "\n&7Your mute will expire on &6" + expiration
-                        + "\n\n&6" + reason);
+                        + "\n\n" + reason);
 
         return builder.build(null);
     }
@@ -170,17 +170,17 @@ public final class Messages {
                                          String altSpy, String commandSpy, String pingSpy, String vanish) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&7 Hover to view data for &6" + uuid)
-                .hover("&7address: &6" + address
-                        + "\n&7username: &6" + username
-                        + "\n&7nickname: &6" + nickname
-                        + "\n&7ban: &6" + ban
-                        + "\n&7mute: &6" + mute
-                        + "\n&7chatType: &6" + chatType
-                        + "\n&7lastPlayed: &6" + lastPlayed
-                        + "\n&7altSpy: &6" + altSpy
-                        + "\n&7commandSpy: &6" + commandSpy
-                        + "\n&7pingSpy: &6" + pingSpy
-                        + "\n&7vanish: &6" + vanish);
+                .hover("&7address:&6 " + address
+                        + "\n&7username:&6 " + username
+                        + "\n&7nickname:&6 " + nickname
+                        + "\n&7ban:&6 " + ban
+                        + "\n&7mute:&6 " + mute
+                        + "\n&7chatType:&6 " + chatType
+                        + "\n&7lastPlayed:&6 " + lastPlayed
+                        + "\n&7altSpy:&6 " + altSpy
+                        + "\n&7commandSpy:&6 " + commandSpy
+                        + "\n&7pingSpy:&6 " + pingSpy
+                        + "\n&7vanish:&6 " + vanish);
 
         return builder.build(null);
     }

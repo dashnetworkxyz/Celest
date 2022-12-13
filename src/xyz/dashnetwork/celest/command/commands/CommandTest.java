@@ -27,8 +27,9 @@ public final class CommandTest extends CelestCommand {
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&atest");
-        builder.append("&atest");
+        builder.append("&a");
+        builder.append("test");
+        builder.append("test");
 
         Component component = builder.build(null);
         String json = GsonComponentSerializer.gson().serialize(component);

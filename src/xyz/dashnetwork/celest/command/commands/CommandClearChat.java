@@ -50,7 +50,7 @@ public final class CommandClearChat extends CelestCommand {
         for (int i = 0; i < 99; i++)
             builder.append("\n");
 
-        builder.append("&6&l» &7Chat was cleared by ").onlyIf(notSelf);
+        builder.append("&6&l»&7 Chat was cleared by ").onlyIf(notSelf);
         builder.append(new PlayerFormat(named)).onlyIf(notSelf);
 
         for (Player player : players)
@@ -58,7 +58,7 @@ public final class CommandClearChat extends CelestCommand {
 
         if (ArrayUtils.containsOtherThan(players, source)) {
             builder = new MessageBuilder();
-            builder.append("&6&l» &7Chat was cleared for ");
+            builder.append("&6&l»&7 Chat was cleared for ");
             builder.append(new PlayerFormat(players));
 
             MessageUtils.message(source, builder::build);

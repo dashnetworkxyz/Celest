@@ -27,6 +27,19 @@ public final class ListUtils {
         return builder.toString();
     }
 
+    public static <T> boolean equals(@NotNull List<T> list1, @NotNull List<T> list2) {
+        int size = list1.size();
+
+        if (size != list2.size())
+            return false;
+
+        for (int i = 0; i < size; i++)
+            if (!list1.get(i).equals(list2.get(i)))
+                return false;
+
+        return true;
+    }
+
     public static boolean containsOtherThan(@NotNull List<?> list, Object object) {
         return list.size() > (list.contains(object) ? 1 : 0);
     }

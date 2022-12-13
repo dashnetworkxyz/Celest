@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.utils.chat.builder;
 
 import net.kyori.adventure.text.event.ClickEvent;
+import xyz.dashnetwork.celest.utils.CompareUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.function.Predicate;
 
 public final class TextSection {
 
-    public static class Hover {
+    public static final class Hover {
 
         final String text;
         Predicate<User> predicate;
@@ -26,9 +27,20 @@ public final class TextSection {
             this.predicate = predicate;
         }
 
+        @Override
+        public boolean equals(Object object) {
+            if (object instanceof Hover) {
+                Hover hover = (Hover) object;
+
+                return text.equals(hover.text) && CompareUtils.equalsWithNull(predicate, hover.predicate);
+            }
+
+            return false;
+        }
+
     }
 
-    final String text;
+    String text;
     List<Hover> hovers;
     ClickEvent click;
     Predicate<User> predicate;
