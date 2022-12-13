@@ -27,17 +27,19 @@ public abstract class Channel {
     private static final Map<ChannelIdentifier, Supplier<Channel>> inputMap = new HashMap<>();
     private static final Map<String, Supplier<Channel>> outputMap = new HashMap<>();
     private static final ChannelRegistrar registrar = Celest.getServer().getChannelRegistrar();
+
+    @SuppressWarnings("UnstableApiUsage")
     protected final ByteArrayDataOutput output = ByteStreams.newDataOutput();
 
     public static void registerIn(String name, Supplier<Channel> supplier) {
-        ChannelIdentifier identifier = MinecraftChannelIdentifier.create("dashnetwork", name);
+        ChannelIdentifier identifier = MinecraftChannelIdentifier.create("dn", name);
 
         registrar.register(identifier);
         inputMap.put(identifier, supplier);
     }
 
     public static void registerOut(String name, Supplier<Channel> supplier) {
-        registrar.register(MinecraftChannelIdentifier.create("dashnetwork", name));
+        registrar.register(MinecraftChannelIdentifier.create("dn", name));
         outputMap.put(name, supplier);
     }
 
@@ -56,7 +58,7 @@ public abstract class Channel {
         Supplier<Channel> supplier = outputMap.get(name);
 
         if (supplier != null)
-            pluginMessage(MinecraftChannelIdentifier.create("dashnetwork", name),
+            pluginMessage(MinecraftChannelIdentifier.create("dn", name),
                     sink, supplier, channel -> channel.handle(user));
     }
 

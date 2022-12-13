@@ -8,7 +8,9 @@
 package xyz.dashnetwork.celest.utils.connection;
 
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.ServerConnection;
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.Savable;
 import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
@@ -19,6 +21,7 @@ import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -31,11 +34,13 @@ public final class User implements Savable, NamedSource {
     private Player player;
     private Address address;
     private UserData userData;
+    private String displayname;
 
     private User(Player player) {
         this.uuid = player.getUniqueId();
         this.stringUuid = uuid.toString();
         this.player = player;
+        this.displayname = null;
 
         load(true);
     }
@@ -72,7 +77,7 @@ public final class User implements Savable, NamedSource {
         address = Address.getAddress(stringAddress, false);
 
         UUID uniqueId = player.getUniqueId();
-        String username = player.getUsername();
+        String username = getUsername();
 
         if (userData == null)
             userData = new UserData();
@@ -144,14 +149,14 @@ public final class User implements Savable, NamedSource {
         return address.getData().getMute();
     }
 
-    @Override
-    public String getDisplayname() {
+    // TODO: Cooldown on this method.
+    public void updateDisplayname() {
         String name = userData.getNickname();
         String prefix = vault.getPrefix(player);
         String suffix = vault.getSuffix(player);
 
         if (name == null)
-            name = player.getUsername();
+            name = getUsername();
 
         if (!prefix.isBlank())
             prefix += " ";
@@ -159,7 +164,24 @@ public final class User implements Savable, NamedSource {
         if (!suffix.isBlank())
             suffix = " " + suffix;
 
-        return prefix + name + suffix;
+        String updated = prefix + name + suffix;
+
+        if (displayname == null)
+            displayname = updated;
+
+        if (!updated.equals(displayname)) {
+            displayname = updated;
+
+            player.getCurrentServer().ifPresent(connection ->
+                    Channel.callOut("displayname", connection, this)
+            );
+        }
+    }
+
+    @Override
+    public String getDisplayname() {
+        updateDisplayname();
+        return displayname;
     }
 
     @Override

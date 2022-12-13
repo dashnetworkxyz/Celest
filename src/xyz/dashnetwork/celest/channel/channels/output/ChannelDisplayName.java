@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.channel.channels.output;
 
 import xyz.dashnetwork.celest.channel.Channel;
+import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 public class ChannelDisplayName extends Channel {
@@ -15,7 +16,7 @@ public class ChannelDisplayName extends Channel {
     @Override
     protected void handle(User user) {
         output.writeUTF(user.getUuid().toString());
-        output.writeUTF(user.getDisplayname());
+        output.writeUTF(ColorUtils.fromAmpersand(user.getDisplayname()));
     }
 
 }
