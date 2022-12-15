@@ -55,13 +55,16 @@ public final class TextSection {
             hover(hover);
     }
 
-    public TextSection hover(String hover) {
-        hovers.add(new Hover(hover, null));
-        return this;
-    }
+    public TextSection hover(String hover) { return hover(hover, null); }
 
     public TextSection hover(String hover, Predicate<User> predicate) {
         hovers.add(new Hover(hover, predicate));
+        return this;
+    }
+
+    public TextSection hover(Format format) {
+        for (TextSection section : format.sections())
+            hover(section.text, section.predicate);
         return this;
     }
 

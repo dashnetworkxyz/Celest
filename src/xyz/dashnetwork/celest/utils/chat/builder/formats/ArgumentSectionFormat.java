@@ -27,6 +27,9 @@ public final class ArgumentSectionFormat implements Format {
 
         for (ArgumentSection each : list) {
             if (each.allowsConsole() || source instanceof Player) {
+                if (required && each.getPredicate() != null)
+                    required = false;
+
                 sections.addAll(new ArgumentSectionFormat(required, each).sections());
 
                 if (required)

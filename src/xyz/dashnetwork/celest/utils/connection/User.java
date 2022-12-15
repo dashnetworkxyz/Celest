@@ -13,6 +13,9 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.Savable;
+import xyz.dashnetwork.celest.utils.TimeType;
+import xyz.dashnetwork.celest.utils.TimeUtils;
+import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.Storage;
@@ -34,15 +37,17 @@ public final class User implements Savable, NamedSource {
     private Player player;
     private Address address;
     private UserData userData;
-    private String displayname;
+    private String prefix, suffix, nickname;
+    private long vaultUpdateTime;
 
     private User(Player player) {
         this.uuid = player.getUniqueId();
         this.stringUuid = uuid.toString();
         this.player = player;
-        this.displayname = null;
+        this.vaultUpdateTime = -1;
 
         load(true);
+        updateDisplayname();
     }
 
     public static List<User> getUsers() { return List.copyOf(users); } // return Immutable list
@@ -149,39 +154,40 @@ public final class User implements Savable, NamedSource {
         return address.getData().getMute();
     }
 
-    // TODO: Cooldown on this method.
     public void updateDisplayname() {
-        String name = userData.getNickname();
-        String prefix = vault.getPrefix(player);
-        String suffix = vault.getSuffix(player);
+        nickname = userData.getNickname();
 
-        if (name == null)
-            name = getUsername();
+        if (nickname == null)
+            nickname = getUsername();
 
-        if (!prefix.isBlank())
-            prefix += " ";
+        if (!TimeUtils.isRecent(vaultUpdateTime, TimeType.SECOND.toMillis(5))) {
+            prefix = ColorUtils.fromAmpersand(vault.getPrefix(player));
+            suffix = ColorUtils.fromAmpersand(vault.getSuffix(player));
 
-        if (!suffix.isBlank())
-            suffix = " " + suffix;
+            if (!prefix.isBlank())
+                prefix += " ";
 
-        String updated = prefix + name + suffix;
+            if (!suffix.isBlank())
+                suffix = " " + suffix;
 
-        if (displayname == null)
-            displayname = updated;
-
-        if (!updated.equals(displayname)) {
-            displayname = updated;
-
-            player.getCurrentServer().ifPresent(connection ->
-                    Channel.callOut("displayname", connection, this)
-            );
+            vaultUpdateTime = System.currentTimeMillis();
         }
     }
 
     @Override
     public String getDisplayname() {
+        Optional<ServerConnection> optional = player.getCurrentServer();
+        String oldPrefix = prefix;
+        String oldSuffix = suffix;
+        String oldNickname = nickname;
+
         updateDisplayname();
-        return displayname;
+
+        if ((!oldPrefix.equals(prefix) || !oldSuffix.equals(suffix) || !oldNickname.equals(nickname))
+                && optional.isPresent())
+            Channel.callOut("displayname", optional.get(), this);
+
+        return prefix + nickname + suffix;
     }
 
     @Override

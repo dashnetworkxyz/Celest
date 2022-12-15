@@ -46,23 +46,22 @@ public abstract class Channel {
     public static boolean callIn(ChannelIdentifier identifier, ChannelMessageSink sink, ByteArrayDataInput input) {
         Supplier<Channel> supplier = inputMap.get(identifier);
 
-        if (supplier != null) {
-            pluginMessage(identifier, sink, supplier, channel -> channel.handle(input));
-            return true;
-        }
+        if (supplier == null)
+            return false;
 
-        return false;
+        call(identifier, sink, supplier, channel -> channel.handle(input));
+        return true;
     }
 
     public static void callOut(String name, ChannelMessageSink sink, User user) {
         Supplier<Channel> supplier = outputMap.get(name);
 
         if (supplier != null)
-            pluginMessage(MinecraftChannelIdentifier.create("dn", name),
+            call(MinecraftChannelIdentifier.create("dn", name),
                     sink, supplier, channel -> channel.handle(user));
     }
 
-    private static void pluginMessage(ChannelIdentifier identifier, ChannelMessageSink sink,
+    private static void call(ChannelIdentifier identifier, ChannelMessageSink sink,
                                       Supplier<Channel> supplier, Consumer<Channel> handler) {
         Channel channel = supplier.get();
         handler.accept(channel);

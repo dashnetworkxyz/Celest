@@ -11,21 +11,21 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.command.CommandExecuteEvent;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 
 public final class CommandExecuteListener {
 
     @Subscribe
     public void onCommandExecute(CommandExecuteEvent event) {
-        // TODO: toggle command spy messages from console
-
         NamedSource named = NamedSource.of(event.getCommandSource());
-        String message = "/" + event.getCommand();
 
-        MessageUtils.broadcast(user -> user.getData().getCommandSpy(), user -> Messages.playerCommandSpy(
-                user, new PlayerFormat(named), message)
-        );
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&9&lCmd&r ");
+        builder.append(new PlayerFormat(named));
+        builder.append("&r &b&l»&b /" + event.getCommand());
+
+        MessageUtils.broadcast(user -> user.getData().getCommandSpy(), builder::build);
     }
 
 }

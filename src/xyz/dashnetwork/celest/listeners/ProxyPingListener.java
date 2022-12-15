@@ -18,7 +18,9 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.*;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.AddressFormat;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
@@ -37,13 +39,11 @@ public final class ProxyPingListener {
     @Subscribe
     public void onProxyPing(ProxyPingEvent event) {
         ServerPing.Builder builder = event.getPing().asBuilder();
-        final int protocol = builder.getVersion().getProtocol();
         int online = 0;
 
         for (User user : User.getUsers())
             if (!user.getData().getVanish())
                 online++;
-
 
         Component description = ComponentUtils.fromLegacyString(ConfigurationList.MOTD_DESCRIPTION);
         String software = ConfigurationList.MOTD_SOFTWARE;
@@ -52,7 +52,7 @@ public final class ProxyPingListener {
         builder.onlinePlayers(online);
         builder.maximumPlayers(Calendar.getInstance().get(Calendar.YEAR));
         builder.description(description);
-        builder.version(new ServerPing.Version(protocol, software));
+        builder.version(new ServerPing.Version(builder.getVersion().getProtocol(), software));
 
         for (String line : ConfigurationList.MOTD_HOVER)
             builder.samplePlayers(new ServerPing.SamplePlayer(line, UUID.randomUUID()));
@@ -63,19 +63,7 @@ public final class ProxyPingListener {
 
         // Run async so PingSpy doesn't hold up the status response.
         scheduler.buildTask(Celest.getInstance(), () -> {
-            String hoststring = connection.getRemoteAddress().getHostString();
-            ProtocolVersion protocolVersion = connection.getProtocolVersion();
-            Optional<InetSocketAddress> virtual = connection.getVirtualHost();
-            String inputAddress = "N/A";
-            String inputPort = "N/A";
-
-            if (virtual.isPresent()) {
-                InetSocketAddress socket = virtual.get();
-                inputAddress = socket.getHostString();
-                inputPort = String.valueOf(socket.getPort());
-            }
-
-            Address address = Address.getAddress(hoststring, true);
+            Address address = Address.getAddress(connection.getRemoteAddress().getHostString(), true);
             AddressData data = address.getData();
             PlayerProfile[] profiles = data.getProfiles();
 
@@ -90,19 +78,39 @@ public final class ProxyPingListener {
 
             address.setServerPingTime(System.currentTimeMillis());
 
+            ProtocolVersion version = connection.getProtocolVersion();
+            Optional<InetSocketAddress> optional = connection.getVirtualHost();
+            InetSocketAddress virtual;
+
+            if (optional.isPresent()) {
+                InetSocketAddress socket = optional.get();
+                String clean = socket.getHostString();
+
+                // Filter Cloudflare proxy.
+                if (clean.matches("_dc-srv\\.([a-f0-9]{12})\\._minecraft\\._tcp\\.([A-z0-9]+)\\.(?i)dashnetwork\\.xyz"))
+                    clean = clean.replaceFirst("_dc-srv\\.([A-z0-9]{12})\\._minecraft\\._tcp\\.", "");
+
+                virtual = new InetSocketAddress(clean, socket.getPort());
+            } else
+                virtual = new InetSocketAddress("Unknown", -1);
+
+            String range = VersionUtils.getVersionString(version);
             String name = profiles[0].getUsername();
-            String version = VersionUtils.getVersionString(protocolVersion);
-            String stringProtocol = String.valueOf(protocol);
             String usernames = ArrayUtils.convertToString(profiles, PlayerProfile::getUsername, ", ");
             PlayerProfile recent = ProfileUtils.findMostRecent(profiles);
 
             if (recent != null)
                 name = recent.getUsername();
 
-            // TODO: Hide Address on sensitiveData setting
-            MessageUtils.broadcast(user -> user.getData().getPingSpy(), Messages.playerPingSpy(
-                    name, hoststring, inputAddress, inputPort, version, stringProtocol, usernames
-            ));
+            MessageBuilder message = new MessageBuilder();
+            TextSection section = message.append("&6&l»&6 " + name + "&7 pinged the server.");
+
+            section.hover(new AddressFormat(address));
+            section.hover("&7\nVirtual Address: &6" + virtual.getHostName() + ":" + virtual.getPort());
+            section.hover("&7\nVersion: &6" + range + "&7 (" + version.getProtocol() + ")");
+            section.hover("\nAccounts: &6" + usernames);
+
+            MessageUtils.broadcast(user -> user.getData().getPingSpy(), message::build);
         }).schedule();
     }
 

@@ -12,6 +12,7 @@ import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.connection.User;
 
+@Deprecated
 public final class Messages {
 
     public static Component commandUsage(String alias, String... arguments) {

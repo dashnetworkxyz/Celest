@@ -11,8 +11,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.chat.Messages;
-import xyz.dashnetwork.celest.utils.chat.builder.Format;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
@@ -24,15 +23,27 @@ public final class PostLoginListener {
         Player player = event.getPlayer();
         User user = User.getUser(player);
         UserData data = user.getData();
-        Format format = new PlayerFormat(player);
+        MessageBuilder builder = new MessageBuilder();
 
-        if (data.getVanish())
-            MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(), each ->
-                    Messages.joinServerVanished(each, format));
-        else if (data.getLastPlayed() == -1)
-            MessageUtils.broadcast(each -> Messages.welcome(each, format));
-        else
-            MessageUtils.broadcast(each -> Messages.joinServer(each, format));
+        if (data.getVanish()) {
+            builder.append("&3&l»&r ");
+            builder.append(new PlayerFormat(user));
+            builder.append("&3 silently joined.");
+
+            MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(), builder::build);
+        } else if (data.getLastPlayed() == -1) {
+            builder.append("&6&l»&6 Welcome, ");
+            builder.append(new PlayerFormat(user));
+            builder.append("&6, to &lDashNetwork");
+
+            MessageUtils.broadcast(builder::build);
+        } else {
+            builder.append("&a&l»&r ");
+            builder.append(new PlayerFormat(user));
+            builder.append("&a joined.");
+
+            MessageUtils.broadcast(builder::build);
+        }
 
         user.getAddress().setServerPingTime(-1); // Reset for PingSpy
 

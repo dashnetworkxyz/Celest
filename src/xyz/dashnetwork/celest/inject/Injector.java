@@ -9,6 +9,7 @@ package xyz.dashnetwork.celest.inject;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import org.slf4j.Logger;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.backend.handler.CelestClientPlaySessionHandler;
 import xyz.dashnetwork.celest.inject.server.CelestServerChannelInitializer;
@@ -23,6 +24,8 @@ import xyz.dashnetwork.celest.utils.reflection.velocity.network.ReflectedServerC
 
 public final class Injector {
 
+    private static final Logger logger = Celest.getLogger();
+
     // Hook into Server Ping.
     // Allows custom ServerPing response for custom entry preventsChatReports:true (CelestServerPing)
     public static void injectChannelInitializer(ProxyServer proxy) {
@@ -33,8 +36,7 @@ public final class Injector {
 
             holder.set(new CelestServerChannelInitializer(holder.get()));
         } catch (ReflectiveOperationException | RuntimeException exception) {
-            Celest.getLogger().error("Failed to inject server channel initializer. Printing stacktrace...");
-            exception.printStackTrace();
+            logger.error("Failed to inject server channel initializer.", exception);
         }
     }
 
@@ -58,8 +60,7 @@ public final class Injector {
             });
             connected.setPlayerKey(null);
         } catch (ReflectiveOperationException | RuntimeException exception) {
-            Celest.getLogger().error("Failed to inject play session handler. Printing stacktrace...");
-            exception.printStackTrace();
+            logger.error("Failed to inject play session handler.", exception);
         }
     }
 

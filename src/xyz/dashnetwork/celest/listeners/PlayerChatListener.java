@@ -18,7 +18,7 @@ import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
-import xyz.dashnetwork.celest.utils.chat.builder.Format;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
@@ -42,12 +42,13 @@ public final class PlayerChatListener {
         if (PunishUtils.isValid(mute)) {
             long expiration = mute.getExpiration();
             String reason = mute.getReason();
-            String banner = ProfileUtils.fromUuid(mute.getJudge()).getUsername();
+            String judge = ProfileUtils.fromUuid(mute.getJudge()).getUsername();
             String date = TimeUtils.longToDate(expiration);
 
+            // TODO: Find a good replacement for Messages here. New Format maybe?
             Component message = expiration == -1 ?
-                    Messages.playerMuted(reason, banner) :
-                    Messages.playerMutedTemporary(reason, banner, date);
+                    Messages.playerMuted(reason, judge) :
+                    Messages.playerMutedTemporary(reason, judge, date);
 
             MessageUtils.message(player, message);
             return;
@@ -69,26 +70,47 @@ public final class PlayerChatListener {
             type = ChatType.GLOBAL;
 
         final String finalMessage = message;
-        final Format format = new PlayerFormat(user);
+        final MessageBuilder builder = new MessageBuilder();
 
         switch (type) {
             case OWNER:
-                MessageUtils.broadcast(each -> each.isOwner() || each.getData().getChatType().equals(ChatType.OWNER), each ->
-                        Messages.playerChatOwner(each, format, finalMessage));
+                builder.append("&9&lOwner&r ");
+                builder.append(new PlayerFormat(user));
+                builder.append("&r &c&l»&c " + message);
+
+                MessageUtils.broadcast(
+                        each -> each.isOwner() || each.getData().getChatType().equals(ChatType.OWNER),
+                        builder::build
+                );
                 break;
             case ADMIN:
-                MessageUtils.broadcast(each -> each.isAdmin() || each.getData().getChatType().equals(ChatType.ADMIN), each ->
-                        Messages.playerChatAdmin(each, format, finalMessage));
+                builder.append("&9&lAdmin&r ");
+                builder.append(new PlayerFormat(user));
+                builder.append("&r &3&l»&3 " + message);
+
+                MessageUtils.broadcast(
+                        each -> each.isAdmin() || each.getData().getChatType().equals(ChatType.ADMIN),
+                        builder::build
+                );
                 break;
             case STAFF:
-                MessageUtils.broadcast(each -> each.isStaff() || each.getData().getChatType().equals(ChatType.STAFF), each ->
-                        Messages.playerChatStaff(each, format, finalMessage));
+                builder.append("&9&lStaff&r ");
+                builder.append(new PlayerFormat(user));
+                builder.append("&r &6&l»&6 " + message);
+
+                MessageUtils.broadcast(
+                        each -> each.isStaff() || each.getData().getChatType().equals(ChatType.STAFF),
+                        builder::build
+                );
                 break;
             case LOCAL:
-                player.spoofChatInput(message); // Removes chat signatures
+                player.spoofChatInput(message);
                 break;
             default:
-                MessageUtils.broadcast(each -> Messages.playerChat(each, format, finalMessage));
+                builder.append(new PlayerFormat(user));
+                builder.append("&r &e&l»&r " + message);
+
+                MessageUtils.broadcast(builder::build);
         }
 
         Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(user, type, finalMessage));
