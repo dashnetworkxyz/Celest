@@ -52,8 +52,6 @@ public final class Configuration {
         }
     }
 
-    public static ConfigurationNode getNode(String node) { return config.getNode(node); }
-
     @SuppressWarnings("unchecked")
     public static <T> T get(Class<T> type, String node) { return (T) config.getNode(node).getValue(type); }
 

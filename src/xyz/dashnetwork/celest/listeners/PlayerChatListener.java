@@ -19,7 +19,7 @@ import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
@@ -75,7 +75,7 @@ public final class PlayerChatListener {
         switch (type) {
             case OWNER:
                 builder.append("&9&lOwner&r ");
-                builder.append(new PlayerFormat(user));
+                builder.append(new NamedSourceFormat(user));
                 builder.append("&r &c&l»&c " + message);
 
                 MessageUtils.broadcast(
@@ -85,7 +85,7 @@ public final class PlayerChatListener {
                 break;
             case ADMIN:
                 builder.append("&9&lAdmin&r ");
-                builder.append(new PlayerFormat(user));
+                builder.append(new NamedSourceFormat(user));
                 builder.append("&r &3&l»&3 " + message);
 
                 MessageUtils.broadcast(
@@ -95,7 +95,7 @@ public final class PlayerChatListener {
                 break;
             case STAFF:
                 builder.append("&9&lStaff&r ");
-                builder.append(new PlayerFormat(user));
+                builder.append(new NamedSourceFormat(user));
                 builder.append("&r &6&l»&6 " + message);
 
                 MessageUtils.broadcast(
@@ -107,7 +107,7 @@ public final class PlayerChatListener {
                 player.spoofChatInput(message);
                 break;
             default:
-                builder.append(new PlayerFormat(user));
+                builder.append(new NamedSourceFormat(user));
                 builder.append("&r &e&l»&r " + message);
 
                 MessageUtils.broadcast(builder::build);

@@ -38,7 +38,7 @@ import xyz.dashnetwork.celest.vault.api.LuckPermsAPI;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "0.10", authors = {"MasterDash5"})
+@Plugin(id = "celest", name = "Celest", version = "0.11", authors = {"MasterDash5"})
 public final class Celest {
 
     private static Celest instance;
@@ -108,15 +108,24 @@ public final class Celest {
         eventManager.register(this, new ServerPreConnectListener());
 
         logger.info("Registering commands...");
+        new CommandAdminChat();
         new CommandBigMistakeBuddy();
         new CommandChat();
         new CommandClearChat();
+        new CommandColorList();
         new CommandDiscord();
+        new CommandGlobalChat();
+        new CommandLocalChat();
         new CommandMattsArmorStands();
         new CommandMommy();
+        new CommandNickName();
+        new CommandOwnerChat();
         new CommandPing();
+        new CommandStaffChat();
         new CommandTest();
         new CommandTheFurpySong();
+        new CommandUniqueId();
+        new CommandVersionList();
 
         logger.info("Registering tasks...");
         Scheduler scheduler = server.getScheduler();

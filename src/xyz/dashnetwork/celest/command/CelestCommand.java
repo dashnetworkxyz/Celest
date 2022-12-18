@@ -73,8 +73,8 @@ public abstract class CelestCommand implements SimpleCommand {
     protected void sendUsage(@NotNull CommandSource source, @NotNull String label) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&c Usage: ");
-        builder.append(new AliasesFormat(label, labels));
-        builder.append(new ArgumentSectionFormat(source, sections));
+        builder.append(new AliasesFormat(label, labels)).prefix("&7");
+        builder.append(new ArgumentSectionFormat(source, sections)).prefix("&7");
 
         MessageUtils.message(source, builder::build);
     }

@@ -9,17 +9,14 @@ package xyz.dashnetwork.celest.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
-import com.velocitypowered.api.network.ProtocolVersion;
-import xyz.dashnetwork.celest.utils.LazyUtils;
+import xyz.dashnetwork.celest.utils.VersionUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 
 public final class PreLoginListener {
 
     @Subscribe
     public void onPreLogin(PreLoginEvent event) {
-        ProtocolVersion version = event.getConnection().getProtocolVersion();
-
-        if (LazyUtils.anyEquals(version, ProtocolVersion.MINECRAFT_1_7_2, ProtocolVersion.MINECRAFT_1_7_6)) {
+        if (VersionUtils.isLegacy(event.getConnection().getProtocolVersion())) {
             event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromLegacyString(
                     "&6&lDashNetwork" +
                             "\n&61.7&7 is no longer supported." +

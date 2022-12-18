@@ -12,7 +12,7 @@ import com.velocitypowered.api.event.command.CommandExecuteEvent;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 
 public final class CommandExecuteListener {
 
@@ -22,7 +22,7 @@ public final class CommandExecuteListener {
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&9&lCmd&r ");
-        builder.append(new PlayerFormat(named));
+        builder.append(new NamedSourceFormat(named));
         builder.append("&r &b&l»&b /" + event.getCommand());
 
         MessageUtils.broadcast(user -> user.getData().getCommandSpy(), builder::build);

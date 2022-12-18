@@ -14,7 +14,8 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ArgumentUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.PermissionType;
+import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
@@ -25,36 +26,58 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public final class CommandChat extends CelestCommand {
+public final class CommandNickName extends CelestCommand {
 
-    public CommandChat() {
-        super("chat");
+    public CommandNickName() {
+        super("nickname", "nick");
 
-        addArguments(ArgumentType.CHAT_TYPE);
-        addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
+        addArguments(ArgumentType.STRING);
+        addArguments(User::isAdmin, true, ArgumentType.PLAYER_LIST);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<ChatType> optional = arguments.get(ChatType.class);
+        Optional<String> optional = arguments.get(String.class);
         List<Player> players = ArgumentUtils.playerListOrSelf(source, arguments);
 
         if (optional.isEmpty() || players.isEmpty()) {
             sendUsage(source, label);
+            MessageUtils.message(source, "&6&l»&7 \"/nickname off\" can be used to clear your nickname.");
             return;
         }
 
+        String string = optional.get();
+        boolean off = string.equals("off");
+
+        if (!off && !PermissionType.ADMIN.hasPermission(source)) {
+            int length = ColorUtils.stripColor(string).length();
+
+            if (length < 4 || length > 16) {
+                MessageUtils.message(source, "&6&l»&c Your nickname cannot be longer than 16 characters.");
+                return;
+            }
+        }
+
+        if (off)
+            string = null;
+        else
+            string = ColorUtils.fromAmpersand(string);
+
         NamedSource named = NamedSource.of(source);
-        ChatType chatType = optional.get();
         Predicate<User> notSelf = user -> !user.getPlayer().equals(source);
         MessageBuilder builder;
 
         for (Player player : players) {
             User user = User.getUser(player);
-            user.getData().setChatType(chatType);
+            user.getData().setNickname(string);
 
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have been moved to &6" + chatType.getName() + "Chat");
+
+            if (off)
+                builder.append("&6&l»&7 Your nickname has been cleared");
+            else
+                builder.append("&6&l»&7 Your nickname has been set to &6" + string);
+
             builder.append("&7 by ").onlyIf(notSelf);
             builder.append(new NamedSourceFormat(named)).onlyIf(notSelf);
 
@@ -66,9 +89,13 @@ public final class CommandChat extends CelestCommand {
 
             if (players.size() > 0) {
                 builder = new MessageBuilder();
-                builder.append("&6&l»&7 You have moved ");
+                builder.append("&6&l»&7 Nicknames for ");
                 builder.append(new PlayerFormat(players));
-                builder.append("&7 to &6" + chatType.getName() + "Chat");
+
+                if (off)
+                    builder.append("have been cleared");
+                else
+                    builder.append("have been set to &6" + string);
 
                 MessageUtils.message(source, builder::build);
             }

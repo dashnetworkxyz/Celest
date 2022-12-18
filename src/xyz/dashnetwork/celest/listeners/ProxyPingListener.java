@@ -38,8 +38,16 @@ public final class ProxyPingListener {
 
     @Subscribe
     public void onProxyPing(ProxyPingEvent event) {
+        final InboundConnection connection = event.getConnection();
+        final ProtocolVersion version = connection.getProtocolVersion();
         ServerPing.Builder builder = event.getPing().asBuilder();
         int online = 0;
+        int protocol;
+
+        if (VersionUtils.isLegacy(version))
+            protocol = 48;
+        else
+            protocol = version.getProtocol();
 
         for (User user : User.getUsers())
             if (!user.getData().getVanish())
@@ -52,14 +60,12 @@ public final class ProxyPingListener {
         builder.onlinePlayers(online);
         builder.maximumPlayers(Calendar.getInstance().get(Calendar.YEAR));
         builder.description(description);
-        builder.version(new ServerPing.Version(builder.getVersion().getProtocol(), software));
+        builder.version(new ServerPing.Version(protocol, software));
 
         for (String line : ConfigurationList.MOTD_HOVER)
             builder.samplePlayers(new ServerPing.SamplePlayer(line, UUID.randomUUID()));
 
         event.setPing(builder.build());
-
-        final InboundConnection connection = event.getConnection();
 
         // Run async so PingSpy doesn't hold up the status response.
         scheduler.buildTask(Celest.getInstance(), () -> {
@@ -78,7 +84,6 @@ public final class ProxyPingListener {
 
             address.setServerPingTime(System.currentTimeMillis());
 
-            ProtocolVersion version = connection.getProtocolVersion();
             Optional<InetSocketAddress> optional = connection.getVirtualHost();
             InetSocketAddress virtual;
 
@@ -106,7 +111,7 @@ public final class ProxyPingListener {
             TextSection section = message.append("&6&l»&6 " + name + "&7 pinged the server.");
 
             section.hover(new AddressFormat(address));
-            section.hover("&7\nVirtual Address: &6" + virtual.getHostName() + ":" + virtual.getPort());
+            section.hover("&7\nVirtual: &6" + virtual.getHostName() + ":" + virtual.getPort());
             section.hover("&7\nVersion: &6" + range + "&7 (" + version.getProtocol() + ")");
             section.hover("\nAccounts: &6" + usernames);
 

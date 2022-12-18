@@ -23,15 +23,12 @@ import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.*;
 
 public final class User implements Savable, NamedSource {
 
+    private static final Map<UUID, User> users = new HashMap<>();
     private static final Vault vault = Celest.getVault();
-    private static final List<User> users = new CopyOnWriteArrayList<>();
     private final UUID uuid;
     private final String stringUuid;
     private Player player;
@@ -50,14 +47,13 @@ public final class User implements Savable, NamedSource {
         updateDisplayname();
     }
 
-    public static List<User> getUsers() { return List.copyOf(users); } // return Immutable list
+    public static Collection<User> getUsers() { return users.values(); }
 
     public static User getUser(Player player) {
         UUID uuid = player.getUniqueId();
 
-        for (User user : users)
-            if (user.uuid.equals(uuid))
-                return user;
+        if (users.containsKey(uuid))
+            return users.get(uuid);
 
         Limbo<User> limbo = Limbo.getLimbo(User.class, each -> each.uuid.equals(uuid));
 
@@ -99,14 +95,34 @@ public final class User implements Savable, NamedSource {
 
         Cache.generate(uuid, userData);
 
-        users.add(this);
+        users.put(uniqueId, this);
+    }
+
+    private void updateDisplayname() {
+        nickname = userData.getNickname();
+
+        if (nickname == null)
+            nickname = getUsername();
+
+        if (!TimeUtils.isRecent(vaultUpdateTime, TimeType.SECOND.toMillis(5))) {
+            prefix = ColorUtils.fromAmpersand(vault.getPrefix(player));
+            suffix = ColorUtils.fromAmpersand(vault.getSuffix(player));
+
+            if (!prefix.isBlank())
+                prefix += " ";
+
+            if (!suffix.isBlank())
+                suffix = " " + suffix;
+
+            vaultUpdateTime = System.currentTimeMillis();
+        }
     }
 
     @Override
     public void save() { Storage.write(stringUuid, Storage.Directory.USER, userData); }
 
     public void remove() {
-        users.remove(this);
+        users.remove(uuid);
 
         new Limbo<>(this);
         new Limbo<>(address);
@@ -152,26 +168,6 @@ public final class User implements Savable, NamedSource {
             return fromUserData;
 
         return address.getData().getMute();
-    }
-
-    public void updateDisplayname() {
-        nickname = userData.getNickname();
-
-        if (nickname == null)
-            nickname = getUsername();
-
-        if (!TimeUtils.isRecent(vaultUpdateTime, TimeType.SECOND.toMillis(5))) {
-            prefix = ColorUtils.fromAmpersand(vault.getPrefix(player));
-            suffix = ColorUtils.fromAmpersand(vault.getSuffix(player));
-
-            if (!prefix.isBlank())
-                prefix += " ";
-
-            if (!suffix.isBlank())
-                suffix = " " + suffix;
-
-            vaultUpdateTime = System.currentTimeMillis();
-        }
     }
 
     @Override

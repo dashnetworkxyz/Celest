@@ -15,6 +15,10 @@ public final class VersionUtils {
 
     private static final ProxyVersion version = Celest.getServer().getVersion();
 
+    public static boolean isLegacy(ProtocolVersion version) {
+        return LazyUtils.anyEquals(version, ProtocolVersion.MINECRAFT_1_7_2, ProtocolVersion.MINECRAFT_1_7_6);
+    }
+
     public static String getVersionString(ProtocolVersion version) {
         String earliest = version.getVersionIntroducedIn();
         String latest = version.getMostRecentSupportedVersion();

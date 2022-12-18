@@ -12,16 +12,16 @@ import com.velocitypowered.api.scheduler.Scheduler;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.Savable;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 public final class Limbo<T extends Savable> implements Runnable {
 
+    private static final List<Limbo<?>> limbos = new ArrayList<>();
     private static final Celest celest = Celest.getInstance();
     private static final Scheduler scheduler = Celest.getServer().getScheduler();
-    private static final List<Limbo<?>> limbos = new CopyOnWriteArrayList<>();
     private final T object;
     private boolean shouldSave;
     private ScheduledTask scheduledTask;

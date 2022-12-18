@@ -22,39 +22,36 @@ import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 
-public final class CommandChat extends CelestCommand {
+public final class CommandAdminChat extends CelestCommand {
 
-    public CommandChat() {
-        super("chat");
+    public CommandAdminChat() {
+        super("adminchat", "ac");
 
-        addArguments(ArgumentType.CHAT_TYPE);
+        setPermission(User::isAdmin, true);
         addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<ChatType> optional = arguments.get(ChatType.class);
         List<Player> players = ArgumentUtils.playerListOrSelf(source, arguments);
 
-        if (optional.isEmpty() || players.isEmpty()) {
+        if (players.isEmpty()) {
             sendUsage(source, label);
             return;
         }
 
         NamedSource named = NamedSource.of(source);
-        ChatType chatType = optional.get();
         Predicate<User> notSelf = user -> !user.getPlayer().equals(source);
         MessageBuilder builder;
 
         for (Player player : players) {
             User user = User.getUser(player);
-            user.getData().setChatType(chatType);
+            user.getData().setChatType(ChatType.ADMIN);
 
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have been moved to &6" + chatType.getName() + "Chat");
+            builder.append("&6&l»&7 You have been moved to &6AdminChat");
             builder.append("&7 by ").onlyIf(notSelf);
             builder.append(new NamedSourceFormat(named)).onlyIf(notSelf);
 
@@ -68,7 +65,7 @@ public final class CommandChat extends CelestCommand {
                 builder = new MessageBuilder();
                 builder.append("&6&l»&7 You have moved ");
                 builder.append(new PlayerFormat(players));
-                builder.append("&7 to &6" + chatType.getName() + "Chat");
+                builder.append("&7 to &6AdminChat");
 
                 MessageUtils.message(source, builder::build);
             }

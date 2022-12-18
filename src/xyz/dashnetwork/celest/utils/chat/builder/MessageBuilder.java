@@ -25,6 +25,8 @@ public final class MessageBuilder {
 
     private final List<TextSection> sections = new ArrayList<>();
 
+    public boolean isEmpty() { return sections.isEmpty(); }
+
     public TextSection append(@NotNull String text) {
         TextSection section = new TextSection(text, null, null);
         sections.add(section);

@@ -24,7 +24,7 @@ public final class ArgumentTypeFormat implements Format {
         String open = required ? "<" : "(";
         String close = required ? ">" : ")";
 
-        TextSection section = new TextSection("&7" + open + name + close, null, null);
+        TextSection section = new TextSection(open + name + close, null, null);
 
         if (!required)
             section.hover("&6Optional ");

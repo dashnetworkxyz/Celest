@@ -11,7 +11,6 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
-import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,21 +20,8 @@ public final class PlayerFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 
-    public PlayerFormat(Player player) { this(NamedSource.of(player)); }
-
-    public PlayerFormat(NamedSource source) {
-        String username = source.getUsername();
-        String displayname = source.getDisplayname();
-        TextSection section = new TextSection(displayname, "&6" + username, null);
-
-        if (source instanceof User) {
-            User user = (User) source;
-
-            section.hover("\n&7Address: &6" + user.getAddress().getString(),
-                    each -> each.isAdmin() && each.getData().getSensitiveData());
-        }
-
-        sections.add(section);
+    public PlayerFormat(Player player) {
+        sections.addAll(new NamedSourceFormat(NamedSource.of(player)).sections());
     }
 
     public PlayerFormat(Player... players) { this(List.of(players)); }

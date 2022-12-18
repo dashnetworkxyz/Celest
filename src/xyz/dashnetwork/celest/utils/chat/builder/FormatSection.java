@@ -18,6 +18,16 @@ public final class FormatSection {
 
     public FormatSection(List<TextSection> sections) { this.sections = sections; }
 
+    public void prefix(String string) {
+        for (TextSection section : sections)
+            section.text = string + section.text;
+    }
+
+    public void suffix(String string) {
+        for (TextSection section : sections)
+            section.text += string;
+    }
+
     public void onlyIf(Predicate<User> predicate) {
         for (TextSection section : sections) {
             if (section.predicate == null)

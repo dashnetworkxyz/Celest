@@ -16,6 +16,7 @@ import xyz.dashnetwork.celest.utils.ArrayUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
@@ -51,7 +52,7 @@ public final class CommandClearChat extends CelestCommand {
             builder.append("\n");
 
         builder.append("&6&l»&7 Chat was cleared by ").onlyIf(notSelf);
-        builder.append(new PlayerFormat(named)).onlyIf(notSelf);
+        builder.append(new NamedSourceFormat(named)).onlyIf(notSelf);
 
         for (Player player : players)
             MessageUtils.message(player, builder::build);

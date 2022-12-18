@@ -7,30 +7,24 @@
 
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
+import com.velocitypowered.api.network.ProtocolVersion;
+import xyz.dashnetwork.celest.utils.ListUtils;
+import xyz.dashnetwork.celest.utils.VersionUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class AliasesFormat implements Format {
+public class ProtocolVersionFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 
-    public AliasesFormat(String label, List<String> aliases) {
-        TextSection text = new TextSection("/" + label, null, null);
-        List<String> copy = new ArrayList<>(aliases);
-        copy.remove(label);
+    public ProtocolVersionFormat(ProtocolVersion version) {
+        String hover = "&6Protocol " + version.getProtocol() +
+                "\n&7" + ListUtils.convertToString(version.getVersionsSupportedBy(), string -> string, ", ");
 
-        if (copy.size() > 0) {
-            text.hover("&7Aliases for &6/" + label);
-
-            for (String each : copy)
-                text.hover("\n&6/" + each);
-        } else
-            text.hover("&7No aliases for &6/" + label);
-
-        sections.add(text);
+        sections.add(new TextSection(VersionUtils.getVersionString(version), hover, null));
     }
 
     @Override
