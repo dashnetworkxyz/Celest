@@ -22,8 +22,8 @@ public final class PreLoginListener {
         if (LazyUtils.anyEquals(version, ProtocolVersion.MINECRAFT_1_7_2, ProtocolVersion.MINECRAFT_1_7_6)) {
             event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromLegacyString(
                     "&6&lDashNetwork" +
-                            "\n\n&61.7&7 is no longer supported." +
-                            "\nPlease update to &61.8&l or newer."
+                            "\n&61.7&7 is no longer supported." +
+                            "\nPlease update to &61.8 or newer."
             )));
         }
     }
