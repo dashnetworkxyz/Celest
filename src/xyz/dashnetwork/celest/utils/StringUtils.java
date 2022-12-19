@@ -32,11 +32,15 @@ public final class StringUtils {
     }
 
     public static boolean matchesUuid(@NotNull String string) {
-        return string.matches("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+        return string.matches("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
     }
 
     public static boolean matchesInteger(@NotNull String string) {
-        return string.matches("\\b(?<!\\.)\\d+(?!\\.)\\b");
+        return string.matches("^\\b(?<!\\.)\\d+(?!\\.)\\b$");
+    }
+
+    public static boolean matchesUrl(@NotNull String string) {
+        return string.matches("^(?:(https?)://)?([-\\w_.]{2,}\\.[a-z]{2,4})(/\\S*)?$");
     }
 
 }

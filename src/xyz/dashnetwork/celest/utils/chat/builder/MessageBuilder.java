@@ -25,7 +25,7 @@ public final class MessageBuilder {
 
     private final List<TextSection> sections = new ArrayList<>();
 
-    public boolean isEmpty() { return sections.isEmpty(); }
+    public int length() { return sections.size(); }
 
     public TextSection append(@NotNull String text) {
         TextSection section = new TextSection(text, null, null);
@@ -46,14 +46,14 @@ public final class MessageBuilder {
         for (TextSection section : sections) {
             if (checkPredicate(user, section.predicate)) {
                 if (last != null) {
-                    if (isSimilar(section, last))
+                    if (isSimilar(section, last)) {
                         last.text += section.text;
-                    else {
+                        continue;
+                    } else
                         components.add(toComponent(user, last));
-                        last = section;
-                    }
-                } else
-                    last = section;
+                }
+
+                last = section.copy();
             }
         }
 
@@ -79,7 +79,7 @@ public final class MessageBuilder {
     private Component toComponent(User user, TextSection section) {
         Component component = ComponentUtils.fromLegacyString(section.text);
 
-        if (!section.hovers.isEmpty()) {
+        if (!section.hovers.isEmpty() && user != null) {
             StringBuilder builder = new StringBuilder();
 
             for (TextSection.Hover hover : section.hovers)
@@ -88,7 +88,9 @@ public final class MessageBuilder {
 
             if (builder.length() > 0)
                 component = component.hoverEvent(HoverEvent.showText(ComponentUtils.fromLegacyString(builder.toString())));
-        } if (section.click != null && user != null)
+        }
+
+        if (section.click != null && user != null)
             component = component.clickEvent(section.click);
 
         return component;

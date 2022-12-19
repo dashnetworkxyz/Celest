@@ -7,6 +7,7 @@
 
 package xyz.dashnetwork.celest.utils.chat;
 
+import com.velocitypowered.api.proxy.ConsoleCommandSource;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -22,6 +23,7 @@ import java.util.function.Predicate;
 public final class MessageUtils {
 
     private static final ProxyServer server = Celest.getServer();
+    private static final ConsoleCommandSource console = server.getConsoleCommandSource();
 
     public static void message(@NotNull Audience audience, @NotNull String message) {
         message(audience, ComponentUtils.fromLegacyString(message));
@@ -43,7 +45,7 @@ public final class MessageUtils {
         for (User user : User.getUsers())
             message(user.getPlayer(), function.apply(user));
 
-        server.getConsoleCommandSource().sendMessage(function.apply(null));
+        console.sendMessage(function.apply(null));
     }
 
     public static void broadcast(@NotNull Predicate<User> predicate, @NotNull String message) {
@@ -55,7 +57,7 @@ public final class MessageUtils {
             if (predicate.test(user))
                 message(user.getPlayer(), component);
 
-        server.getConsoleCommandSource().sendMessage(component);
+        console.sendMessage(component);
     }
 
     public static void broadcast(@NotNull Predicate<User> predicate, @NotNull Function<@Nullable User, Component> function) {
@@ -63,7 +65,7 @@ public final class MessageUtils {
             if (predicate.test(user))
                 message(user.getPlayer(), function.apply(user));
 
-        server.getConsoleCommandSource().sendMessage(function.apply(null));
+        console.sendMessage(function.apply(null));
     }
 
 }

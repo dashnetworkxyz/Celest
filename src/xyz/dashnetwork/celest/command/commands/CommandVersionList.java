@@ -19,7 +19,10 @@ import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.ProtocolVersionFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class CommandVersionList extends CelestCommand {
 
@@ -46,7 +49,7 @@ public final class CommandVersionList extends CelestCommand {
         MessageBuilder builder = new MessageBuilder();
 
         for (Map.Entry<ProtocolVersion, List<NamedSource>> entry : list) {
-            if (!builder.isEmpty())
+            if (builder.length() > 0)
                 builder.append("\n");
 
             builder.append("&6&l»&7 [");
@@ -54,6 +57,9 @@ public final class CommandVersionList extends CelestCommand {
             builder.append("&7] ");
             builder.append(new NamedSourceFormat(entry.getValue()));
         }
+
+        if (builder.length() == 0)
+            builder.append("&6&l»&7 No players online.");
 
         MessageUtils.message(source, builder::build);
     }

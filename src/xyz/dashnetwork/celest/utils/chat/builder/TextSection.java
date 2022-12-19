@@ -45,15 +45,21 @@ public final class TextSection {
     ClickEvent click;
     Predicate<User> predicate;
 
-    public TextSection(String text, String hover, Predicate<User> predicate) {
+    public TextSection(String text, List<Hover> hovers, ClickEvent click, Predicate<User> predicate) {
         this.text = text;
-        this.hovers = new ArrayList<>();
-        this.click = null;
+        this.hovers = hovers;
+        this.click = click;
         this.predicate = predicate;
+    }
+
+    public TextSection(String text, String hover, Predicate<User> predicate) {
+        this(text, new ArrayList<>(), null, predicate);
 
         if (hover != null)
             hover(hover);
     }
+
+    TextSection copy() { return new TextSection(text, new ArrayList<>(hovers), click, predicate); }
 
     public TextSection hover(String hover) { return hover(hover, null); }
 
