@@ -10,7 +10,6 @@ package xyz.dashnetwork.celest.utils.connection.limbo;
 import com.velocitypowered.api.scheduler.ScheduledTask;
 import com.velocitypowered.api.scheduler.Scheduler;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.Savable;
 
 import java.util.ArrayList;
 import java.util.List;

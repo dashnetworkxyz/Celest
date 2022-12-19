@@ -5,7 +5,7 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.utils;
+package xyz.dashnetwork.celest.utils.connection.limbo;
 
 public interface Savable {
 

@@ -12,7 +12,7 @@ import com.velocitypowered.api.proxy.ServerConnection;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.Savable;
+import xyz.dashnetwork.celest.utils.connection.limbo.Savable;
 import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;

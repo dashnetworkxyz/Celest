@@ -54,6 +54,7 @@ public final class PlayerChatListener {
             return;
         }
 
+        // TODO: URL ClickEvent generation.
         String message = event.getMessage();
         ChatType type = ChatType.parseSelector(message);
 

@@ -10,7 +10,7 @@ package xyz.dashnetwork.celest.utils.connection;
 import xyz.dashnetwork.celest.utils.ArrayUtils;
 import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.PunishUtils;
-import xyz.dashnetwork.celest.utils.Savable;
+import xyz.dashnetwork.celest.utils.connection.limbo.Savable;
 import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.storage.Storage;
