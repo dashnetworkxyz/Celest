@@ -43,9 +43,11 @@ public final class CommandUniqueId extends CelestCommand {
         String stringInts = "Id:[I;" + ints[0] + "," + ints[1] + "," + ints[2] + "," + ints[3] + "]";
 
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&6 " + stringUuid).hover("&7Click to copy &6" + stringUuid).click(ClickEvent.suggestCommand(stringUuid));
-        builder.append("\n&6&l»&7 " + stringLongs).hover("&7Click to copy &6" + stringLongs).click(ClickEvent.suggestCommand(stringLongs));
-        builder.append("\n&6&l»&7 " + stringInts).hover("&7Click to copy &6" + stringInts).click(ClickEvent.suggestCommand(stringInts));
+        builder.append("&6&l»&7 128 Bit: &6" + stringUuid).hover("&6" + stringUuid).click(ClickEvent.suggestCommand(stringUuid));
+        builder.append("\n&6&l»&7 UUID Most: &6" + most).hover("&6" + stringLongs).click(ClickEvent.suggestCommand(stringLongs));
+        builder.append("\n&6&l»&7 UUID Least: &6" + least).hover("&6" + stringLongs).click(ClickEvent.suggestCommand(stringLongs));
+        builder.append("\n&6&l»&7 Int Array:\n&6&l»&6 " + ints[0] + "\n&6&l»&6 " + ints[1] + "\n&6&l»&6 " + ints[2] + "\n&6&l»&6 " + ints[3])
+                        .hover("&6" + stringInts).click(ClickEvent.suggestCommand(stringInts));
 
         MessageUtils.message(source, builder::build);
     }

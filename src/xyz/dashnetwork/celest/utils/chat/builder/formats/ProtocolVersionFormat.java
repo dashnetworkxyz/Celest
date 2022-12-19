@@ -16,7 +16,7 @@ import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProtocolVersionFormat implements Format {
+public final class ProtocolVersionFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 

@@ -20,28 +20,30 @@ public final class DisconnectListener {
 
     @Subscribe
     public void onDisconnect(DisconnectEvent event) {
-        Player player = event.getPlayer();
-        User user = User.getUser(player);
-        UserData data = user.getData();
-        MessageBuilder builder = new MessageBuilder();
+        if (event.getLoginStatus().equals(DisconnectEvent.LoginStatus.SUCCESSFUL_LOGIN)) {
+            Player player = event.getPlayer();
+            User user = User.getUser(player);
+            UserData data = user.getData();
+            MessageBuilder builder = new MessageBuilder();
 
-        if (data.getVanish()) {
-            builder.append("&3&l»&r ");
-            builder.append(new NamedSourceFormat(user));
-            builder.append("&3 silently left.");
+            if (data.getVanish()) {
+                builder.append("&3&l»&r ");
+                builder.append(new NamedSourceFormat(user));
+                builder.append("&3 silently left.");
 
-            MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(), builder::build);
-        } else {
-            builder.append("&c&l»&r ");
-            builder.append(new NamedSourceFormat(user));
-            builder.append("&c left.");
+                MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(), builder::build);
+            } else {
+                builder.append("&c&l»&r ");
+                builder.append(new NamedSourceFormat(user));
+                builder.append("&c left.");
 
-            MessageUtils.broadcast(builder::build);
+                MessageUtils.broadcast(builder::build);
 
-            data.setLastPlayed(System.currentTimeMillis()); // TODO: Set this variable on /vanish
+                data.setLastPlayed(System.currentTimeMillis()); // TODO: Set this variable on /vanish
+            }
+
+            user.remove();
         }
-
-        user.remove();
     }
 
 }

@@ -15,7 +15,7 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddressFormat implements Format {
+public final class AddressFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 
