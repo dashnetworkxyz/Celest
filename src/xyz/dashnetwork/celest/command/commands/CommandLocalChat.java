@@ -22,7 +22,6 @@ import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 public final class CommandLocalChat extends CelestCommand {
 
@@ -43,7 +42,6 @@ public final class CommandLocalChat extends CelestCommand {
         }
 
         NamedSource named = NamedSource.of(source);
-        Predicate<User> notSelf = user -> !user.getPlayer().equals(source);
         MessageBuilder builder;
 
         for (Player player : players) {
@@ -52,8 +50,11 @@ public final class CommandLocalChat extends CelestCommand {
 
             builder = new MessageBuilder();
             builder.append("&6&l»&7 You have been moved to &6LocalChat");
-            builder.append("&7 by ").onlyIf(notSelf);
-            builder.append(new NamedSourceFormat(named)).onlyIf(notSelf);
+
+            if (!source.equals(player)) {
+                builder.append("&7 by ");
+                builder.append(new NamedSourceFormat(named));
+            }
 
             MessageUtils.message(player, builder::build);
         }

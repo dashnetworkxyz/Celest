@@ -13,7 +13,7 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 
-public class CommandColorList extends CelestCommand {
+public final class CommandColorList extends CelestCommand {
 
     private static final LegacyComponentSerializer serializer = LegacyComponentSerializer.legacySection();
 

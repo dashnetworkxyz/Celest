@@ -13,22 +13,21 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ArgumentUtils;
-import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public final class CommandStaffChat extends CelestCommand {
+public final class CommandPingSpy extends CelestCommand {
 
-    public CommandStaffChat() {
-        super("staffchat", "sc");
+    public CommandPingSpy() {
+        super("pingspy", "ps");
 
-        setPermission(User::isStaff, true);
+        setPermission(User::isAdmin, true);
         addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
     }
 
@@ -41,35 +40,53 @@ public final class CommandStaffChat extends CelestCommand {
             return;
         }
 
-        NamedSource named = NamedSource.of(source);
+        List<Player> on = new ArrayList<>();
+        List<Player> off = new ArrayList<>();
         MessageBuilder builder;
 
         for (Player player : players) {
             User user = User.getUser(player);
-            user.getData().setChatType(ChatType.STAFF);
+            UserData data = user.getData();
+            boolean spy = !data.getPingSpy();
+
+            data.setPingSpy(spy);
 
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have been moved to &6StaffChat");
+            builder.append("&6&l»&7 You are ");
 
-            if (!source.equals(player)) {
-                builder.append("&7 by ");
-                builder.append(new NamedSourceFormat(named));
+            if (spy) {
+                builder.append("now");
+
+                if (!source.equals(player))
+                    on.add(player);
+            } else {
+                builder.append("no longer");
+
+                if (!source.equals(player))
+                    off.add(player);
             }
+
+            builder.append(" in &6PingSpy");
 
             MessageUtils.message(player, builder::build);
         }
 
-        if (source instanceof Player) {
-            players.remove(source);
+        if (on.size() > 0) {
+            builder = new MessageBuilder();
+            builder.append("&6&l»&7 ");
+            builder.append(new PlayerFormat(on));
+            builder.append("&7 now in &6PingSpy");
 
-            if (players.size() > 0) {
-                builder = new MessageBuilder();
-                builder.append("&6&l»&7 You have moved ");
-                builder.append(new PlayerFormat(players));
-                builder.append("&7 to &6StaffChat");
+            MessageUtils.message(source, builder::build);
+        }
 
-                MessageUtils.message(source, builder::build);
-            }
+        if (off.size() > 0) {
+            builder = new MessageBuilder();
+            builder.append("&6&l»&7 ");
+            builder.append(new PlayerFormat(off));
+            builder.append("&7 no longer in &6PingSpy");
+
+            MessageUtils.message(source, builder::build);
         }
     }
 

@@ -116,7 +116,7 @@ public final class PlayerChatListener {
                 TextSection section = builder.append(" " + split);
 
                 if (StringUtils.matchesUrl(split)) {
-                    String url = split.toLowerCase().startsWith("http://") ? split : "https://" + split;
+                    String url = split.toLowerCase().startsWith("http") ? split : "https://" + split;
 
                     section.hover("&7Click to open &6" + url).click(ClickEvent.openUrl(url));
                 }

@@ -99,7 +99,7 @@ public final class User implements Savable, NamedSource {
     }
 
     private void updateDisplayname() {
-        nickname = userData.getNickname();
+        nickname = userData.getNickName();
 
         if (nickname == null)
             nickname = getUsername();

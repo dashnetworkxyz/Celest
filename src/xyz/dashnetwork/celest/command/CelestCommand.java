@@ -59,15 +59,15 @@ public abstract class CelestCommand implements SimpleCommand {
 
     protected abstract void execute(CommandSource source, String label, Arguments arguments);
 
+    protected void setPermission(@NotNull Predicate<User> predicate, boolean console) {
+        this.predicate = predicate;
+        this.console = console;
+    }
+
     protected void addArguments(@NotNull ArgumentType... types) { addArguments(user -> true, true, types); }
 
     protected void addArguments(@NotNull Predicate<User> predicate, boolean console, @NotNull ArgumentType... types) {
         sections.add(new ArgumentSection(predicate, console, types));
-    }
-
-    protected void setPermission(@NotNull Predicate<User> predicate, boolean console) {
-        this.predicate = predicate;
-        this.console = console;
     }
 
     protected void sendUsage(@NotNull CommandSource source, @NotNull String label) {

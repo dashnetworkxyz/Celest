@@ -24,7 +24,6 @@ import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 public final class CommandNickName extends CelestCommand {
 
@@ -64,12 +63,11 @@ public final class CommandNickName extends CelestCommand {
             string = ColorUtils.fromAmpersand(string);
 
         NamedSource named = NamedSource.of(source);
-        Predicate<User> notSelf = user -> !user.getPlayer().equals(source);
         MessageBuilder builder;
 
         for (Player player : players) {
             User user = User.getUser(player);
-            user.getData().setNickname(string);
+            user.getData().setNickName(string);
 
             builder = new MessageBuilder();
 
@@ -78,8 +76,10 @@ public final class CommandNickName extends CelestCommand {
             else
                 builder.append("&6&l»&7 Your nickname has been set to &6" + string);
 
-            builder.append("&7 by ").onlyIf(notSelf);
-            builder.append(new NamedSourceFormat(named)).onlyIf(notSelf);
+            if (!source.equals(player)) {
+                builder.append("&7 by ");
+                builder.append(new NamedSourceFormat(named));
+            }
 
             MessageUtils.message(player, builder::build);
         }

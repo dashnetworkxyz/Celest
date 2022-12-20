@@ -92,7 +92,7 @@ public final class LegacyParser {
             }
         }
 
-        parseMap(nicknames, UserData::setNickname);
+        parseMap(nicknames, UserData::setNickName);
         parseMap(lastPlayed, UserData::setLastPlayed);
         parseList(staffchat, data -> data.setChatType(ChatType.STAFF));
         parseList(adminchat, data -> data.setChatType(ChatType.ADMIN));

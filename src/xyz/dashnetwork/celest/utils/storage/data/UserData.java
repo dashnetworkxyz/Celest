@@ -45,7 +45,7 @@ public final class UserData {
 
     // Celest data
 
-    public String getNickname() { return nickname; }
+    public String getNickName() { return nickname; }
 
     public PunishData getBan() { return ban; }
 
@@ -65,7 +65,7 @@ public final class UserData {
 
     public boolean getSensitiveData() { return sensitiveData; }
 
-    public void setNickname(String nickname) { this.nickname = nickname; }
+    public void setNickName(String nickname) { this.nickname = nickname; }
 
     public void setBan(PunishData ban) { this.ban = ban; }
 

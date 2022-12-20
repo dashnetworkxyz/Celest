@@ -109,11 +109,16 @@ public final class Celest {
 
         logger.info("Registering commands...");
         new CommandAdminChat();
+        new CommandAltSpy();
         new CommandBigMistakeBuddy();
         new CommandChat();
         new CommandClearChat();
         new CommandColorList();
+        new CommandCommandSpy();
         new CommandDiscord();
+        new CommandFakeJoin();
+        new CommandFakeLeave();
+        new CommandFakeOp();
         new CommandGlobalChat();
         new CommandLocalChat();
         new CommandMattsArmorStands();
@@ -121,6 +126,7 @@ public final class Celest {
         new CommandNickName();
         new CommandOwnerChat();
         new CommandPing();
+        new CommandPingSpy();
         new CommandStaffChat();
         new CommandTest();
         new CommandTheFurpySong();
