@@ -46,24 +46,24 @@ public final class CommandClearChat extends CelestCommand {
         NamedSource named = NamedSource.of(source);
         Player[] players = optional.get();
         MessageBuilder builder = new MessageBuilder();
-        Predicate<User> notSelf = user -> players.length == 1 || !user.getPlayer().equals(source);
+        Predicate<User> notSelf = user -> !user.getPlayer().equals(source);
 
         for (int i = 0; i < 99; i++)
             builder.append("\n");
 
-        builder.append("&6&l»&7 Chat was cleared by ").onlyIf(notSelf);
-        builder.append(new NamedSourceFormat(named)).onlyIf(notSelf);
+        if (players.length > 1) {
+            builder.append("&6&l»&7 Chat was cleared by ").onlyIf(notSelf);
+            builder.append(new NamedSourceFormat(named)).onlyIf(notSelf);
+        }
 
         for (Player player : players)
             MessageUtils.message(player, builder::build);
 
-        if (ArrayUtils.containsOtherThan(players, source)) {
-            builder = new MessageBuilder();
-            builder.append("&6&l»&7 Chat was cleared for ");
-            builder.append(new PlayerFormat(players));
+        builder = new MessageBuilder();
+        builder.append("&6&l»&7 Chat was cleared for ");
+        builder.append(new PlayerFormat(players));
 
-            MessageUtils.message(source, builder::build);
-        }
+        MessageUtils.message(source, builder::build);
     }
 
 }

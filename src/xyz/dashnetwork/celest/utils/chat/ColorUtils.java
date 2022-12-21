@@ -15,8 +15,7 @@ public final class ColorUtils {
         return string.replaceAll("&([0-f]|[k-o]|r|x)", "§$1");
     }
 
-    // TODO: Actually use this
-    public static String stripColor(@NotNull String string) {
+    public static String strip(@NotNull String string) {
         return string.replaceAll("[&§]([0-f]|[k-o]|r|x)", "");
     }
 

@@ -49,10 +49,10 @@ public final class CommandNickName extends CelestCommand {
         boolean off = string.equals("off");
 
         if (!off && !PermissionType.ADMIN.hasPermission(source)) {
-            int length = ColorUtils.stripColor(string).length();
+            int length = ColorUtils.strip(string).length();
 
             if (length < 4 || length > 16) {
-                MessageUtils.message(source, "&6&l»&c Your nickname cannot be longer than 16 characters.");
+                MessageUtils.message(source, "&6&l»&c Your nickname must be between 4-16 characters.");
                 return;
             }
         }
@@ -93,9 +93,9 @@ public final class CommandNickName extends CelestCommand {
                 builder.append(new PlayerFormat(players));
 
                 if (off)
-                    builder.append("have been cleared");
+                    builder.append("&7 have been cleared");
                 else
-                    builder.append("have been set to &6" + string);
+                    builder.append("&7 have been set to &6" + string);
 
                 MessageUtils.message(source, builder::build);
             }

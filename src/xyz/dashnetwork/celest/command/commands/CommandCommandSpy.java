@@ -71,20 +71,35 @@ public final class CommandCommandSpy extends CelestCommand {
             MessageUtils.message(player, builder::build);
         }
 
-        if (on.size() > 0) {
+        int onSize = on.size();
+        int offSize = off.size();
+
+        if (onSize > 0) {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 ");
             builder.append(new PlayerFormat(on));
-            builder.append("&7 now in &6CommandSpy");
+
+            if (onSize > 1)
+                builder.append("&7 are");
+            else
+                builder.append("&7 is");
+
+            builder.append(" now in &6CommandSpy");
 
             MessageUtils.message(source, builder::build);
         }
 
-        if (off.size() > 0) {
+        if (offSize > 0) {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 ");
             builder.append(new PlayerFormat(off));
-            builder.append("&7 no longer in &6CommandSpy");
+
+            if (offSize > 1)
+                builder.append("&7 are");
+            else
+                builder.append("&7 is");
+
+            builder.append(" no longer in &6CommandSpy");
 
             MessageUtils.message(source, builder::build);
         }
