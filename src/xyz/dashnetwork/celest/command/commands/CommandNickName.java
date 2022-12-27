@@ -12,6 +12,7 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
+import xyz.dashnetwork.celest.utils.ArgumentUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.PermissionType;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
@@ -36,7 +37,7 @@ public final class CommandNickName extends CelestCommand {
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
         Optional<String> optional = arguments.get(String.class);
-        List<Player> players = arguments.playerListOrSelf(source);
+        List<Player> players = ArgumentUtils.playerListOrSelf(source, arguments);
 
         if (optional.isEmpty() || players.isEmpty()) {
             sendUsage(source, label);
@@ -67,7 +68,6 @@ public final class CommandNickName extends CelestCommand {
         for (Player player : players) {
             User user = User.getUser(player);
             user.getData().setNickName(string);
-            user.updateDisplayname();
 
             builder = new MessageBuilder();
 
@@ -93,9 +93,9 @@ public final class CommandNickName extends CelestCommand {
                 builder.append(new PlayerFormat(players));
 
                 if (off)
-                    builder.append(" have been cleared");
+                    builder.append("have been cleared");
                 else
-                    builder.append(" have been set to &6" + string);
+                    builder.append("have been set to &6" + string);
 
                 MessageUtils.message(source, builder::build);
             }
