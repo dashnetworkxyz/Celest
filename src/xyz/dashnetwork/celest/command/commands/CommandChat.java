@@ -12,7 +12,6 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.ArgumentUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
@@ -36,7 +35,7 @@ public final class CommandChat extends CelestCommand {
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
         Optional<ChatType> optional = arguments.get(ChatType.class);
-        List<Player> players = ArgumentUtils.playerListOrSelf(source, arguments);
+        List<Player> players = arguments.playerListOrSelf(source);
 
         if (optional.isEmpty() || players.isEmpty()) {
             sendUsage(source, label);

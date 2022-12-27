@@ -8,58 +8,10 @@
 package xyz.dashnetwork.celest.utils.chat;
 
 import net.kyori.adventure.text.Component;
-import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.connection.User;
 
 @Deprecated
 public final class Messages {
-
-    public static Component commandUsage(String alias, String... arguments) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&c Usage:&7 /" + alias);
-
-        for (String argument : arguments)
-            builder.append(" " + argument + "");
-
-        return builder.build(null);
-    }
-
-    public static Component joinServer(User user, Format player) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&a&l»&r ");
-        builder.append(player);
-        builder.append("&a joined.");
-
-        return builder.build(user);
-    }
-
-    public static Component joinServerVanished(User user, Format player) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&3&l»&r ");
-        builder.append(player);
-        builder.append("&3 silently joined.");
-
-        return builder.build(user);
-    }
-
-    public static Component leaveServer(User user, Format player) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&c&l»&r ");
-        builder.append(player);
-        builder.append("&c left.");
-
-        return builder.build(user);
-    }
-
-    public static Component leaveServerVanished(User user, Format player) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&3&l»&r ");
-        builder.append(player);
-        builder.append("&3 silently left.");
-
-        return builder.build(user);
-    }
 
     public static Component loginBanned(String reason, String username) {
         MessageBuilder builder = new MessageBuilder();
@@ -82,55 +34,6 @@ public final class Messages {
         return builder.build(null);
     }
 
-    public static Component playerChat(User user, Format player, String message) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append(player);
-        builder.append("&r &e&l»&r ");
-        builder.append(message);
-
-        return builder.build(user);
-    }
-
-    public static Component playerChatAdmin(User user, Format player, String message) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&9&lAdmin&r ");
-        builder.append(player);
-        builder.append("&r &3&l»&3 ");
-        builder.append(message);
-
-        return builder.build(user);
-    }
-
-    public static Component playerChatOwner(User user, Format player, String message) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&9&lOwner&r ");
-        builder.append(player);
-        builder.append("&r &c&l»&c ");
-        builder.append(message);
-
-        return builder.build(user);
-    }
-
-    public static Component playerChatStaff(User user, Format player, String message) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&9&lStaff&r ");
-        builder.append(player);
-        builder.append("&r &6&l»&6 ");
-        builder.append(message);
-
-        return builder.build(user);
-    }
-
-    public static Component playerCommandSpy(User user, Format player, String message) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&9&lCmd&r ");
-        builder.append(player);
-        builder.append("&r &b&l»&b ");
-        builder.append(message);
-
-        return builder.build(user);
-    }
-
     public static Component playerMuted(String reason, String username) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&7 You have been permanently muted. Hover for more information.")
@@ -148,51 +51,6 @@ public final class Messages {
                         + "\n\n" + reason);
 
         return builder.build(null);
-    }
-
-    public static Component playerPingSpy(String name, String clientAddress,
-                                          String serverAddress, String serverPort,
-                                          String version, String protocol,
-                                          String profiles) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&6 " + name + "&7 pinged the server.")
-                .hover("&6" + clientAddress
-                        + "\n&7Server Address: &6" + serverAddress
-                        + "\n&7Server Port: &6" + serverPort
-                        + "\n&7Version: &6" + version + "&7 (" + protocol + ")"
-                        + "\n&7Profiles: &6" + profiles);
-
-        return builder.build(null);
-    }
-
-    // TODO
-    public static Component userdataInfo(String uuid, String address, String username, String nickname,
-                                         String ban, String mute, String chatType, String lastPlayed,
-                                         String altSpy, String commandSpy, String pingSpy, String vanish) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&7 Hover to view data for &6" + uuid)
-                .hover("&7address:&6 " + address
-                        + "\n&7username:&6 " + username
-                        + "\n&7nickname:&6 " + nickname
-                        + "\n&7ban:&6 " + ban
-                        + "\n&7mute:&6 " + mute
-                        + "\n&7chatType:&6 " + chatType
-                        + "\n&7lastPlayed:&6 " + lastPlayed
-                        + "\n&7altSpy:&6 " + altSpy
-                        + "\n&7commandSpy:&6 " + commandSpy
-                        + "\n&7pingSpy:&6 " + pingSpy
-                        + "\n&7vanish:&6 " + vanish);
-
-        return builder.build(null);
-    }
-
-    public static Component welcome(User user, Format player) {
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&6 Welcome, ");
-        builder.append(player);
-        builder.append("&6, to &lDashNetwork");
-
-        return builder.build(user);
     }
 
 }

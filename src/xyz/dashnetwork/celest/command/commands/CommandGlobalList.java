@@ -8,38 +8,39 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
-import com.velocitypowered.api.network.ProtocolVersion;
+import com.velocitypowered.api.proxy.ServerConnection;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.CastUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.VersionUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
-public final class CommandVersionList extends CelestCommand {
+public final class CommandGlobalList extends CelestCommand {
 
-    public CommandVersionList() { super("versionlist", "verlist"); }
+    public CommandGlobalList() { super("globallist", "glist", "list"); }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Map<ProtocolVersion, List<NamedSource>> map = new TreeMap<>(ProtocolVersion::compareTo);
+        Map<String, List<NamedSource>> map = new TreeMap<>(String::compareTo);
         User user = CastUtils.toUser(source);
 
         for (User each : User.getUsers()) {
             if (user == null || user.canSee(each)) {
-                ProtocolVersion version = each.getPlayer().getProtocolVersion();
-                List<NamedSource> list = map.getOrDefault(version, new ArrayList<>());
+                Optional<ServerConnection> optional = each.getPlayer().getCurrentServer();
+
+                if (optional.isEmpty())
+                    continue;
+
+                String name = optional.get().getServerInfo().getName();
+                List<NamedSource> list = map.getOrDefault(name, new ArrayList<>());
 
                 list.add(each);
-                map.put(version, list);
+                map.put(name, list);
             }
         }
 
@@ -50,11 +51,11 @@ public final class CommandVersionList extends CelestCommand {
 
         MessageBuilder builder = new MessageBuilder();
 
-        for (Map.Entry<ProtocolVersion, List<NamedSource>> entry : map.entrySet()) {
+        for (Map.Entry<String, List<NamedSource>> entry : map.entrySet()) {
             if (builder.length() > 0)
                 builder.append("\n");
 
-            builder.append("&6&l»&7 [" + VersionUtils.getVersionString(entry.getKey()) + "] ");
+            builder.append("&6&l»&7 [" + entry.getKey() + "] ");
             builder.append(new NamedSourceFormat(entry.getValue()));
         }
 

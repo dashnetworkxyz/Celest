@@ -45,6 +45,8 @@ public final class PostLoginListener {
             MessageUtils.broadcast(builder::build);
         }
 
+        // user.getAddress().getData().getProfiles()
+
         user.getAddress().setServerPingTime(-1); // Reset for PingSpy
 
         // TODO: Altspy

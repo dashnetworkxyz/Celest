@@ -20,9 +20,7 @@ public final class PlayerFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 
-    public PlayerFormat(Player player) {
-        sections.addAll(new NamedSourceFormat(NamedSource.of(player)).sections());
-    }
+    public PlayerFormat(Player player) { sections.addAll(new NamedSourceFormat(NamedSource.of(player)).sections()); }
 
     public PlayerFormat(Player... players) { this(List.of(players)); }
 

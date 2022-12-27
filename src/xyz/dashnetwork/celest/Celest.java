@@ -120,6 +120,7 @@ public final class Celest {
         new CommandFakeLeave();
         new CommandFakeOp();
         new CommandGlobalChat();
+        new CommandGlobalList();
         new CommandLocalChat();
         new CommandMattsArmorStands();
         new CommandMommy();
@@ -131,6 +132,7 @@ public final class Celest {
         new CommandTest();
         new CommandTheFurpySong();
         new CommandUniqueId();
+        new CommandVanish();
         new CommandVersionList();
 
         logger.info("Registering tasks...");

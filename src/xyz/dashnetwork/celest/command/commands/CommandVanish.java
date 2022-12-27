@@ -9,22 +9,25 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
-public final class CommandAltSpy extends CelestCommand {
+public final class CommandVanish extends CelestCommand {
 
-    public CommandAltSpy() {
-        super("altspy", "as");
+    public CommandVanish() {
+        super("vanish", "v");
 
         setPermission(User::isStaff, true);
         addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
@@ -42,50 +45,52 @@ public final class CommandAltSpy extends CelestCommand {
         List<Player> on = new ArrayList<>();
         List<Player> off = new ArrayList<>();
         MessageBuilder builder;
+        Predicate<User> predicate = each -> each.isStaff() || each.getData().getVanish();
 
         for (Player player : players) {
             User user = User.getUser(player);
             UserData data = user.getData();
-            boolean spy = !data.getAltSpy();
+            boolean vanish = !data.getVanish();
 
-            data.setAltSpy(spy);
+            data.setVanish(vanish);
 
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 You are ");
 
-            if (spy) {
-                builder.append("now");
+            if (vanish) {
+                builder.append("&c&l»&r ");
+                builder.append(new NamedSourceFormat(user));
+                builder.append("&c left.");
 
-                if (!source.equals(player))
-                    on.add(player);
+                on.add(player);
             } else {
-                builder.append("no longer");
+                builder.append("&a&l»&r ");
+                builder.append(new NamedSourceFormat(user));
+                builder.append("&a joined.");
 
-                if (!source.equals(player))
-                    off.add(player);
+                off.add(player);
             }
 
-            builder.append(" in &6AltSpy");
+            MessageUtils.broadcast(false, predicate.negate(), builder::build);
 
-            MessageUtils.message(player, builder::build);
+            Channel.callOut("vanish", user);
         }
 
         if (on.size() > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 ");
-            builder.append(new PlayerFormat(on));
-            builder.append("&7 now in &6AltSpy");
+            builder.append("&3&l»&r ");
+            builder.append(new PlayerFormat(players));
+            builder.append("&3 is now vanished. Poof.");
 
-            MessageUtils.message(source, builder::build);
+            MessageUtils.broadcast(predicate, builder::build);
         }
 
         if (off.size() > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 ");
-            builder.append(new PlayerFormat(off));
-            builder.append("&7 no longer in &6AltSpy");
+            builder.append("&3&l»&r ");
+            builder.append(new PlayerFormat(players));
+            builder.append("&3 is no longer vanished.");
 
-            MessageUtils.message(source, builder::build);
+            MessageUtils.broadcast(predicate, builder::build);
         }
     }
 

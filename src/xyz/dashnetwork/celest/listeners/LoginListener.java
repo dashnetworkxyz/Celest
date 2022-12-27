@@ -11,10 +11,9 @@ import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.proxy.Player;
-import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
-import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
@@ -32,15 +31,19 @@ public final class LoginListener {
 
         if (PunishUtils.isValid(ban)) {
             long expiration = ban.getExpiration();
-            String reason = ban.getReason();
-            String banner = ProfileUtils.fromUuid(ban.getJudge()).getUsername();
-            String date = TimeUtils.longToDate(expiration);
+            String type = expiration == -1 ? "permanently" : "temporarily";
 
-            Component message = expiration == -1 ?
-                    Messages.loginBanned(reason, banner) :
-                    Messages.loginBannedTemporary(reason, banner, date);
+            MessageBuilder builder = new MessageBuilder();
+            builder.append("&6&lDashNetwork");
+            builder.append("\n&7You have been " + type + " banned");
+            builder.append("\n&7You were banned by &6" + ProfileUtils.fromUuid(ban.getJudge()).getUsername());
 
-            event.setResult(ResultedEvent.ComponentResult.denied(message));
+            if (expiration != -1)
+                builder.append("\n&7Your ban will expire on &6" + TimeUtils.longToDate(expiration));
+
+            builder.append("\n\n" + ban.getReason());
+
+            event.setResult(ResultedEvent.ComponentResult.denied(builder.build(user)));
             user.remove();
         }
 

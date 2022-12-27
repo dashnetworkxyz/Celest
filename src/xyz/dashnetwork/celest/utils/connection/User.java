@@ -8,42 +8,51 @@
 package xyz.dashnetwork.celest.utils.connection;
 
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ServerConnection;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.NamedSource;
+import xyz.dashnetwork.celest.utils.OfflineUser;
 import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
-import xyz.dashnetwork.celest.utils.connection.limbo.Limbo;
-import xyz.dashnetwork.celest.utils.connection.limbo.Savable;
+import xyz.dashnetwork.celest.utils.limbo.Limbo;
+import xyz.dashnetwork.celest.utils.limbo.Savable;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
-public final class User implements Savable, NamedSource {
+public final class User extends OfflineUser implements NamedSource {
 
     private static final Map<UUID, User> users = new HashMap<>();
     private static final Vault vault = Celest.getVault();
-    private final UUID uuid;
-    private final String stringUuid;
     private Player player;
     private Address address;
-    private UserData userData;
     private String prefix, suffix, nickname;
     private long vaultUpdateTime;
 
     private User(Player player) {
-        this.uuid = player.getUniqueId();
-        this.stringUuid = uuid.toString();
+        super(player.getUsername(), player.getUniqueId());
+
+        if (userData == null)
+            userData = new UserData();
+
         this.player = player;
+        this.address = Address.getAddress(player.getRemoteAddress().getHostString(), false);
         this.vaultUpdateTime = -1;
 
-        load(true);
+        String old = userData.getAddress();
+
+        if (old != null && !old.equals(address.getString()))
+            Address.getAddress(old, true).removeUserIfPresent(uuid);
+
+        load();
         updateDisplayname();
     }
 
@@ -62,7 +71,7 @@ public final class User implements Savable, NamedSource {
 
             User user = limbo.getObject();
             user.player = player;
-            user.load(false);
+            user.load();
 
             return user;
         }
@@ -70,24 +79,12 @@ public final class User implements Savable, NamedSource {
         return new User(player);
     }
 
-    private void load(boolean readFile) {
-        if (readFile)
-            userData = Storage.read(stringUuid, Storage.Directory.USER, UserData.class);
-
+    private void load() {
         String stringAddress = player.getRemoteAddress().getHostString();
         address = Address.getAddress(stringAddress, false);
 
         UUID uniqueId = player.getUniqueId();
         String username = getUsername();
-
-        if (userData == null)
-            userData = new UserData();
-        else {
-            String old = userData.getAddress();
-
-            if (!old.equals(stringAddress))
-                Address.getAddress(old, true).removeUserIfPresent(uniqueId);
-        }
 
         userData.setAddress(stringAddress);
         userData.setUsername(username);
@@ -98,7 +95,20 @@ public final class User implements Savable, NamedSource {
         users.put(uniqueId, this);
     }
 
-    private void updateDisplayname() {
+    public void updateDisplayname() {
+        String oldPrefix = prefix;
+        String oldSuffix = suffix;
+        String oldNickname = nickname;
+
+        if (oldPrefix == null)
+            oldPrefix = "";
+
+        if (oldSuffix == null)
+            oldSuffix = "";
+
+        if (oldNickname == null)
+            oldNickname = "";
+
         nickname = userData.getNickName();
 
         if (nickname == null)
@@ -116,10 +126,10 @@ public final class User implements Savable, NamedSource {
 
             vaultUpdateTime = System.currentTimeMillis();
         }
-    }
 
-    @Override
-    public void save() { Storage.write(stringUuid, Storage.Directory.USER, userData); }
+        if (!oldPrefix.equals(prefix) || !oldSuffix.equals(suffix) || !oldNickname.equals(nickname))
+            Channel.callOut("displayname", this);
+    }
 
     public void remove() {
         users.remove(uuid);
@@ -130,15 +140,13 @@ public final class User implements Savable, NamedSource {
 
     public boolean canSee(User user) { return isStaff() || !user.getData().getVanish() || getData().getVanish(); }
 
-    public void setData(UserData userData) { this.userData = userData; }
+    public boolean sensitiveData() { return isAdmin() && getData().getSensitiveData(); }
 
     public Player getPlayer() { return player; }
 
     public UUID getUuid() { return uuid; }
 
     public Address getAddress() { return address; }
-
-    public UserData getData() { return userData; }
 
     public boolean isStaff() { return player.hasPermission("dashnetwork.staff") || isAdmin(); }
 
@@ -172,21 +180,9 @@ public final class User implements Savable, NamedSource {
 
     @Override
     public String getDisplayname() {
-        Optional<ServerConnection> optional = player.getCurrentServer();
-        String oldPrefix = prefix;
-        String oldSuffix = suffix;
-        String oldNickname = nickname;
-
         updateDisplayname();
-
-        if ((!oldPrefix.equals(prefix) || !oldSuffix.equals(suffix) || !oldNickname.equals(nickname))
-                && optional.isPresent())
-            Channel.callOut("displayname", optional.get(), this);
 
         return prefix + nickname + suffix;
     }
-
-    @Override
-    public String getUsername() { return player.getUsername(); }
 
 }

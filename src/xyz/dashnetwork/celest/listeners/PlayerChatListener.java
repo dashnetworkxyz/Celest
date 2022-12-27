@@ -10,18 +10,18 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.ArgumentTypeFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
@@ -46,16 +46,19 @@ public final class PlayerChatListener {
 
         if (PunishUtils.isValid(mute)) {
             long expiration = mute.getExpiration();
-            String reason = mute.getReason();
-            String judge = ProfileUtils.fromUuid(mute.getJudge()).getUsername();
-            String date = TimeUtils.longToDate(expiration);
+            String type = expiration == -1 ? "permanently" : "temporarily";
 
-            // TODO: Find a good replacement for Messages here. New Format maybe?
-            Component message = expiration == -1 ?
-                    Messages.playerMuted(reason, judge) :
-                    Messages.playerMutedTemporary(reason, judge, date);
+            MessageBuilder builder = new MessageBuilder();
+            TextSection section = builder.append("&6&l»&7 You have been " + type + " muted. Hover for more information.");
 
-            MessageUtils.message(player, message);
+            section.hover("&7You were muted by &6" + ProfileUtils.fromUuid(mute.getJudge()).getUsername());
+
+            if (expiration != -1)
+                section.hover("\n&7Your mute will expire on &6" + TimeUtils.longToDate(expiration));
+
+            section.hover("\n\n" + mute.getReason());
+
+            MessageUtils.message(player, builder::build);
             return;
         }
 
@@ -68,7 +71,11 @@ public final class PlayerChatListener {
             message = message.substring(3);
 
             if (message.isBlank()) {
-                MessageUtils.message(player, "&6&l»&c Usage:&7 " + type.getSelectors()[0] + "<message>");
+                MessageBuilder builder = new MessageBuilder();
+                builder.append("&6&l»&c Usage:&7 " + type.getSelectors()[0]);
+                builder.append(new ArgumentTypeFormat(true, ArgumentType.MESSAGE)).prefix("&7");
+
+                MessageUtils.message(player, builder::build);
                 return;
             }
         } else

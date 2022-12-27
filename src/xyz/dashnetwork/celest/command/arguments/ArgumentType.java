@@ -23,6 +23,7 @@ public enum ArgumentType {
     LONG(new LongParser(), INTEGER.suggester), // TODO: Long suggester with TimeType selectors
     PLAYER(new PlayerParser(), new PlayerSuggester()),
     PLAYER_LIST(new PlayerListParser(), new PlayerListSuggester()),
+    OFFLINE_PLAYER(new OfflinePlayerParser(), new OfflinePlayerSuggester()),
     SERVER(new ServerParser(), new ServerSuggester()),
     UNIQUE_ID(new UniqueIdParser(), (user, string) -> Collections.emptyList()),
     STRING((user, string) -> string, (user, string) -> Collections.emptyList()),

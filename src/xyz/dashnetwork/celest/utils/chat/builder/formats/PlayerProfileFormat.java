@@ -7,24 +7,26 @@
 
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
-import com.velocitypowered.api.network.ProtocolVersion;
-import xyz.dashnetwork.celest.utils.ListUtils;
-import xyz.dashnetwork.celest.utils.VersionUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ProtocolVersionFormat implements Format {
+public class PlayerProfileFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 
-    public ProtocolVersionFormat(ProtocolVersion version) {
-        String hover = "&6Protocol " + version.getProtocol() +
-                "\n&7" + ListUtils.convertToString(version.getVersionsSupportedBy(), string -> string, ", ");
+    public PlayerProfileFormat(PlayerProfile... profiles) { this(List.of(profiles)); }
 
-        sections.add(new TextSection(VersionUtils.getVersionString(version), hover, null));
+    public PlayerProfileFormat(List<PlayerProfile> profiles) {
+        for (PlayerProfile profile : profiles) {
+            if (!sections.isEmpty())
+                sections.add(new TextSection(", ", null, null));
+
+            sections.add(new TextSection(profile.getUsername(), "&6" + profile.getUuid(), null));
+        }
     }
 
     @Override

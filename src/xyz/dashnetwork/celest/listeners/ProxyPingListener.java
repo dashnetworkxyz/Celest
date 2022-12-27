@@ -20,12 +20,14 @@ import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.AddressFormat;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
+import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.data.AddressData;
+import xyz.dashnetwork.celest.utils.storage.data.CacheData;
 
 import java.net.InetSocketAddress;
 import java.util.Calendar;
@@ -93,27 +95,30 @@ public final class ProxyPingListener {
 
                 // Filter Cloudflare proxy.
                 if (clean.matches("_dc-srv\\.([a-f0-9]{12})\\._minecraft\\._tcp\\.([A-z0-9]+)\\.(?i)dashnetwork\\.xyz"))
-                    clean = clean.replaceFirst("_dc-srv\\.([A-z0-9]{12})\\._minecraft\\._tcp\\.", "");
+                    clean = clean.replaceFirst("_dc-srv\\.([a-f0-9]{12})\\._minecraft\\._tcp\\.", "");
 
                 virtual = new InetSocketAddress(clean, socket.getPort());
             } else
-                virtual = new InetSocketAddress("Unknown", -1);
+                virtual = new InetSocketAddress("Unknown", 0);
 
             String range = VersionUtils.getVersionString(version);
             String name = profiles[0].getUsername();
-            String usernames = ArrayUtils.convertToString(profiles, PlayerProfile::getUsername, ", ");
-            PlayerProfile recent = ProfileUtils.findMostRecent(profiles);
 
-            if (recent != null)
-                name = recent.getUsername();
+            if (profiles.length > 1) {
+                CacheData recent = Cache.findMostRecent(profiles);
+
+                if (recent != null)
+                    name = recent.getUsername();
+            }
 
             MessageBuilder message = new MessageBuilder();
             TextSection section = message.append("&6&l»&6 " + name + "&7 pinged the server.");
 
-            section.hover(new AddressFormat(address));
+            section.hover("&6" + address.getString(), User::sensitiveData);
             section.hover("&7\nVirtual: &6" + virtual.getHostName() + ":" + virtual.getPort());
             section.hover("&7\nVersion: &6" + range + "&7 (" + version.getProtocol() + ")");
-            section.hover("\nAccounts: &6" + usernames);
+            section.hover("\nAccounts: &6");
+            section.hover(new PlayerProfileFormat(profiles));
 
             MessageUtils.broadcast(user -> user.getData().getPingSpy(), message::build);
         }).schedule();

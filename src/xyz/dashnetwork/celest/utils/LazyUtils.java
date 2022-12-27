@@ -21,10 +21,12 @@ public final class LazyUtils {
         return false;
     }
 
+    @Deprecated
     public static boolean anyEquals(@NotNull Object object, @NotNull Object... compare) {
         return anyTrue(check -> check.equals(object), compare);
     }
 
+    @Deprecated
     public static boolean anyEqualsIgnoreCase(@NotNull String string, @NotNull String... compare) {
         return anyTrue(check -> check.equalsIgnoreCase(string), compare);
     }

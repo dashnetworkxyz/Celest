@@ -7,6 +7,7 @@
 
 package xyz.dashnetwork.celest.utils.storage;
 
+import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.storage.data.CacheData;
@@ -82,7 +83,6 @@ public final class Cache {
         return list;
     }
 
-    // TODO: Move to ProfileUtils?
     public static List<CacheData> fromPlayerProfiles(PlayerProfile... profiles) {
         List<CacheData> list = new ArrayList<>();
 
@@ -92,6 +92,22 @@ public final class Cache {
                     list.add(each);
 
         return list;
+    }
+
+    public static CacheData findMostRecent(@NotNull PlayerProfile... profiles) {
+        long time = -1;
+        CacheData selected = null;
+
+        for (CacheData data : fromPlayerProfiles(profiles)) {
+            long compare = data.getAccessTime();
+
+            if (time < compare) {
+                selected = data;
+                time = compare;
+            }
+        }
+
+        return selected;
     }
 
 }

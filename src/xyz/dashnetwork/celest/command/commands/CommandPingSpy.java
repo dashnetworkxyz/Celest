@@ -12,7 +12,6 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.ArgumentUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
@@ -33,7 +32,7 @@ public final class CommandPingSpy extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        List<Player> players = ArgumentUtils.playerListOrSelf(source, arguments);
+        List<Player> players = arguments.playerListOrSelf(source);
 
         if (players.isEmpty()) {
             sendUsage(source, label);

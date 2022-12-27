@@ -8,10 +8,9 @@
 package xyz.dashnetwork.celest.command.arguments;
 
 import com.velocitypowered.api.command.CommandSource;
-import xyz.dashnetwork.celest.utils.ArgumentUtils;
-import xyz.dashnetwork.celest.utils.CastUtils;
-import xyz.dashnetwork.celest.utils.MathUtils;
-import xyz.dashnetwork.celest.utils.StringUtils;
+import com.velocitypowered.api.proxy.Player;
+import org.jetbrains.annotations.NotNull;
+import xyz.dashnetwork.celest.utils.*;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import java.util.Optional;
 public final class Arguments {
 
     private final List<Object> parsed = new ArrayList<>();
+    private boolean playersSuccessfullyParsed = true;
     private int index = 0;
 
     public Arguments(CommandSource source, String[] array, List<ArgumentSection> sections) {
@@ -38,11 +38,13 @@ public final class Arguments {
 
             if (object != null)
                 parsed.add(object);
+            else if (LazyUtils.anyEquals(argument, ArgumentType.PLAYER, ArgumentType.PLAYER_LIST))
+                playersSuccessfullyParsed = false;
         }
     }
 
     @SuppressWarnings("unchecked")
-    public <T> Optional<T> get(Class<T> clazz) {
+    public <T> Optional<T> get(@NotNull Class<T> clazz) {
         if (parsed.size() <= index)
             return Optional.empty();
 
@@ -54,6 +56,35 @@ public final class Arguments {
         }
 
         return Optional.empty();
+    }
+
+    public Player playerOrSelf(@NotNull CommandSource source) {
+        Optional<Player> optional = get(Player.class);
+
+        if (optional.isEmpty()) {
+            if (source instanceof Player && playersSuccessfullyParsed)
+                return (Player) source;
+
+            return null;
+        }
+
+        return optional.get();
+    }
+
+    public List<Player> playerListOrSelf(@NotNull CommandSource source) {
+        List<Player> list = new ArrayList<>();
+        Optional<Player[]> optional = get(Player[].class);
+
+        if (optional.isEmpty()) {
+            if (source instanceof Player && playersSuccessfullyParsed)
+                list.add((Player) source);
+
+            return list;
+        }
+
+        list.addAll(List.of(optional.get()));
+
+        return list;
     }
 
 }

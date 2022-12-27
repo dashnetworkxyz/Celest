@@ -10,6 +10,7 @@ package xyz.dashnetwork.celest.channel;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.messages.ChannelIdentifier;
 import com.velocitypowered.api.proxy.messages.ChannelMessageSink;
 import com.velocitypowered.api.proxy.messages.ChannelRegistrar;
@@ -19,6 +20,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -53,12 +55,17 @@ public abstract class Channel {
         return true;
     }
 
-    public static void callOut(String name, ChannelMessageSink sink, User user) {
+    public static void callOut(String name, User user) {
+        Optional<ServerConnection> optional = user.getPlayer().getCurrentServer();
+
+        if (optional.isEmpty())
+            return;
+
         Supplier<Channel> supplier = outputMap.get(name);
 
         if (supplier != null)
             call(MinecraftChannelIdentifier.create("dn", name),
-                    sink, supplier, channel -> channel.handle(user));
+                    optional.get(), supplier, channel -> channel.handle(user));
     }
 
     private static void call(ChannelIdentifier identifier, ChannelMessageSink sink,
