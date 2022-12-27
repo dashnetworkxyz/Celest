@@ -112,7 +112,7 @@ public final class ProxyPingListener {
             MessageBuilder message = new MessageBuilder();
             TextSection section = message.append("&6&l»&6 " + name + "&7 pinged the server.");
 
-            section.hover("&6" + address.getString(), User::sensitiveData);
+            section.hover("&6" + address.getString(), User::showAddress);
             section.hover("&7\nVirtual: &6" + virtual.getHostName() + ":" + virtual.getPort());
             section.hover("&7\nVersion: &6" + range + "&7 (" + version.getProtocol() + ")");
             section.hover("\nAccounts: &6" + ArrayUtils.convertToString(profiles, PlayerProfile::getUsername, ", "));

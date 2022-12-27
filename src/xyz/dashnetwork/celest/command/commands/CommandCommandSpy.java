@@ -26,7 +26,7 @@ public final class CommandCommandSpy extends CelestCommand {
     public CommandCommandSpy() {
         super("commandspy", "cmdspy", "cs");
 
-        setPermission(User::isStaff, true);
+        setPermission(User::isAdmin, true);
         addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
     }
 

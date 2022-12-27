@@ -40,8 +40,7 @@ public final class NamedSourceFormat implements Format {
         if (source instanceof User) {
             User user = (User) source;
 
-            section.hover("\n&7Address: &6" + user.getAddress().getString(),
-                    each -> each.isAdmin() && each.getData().getSensitiveData())
+            section.hover("\n&7Address: &6" + user.getAddress().getString(), User::showAddress)
                     .click(ClickEvent.suggestCommand(user.getUuid().toString()));
         }
 

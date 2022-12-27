@@ -134,7 +134,7 @@ public final class User extends OfflineUser implements NamedSource {
 
     public boolean canSee(User user) { return isStaff() || !user.getData().getVanish() || getData().getVanish(); }
 
-    public boolean sensitiveData() { return isAdmin() && getData().getSensitiveData(); }
+    public boolean showAddress() { return isAdmin() && !getData().getHideAddress(); }
 
     public Player getPlayer() { return player; }
 

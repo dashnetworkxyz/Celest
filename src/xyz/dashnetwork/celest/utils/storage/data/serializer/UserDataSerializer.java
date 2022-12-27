@@ -20,8 +20,9 @@ public final class UserDataSerializer implements JsonSerializer<UserData> {
     @Override
     public JsonElement serialize(UserData userData, Type type, JsonSerializationContext context) {
         JsonObject object = (JsonObject) gson.toJsonTree(userData);
+        ChatType chatType = userData.getChatType();
 
-        if (userData.getChatType().equals(ChatType.GLOBAL))
+        if (chatType != null && chatType.equals(ChatType.GLOBAL))
             object.remove("chatType");
 
         if (!userData.getAltSpy())
@@ -36,8 +37,8 @@ public final class UserDataSerializer implements JsonSerializer<UserData> {
         if (!userData.getVanish())
             object.remove("vanish");
 
-        if (userData.getSensitiveData())
-            object.remove("sensitiveData");
+        if (!userData.getHideAddress())
+            object.remove("hideAddress");
 
         return object;
     }
