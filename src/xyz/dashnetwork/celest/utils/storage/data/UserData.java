@@ -12,20 +12,21 @@ import xyz.dashnetwork.celest.utils.chat.ChatType;
 
 public final class UserData {
 
-    private String address, username, nickname;
+    private String username, address, nickname;
     private PunishData ban, mute;
     private ChatType chatType;
-    private long lastPlayed;
+    private Long lastPlayed;
     private boolean altSpy, commandSpy, pingSpy, vanish, sensitiveData;
 
-    public UserData() {
+    public UserData(String username) {
+        this.username = username;
+
         ban = null;
         mute = null;
         chatType = ChatType.GLOBAL;
         address = null;
-        username = null;
         nickname = null;
-        lastPlayed = -1;
+        lastPlayed = null;
         altSpy = false;
         commandSpy = false;
         pingSpy = false;
@@ -53,7 +54,7 @@ public final class UserData {
 
     public ChatType getChatType() { return chatType; }
 
-    public long getLastPlayed() { return lastPlayed; }
+    public Long getLastPlayed() { return lastPlayed; }
 
     public boolean getAltSpy() { return altSpy; }
 
@@ -84,5 +85,19 @@ public final class UserData {
     public void setVanish(boolean vanish) { this.vanish = vanish; }
 
     public void setSensitiveData(boolean sensitiveData) { this.sensitiveData = sensitiveData; }
+
+    public boolean isObsolete() {
+        return ban == null
+                && mute == null
+                && chatType == ChatType.GLOBAL
+                && address == null
+                && nickname == null
+                && lastPlayed == null
+                && !altSpy
+                && !commandSpy
+                && !pingSpy
+                && !vanish
+                && sensitiveData;
+    }
 
 }

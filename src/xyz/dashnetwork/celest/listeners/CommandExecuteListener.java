@@ -21,7 +21,7 @@ public final class CommandExecuteListener {
         NamedSource named = NamedSource.of(event.getCommandSource());
 
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&9&lCmd&r ");
+        builder.append("&6&l»&r ");
         builder.append(new NamedSourceFormat(named));
         builder.append("&r &b&l»&b /" + event.getCommand());
 

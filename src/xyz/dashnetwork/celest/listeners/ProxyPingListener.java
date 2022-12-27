@@ -20,11 +20,9 @@ import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
-import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.data.AddressData;
 import xyz.dashnetwork.celest.utils.storage.data.CacheData;
@@ -117,8 +115,7 @@ public final class ProxyPingListener {
             section.hover("&6" + address.getString(), User::sensitiveData);
             section.hover("&7\nVirtual: &6" + virtual.getHostName() + ":" + virtual.getPort());
             section.hover("&7\nVersion: &6" + range + "&7 (" + version.getProtocol() + ")");
-            section.hover("\nAccounts: &6");
-            section.hover(new PlayerProfileFormat(profiles));
+            section.hover("\nAccounts: &6" + ArrayUtils.convertToString(profiles, PlayerProfile::getUsername, ", "));
 
             MessageUtils.broadcast(user -> user.getData().getPingSpy(), message::build);
         }).schedule();

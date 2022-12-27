@@ -7,6 +7,7 @@
 
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
+import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
@@ -40,7 +41,8 @@ public final class NamedSourceFormat implements Format {
             User user = (User) source;
 
             section.hover("\n&7Address: &6" + user.getAddress().getString(),
-                    each -> each.isAdmin() && each.getData().getSensitiveData());
+                    each -> each.isAdmin() && each.getData().getSensitiveData())
+                    .click(ClickEvent.suggestCommand(user.getUuid().toString()));
         }
 
         sections.add(section);

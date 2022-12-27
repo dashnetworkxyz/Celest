@@ -7,6 +7,7 @@
 
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
+import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
@@ -14,7 +15,7 @@ import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerProfileFormat implements Format {
+public final class PlayerProfileFormat implements Format {
 
     private final List<TextSection> sections = new ArrayList<>();
 
@@ -25,7 +26,10 @@ public class PlayerProfileFormat implements Format {
             if (!sections.isEmpty())
                 sections.add(new TextSection(", ", null, null));
 
-            sections.add(new TextSection(profile.getUsername(), "&6" + profile.getUuid(), null));
+            String stringUuid = profile.getUuid().toString();
+
+            sections.add(new TextSection(profile.getUsername(), "&6" + stringUuid, null)
+                    .click(ClickEvent.suggestCommand(stringUuid)));
         }
     }
 

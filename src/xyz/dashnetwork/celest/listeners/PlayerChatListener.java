@@ -28,6 +28,7 @@ import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
+import java.util.UUID;
 import java.util.function.Predicate;
 
 public final class PlayerChatListener {
@@ -45,15 +46,18 @@ public final class PlayerChatListener {
             mute = user.getAddress().getData().getMute();
 
         if (PunishUtils.isValid(mute)) {
-            long expiration = mute.getExpiration();
-            String type = expiration == -1 ? "permanently" : "temporarily";
+            Long expiration = mute.getExpiration();
+            UUID uuid = mute.getJudge();
+
+            String type = expiration == null ? "permanently" : "temporarily";
+            String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).getUsername();
 
             MessageBuilder builder = new MessageBuilder();
             TextSection section = builder.append("&6&l»&7 You have been " + type + " muted. Hover for more information.");
 
-            section.hover("&7You were muted by &6" + ProfileUtils.fromUuid(mute.getJudge()).getUsername());
+            section.hover("&7You were muted by &6" + judge);
 
-            if (expiration != -1)
+            if (expiration != null)
                 section.hover("\n&7Your mute will expire on &6" + TimeUtils.longToDate(expiration));
 
             section.hover("\n\n" + mute.getReason());

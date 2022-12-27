@@ -53,10 +53,8 @@ public final class LegacyParser {
             for (Map.Entry<String, String> each : names.entrySet()) {
                 UUID uuid = UUID.fromString(each.getKey());
 
-                if (uuid.getMostSignificantBits() != 0) { // Make sure it's not an old bedrock account
-                    userDataMap.put(uuid, new UserData());
-                    userDataMap.get(uuid).setUsername(each.getValue());
-                }
+                if (uuid.getMostSignificantBits() != 0) // Make sure it's not an old bedrock account
+                    userDataMap.put(uuid, new UserData(each.getValue()));
             }
         }
 
@@ -80,8 +78,7 @@ public final class LegacyParser {
                         if (username == null)
                             continue;
 
-                        userDataMap.put(uuid, new UserData());
-                        userDataMap.get(uuid).setUsername(username);
+                        userDataMap.put(uuid, new UserData(username));
                     } else
                         continue;
 
@@ -123,7 +120,7 @@ public final class LegacyParser {
 
                 user.setData(data);
                 user.save();
-            } else
+            } else if (!data.isObsolete())
                 Storage.write(uuid.toString(), Storage.Directory.USER, data);
         }
     }

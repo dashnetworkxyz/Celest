@@ -8,16 +8,12 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.command.arguments.parser.parsers.OfflinePlayerParser;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
+import xyz.dashnetwork.celest.utils.storage.LegacyParser;
 
 import java.util.Optional;
 
@@ -27,30 +23,35 @@ public final class CommandTest extends CelestCommand {
         super("test");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.OFFLINE_PLAYER);
+        addArguments(ArgumentType.STRING);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<PlayerProfile> optional = arguments.get(PlayerProfile.class);
-
-        MessageBuilder builder = new MessageBuilder();
-        builder.append("&a");
-        builder.append("test");
-        builder.append("test");
+        Optional<String> optional = arguments.get(String.class);
 
         if (optional.isPresent()) {
-            PlayerProfile profile = optional.get();
+            String string = optional.get();
 
-            builder.append("\nname: " + profile.getUsername());
-            builder.append("\nuuid: " + profile.getUuid());
+            if (string.equalsIgnoreCase("legacy-import")) {
+                MessageUtils.message(source, "reading legacy data...");
+
+                LegacyParser parser = new LegacyParser();
+                parser.read();
+
+                MessageUtils.message(source, "writing legacy data...");
+
+                parser.write();
+
+                MessageUtils.message(source, "legacy import complete.");
+                return;
+            }
         }
 
-        Component component = builder.build(null);
-        String json = GsonComponentSerializer.gson().serialize(component);
+        MessageUtils.message(source, "no u");
 
-        MessageUtils.message(source, component);
-        MessageUtils.message(source, json);
+        // Component component = builder.build(null);
+        // String json = GsonComponentSerializer.gson().serialize(component);
     }
 
 }

@@ -13,9 +13,9 @@ public final class PunishData {
 
     private final UUID judge;
     private final String reason;
-    private final long expiration;
+    private final Long expiration;
 
-    public PunishData(UUID judge, String reason, long expiration) {
+    public PunishData(UUID judge, String reason, Long expiration) {
         this.judge = judge;
         this.reason = reason;
         this.expiration = expiration;
@@ -25,6 +25,6 @@ public final class PunishData {
 
     public String getReason() { return reason; }
 
-    public long getExpiration() { return expiration; }
+    public Long getExpiration() { return expiration; }
 
 }

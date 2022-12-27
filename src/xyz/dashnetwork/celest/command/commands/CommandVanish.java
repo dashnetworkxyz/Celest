@@ -61,6 +61,8 @@ public final class CommandVanish extends CelestCommand {
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&c left.");
 
+                data.setLastPlayed(System.currentTimeMillis());
+
                 on.add(player);
             } else {
                 builder.append("&a&l»&r ");

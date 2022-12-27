@@ -108,8 +108,10 @@ public final class Celest {
         eventManager.register(this, new ServerPreConnectListener());
 
         logger.info("Registering commands...");
+        new CommandAccounts();
         new CommandAdminChat();
         new CommandAltSpy();
+        new CommandBan();
         new CommandBigMistakeBuddy();
         new CommandChat();
         new CommandClearChat();
@@ -131,6 +133,7 @@ public final class Celest {
         new CommandStaffChat();
         new CommandTest();
         new CommandTheFurpySong();
+        new CommandUnban();
         new CommandUniqueId();
         new CommandVanish();
         new CommandVersionList();

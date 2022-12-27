@@ -16,11 +16,8 @@ import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
-import xyz.dashnetwork.celest.utils.limbo.Savable;
 import xyz.dashnetwork.celest.utils.storage.Cache;
-import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
-import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import xyz.dashnetwork.celest.vault.Vault;
 
 import java.util.Collection;
@@ -39,9 +36,6 @@ public final class User extends OfflineUser implements NamedSource {
 
     private User(Player player) {
         super(player.getUsername(), player.getUniqueId());
-
-        if (userData == null)
-            userData = new UserData();
 
         this.player = player;
         this.address = Address.getAddress(player.getRemoteAddress().getHostString(), false);
@@ -143,8 +137,6 @@ public final class User extends OfflineUser implements NamedSource {
     public boolean sensitiveData() { return isAdmin() && getData().getSensitiveData(); }
 
     public Player getPlayer() { return player; }
-
-    public UUID getUuid() { return uuid; }
 
     public Address getAddress() { return address; }
 

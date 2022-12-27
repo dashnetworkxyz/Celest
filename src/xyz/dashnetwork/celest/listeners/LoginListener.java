@@ -18,6 +18,8 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 
+import java.util.UUID;
+
 public final class LoginListener {
 
     @Subscribe
@@ -30,15 +32,18 @@ public final class LoginListener {
             ban = user.getAddress().getData().getBan();
 
         if (PunishUtils.isValid(ban)) {
-            long expiration = ban.getExpiration();
-            String type = expiration == -1 ? "permanently" : "temporarily";
+            Long expiration = ban.getExpiration();
+            UUID uuid = ban.getJudge();
+
+            String type = expiration == null ? "permanently" : "temporarily";
+            String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).getUsername();
 
             MessageBuilder builder = new MessageBuilder();
             builder.append("&6&lDashNetwork");
             builder.append("\n&7You have been " + type + " banned");
-            builder.append("\n&7You were banned by &6" + ProfileUtils.fromUuid(ban.getJudge()).getUsername());
+            builder.append("\n&7You were banned by &6" + judge);
 
-            if (expiration != -1)
+            if (expiration != null)
                 builder.append("\n&7Your ban will expire on &6" + TimeUtils.longToDate(expiration));
 
             builder.append("\n\n" + ban.getReason());

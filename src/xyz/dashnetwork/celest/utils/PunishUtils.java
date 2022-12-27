@@ -15,9 +15,9 @@ public final class PunishUtils {
         if (data == null)
             return false;
 
-        long expiration = data.getExpiration();
+        Long expiration = data.getExpiration();
 
-        return expiration == -1 || expiration > System.currentTimeMillis();
+        return expiration == null || expiration > System.currentTimeMillis();
     }
 
 }
