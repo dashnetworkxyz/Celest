@@ -11,11 +11,13 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.utils.connection.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 public final class Arguments {
 
@@ -25,7 +27,7 @@ public final class Arguments {
 
     public Arguments(CommandSource source, String[] array, List<ArgumentSection> sections) {
         User user = CastUtils.toUser(source);
-        List<ArgumentType> list = ArgumentUtils.typesFromSections(source, sections);
+        List<ArgumentType> list = ArgumentUtils.typesFromSections(user, sections);
         int size = MathUtils.getLowest(array.length, list.size());
 
         for (int i = 0; i < size; i++) {
@@ -38,7 +40,8 @@ public final class Arguments {
 
             if (object != null)
                 parsed.add(object);
-            else if (LazyUtils.anyEquals(argument, ArgumentType.PLAYER, ArgumentType.PLAYER_LIST))
+            else if (LazyUtils.anyEquals(argument,
+                    ArgumentType.PLAYER, ArgumentType.PLAYER_LIST, ArgumentType.OFFLINE_USER))
                 playersSuccessfullyParsed = false;
         }
     }
@@ -59,11 +62,27 @@ public final class Arguments {
     }
 
     public Player playerOrSelf(@NotNull CommandSource source) {
-        Optional<Player> optional = get(Player.class);
+        return getOrSelf(Player.class, source, self -> (Player) self);
+    }
+
+    public OfflineUser offlineOrSelf(@NotNull CommandSource source) {
+        return getOrSelf(OfflineUser.class, source, self -> User.getUser((Player) self));
+    }
+
+    public List<Player> playerListOrSelf(@NotNull CommandSource source) {
+        return getListOrSelf(Player[].class, source, self -> (Player) self);
+    }
+
+    public List<OfflineUser> offlineListOrSelf(@NotNull CommandSource source) {
+        return getListOrSelf(OfflineUser[].class, source, self -> User.getUser((Player) self));
+    }
+
+    private <T> T getOrSelf(@NotNull Class<T> clazz, @NotNull CommandSource source, @NotNull Function<CommandSource, T> function) {
+        Optional<T> optional = get(clazz);
 
         if (optional.isEmpty()) {
             if (source instanceof Player && playersSuccessfullyParsed)
-                return (Player) source;
+                return function.apply(source);
 
             return null;
         }
@@ -71,13 +90,13 @@ public final class Arguments {
         return optional.get();
     }
 
-    public List<Player> playerListOrSelf(@NotNull CommandSource source) {
-        List<Player> list = new ArrayList<>();
-        Optional<Player[]> optional = get(Player[].class);
+    private <T> List<T> getListOrSelf(@NotNull Class<T[]> clazz, @NotNull CommandSource source, @NotNull Function<CommandSource, T> function) {
+        List<T> list = new ArrayList<>();
+        Optional<T[]> optional = get(clazz);
 
         if (optional.isEmpty()) {
             if (source instanceof Player && playersSuccessfullyParsed)
-                list.add((Player) source);
+                list.add(function.apply(source));
 
             return list;
         }

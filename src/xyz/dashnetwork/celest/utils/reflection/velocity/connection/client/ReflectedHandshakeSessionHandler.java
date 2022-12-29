@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 public final class ReflectedHandshakeSessionHandler {
 
     private static final Class<?> clazz;
-    private static final Method cleanVhost, getStateForProtocol, handleLogin;
+    private static Method cleanVhost, getStateForProtocol, handleLogin;
     private final Object original;
 
     static {
@@ -31,7 +31,7 @@ public final class ReflectedHandshakeSessionHandler {
             getStateForProtocol.setAccessible(true);
             handleLogin.setAccessible(true);
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

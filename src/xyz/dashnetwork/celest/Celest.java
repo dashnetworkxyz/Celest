@@ -7,6 +7,7 @@
 
 package xyz.dashnetwork.celest;
 
+import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
@@ -21,6 +22,7 @@ import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.channel.channels.input.ChannelBroadcast;
 import xyz.dashnetwork.celest.channel.channels.input.ChannelOnline;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelDisplayName;
+import xyz.dashnetwork.celest.channel.channels.output.ChannelTwoFactor;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelVanish;
 import xyz.dashnetwork.celest.command.commands.*;
 import xyz.dashnetwork.celest.inject.Injector;
@@ -41,13 +43,18 @@ import java.util.concurrent.TimeUnit;
 @Plugin(id = "celest", name = "Celest", version = "0.11", authors = {"MasterDash5"})
 public final class Celest {
 
+    private static final Gson gson = new Gson();
+    private static final ClearTask clearTask = new ClearTask();
+    private static final SaveTask saveTask = new SaveTask();
     private static Celest instance;
     private static ProxyServer server;
     private static Logger logger;
     private static Path directory;
     private static Vault vault;
-    private static final ClearTask clearTask = new ClearTask();
-    private static final SaveTask saveTask = new SaveTask();
+
+    public static Gson getGson() { return gson; }
+
+    public static SaveTask getSaveTask() { return saveTask; }
 
     public static Celest getInstance() { return instance; }
 
@@ -73,8 +80,8 @@ public final class Celest {
         long start = System.currentTimeMillis();
 
         Storage.mkdir();
-        Configuration.load(); // TODO: Call this on a config reload command
-        ConfigurationList.load(); // ^ and this
+        Configuration.load();
+        ConfigurationList.load();
         Cache.load();
 
         if (server.getPluginManager().isLoaded("luckperms"))
@@ -91,6 +98,7 @@ public final class Celest {
         Channel.registerIn("broadcast", ChannelBroadcast::new);
         Channel.registerIn("online", ChannelOnline::new);
         Channel.registerOut("displayname", ChannelDisplayName::new);
+        Channel.registerOut("twofactor", ChannelTwoFactor::new);
         Channel.registerOut("vanish", ChannelVanish::new);
 
         logger.info("Registering events...");
@@ -113,6 +121,7 @@ public final class Celest {
         new CommandAltSpy();
         new CommandBan();
         new CommandBigMistakeBuddy();
+        new CommandCelest();
         new CommandChat();
         new CommandClearChat();
         new CommandColorList();
@@ -123,6 +132,7 @@ public final class Celest {
         new CommandFakeOp();
         new CommandGlobalChat();
         new CommandGlobalList();
+        new CommandHideAddress();
         new CommandLocalChat();
         new CommandMattsArmorStands();
         new CommandMommy();
@@ -130,9 +140,11 @@ public final class Celest {
         new CommandOwnerChat();
         new CommandPing();
         new CommandPingSpy();
+        new CommandRealName();
         new CommandStaffChat();
         new CommandTest();
         new CommandTheFurpySong();
+        new CommandTwoFactor();
         new CommandUnban();
         new CommandUniqueId();
         new CommandVanish();

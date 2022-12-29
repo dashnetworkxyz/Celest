@@ -11,20 +11,20 @@ import xyz.dashnetwork.celest.utils.reflection.ClassList;
 
 import java.lang.reflect.Field;
 
-public final class ReflectedSessionPlayerChat {
+public final class ReflectedSessionPlayerCommand {
 
     private static final Class<?> clazz;
     private static final Class<?>[] array;
-    private static Field unsigned;
+    private static Field salt;
     private final Object original;
 
     static {
-        clazz = ClassList.SESSION_PLAYER_CHAT;
+        clazz = ClassList.SESSION_PLAYER_COMMAND;
         array = new Class<?>[] { clazz };
 
         try {
-            unsigned = clazz.getDeclaredField("signed");
-            unsigned.setAccessible(true);
+            salt = clazz.getDeclaredField("salt");
+            salt.setAccessible(true);
         } catch (ReflectiveOperationException exception) {
             exception.printStackTrace();
         }
@@ -32,12 +32,10 @@ public final class ReflectedSessionPlayerChat {
 
     public static Class<?>[] array() { return array; }
 
-    public ReflectedSessionPlayerChat(Object original) { this.original = original; }
+    public ReflectedSessionPlayerCommand(Object original) { this.original = original; }
 
     public Object original() { return original; }
 
-    public void setSigned(boolean value) throws ReflectiveOperationException {
-        unsigned.set(original, value);
-    }
+    public void setSalt(long value) throws ReflectiveOperationException { salt.set(original, value); }
 
 }

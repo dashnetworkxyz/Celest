@@ -9,10 +9,10 @@ package xyz.dashnetwork.celest.utils.profile;
 
 import java.util.UUID;
 
-public final class PlayerProfile {
+public class PlayerProfile {
 
-    private final UUID uuid;
-    private final String username;
+    protected final UUID uuid;
+    protected final String username;
 
     public PlayerProfile(UUID uuid, String username) {
         this.uuid = uuid;

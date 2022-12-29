@@ -12,7 +12,7 @@ import xyz.dashnetwork.celest.utils.chat.ChatType;
 
 public final class UserData {
 
-    private String username, address, nickname;
+    private String username, address, twoFactor, nickname;
     private PunishData ban, mute;
     private ChatType chatType;
     private Long lastPlayed;
@@ -26,6 +26,7 @@ public final class UserData {
         chatType = ChatType.GLOBAL;
         address = null;
         nickname = null;
+        twoFactor = null;
         lastPlayed = null;
         altSpy = false;
         commandSpy = false;
@@ -46,6 +47,8 @@ public final class UserData {
 
     // Celest data
 
+    public String getTwoFactor() { return twoFactor; }
+
     public String getNickName() { return nickname; }
 
     public PunishData getBan() { return ban; }
@@ -65,6 +68,8 @@ public final class UserData {
     public boolean getVanish() { return vanish; }
 
     public boolean getHideAddress() { return hideAddress; }
+
+    public void setTwoFactor(String twoFactor) { this.twoFactor = twoFactor; }
 
     public void setNickName(String nickname) { this.nickname = nickname; }
 

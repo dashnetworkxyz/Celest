@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 public final class ReflectedServerChannelInitializerHolder {
 
     private static final Class<?> clazz;
-    private static final Field initializer; // Use field to avoid warning message.
+    private static Field initializer; // Use field to avoid warning message.
     private final Object original;
 
     static {
@@ -25,7 +25,7 @@ public final class ReflectedServerChannelInitializerHolder {
             initializer = clazz.getDeclaredField("initializer");
             initializer.setAccessible(true);
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

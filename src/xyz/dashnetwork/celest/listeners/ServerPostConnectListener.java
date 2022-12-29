@@ -23,12 +23,11 @@ public final class ServerPostConnectListener {
         Player player = event.getPlayer();
         User user = User.getUser(player);
 
-        if (user.getData().getVanish())
-            Channel.callOut("vanish", user);
-
+        Channel.callOut("vanish", user);
+        Channel.callOut("twofactor", user);
         Channel.callOut("displayname", user);
 
-        if (player.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19) >= 0)
+        if (player.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19) > 0)
             Injector.injectSessionHandler(player);
     }
 

@@ -8,14 +8,15 @@
 package xyz.dashnetwork.celest.utils.storage.data.serializer;
 
 import com.google.gson.*;
+import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.lang.reflect.Type;
 
-public final class UserDataSerializer implements JsonSerializer<UserData> {
+public final class UserDataSerializer implements JsonSerializer<UserData>, JsonDeserializer<UserData> {
 
-    private static final Gson gson = new GsonBuilder().create();
+    private static final Gson gson = Celest.getGson();
 
     @Override
     public JsonElement serialize(UserData userData, Type type, JsonSerializationContext context) {
@@ -41,6 +42,16 @@ public final class UserDataSerializer implements JsonSerializer<UserData> {
             object.remove("hideAddress");
 
         return object;
+    }
+
+    @Override
+    public UserData deserialize(JsonElement element, Type type, JsonDeserializationContext context) {
+        UserData userData = gson.fromJson(element, UserData.class);
+
+        if (userData.getChatType() == null)
+            userData.setChatType(ChatType.GLOBAL);
+
+        return userData;
     }
 
 }

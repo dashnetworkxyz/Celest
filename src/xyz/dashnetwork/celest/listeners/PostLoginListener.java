@@ -67,6 +67,9 @@ public final class PostLoginListener {
             MessageUtils.broadcast(each -> each.getData().getAltSpy(), builder::build);
         }
 
+        if (!user.isAuthenticated())
+            MessageUtils.message(player, "&6&l»&7 Please enter your 2fa code into chat.");
+
         user.getAddress().setServerPingTime(-1); // Reset for PingSpy
     }
 

@@ -15,15 +15,15 @@ import xyz.dashnetwork.celest.utils.connection.User;
 public final class LongParser implements ArgumentParser {
 
     @Override
-    public Object parse(User user, String string) {
-        long parsed = TimeUtils.fromTimeArgument(string);
+    public Object parse(User user, String input) {
+        long parsed = TimeUtils.fromTimeArgument(input);
 
         if (parsed != -1)
             return parsed;
 
-        if (StringUtils.matchesInteger(string)) {
+        if (StringUtils.matchesInteger(input)) {
             try {
-                return Long.parseLong(string);
+                return Long.parseLong(input);
             } catch (NumberFormatException ignored) {}
         }
 

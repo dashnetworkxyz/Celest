@@ -31,6 +31,7 @@ public final class CommandNickName extends CelestCommand {
 
         addArguments(ArgumentType.STRING);
         addArguments(User::isAdmin, true, ArgumentType.PLAYER_LIST);
+        setCompletions(0, "off");
     }
 
     @Override
@@ -40,20 +41,26 @@ public final class CommandNickName extends CelestCommand {
 
         if (optional.isEmpty() || players.isEmpty()) {
             sendUsage(source, label);
-            MessageUtils.message(source, "&6&l»&7 \"/nickname off\" can be used to clear your nickname.");
+            MessageUtils.message(source, "&6&l»&7 \"&6/" + label + " off&7\" will clear your nickname.");
             return;
         }
 
         String string = optional.get();
         boolean off = string.equals("off");
+        boolean admin = PermissionType.ADMIN.hasPermission(source);
 
-        if (!off && !PermissionType.ADMIN.hasPermission(source)) {
+        if (!off && !admin) {
             int length = ColorUtils.strip(string).length();
 
             if (length < 4 || length > 16) {
-                MessageUtils.message(source, "&6&l»&c Your nickname cannot be longer than 16 characters.");
+                MessageUtils.message(source, "&6&l»&c Your nickname must be within 4-16 characters.");
                 return;
             }
+        }
+
+        if (!ColorUtils.strip(string).matches("[A-z0-9]+") && !admin) {
+            MessageUtils.message(source, "&6&l»&c Your nickname must be alphanumeric.");
+            return;
         }
 
         if (off)

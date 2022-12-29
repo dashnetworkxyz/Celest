@@ -59,5 +59,10 @@
             <version>4.1.86.Final</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>de.taimos</groupId>
+            <artifactId>totp</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 public final class ReflectedConnectionManager {
 
     private static final Class<?> clazz;
-    private static final Method getServerChannelInitializer;
+    private static Method getServerChannelInitializer;
     private final Object original;
 
     static {
@@ -23,7 +23,7 @@ public final class ReflectedConnectionManager {
         try {
             getServerChannelInitializer = clazz.getMethod("getServerChannelInitializer");
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

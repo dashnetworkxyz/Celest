@@ -18,27 +18,28 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ArgumentUtils;
 import xyz.dashnetwork.celest.utils.CastUtils;
+import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.AliasesFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.ArgumentSectionFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
 public abstract class CelestCommand implements SimpleCommand {
 
     private static final CommandManager commandManager = Celest.getServer().getCommandManager();
+    private final Map<Integer, String[]> customCompletions;
     private final List<ArgumentSection> sections;
     private final List<String> labels;
     private Predicate<User> predicate;
     private boolean console;
 
     public CelestCommand(String label, String... aliases) {
+        customCompletions = new HashMap<>();
         sections = new ArrayList<>();
         labels = new ArrayList<>();
         predicate = user -> true;
@@ -63,6 +64,8 @@ public abstract class CelestCommand implements SimpleCommand {
         this.predicate = predicate;
         this.console = console;
     }
+
+    protected void setCompletions(int place, String... completions) { customCompletions.put(place, completions); }
 
     protected void addArguments(@NotNull ArgumentType... types) { addArguments(user -> true, true, types); }
 
@@ -97,14 +100,13 @@ public abstract class CelestCommand implements SimpleCommand {
 
     @Override
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
-        CommandSource source = invocation.source();
-        User user = CastUtils.toUser(source);
+        User user = CastUtils.toUser(invocation.source());
 
         if (user == null)
             return CompletableFuture.completedFuture(Collections.emptyList());
 
-        List<ArgumentType> list = ArgumentUtils.typesFromSections(source, sections);
         String[] args = invocation.arguments();
+        List<ArgumentType> list = ArgumentUtils.typesFromSections(user, sections);
         int length = args.length;
         int size = list.size();
 
@@ -113,6 +115,15 @@ public abstract class CelestCommand implements SimpleCommand {
 
             if (length > 0)
                 length--;
+
+            if (customCompletions.containsKey(length)) {
+                List<String> custom = new ArrayList<>();
+
+                for (String each : customCompletions.get(length))
+                    ListUtils.addIfStarts(custom, selected, each);
+
+                return CompletableFuture.completedFuture(custom);
+            }
 
             return CompletableFuture.completedFuture(list.get(length).suggest(user, selected));
         }

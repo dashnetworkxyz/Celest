@@ -20,7 +20,7 @@ import java.lang.reflect.Proxy;
 public final class ReflectedMinecraftConnection {
 
     private static final Class<?> clazz;
-    private static final Method close, write, eventLoop, getSessionHandler, setSessionHandler, setState, getProtocolVersion, setProtocolVersion, setAssociation;
+    private static Method close, write, eventLoop, getSessionHandler, setSessionHandler, setState, getProtocolVersion, setProtocolVersion, setAssociation;
     private final Object original;
 
     static {
@@ -37,7 +37,7 @@ public final class ReflectedMinecraftConnection {
             setProtocolVersion = clazz.getMethod("setProtocolVersion", ProtocolVersion.class);
             setAssociation = clazz.getMethod("setAssociation", ClassList.MINECRAFT_CONNECTION_ASSOCIATION);
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

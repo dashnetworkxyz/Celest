@@ -14,10 +14,10 @@ import xyz.dashnetwork.celest.utils.connection.User;
 public final class IntegerParser implements ArgumentParser {
 
     @Override
-    public Object parse(User user, String string) {
-        if (StringUtils.matchesInteger(string)) {
+    public Object parse(User user, String input) {
+        if (StringUtils.matchesInteger(input)) {
             try {
-                return Integer.parseInt(string);
+                return Integer.parseInt(input);
             } catch (NumberFormatException ignored) {}
         }
 

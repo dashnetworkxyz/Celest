@@ -18,15 +18,15 @@ import java.util.List;
 public final class PlayerListParser implements ArgumentParser {
 
     @Override
-    public Object parse(User user, String string) {
+    public Object parse(User user, String input) {
         List<Player> list = new ArrayList<>();
 
-        if (string.equalsIgnoreCase("@a")) {
+        if (input.equalsIgnoreCase("@a")) {
             for (User each : User.getUsers())
                 if (user == null || user.canSee(each))
                     list.add(each.getPlayer());
         } else {
-            for (String each : string.split(",")) {
+            for (String each : input.split(",")) {
                 Object player = ArgumentType.PLAYER.parse(user, each);
 
                 if (player != null)

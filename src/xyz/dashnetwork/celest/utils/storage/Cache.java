@@ -9,19 +9,18 @@ package xyz.dashnetwork.celest.utils.storage;
 
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.TimeType;
+import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.storage.data.CacheData;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class Cache {
 
-    private static final List<CacheData> cache = new CopyOnWriteArrayList<>();
+    private static final List<CacheData> cache = new ArrayList<>();
 
     public static List<CacheData> getCache() { return cache; }
 
@@ -29,7 +28,7 @@ public final class Cache {
         CacheData[] cacheArray = Storage.read("cache", Storage.Directory.PARENT, CacheData[].class);
 
         if (cacheArray != null)
-            cache.addAll(Arrays.asList(cacheArray));
+            cache.addAll(List.of(cacheArray));
     }
 
     public static void save() {
@@ -39,6 +38,11 @@ public final class Cache {
 
     public static void removeOldEntries() {
         cache.removeIf(data -> System.currentTimeMillis() - TimeType.MONTH.toMillis() >= data.getAccessTime());
+    }
+
+    public static void refreshOnline() {
+        for (User user : User.getUsers())
+            fromUuid(user.getUuid(), true);
     }
 
     public static void generate(UUID uuid, UserData userData) {

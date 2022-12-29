@@ -12,22 +12,22 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.OfflineUser;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.utils.connection.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.Optional;
 
-public class CommandUnban extends CelestCommand {
+public final class CommandUnban extends CelestCommand {
 
     public CommandUnban() {
         super("unban");
 
         setPermission(User::isAdmin, true);
-        addArguments(ArgumentType.OFFLINE_PLAYER);
+        addArguments(ArgumentType.OFFLINE_USER);
     }
 
     @Override

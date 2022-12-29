@@ -16,7 +16,7 @@ public final class ReflectedHandshake {
 
     private static final Class<?> clazz;
     private static final Class<?>[] array;
-    private static final Method getProtocolVersion, getServerAddress, getPort, getNextStatus;
+    private static Method getProtocolVersion, getServerAddress, getPort, getNextStatus;
     private final Object original;
 
     static {
@@ -29,7 +29,7 @@ public final class ReflectedHandshake {
             getPort = clazz.getMethod("getPort");
             getNextStatus = clazz.getMethod("getNextStatus");
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

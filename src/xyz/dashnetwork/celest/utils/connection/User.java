@@ -11,7 +11,6 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.OfflineUser;
 import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
@@ -33,13 +32,15 @@ public final class User extends OfflineUser implements NamedSource {
     private Address address;
     private String prefix, suffix, nickname;
     private long vaultUpdateTime;
+    private boolean authenticated;
 
     private User(Player player) {
-        super(player.getUsername(), player.getUniqueId());
+        super(player.getUniqueId(), player.getUsername(), false);
 
         this.player = player;
         this.address = Address.getAddress(player.getRemoteAddress().getHostString(), false);
         this.vaultUpdateTime = -1;
+        this.authenticated = false;
 
         String old = userData.getAddress();
 
@@ -90,18 +91,9 @@ public final class User extends OfflineUser implements NamedSource {
     }
 
     public void updateDisplayname() {
-        String oldPrefix = prefix;
-        String oldSuffix = suffix;
-        String oldNickname = nickname;
-
-        if (oldPrefix == null)
-            oldPrefix = "";
-
-        if (oldSuffix == null)
-            oldSuffix = "";
-
-        if (oldNickname == null)
-            oldNickname = "";
+        String oldPrefix = prefix == null ? "" : prefix;
+        String oldSuffix = suffix == null ? "" : suffix;
+        String oldNickname = nickname == null ? "" : nickname;
 
         nickname = userData.getNickName();
 
@@ -151,6 +143,10 @@ public final class User extends OfflineUser implements NamedSource {
     public boolean isKevin() { return stringUuid.equals("a948c50c-ede2-4dfa-9b6c-688daf22197c"); }
 
     public boolean isGolden() { return stringUuid.equals("bbeb983a-3111-4722-bcf0-e6aafbd5f7d2"); }
+
+    public boolean isAuthenticated() { return userData.getTwoFactor() == null || authenticated; }
+
+    public void authenticate() { authenticated = true; }
 
     public PunishData getBan() {
         PunishData fromUserData = userData.getBan();

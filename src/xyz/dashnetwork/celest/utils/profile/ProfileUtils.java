@@ -8,6 +8,7 @@
 package xyz.dashnetwork.celest.utils.profile;
 
 import org.jetbrains.annotations.NotNull;
+import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.utils.storage.data.CacheData;
@@ -16,6 +17,13 @@ import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import java.util.UUID;
 
 public final class ProfileUtils {
+
+    public static PlayerProfile fromUsernameOrUuid(@NotNull String string) {
+        if (StringUtils.matchesUuid(string))
+            return ProfileUtils.fromUuid(UUID.fromString(string));
+        else
+            return ProfileUtils.fromUsername(string);
+    }
 
     public static PlayerProfile fromUsername(@NotNull String username) {
         CacheData data = Cache.fromUsername(username, true);

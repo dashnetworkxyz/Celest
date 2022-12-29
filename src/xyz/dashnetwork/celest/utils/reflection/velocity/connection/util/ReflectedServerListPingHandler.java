@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 public final class ReflectedServerListPingHandler {
 
     private static final Class<?> clazz;
-    private static final Method getInitialPing;
+    private static Method getInitialPing;
     private final Object original;
 
     static {
@@ -26,7 +26,7 @@ public final class ReflectedServerListPingHandler {
         try {
             getInitialPing = clazz.getMethod("getInitialPing", ClassList.VELOCITY_INBOUND_CONNECTION);
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

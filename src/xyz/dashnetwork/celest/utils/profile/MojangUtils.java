@@ -8,7 +8,6 @@
 package xyz.dashnetwork.celest.utils.profile;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.Celest;
@@ -21,7 +20,7 @@ import java.util.UUID;
 public final class MojangUtils {
 
     private static final Logger logger = Celest.getLogger();
-    private static final Gson gson = new GsonBuilder().create();
+    private static final Gson gson = Celest.getGson();
 
     public static PlayerProfile fromUsername(@NotNull String username) {
         if (username.length() > 16)

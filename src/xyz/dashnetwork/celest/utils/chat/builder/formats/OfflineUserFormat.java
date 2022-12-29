@@ -7,31 +7,36 @@
 
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
-import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.connection.OfflineUser;
+import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public final class PlayerFormat implements Format {
+public class OfflineUserFormat implements Format {
 
     private final List<TextSection> sections;
 
-    public PlayerFormat(Player player) { sections = new NamedSourceFormat(NamedSource.of(player)).sections(); }
+    public OfflineUserFormat(OfflineUser offline) {
+        if (offline instanceof User)
+            sections = new NamedSourceFormat((User) offline).sections();
+        else
+            sections = new PlayerProfileFormat(offline).sections();
+    }
 
-    public PlayerFormat(Player... players) { this(List.of(players)); }
+    public OfflineUserFormat(OfflineUser... offlines) { this(List.of(offlines)); }
 
-    public PlayerFormat(Collection<Player> players) {
+    public OfflineUserFormat(Collection<OfflineUser> offlines) {
         sections = new ArrayList<>();
 
-        for (Player player : players) {
+        for (OfflineUser each : offlines) {
             if (!sections.isEmpty())
                 sections.add(new TextSection("&6, ", null, null));
 
-            sections.addAll(new PlayerFormat(player).sections());
+            sections.addAll(new OfflineUserFormat(each).sections);
         }
     }
 

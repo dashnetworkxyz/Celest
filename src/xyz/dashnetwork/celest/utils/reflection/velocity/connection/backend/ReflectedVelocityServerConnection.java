@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 public final class ReflectedVelocityServerConnection {
 
     private static final Class<?> clazz;
-    private static final Method ensureConnected;
+    private static Method ensureConnected;
     private final Object original;
 
     static {
@@ -24,7 +24,7 @@ public final class ReflectedVelocityServerConnection {
         try {
             ensureConnected = clazz.getMethod("ensureConnected");
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

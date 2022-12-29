@@ -20,8 +20,8 @@ import java.lang.reflect.Method;
 public final class ReflectedVelocityServer {
 
     private static final Class<?> clazz;
-    private static final Field cm;
-    private static final Method getPingGsonInstance, getServerListPingHandler;
+    private static Field cm;
+    private static Method getPingGsonInstance, getServerListPingHandler;
     private final ProxyServer original;
 
     static {
@@ -34,7 +34,7 @@ public final class ReflectedVelocityServer {
             getPingGsonInstance = clazz.getMethod("getPingGsonInstance", ProtocolVersion.class);
             getServerListPingHandler = clazz.getMethod("getServerListPingHandler");
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

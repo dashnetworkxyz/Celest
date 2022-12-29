@@ -14,7 +14,7 @@ import java.lang.reflect.Constructor;
 public final class ReflectedStatusResponse {
 
     private static final Class<?> clazz;
-    private static final Constructor<?> constructor;
+    private static Constructor<?> constructor;
     private final Object original;
 
     static {
@@ -23,7 +23,7 @@ public final class ReflectedStatusResponse {
         try {
             constructor = clazz.getConstructor(CharSequence.class);
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

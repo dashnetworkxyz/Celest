@@ -7,14 +7,17 @@
 
 package xyz.dashnetwork.celest.listeners;
 
+import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
 import xyz.dashnetwork.celest.utils.PunishUtils;
+import xyz.dashnetwork.celest.utils.SecureUtils;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
@@ -33,13 +36,28 @@ import java.util.function.Predicate;
 
 public final class PlayerChatListener {
 
-    @Subscribe
+    @Subscribe(order = PostOrder.FIRST)
     public void onPlayerChat(PlayerChatEvent event) {
         event.setResult(PlayerChatEvent.ChatResult.denied());
 
         Player player = event.getPlayer();
         User user = User.getUser(player);
         UserData userData = user.getData();
+        String message = event.getMessage();
+
+        if (!user.isAuthenticated()) {
+            if (message.equals(SecureUtils.getTOTP(userData.getTwoFactor()))) {
+                user.authenticate();
+
+                Channel.callOut("twofactor", user);
+
+                MessageUtils.message(player, "&6&l»&7 You have been successfully authenticated.");
+            } else
+                MessageUtils.message(player, "&6&l»&7 Please enter your 2fa code into chat.");
+
+            return;
+        }
+
         PunishData mute = user.getMute();
 
         if (!PunishUtils.isValid(mute))
@@ -66,7 +84,6 @@ public final class PlayerChatListener {
             return;
         }
 
-        String message = event.getMessage();
         ChatType type = ChatType.parseSelector(message);
 
         if (type == null)

@@ -17,8 +17,8 @@ import java.lang.reflect.Method;
 public final class ReflectedStatusSessionHandler {
 
     private static final Class<?> clazz;
-    private static final Constructor<?> constructor;
-    private static final Field pingReceived;
+    private static Constructor<?> constructor;
+    private static Field pingReceived;
     private final Object original;
 
     static {
@@ -31,7 +31,7 @@ public final class ReflectedStatusSessionHandler {
             pingReceived = clazz.getDeclaredField("pingReceived");
             pingReceived.setAccessible(true);
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

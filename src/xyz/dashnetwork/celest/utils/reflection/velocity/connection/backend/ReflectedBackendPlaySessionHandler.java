@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 public final class ReflectedBackendPlaySessionHandler {
 
     private static final Class<?> clazz;
-    private static final Field playerConnection;
+    private static Field playerConnection;
     private final Object original;
 
     static {
@@ -26,7 +26,7 @@ public final class ReflectedBackendPlaySessionHandler {
             playerConnection = clazz.getDeclaredField("playerConnection");
             playerConnection.setAccessible(true);
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

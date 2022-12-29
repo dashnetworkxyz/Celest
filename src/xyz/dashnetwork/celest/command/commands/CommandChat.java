@@ -44,6 +44,7 @@ public final class CommandChat extends CelestCommand {
 
         NamedSource named = NamedSource.of(source);
         ChatType chatType = optional.get();
+        String name = chatType.getName();
         MessageBuilder builder;
 
         for (Player player : players) {
@@ -51,7 +52,7 @@ public final class CommandChat extends CelestCommand {
             user.getData().setChatType(chatType);
 
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have been moved to &6" + chatType.getName() + "Chat");
+            builder.append("&6&l»&7 You have been moved to &6" + name + "Chat");
 
             if (!source.equals(player)) {
                 builder.append("&7 by ");
@@ -68,7 +69,7 @@ public final class CommandChat extends CelestCommand {
                 builder = new MessageBuilder();
                 builder.append("&6&l»&7 You have moved ");
                 builder.append(new PlayerFormat(players));
-                builder.append("&7 to &6" + chatType.getName() + "Chat");
+                builder.append("&7 to &6" + name + "Chat");
 
                 MessageUtils.message(source, builder::build);
             }

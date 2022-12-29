@@ -17,7 +17,7 @@ public final class ClassList {
             SERVER_LIST_PING_HANDLER, VELOCITY_INBOUND_CONNECTION,
             CONNECTION_MANAGER, SERVER_CHANNEL_INITIALIZER_HOLDER,
             STATE_REGISTRY,
-            SESSION_PLAYER_CHAT,
+            SESSION_PLAYER_CHAT, SESSION_PLAYER_COMMAND,
             HANDSHAKE, STATUS_REQUEST, STATUS_RESPONSE;
 
     static {
@@ -39,6 +39,7 @@ public final class ClassList {
             SERVER_CHANNEL_INITIALIZER_HOLDER = Class.forName("com.velocitypowered.proxy.network.ServerChannelInitializerHolder");
             STATE_REGISTRY = Class.forName("com.velocitypowered.proxy.protocol.StateRegistry");
             SESSION_PLAYER_CHAT = Class.forName("com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerChat");
+            SESSION_PLAYER_COMMAND = Class.forName("com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerCommand");
             HANDSHAKE = Class.forName("com.velocitypowered.proxy.protocol.packet.Handshake");
             STATUS_REQUEST = Class.forName("com.velocitypowered.proxy.protocol.packet.StatusRequest");
             STATUS_RESPONSE = Class.forName("com.velocitypowered.proxy.protocol.packet.StatusResponse");

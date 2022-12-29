@@ -21,7 +21,9 @@ import java.util.List;
 
 public final class Storage {
 
-    private static final Gson gson = new GsonBuilder().registerTypeAdapter(UserData.class, new UserDataSerializer()).create();
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(UserData.class, new UserDataSerializer())
+            .create();
     private static final File folder = new File(Celest.getDirectory().toFile(), "data");
 
     public enum Directory {
@@ -59,7 +61,7 @@ public final class Storage {
             if (!file.exists())
                 file.createNewFile();
 
-            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+            FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8);
             writer.write(json);
             writer.close();
         } catch (IOException exception) {

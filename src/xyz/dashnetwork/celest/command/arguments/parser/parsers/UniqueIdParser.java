@@ -16,9 +16,9 @@ import java.util.UUID;
 public final class UniqueIdParser implements ArgumentParser {
 
     @Override
-    public Object parse(User user, String string) {
-        if (StringUtils.matchesUuid(string))
-            return UUID.fromString(string);
+    public Object parse(User user, String input) {
+        if (StringUtils.matchesUuid(input))
+            return UUID.fromString(input);
 
         return null;
     }

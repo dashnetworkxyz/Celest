@@ -22,16 +22,16 @@ public final class PlayerParser implements ArgumentParser {
     private static final ProxyServer server = Celest.getServer();
 
     @Override
-    public Object parse(User user, String string) {
-        if (string.matches("@[PpSs]") && user != null)
+    public Object parse(User user, String input) {
+        if (input.matches("@[PpSs]") && user != null)
             return user.getPlayer();
 
         Optional<Player> optional;
 
-        if (StringUtils.matchesUuid(string))
-            optional = server.getPlayer(UUID.fromString(string));
+        if (StringUtils.matchesUuid(input))
+            optional = server.getPlayer(UUID.fromString(input));
         else
-            optional = server.getPlayer(string);
+            optional = server.getPlayer(input);
 
         if (optional.isEmpty())
             return null;

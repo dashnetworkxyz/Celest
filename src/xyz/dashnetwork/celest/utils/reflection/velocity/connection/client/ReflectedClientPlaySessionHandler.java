@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 public final class ReflectedClientPlaySessionHandler {
 
     private static final Class<?> clazz;
-    private static final Method validateChat;
+    private static Method validateChat;
     private final Object original;
 
     static {
@@ -25,7 +25,7 @@ public final class ReflectedClientPlaySessionHandler {
             validateChat = clazz.getDeclaredMethod("validateChat", String.class);
             validateChat.setAccessible(true);
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

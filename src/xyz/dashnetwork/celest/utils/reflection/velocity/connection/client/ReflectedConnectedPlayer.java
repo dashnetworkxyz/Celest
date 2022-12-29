@@ -17,8 +17,8 @@ import java.lang.reflect.Method;
 public final class ReflectedConnectedPlayer {
 
     private static final Class<?> clazz;
-    private static final Field playerKey;
-    private static final Method getConnectedServer;
+    private static Field playerKey;
+    private static Method getConnectedServer;
     private final Object original;
 
     static {
@@ -30,7 +30,7 @@ public final class ReflectedConnectedPlayer {
 
             getConnectedServer = clazz.getMethod("getConnectedServer");
         } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 

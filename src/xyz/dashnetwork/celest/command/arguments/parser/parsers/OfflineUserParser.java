@@ -8,18 +8,21 @@
 package xyz.dashnetwork.celest.command.arguments.parser.parsers;
 
 import xyz.dashnetwork.celest.command.arguments.parser.ArgumentParser;
-import xyz.dashnetwork.celest.utils.OfflineUser;
 import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.connection.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 
 import java.util.UUID;
 
-public class OfflinePlayerParser implements ArgumentParser {
+public final class OfflineUserParser implements ArgumentParser {
 
     @Override
     public Object parse(User user, String input) {
+        if (input.matches("@[PpSs]") && user != null)
+            return user;
+
         PlayerProfile profile;
 
         if (StringUtils.matchesUuid(input))

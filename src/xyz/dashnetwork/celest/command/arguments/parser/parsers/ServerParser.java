@@ -17,8 +17,8 @@ import java.util.Optional;
 public final class ServerParser implements ArgumentParser {
 
     @Override
-    public Object parse(User user, String string) {
-        Optional<RegisteredServer> optional = Celest.getServer().getServer(string);
+    public Object parse(User user, String input) {
+        Optional<RegisteredServer> optional = Celest.getServer().getServer(input);
 
         if (optional.isEmpty())
             return null;
