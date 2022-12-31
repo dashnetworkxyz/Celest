@@ -7,7 +7,7 @@
 
 package xyz.dashnetwork.celest.command.arguments.suggester.suggesters;
 
-import xyz.dashnetwork.celest.command.arguments.suggester.ArugmentSuggester;
+import xyz.dashnetwork.celest.command.arguments.suggester.Suggester;
 import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.storage.Cache;
@@ -16,7 +16,7 @@ import xyz.dashnetwork.celest.utils.storage.data.CacheData;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class OfflineUserSuggester implements ArugmentSuggester {
+public final class OfflineUserSuggester implements Suggester {
 
     @Override
     public List<String> suggest(User user, String input) {

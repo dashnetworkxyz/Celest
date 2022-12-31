@@ -22,13 +22,14 @@ public class OfflineUser extends PlayerProfile implements Savable {
 
     protected final String stringUuid;
     protected UserData userData;
+    private final boolean generated;
 
     protected OfflineUser(UUID uuid, String username, boolean shouldLimbo) {
         super(uuid, username);
 
         stringUuid = uuid.toString();
 
-        Limbo<OfflineUser> limbo = Limbo.getLimbo(OfflineUser.class, each -> each.getUuid().equals(uuid));
+        Limbo<OfflineUser> limbo = Limbo.get(OfflineUser.class, each -> each.getUuid().equals(uuid));
 
         if (limbo != null) {
             limbo.cancel();
@@ -37,8 +38,11 @@ public class OfflineUser extends PlayerProfile implements Savable {
         } else
             userData = Storage.read(stringUuid, Storage.Directory.USER, UserData.class);
 
-        if (userData == null)
+        if (userData == null) {
             userData = new UserData(username);
+            generated = true;
+        } else
+            generated = false;
 
         if (shouldLimbo)
             new Limbo<>(this);
@@ -51,7 +55,7 @@ public class OfflineUser extends PlayerProfile implements Savable {
         if (optional.isPresent())
             return User.getUser(optional.get());
 
-        Limbo<OfflineUser> limbo = Limbo.getLimbo(OfflineUser.class, each -> each.getUuid().equals(uuid));
+        Limbo<OfflineUser> limbo = Limbo.get(OfflineUser.class, each -> each.getUuid().equals(uuid));
 
         if (limbo != null)
             return limbo.getObject();
@@ -61,14 +65,17 @@ public class OfflineUser extends PlayerProfile implements Savable {
 
     @Override
     public void save() {
-        if (userData.isObsolete())
-            Storage.delete(stringUuid, Storage.Directory.USER);
-        else
+        if (userData.isObsolete()) {
+            if (!isGenerated())
+                Storage.delete(stringUuid, Storage.Directory.USER);
+        } else
             Storage.write(stringUuid, Storage.Directory.USER, userData);
     }
 
     public void setData(UserData userData) { this.userData = userData; }
 
     public UserData getData() { return userData; }
+
+    public boolean isGenerated() { return generated; }
 
 }

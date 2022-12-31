@@ -9,11 +9,11 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
@@ -21,34 +21,38 @@ import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.List;
+import java.util.Optional;
 
-public final class CommandOwnerChat extends CelestCommand {
+public class CommandServer extends CelestCommand {
 
-    public CommandOwnerChat() {
-        super("ownerchat", "oc", "dc");
+    public CommandServer() {
+        super("server");
 
-        setPermission(User::isOwner, true);
-        addArguments(ArgumentType.PLAYER_LIST);
+        setPermission(user -> true, true);
+        addArguments(ArgumentType.SERVER);
+        addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
+        Optional<RegisteredServer> optional = arguments.get(RegisteredServer.class);
         List<Player> players = arguments.playerListOrSelf(source);
 
-        if (players.isEmpty()) {
+        if (optional.isEmpty() || players.isEmpty()) {
             sendUsage(source, label);
             return;
         }
 
+        RegisteredServer server = optional.get();
+        String name = server.getServerInfo().getName();
         NamedSource named = NamedSource.of(source);
         MessageBuilder builder;
 
         for (Player player : players) {
-            User user = User.getUser(player);
-            user.getData().setChatType(ChatType.OWNER);
+            player.createConnectionRequest(server);
 
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have been moved to &6OwnerChat");
+            builder.append("&6&l»&7 You have been sent to &6" + name);
 
             if (!source.equals(player)) {
                 builder.append("&7 by ");
@@ -63,9 +67,9 @@ public final class CommandOwnerChat extends CelestCommand {
 
         if (players.size() > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have moved ");
+            builder.append("&6&l»&7 You have sent ");
             builder.append(new PlayerFormat(players));
-            builder.append("&7 to &6OwnerChat");
+            builder.append("&7 to &6" + name);
 
             MessageUtils.message(source, builder::build);
         }

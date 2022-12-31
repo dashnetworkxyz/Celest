@@ -8,7 +8,7 @@
 package xyz.dashnetwork.celest.command.arguments.suggester.suggesters;
 
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
-import xyz.dashnetwork.celest.command.arguments.suggester.ArugmentSuggester;
+import xyz.dashnetwork.celest.command.arguments.suggester.Suggester;
 import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -16,7 +16,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PlayerListSuggester implements ArugmentSuggester {
+public final class PlayerListSuggester implements Suggester {
 
     @Override
     public List<String> suggest(User user, String input) {

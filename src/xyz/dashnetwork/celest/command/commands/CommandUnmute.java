@@ -22,10 +22,10 @@ import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.Optional;
 
-public final class CommandUnban extends CelestCommand {
+public class CommandUnmute extends CelestCommand {
 
-    public CommandUnban() {
-        super("unban");
+    public CommandUnmute() {
+        super("unmute");
 
         setPermission(User::isAdmin, true);
         addArguments(ArgumentType.OFFLINE_USER);
@@ -44,12 +44,12 @@ public final class CommandUnban extends CelestCommand {
         UserData data = offline.getData();
 
         if (data != null)
-            data.setBan(null);
+            data.setMute(null);
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&r ");
         builder.append(new PlayerProfileFormat(offline)).prefix("&6");
-        builder.append("&7 unbanned by ");
+        builder.append("&7 unmuted by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));
 
         MessageUtils.broadcast(User::isStaff, builder::build);

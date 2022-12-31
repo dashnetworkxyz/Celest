@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.utils.limbo.Limbo;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,6 +27,14 @@ public final class MojangUtils {
         if (username.length() > 16)
             return null;
 
+        Limbo<PlayerProfile> limbo = Limbo.get(PlayerProfile.class, each -> each.getUsername().equalsIgnoreCase(username));
+
+        if (limbo != null) {
+            limbo.reset();
+
+            return limbo.getObject();
+        }
+
         try {
             URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + username);
             Response response = gson.fromJson(new InputStreamReader(url.openStream()), Response.class);
@@ -33,7 +42,10 @@ public final class MojangUtils {
             if (response == null)
                 return null;
 
-            return response.toProfile();
+            PlayerProfile profile = response.toProfile();
+            new Limbo<>(profile);
+
+            return profile;
         } catch (IOException exception) {
             logger.warn("Failed to pull response from Mojang API.");
             exception.printStackTrace();
@@ -42,6 +54,14 @@ public final class MojangUtils {
     }
 
     public static PlayerProfile fromUuid(@NotNull UUID uuid) {
+        Limbo<PlayerProfile> limbo = Limbo.get(PlayerProfile.class, each -> each.getUuid().equals(uuid));
+
+        if (limbo != null) {
+            limbo.reset();
+
+            return limbo.getObject();
+        }
+
         try {
             URL url = new URL("https://api.mojang.com/user/profile/" + uuid);
             Response response = gson.fromJson(new InputStreamReader(url.openStream()), Response.class);
@@ -49,7 +69,10 @@ public final class MojangUtils {
             if (response == null)
                 return null;
 
-            return response.toProfile();
+            PlayerProfile profile = response.toProfile();
+            new Limbo<>(profile);
+
+            return profile;
         } catch (IOException exception) {
             logger.warn("Failed to pull response from Mojang API.");
             exception.printStackTrace();

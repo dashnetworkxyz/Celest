@@ -5,12 +5,14 @@
  * is strictly prohibited.
  */
 
-package xyz.dashnetwork.celest.command.arguments.parser;
+package xyz.dashnetwork.celest.command.arguments.suggester;
 
 import xyz.dashnetwork.celest.utils.connection.User;
 
-public interface ArgumentParser {
+import java.util.List;
 
-    Object parse(User user, String input);
+public interface Suggester {
+
+    List<String> suggest(User user, String input);
 
 }

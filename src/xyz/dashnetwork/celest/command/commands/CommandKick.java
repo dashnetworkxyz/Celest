@@ -9,26 +9,26 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
+import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.NamedSource;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.List;
 
-public final class CommandOwnerChat extends CelestCommand {
+public final class CommandKick extends CelestCommand {
 
-    public CommandOwnerChat() {
-        super("ownerchat", "oc", "dc");
+    public CommandKick() {
+        super("kick");
 
-        setPermission(User::isOwner, true);
+        setPermission(User::isAdmin, true);
         addArguments(ArgumentType.PLAYER_LIST);
+        addArguments(ArgumentType.MESSAGE);
     }
 
     @Override
@@ -41,34 +41,28 @@ public final class CommandOwnerChat extends CelestCommand {
         }
 
         NamedSource named = NamedSource.of(source);
-        MessageBuilder builder;
+        String reason = arguments.get(String.class).orElse("No reason provided.");
+
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&6&lDashNetwork");
+        builder.append("\n&7You have been kicked");
+        builder.append("\n&7You were kicked by &6" + named.getUsername());
+        builder.append("\n\n" + reason);
+
+        Component message = builder.build(null);
+
+        builder = new MessageBuilder();
+        builder.append("&6&l»&6");
 
         for (Player player : players) {
-            User user = User.getUser(player);
-            user.getData().setChatType(ChatType.OWNER);
-
-            builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have been moved to &6OwnerChat");
-
-            if (!source.equals(player)) {
-                builder.append("&7 by ");
-                builder.append(new NamedSourceFormat(named));
-            }
-
-            MessageUtils.message(player, builder::build);
+            builder.append(" " + player.getUsername());
+            player.disconnect(message);
         }
 
-        if (source instanceof Player)
-            players.remove(source);
+        builder.append("&7 kicked by");
+        builder.append(new NamedSourceFormat(named));
 
-        if (players.size() > 0) {
-            builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have moved ");
-            builder.append(new PlayerFormat(players));
-            builder.append("&7 to &6OwnerChat");
-
-            MessageUtils.message(source, builder::build);
-        }
+        MessageUtils.broadcast(builder::build);
     }
 
 }

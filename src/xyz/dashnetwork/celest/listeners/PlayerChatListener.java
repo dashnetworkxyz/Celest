@@ -47,13 +47,13 @@ public final class PlayerChatListener {
 
         if (!user.isAuthenticated()) {
             if (message.equals(SecureUtils.getTOTP(userData.getTwoFactor()))) {
-                user.authenticate();
+                user.getData().setAuthenticated(true);
 
                 Channel.callOut("twofactor", user);
 
                 MessageUtils.message(player, "&6&l»&7 You have been successfully authenticated.");
             } else
-                MessageUtils.message(player, "&6&l»&7 Please enter your 2fa code into chat.");
+                MessageUtils.message(player, "&6&l»&7 Invalid TOTP code.");
 
             return;
         }
@@ -71,7 +71,7 @@ public final class PlayerChatListener {
             String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).getUsername();
 
             MessageBuilder builder = new MessageBuilder();
-            TextSection section = builder.append("&6&l»&7 You have been " + type + " muted. Hover for more information.");
+            TextSection section = builder.append("&6&l»&7 You have been " + type + " muted. Hover for more info.");
 
             section.hover("&7You were muted by &6" + judge);
 

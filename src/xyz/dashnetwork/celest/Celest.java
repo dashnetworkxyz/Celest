@@ -40,7 +40,7 @@ import xyz.dashnetwork.celest.vault.api.LuckPermsAPI;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "0.11", authors = {"MasterDash5"})
+@Plugin(id = "celest", name = "Celest", version = "0.12", authors = {"MasterDash5"})
 public final class Celest {
 
     private static final Gson gson = new Gson();
@@ -133,20 +133,27 @@ public final class Celest {
         new CommandGlobalChat();
         new CommandGlobalList();
         new CommandHideAddress();
+        new CommandKick();
         new CommandLocalChat();
         new CommandMattsArmorStands();
         new CommandMommy();
+        new CommandMute();
         new CommandNickName();
         new CommandOwnerChat();
         new CommandPing();
         new CommandPingSpy();
         new CommandRealName();
+        new CommandSeen();
+        new CommandServer();
         new CommandStaffChat();
+        new CommandTempBan();
+        new CommandTempMute();
         new CommandTest();
         new CommandTheFurpySong();
         new CommandTwoFactor();
         new CommandUnban();
         new CommandUniqueId();
+        new CommandUnmute();
         new CommandVanish();
         new CommandVersionList();
 

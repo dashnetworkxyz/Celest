@@ -7,12 +7,12 @@
 
 package xyz.dashnetwork.celest.command.arguments.parser.parsers;
 
-import xyz.dashnetwork.celest.command.arguments.parser.ArgumentParser;
+import xyz.dashnetwork.celest.command.arguments.parser.Parser;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-public final class LongParser implements ArgumentParser {
+public final class LongParser implements Parser {
 
     @Override
     public Object parse(User user, String input) {

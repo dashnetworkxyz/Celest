@@ -9,12 +9,12 @@ package xyz.dashnetwork.celest.command.arguments.parser.parsers;
 
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.command.arguments.parser.ArgumentParser;
+import xyz.dashnetwork.celest.command.arguments.parser.Parser;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.Optional;
 
-public final class ServerParser implements ArgumentParser {
+public final class ServerParser implements Parser {
 
     @Override
     public Object parse(User user, String input) {

@@ -62,17 +62,16 @@ public final class CommandChat extends CelestCommand {
             MessageUtils.message(player, builder::build);
         }
 
-        if (source instanceof Player) {
+        if (source instanceof Player)
             players.remove(source);
 
-            if (players.size() > 0) {
-                builder = new MessageBuilder();
-                builder.append("&6&l»&7 You have moved ");
-                builder.append(new PlayerFormat(players));
-                builder.append("&7 to &6" + name + "Chat");
+        if (players.size() > 0) {
+            builder = new MessageBuilder();
+            builder.append("&6&l»&7 You have moved ");
+            builder.append(new PlayerFormat(players));
+            builder.append("&7 to &6" + name + "Chat");
 
-                MessageUtils.message(source, builder::build);
-            }
+            MessageUtils.message(source, builder::build);
         }
     }
 

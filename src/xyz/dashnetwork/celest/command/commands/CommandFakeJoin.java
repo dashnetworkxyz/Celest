@@ -25,7 +25,7 @@ public final class CommandFakeJoin extends CelestCommand {
         super("fakejoin");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.STRING, ArgumentType.STRING);
+        addArguments(ArgumentType.STRING, ArgumentType.MESSAGE);
     }
 
     @Override
@@ -38,8 +38,8 @@ public final class CommandFakeJoin extends CelestCommand {
             return;
         }
 
-        String displayname = optional1.get();
-        String username = optional2.get();
+        String username = optional1.get();
+        String displayname = optional2.get();
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&a&l»&r ");
@@ -49,9 +49,9 @@ public final class CommandFakeJoin extends CelestCommand {
         MessageUtils.broadcast(each -> !each.isStaff(), builder::build);
 
         builder = new MessageBuilder();
-        builder.append("&a&l»&r ");
+        builder.append("&6&l»&r ");
         builder.append(displayname).hover(username);
-        builder.append("&a fake-joined by ");
+        builder.append("&7 fake-joined by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));
 
         MessageUtils.broadcast(User::isStaff, builder::build);

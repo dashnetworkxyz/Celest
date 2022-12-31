@@ -10,6 +10,7 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
@@ -20,28 +21,32 @@ public final class DisconnectListener {
 
     @Subscribe
     public void onDisconnect(DisconnectEvent event) {
-        Player player = event.getPlayer();
-        User user = User.getUser(player);
-        UserData data = user.getData();
-        MessageBuilder builder = new MessageBuilder();
+        if (LazyUtils.anyEquals(event.getLoginStatus(),
+                DisconnectEvent.LoginStatus.PRE_SERVER_JOIN,
+                DisconnectEvent.LoginStatus.SUCCESSFUL_LOGIN)) {
+            Player player = event.getPlayer();
+            User user = User.getUser(player);
+            UserData data = user.getData();
+            MessageBuilder builder = new MessageBuilder();
 
-        if (data.getVanish()) {
-            builder.append("&3&l»&r ");
-            builder.append(new NamedSourceFormat(user));
-            builder.append("&3 silently left.");
+            if (data.getVanish()) {
+                builder.append("&3&l»&r ");
+                builder.append(new NamedSourceFormat(user));
+                builder.append("&3 silently left.");
 
-            MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(), builder::build);
-        } else {
-            builder.append("&c&l»&r ");
-            builder.append(new NamedSourceFormat(user));
-            builder.append("&c left.");
+                MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(), builder::build);
+            } else {
+                builder.append("&c&l»&r ");
+                builder.append(new NamedSourceFormat(user));
+                builder.append("&c left.");
 
-            MessageUtils.broadcast(builder::build);
+                MessageUtils.broadcast(builder::build);
 
-            data.setLastPlayed(System.currentTimeMillis());
+                data.setLastPlayed(System.currentTimeMillis());
+            }
+
+            user.remove();
         }
-
-        user.remove();
     }
 
 }

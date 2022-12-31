@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
-public final class Limbo<T extends Savable> implements Runnable {
+public final class Limbo<T> implements Runnable {
 
     private static final List<Limbo<?>> limbos = new ArrayList<>();
     private static final Celest celest = Celest.getInstance();
@@ -27,7 +27,7 @@ public final class Limbo<T extends Savable> implements Runnable {
 
     public Limbo(T object) {
         this.object = object;
-        this.shouldSave = true;
+        this.shouldSave = isSavable();
 
         schedule();
 
@@ -37,7 +37,7 @@ public final class Limbo<T extends Savable> implements Runnable {
     public static List<Limbo<?>> getLimbos() { return limbos; }
 
     @SuppressWarnings("unchecked")
-    public static <T extends Savable> Limbo<T> getLimbo(Class<T> clazz, Predicate<T> predicate) {
+    public static <T> Limbo<T> get(Class<T> clazz, Predicate<T> predicate) {
         for (Limbo<?> limbo : limbos)
             if (clazz.isInstance(limbo.object) && predicate.test((T) limbo.object))
                 return (Limbo<T>) limbo;
@@ -53,14 +53,14 @@ public final class Limbo<T extends Savable> implements Runnable {
 
     public void save() {
         if (shouldSave) {
-            object.save();
+            ((Savable) object).save();
             shouldSave = false;
         }
     }
 
     public void reset() {
         scheduledTask.cancel();
-        shouldSave = true;
+        shouldSave = isSavable();
         
         schedule();
     }
@@ -75,5 +75,7 @@ public final class Limbo<T extends Savable> implements Runnable {
         save();
         limbos.remove(this);
     }
+
+    private boolean isSavable() { return object.getClass().isAssignableFrom(Savable.class); }
 
 }

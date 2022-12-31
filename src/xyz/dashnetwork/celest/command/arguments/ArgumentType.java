@@ -7,9 +7,9 @@
 
 package xyz.dashnetwork.celest.command.arguments;
 
-import xyz.dashnetwork.celest.command.arguments.parser.ArgumentParser;
+import xyz.dashnetwork.celest.command.arguments.parser.Parser;
 import xyz.dashnetwork.celest.command.arguments.parser.parsers.*;
-import xyz.dashnetwork.celest.command.arguments.suggester.ArugmentSuggester;
+import xyz.dashnetwork.celest.command.arguments.suggester.Suggester;
 import xyz.dashnetwork.celest.command.arguments.suggester.suggesters.*;
 import xyz.dashnetwork.celest.utils.connection.User;
 
@@ -20,7 +20,7 @@ public enum ArgumentType {
 
     CHAT_TYPE(new ChatTypeParser(), new ChatTypeSuggester()),
     INTEGER(new IntegerParser(), new IntegerSuggester()),
-    LONG(new LongParser(), INTEGER.suggester), // TODO: Long suggester with TimeType selectors
+    LONG(new LongParser(), new LongSuggester()),
     PLAYER(new PlayerParser(), new PlayerSuggester()),
     PLAYER_LIST(new PlayerListParser(), new PlayerListSuggester()),
     OFFLINE_USER(new OfflineUserParser(), new OfflineUserSuggester()),
@@ -29,10 +29,10 @@ public enum ArgumentType {
     STRING((user, string) -> string, (user, string) -> Collections.emptyList()),
     MESSAGE((user, string) -> string, (user, string) -> Collections.emptyList());
 
-    private final ArgumentParser parser;
-    private final ArugmentSuggester suggester;
+    private final Parser parser;
+    private final Suggester suggester;
 
-    ArgumentType(ArgumentParser parser, ArugmentSuggester suggester) {
+    ArgumentType(Parser parser, Suggester suggester) {
         this.parser = parser;
         this.suggester = suggester;
     }

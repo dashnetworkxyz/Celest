@@ -18,7 +18,7 @@ public interface NamedSource {
         public String getDisplayname() { return "&4&lServer&6 Velocity"; }
 
         @Override
-        public String getUsername() { return VersionUtils.getProxyName() + "&7\n" + VersionUtils.getProxyVersion(); }
+        public String getUsername() { return "Console"; }
     };
 
     static NamedSource of(CommandSource source) {

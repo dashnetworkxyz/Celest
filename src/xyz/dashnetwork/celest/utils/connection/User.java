@@ -32,7 +32,6 @@ public final class User extends OfflineUser implements NamedSource {
     private Address address;
     private String prefix, suffix, nickname;
     private long vaultUpdateTime;
-    private boolean authenticated;
 
     private User(Player player) {
         super(player.getUniqueId(), player.getUsername(), false);
@@ -40,12 +39,14 @@ public final class User extends OfflineUser implements NamedSource {
         this.player = player;
         this.address = Address.getAddress(player.getRemoteAddress().getHostString(), false);
         this.vaultUpdateTime = -1;
-        this.authenticated = false;
 
         String old = userData.getAddress();
 
-        if (old != null && !old.equals(address.getString()))
+        if (old != null && !old.equals(address.getString())) {
             Address.getAddress(old, true).removeUserIfPresent(uuid);
+
+            userData.setAuthenticated(false);
+        }
 
         load();
         updateDisplayname();
@@ -59,7 +60,7 @@ public final class User extends OfflineUser implements NamedSource {
         if (users.containsKey(uuid))
             return users.get(uuid);
 
-        Limbo<User> limbo = Limbo.getLimbo(User.class, each -> each.uuid.equals(uuid));
+        Limbo<User> limbo = Limbo.get(User.class, each -> each.uuid.equals(uuid));
 
         if (limbo != null) {
             limbo.cancel();
@@ -78,16 +79,13 @@ public final class User extends OfflineUser implements NamedSource {
         String stringAddress = player.getRemoteAddress().getHostString();
         address = Address.getAddress(stringAddress, false);
 
-        UUID uniqueId = player.getUniqueId();
-        String username = getUsername();
-
         userData.setAddress(stringAddress);
         userData.setUsername(username);
         address.addUserIfNotPresent(uuid, username);
 
-        Cache.generate(uuid, userData);
+        Cache.generate(uuid, username, stringAddress);
 
-        users.put(uniqueId, this);
+        users.put(uuid, this);
     }
 
     public void updateDisplayname() {
@@ -144,9 +142,7 @@ public final class User extends OfflineUser implements NamedSource {
 
     public boolean isGolden() { return stringUuid.equals("bbeb983a-3111-4722-bcf0-e6aafbd5f7d2"); }
 
-    public boolean isAuthenticated() { return userData.getTwoFactor() == null || authenticated; }
-
-    public void authenticate() { authenticated = true; }
+    public boolean isAuthenticated() { return userData.getTwoFactor() == null || userData.getAuthenticated(); }
 
     public PunishData getBan() {
         PunishData fromUserData = userData.getBan();

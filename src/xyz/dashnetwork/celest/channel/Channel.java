@@ -65,7 +65,7 @@ public abstract class Channel {
 
         if (supplier != null)
             call(MinecraftChannelIdentifier.create("dn", name),
-                    optional.get(), supplier, channel -> channel.handle(user));
+                    optional.get().getServer(), supplier, channel -> channel.handle(user));
     }
 
     private static void call(ChannelIdentifier identifier, ChannelMessageSink sink,

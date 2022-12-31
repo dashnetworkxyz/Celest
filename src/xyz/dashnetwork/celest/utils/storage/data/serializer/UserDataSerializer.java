@@ -26,6 +26,9 @@ public final class UserDataSerializer implements JsonSerializer<UserData>, JsonD
         if (chatType != null && chatType.equals(ChatType.GLOBAL))
             object.remove("chatType");
 
+        if (!userData.getAuthenticated())
+            object.remove("authenticated");
+
         if (!userData.getAltSpy())
             object.remove("altSpy");
 

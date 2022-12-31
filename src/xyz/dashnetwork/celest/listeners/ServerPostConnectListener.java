@@ -27,7 +27,7 @@ public final class ServerPostConnectListener {
         Channel.callOut("twofactor", user);
         Channel.callOut("displayname", user);
 
-        if (player.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19) > 0)
+        if (player.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19) >= 0)
             Injector.injectSessionHandler(player);
     }
 

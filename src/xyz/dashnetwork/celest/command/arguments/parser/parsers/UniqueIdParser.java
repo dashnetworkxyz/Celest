@@ -7,13 +7,13 @@
 
 package xyz.dashnetwork.celest.command.arguments.parser.parsers;
 
-import xyz.dashnetwork.celest.command.arguments.parser.ArgumentParser;
+import xyz.dashnetwork.celest.command.arguments.parser.Parser;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.UUID;
 
-public final class UniqueIdParser implements ArgumentParser {
+public final class UniqueIdParser implements Parser {
 
     @Override
     public Object parse(User user, String input) {

@@ -48,7 +48,7 @@ public final class Address implements Savable {
                 return address;
         }
 
-        Limbo<Address> limbo = Limbo.getLimbo(Address.class, each -> each.address.equals(name));
+        Limbo<Address> limbo = Limbo.get(Address.class, each -> each.address.equals(name));
 
         if (limbo != null) {
             if (shouldLimbo)

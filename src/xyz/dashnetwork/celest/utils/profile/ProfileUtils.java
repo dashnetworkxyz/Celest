@@ -40,7 +40,7 @@ public final class ProfileUtils {
         UserData userData = Storage.read(uuid.toString(), Storage.Directory.USER, UserData.class);
 
         if (userData != null)
-            Cache.generate(uuid, userData);
+            Cache.generate(uuid, userData.getUsername(), userData.getAddress());
 
         return profile;
     }
@@ -54,7 +54,7 @@ public final class ProfileUtils {
         UserData userData = Storage.read(uuid.toString(), Storage.Directory.USER, UserData.class);
 
         if (userData != null) {
-            Cache.generate(uuid, userData);
+            Cache.generate(uuid, userData.getUsername(), userData.getAddress());
 
             return new PlayerProfile(uuid, userData.getUsername());
         }

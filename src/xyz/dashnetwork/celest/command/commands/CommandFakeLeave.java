@@ -25,7 +25,7 @@ public final class CommandFakeLeave extends CelestCommand {
         super("fakeleave");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.STRING, ArgumentType.STRING);
+        addArguments(ArgumentType.STRING, ArgumentType.MESSAGE);
     }
 
     @Override
@@ -38,8 +38,8 @@ public final class CommandFakeLeave extends CelestCommand {
             return;
         }
 
-        String displayname = optional1.get();
-        String username = optional2.get();
+        String username = optional1.get();
+        String displayname = optional2.get();
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&c&l»&r ");
@@ -49,9 +49,9 @@ public final class CommandFakeLeave extends CelestCommand {
         MessageUtils.broadcast(each -> !each.isStaff(), builder::build);
 
         builder = new MessageBuilder();
-        builder.append("&c&l»&r ");
+        builder.append("&6&l»&r ");
         builder.append(displayname).hover(username);
-        builder.append("&c fake-left by ");
+        builder.append("&7 fake-left by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));
 
         MessageUtils.broadcast(User::isStaff, builder::build);

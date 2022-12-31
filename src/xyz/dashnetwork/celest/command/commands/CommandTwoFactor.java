@@ -60,6 +60,7 @@ public final class CommandTwoFactor extends CelestCommand {
         User user = CastUtils.toUser(source);
         assert user != null;
 
+        UUID uuid = user.getUuid();
         UserData data = user.getData();
         String twoFactor = data.getTwoFactor();
 
@@ -71,11 +72,11 @@ public final class CommandTwoFactor extends CelestCommand {
                 }
 
                 String generated = SecureUtils.generateSecret();
-                tempKeyMap.put(user.getUuid(), generated);
+                tempKeyMap.put(uuid, generated);
 
                 MessageBuilder builder = new MessageBuilder();
-                builder.append("&6&l»&7 Your generated key is &6");
-                builder.append(generated).hover("&7Click to copy &6" + generated).click(ClickEvent.suggestCommand(generated));
+                builder.append("&6&l»&7 Your generated key is ");
+                builder.append("&6" + generated).hover("&7Click to copy &6" + generated).click(ClickEvent.suggestCommand(generated));
                 builder.append("\n&6&l»&7 Do not share this key with anyone.");
                 builder.append("\n&6&l»&7 Type &6/" + label + " verify <totp>&7 to finish 2fa setup.");
 
@@ -101,7 +102,8 @@ public final class CommandTwoFactor extends CelestCommand {
                 MessageUtils.message(source, "&6&l»&7 Incorrect TOTP code.");
                 break;
             case "verify":
-                if (!tempKeyMap.containsKey(user.getUuid())) {
+            case "totp":
+                if (!tempKeyMap.containsKey(uuid)) {
                     MessageUtils.message(source, "&6&l»&7 Use &6/" + label + " setup&7 to setup 2fa.");
                     return;
                 }
@@ -111,10 +113,14 @@ public final class CommandTwoFactor extends CelestCommand {
                     return;
                 }
 
-                String secret = tempKeyMap.get(user.getUuid());
+                String secret = tempKeyMap.get(uuid);
 
                 if (optionalCode.get().equals(SecureUtils.getTOTP(secret))) {
+                    tempKeyMap.remove(uuid);
+
                     data.setTwoFactor(secret);
+                    data.setAuthenticated(true);
+
                     MessageUtils.message(source, "&6&l»&7 2fa has been successfully setup.");
                     return;
                 }

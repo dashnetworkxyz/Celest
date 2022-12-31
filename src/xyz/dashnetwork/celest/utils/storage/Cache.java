@@ -12,15 +12,15 @@ import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.storage.data.CacheData;
-import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class Cache {
 
-    private static final List<CacheData> cache = new ArrayList<>();
+    private static final List<CacheData> cache = new CopyOnWriteArrayList<>();
 
     public static List<CacheData> getCache() { return cache; }
 
@@ -45,11 +45,8 @@ public final class Cache {
             fromUuid(user.getUuid(), true);
     }
 
-    public static void generate(UUID uuid, UserData userData) {
-        String username = userData.getUsername();
-        String address = userData.getAddress();
-
-        cache.removeIf(data -> data.getUUID().equals(uuid) || data.getUsername().equalsIgnoreCase(username));
+    public static void generate(UUID uuid, String username, String address) {
+        cache.removeIf(each -> each.getUUID().equals(uuid) || each.getUsername().equalsIgnoreCase(username));
         cache.add(new CacheData(uuid, username, address));
     }
 

@@ -9,14 +9,14 @@ package xyz.dashnetwork.celest.command.arguments.suggester.suggesters;
 
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.command.arguments.suggester.ArugmentSuggester;
+import xyz.dashnetwork.celest.command.arguments.suggester.Suggester;
 import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ServerSuggester implements ArugmentSuggester {
+public final class ServerSuggester implements Suggester {
 
     @Override
     public List<String> suggest(User user, String input) {

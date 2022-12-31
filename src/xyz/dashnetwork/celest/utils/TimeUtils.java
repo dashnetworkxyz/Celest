@@ -10,16 +10,22 @@ package xyz.dashnetwork.celest.utils;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 public final class TimeUtils {
 
-    private static final SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy, hh:mm a z");
+    private static final SimpleDateFormat formatter;
+
+    static {
+        formatter = new SimpleDateFormat("MMM d, yyyy, hh:mm a z");
+        formatter.setTimeZone(TimeZone.getTimeZone("MST"));
+    }
 
     public static String longToDate(long time) { return formatter.format(time); }
 
-    public static boolean isRecent(long time, long compare) { return compare > System.currentTimeMillis() - time; }
-
     public static boolean isRecent(long time, TimeType compare) { return isRecent(time, compare.toMillis()); }
+
+    public static boolean isRecent(long time, long compare) { return compare > System.currentTimeMillis() - time; }
 
     public static long fromTimeArgument(@NotNull String string) {
         if (!string.matches("(\\d{1,18})([A-z]+)"))

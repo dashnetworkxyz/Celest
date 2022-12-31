@@ -1,0 +1,135 @@
+/*
+ * Copyright (C) 2022 Andrew Bell - All Rights Reserved
+ *
+ * Unauthorized copying or redistribution of this file in source and binary forms via any medium
+ * is strictly prohibited.
+ */
+
+package xyz.dashnetwork.celest.command.commands;
+
+import com.velocitypowered.api.command.CommandSource;
+import net.kyori.adventure.text.event.ClickEvent;
+import xyz.dashnetwork.celest.command.CelestCommand;
+import xyz.dashnetwork.celest.command.arguments.ArgumentType;
+import xyz.dashnetwork.celest.command.arguments.Arguments;
+import xyz.dashnetwork.celest.utils.CastUtils;
+import xyz.dashnetwork.celest.utils.PunishUtils;
+import xyz.dashnetwork.celest.utils.TimeUtils;
+import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
+import xyz.dashnetwork.celest.utils.connection.OfflineUser;
+import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
+import xyz.dashnetwork.celest.utils.storage.data.PunishData;
+import xyz.dashnetwork.celest.utils.storage.data.UserData;
+
+import java.util.Optional;
+import java.util.UUID;
+
+public final class CommandSeen extends CelestCommand {
+
+    public CommandSeen() {
+        super("seen");
+
+        addArguments(ArgumentType.OFFLINE_USER);
+    }
+
+    @Override
+    protected void execute(CommandSource source, String label, Arguments arguments) {
+        Optional<OfflineUser> optional = arguments.get(OfflineUser.class);
+
+        if (optional.isEmpty()) {
+            sendUsage(source, label);
+            return;
+        }
+
+        User user = CastUtils.toUser(source);
+
+        OfflineUser offline = optional.get();
+        UserData data = offline.getData();
+        MessageBuilder builder = new MessageBuilder();
+
+        builder.append("&6&l»&r ");
+        builder.append(new OfflineUserFormat(offline)).prefix("&6");
+
+        Long lastPlayed = data.getLastPlayed();
+        String uuid = offline.getUuid().toString();
+        String address = data.getAddress();
+        PunishData ban = data.getBan();
+        PunishData mute = data.getMute();
+
+        if (lastPlayed == null)
+            builder.append("&7 has never joined the server before.");
+        else if (offline instanceof User)
+            builder.append("&7 is &aonline");
+        else {
+            builder.append("&7 has been &coffline&7 since ");
+            builder.append("&6" + TimeUtils.longToDate(lastPlayed))
+                    .hover("&7Click to copy &6" + lastPlayed)
+                    .click(ClickEvent.suggestCommand(lastPlayed.toString()));
+        }
+
+        builder.append("\n&6&l»&7 UUID: ");
+        builder.append("&6" + uuid)
+                .hover("&7Click to copy &6" + uuid)
+                .click(ClickEvent.suggestCommand(uuid));
+
+        if ((user == null || user.showAddress()) && address != null) {
+            builder.append("\n&6&l»&7 Address: ");
+            builder.append("&6" + address)
+                    .hover("&7Click to copy &6" + address)
+                    .click(ClickEvent.suggestCommand(address));
+        }
+
+        if (PunishUtils.isValid(ban)) {
+            builder.append("\n&6&l»&7 Ban: ");
+
+            Long duration = ban.getExpiration();
+            TextSection section;
+            String date = duration == null ? null : TimeUtils.longToDate(duration);
+
+            if (duration == null)
+                section = builder.append("&6Permanent");
+            else
+                section = builder.append("&6Until " + date);
+
+            UUID judge = ban.getJudge();
+            String name = judge == null ? "Console" : ProfileUtils.fromUuid(judge).getUsername();
+
+            section.hover("&7Banned by &6" + name);
+
+            if (duration != null)
+                section.hover("\n&7Expires on &6" + date);
+
+            section.hover("\n\n&7For: &6" + ban.getReason());
+        }
+
+        if (PunishUtils.isValid(mute)) {
+            builder.append("\n&6&l»&7 Mute: ");
+
+            Long duration = mute.getExpiration();
+            TextSection section;
+            String date = duration == null ? null : TimeUtils.longToDate(duration);
+
+            if (duration == null)
+                section = builder.append("&6Permanent");
+            else
+                section = builder.append("&6Until " + date);
+
+            UUID judge = mute.getJudge();
+            String name = judge == null ? "Console" : ProfileUtils.fromUuid(judge).getUsername();
+
+            section.hover("&7Muted by &6" + name);
+
+            if (duration != null)
+                section.hover("\n&7Expires on &6" + date);
+
+            section.hover("\n\n&7For: &6" + mute.getReason());
+        }
+
+        MessageUtils.message(source, builder::build);
+    }
+
+}

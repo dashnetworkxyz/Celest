@@ -10,14 +10,14 @@ package xyz.dashnetwork.celest.command.arguments.parser.parsers;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.command.arguments.parser.ArgumentParser;
+import xyz.dashnetwork.celest.command.arguments.parser.Parser;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public final class PlayerParser implements ArgumentParser {
+public final class PlayerParser implements Parser {
 
     private static final ProxyServer server = Celest.getServer();
 
