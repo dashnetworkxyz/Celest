@@ -22,7 +22,7 @@ import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.Optional;
 
-public class CommandUnmute extends CelestCommand {
+public final class CommandUnmute extends CelestCommand {
 
     public CommandUnmute() {
         super("unmute");
