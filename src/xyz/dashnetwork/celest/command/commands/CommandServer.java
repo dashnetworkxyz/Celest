@@ -33,7 +33,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import java.util.List;
 import java.util.Optional;
 
-public class CommandServer extends CelestCommand {
+public final class CommandServer extends CelestCommand {
 
     public CommandServer() {
         super("server");
