@@ -17,8 +17,10 @@
 
 package xyz.dashnetwork.celest.utils.chat.builder;
 
+import com.velocitypowered.api.network.ProtocolVersion;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -87,7 +89,7 @@ public final class MessageBuilder {
     }
 
     private Component toComponent(User user, TextSection section) {
-        Component component = ComponentUtils.fromLegacyString(section.text);
+        Component component = ComponentUtils.fromString(section.text);
 
         if (!section.hovers.isEmpty() && user != null) {
             StringBuilder builder = new StringBuilder();
@@ -97,7 +99,7 @@ public final class MessageBuilder {
                     builder.append(hover.text);
 
             if (builder.length() > 0)
-                component = component.hoverEvent(HoverEvent.showText(ComponentUtils.fromLegacyString(builder.toString())));
+                component = component.hoverEvent(HoverEvent.showText(ComponentUtils.fromString(builder.toString())));
         }
 
         if (section.click != null && user != null)

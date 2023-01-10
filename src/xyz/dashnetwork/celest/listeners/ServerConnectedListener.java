@@ -32,8 +32,8 @@ public final class ServerConnectedListener {
         String name = server.getServerInfo().getName();
 
         player.sendPlayerListHeaderAndFooter(
-                ComponentUtils.fromLegacyString("&6&lDashNetwork&7\nYou are connected to &6" + name + "\n"),
-                ComponentUtils.fromLegacyString("&6\nplay.dashnetwork.xyz"));
+                ComponentUtils.fromString("&6&lDashNetwork&7\nYou are connected to &6" + name + "\n"),
+                ComponentUtils.fromString("&6\nplay.dashnetwork.xyz"));
     }
 
 }

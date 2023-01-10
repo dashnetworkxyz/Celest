@@ -36,7 +36,7 @@ public enum PermissionType {
     public Predicate<User> getPermission() { return permission; }
 
     public boolean hasPermission(CommandSource source) {
-        User user = CastUtils.toUser(source);
+        User user = User.getUser(source);
 
         if (user != null)
             return permission.test(user);

@@ -56,17 +56,17 @@ public final class CommandFakeOp extends CelestCommand {
 
         for (Player player : players) {
             builder = new MessageBuilder();
-            builder.append("&7&o[" + username + ": Opped " + player.getUsername());
+            builder.append("&7&o[" + username + ": Opped " + player.getUsername() + "]");
 
             MessageUtils.message(player, builder::build);
         }
 
-        if (ListUtils.containsOtherThan(players, source)) {
-            if (source instanceof Player)
-                players.remove(source);
+        if (source instanceof Player)
+            players.remove(source);
 
+        if (players.size() > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 Fake op sent to ");
+            builder.append("&6&l»&7 Fake-op sent to ");
             builder.append(new PlayerFormat(players));
 
             MessageUtils.message(source, builder::build);

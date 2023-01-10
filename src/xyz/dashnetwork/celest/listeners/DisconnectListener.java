@@ -31,11 +31,12 @@ public final class DisconnectListener {
 
     @Subscribe
     public void onDisconnect(DisconnectEvent event) {
+        Player player = event.getPlayer();
+        User user = User.getUser(player);
+
         if (LazyUtils.anyEquals(event.getLoginStatus(),
                 DisconnectEvent.LoginStatus.PRE_SERVER_JOIN,
                 DisconnectEvent.LoginStatus.SUCCESSFUL_LOGIN)) {
-            Player player = event.getPlayer();
-            User user = User.getUser(player);
             UserData data = user.getData();
             MessageBuilder builder = new MessageBuilder();
 
@@ -54,9 +55,9 @@ public final class DisconnectListener {
 
                 data.setLastPlayed(System.currentTimeMillis());
             }
-
-            user.remove();
         }
+
+        user.remove();
     }
 
 }

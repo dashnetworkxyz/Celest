@@ -24,7 +24,6 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.CastUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.function.Function;
@@ -36,7 +35,7 @@ public final class MessageUtils {
     private static final ConsoleCommandSource consoleCommandSource = server.getConsoleCommandSource();
 
     public static void message(@NotNull Audience audience, @NotNull String message) {
-        message(audience, ComponentUtils.fromLegacyString(message));
+        message(audience, ComponentUtils.fromString(message));
     }
 
     public static void message(@NotNull Audience audience, @NotNull Component component) {
@@ -44,10 +43,10 @@ public final class MessageUtils {
     }
 
     public static void message(@NotNull Audience audience, @NotNull Function<User, Component> function) {
-        message(audience, function.apply(CastUtils.toUser(audience)));
+        message(audience, function.apply(User.getUser(audience)));
     }
 
-    public static void broadcast(@NotNull String message) { broadcast(ComponentUtils.fromLegacyString(message)); }
+    public static void broadcast(@NotNull String message) { broadcast(ComponentUtils.fromString(message)); }
 
     public static void broadcast(@NotNull Component component) { server.sendMessage(component); }
 
@@ -72,7 +71,7 @@ public final class MessageUtils {
     }
 
     public static void broadcast(boolean console, @NotNull Component component) {
-        broadcast(console, user -> true, user -> component);
+        broadcast(console, user -> true, component);
     }
 
     public static void broadcast(boolean console, @NotNull Function<@Nullable User, Component> function) {
@@ -80,7 +79,7 @@ public final class MessageUtils {
     }
 
     public static void broadcast(boolean console, @NotNull Predicate<User> predicate, @NotNull String message) {
-        broadcast(console, predicate, ComponentUtils.fromLegacyString(message));
+        broadcast(console, predicate, ComponentUtils.fromString(message));
     }
 
     public static void broadcast(boolean console, @NotNull Predicate<User> predicate, @NotNull Component component) {

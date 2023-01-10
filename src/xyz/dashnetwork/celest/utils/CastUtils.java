@@ -17,16 +17,13 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.connection.User;
 
+@Deprecated
 public final class CastUtils {
 
     public static User toUser(Object object) {
-        if (object instanceof Player)
-            return User.getUser((Player) object);
-
-        return null;
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -19,6 +19,7 @@ package xyz.dashnetwork.celest.utils.connection;
 
 import xyz.dashnetwork.celest.utils.ArrayUtils;
 import xyz.dashnetwork.celest.utils.LazyUtils;
+import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.limbo.Savable;
@@ -73,15 +74,16 @@ public final class Address implements Savable {
     }
 
     public void removeUserIfPresent(UUID uuid) {
-        List<PlayerProfile> queue = new ArrayList<>();
+        List<PlayerProfile> list = new ArrayList<>();
         PlayerProfile[] profiles = addressData.getProfiles();
 
         for (PlayerProfile profile : profiles)
-            if (profile.getUuid().equals(uuid))
-                queue.add(profile);
+            if (!profile.getUuid().equals(uuid))
+                list.add(profile);
 
-        if (!queue.isEmpty())
-            addressData.setProfiles(ArrayUtils.removeAll(PlayerProfile[]::new, profiles, queue));
+        System.out.println("Remove: " + ListUtils.convertToString(list, PlayerProfile::getUsername, ", "));
+
+        addressData.setProfiles(list.toArray(PlayerProfile[]::new));
     }
 
     public void addUserIfNotPresent(UUID uuid, String username) {

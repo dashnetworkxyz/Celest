@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.channel.channels.input.ChannelBroadcast;
 import xyz.dashnetwork.celest.channel.channels.input.ChannelOnline;
+import xyz.dashnetwork.celest.channel.channels.input.ChannelSignSpy;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelDisplayName;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelTwoFactor;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelVanish;
@@ -107,6 +108,7 @@ public final class Celest {
         logger.info("Registering channels...");
         Channel.registerIn("broadcast", ChannelBroadcast::new);
         Channel.registerIn("online", ChannelOnline::new);
+        Channel.registerIn("signspy", ChannelSignSpy::new);
         Channel.registerOut("displayname", ChannelDisplayName::new);
         Channel.registerOut("twofactor", ChannelTwoFactor::new);
         Channel.registerOut("vanish", ChannelVanish::new);
@@ -143,6 +145,7 @@ public final class Celest {
         new CommandGlobalChat();
         new CommandGlobalList();
         new CommandHideAddress();
+        new CommandIpBan();
         new CommandKick();
         new CommandLocalChat();
         new CommandMattsArmorStands();

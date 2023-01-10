@@ -27,7 +27,7 @@ public final class PreLoginListener {
     @Subscribe
     public void onPreLogin(PreLoginEvent event) {
         if (VersionUtils.isLegacy(event.getConnection().getProtocolVersion())) {
-            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromLegacyString(
+            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
                     "&6&lDashNetwork" +
                             "\n&61.7&7 is no longer supported." +
                             "\nPlease update to &61.8 or newer."

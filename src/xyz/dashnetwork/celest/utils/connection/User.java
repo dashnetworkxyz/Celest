@@ -18,6 +18,8 @@
 package xyz.dashnetwork.celest.utils.connection;
 
 import com.velocitypowered.api.proxy.Player;
+import net.kyori.adventure.audience.Audience;
+import org.jetbrains.annotations.Nullable;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.NamedSource;
@@ -63,6 +65,13 @@ public final class User extends OfflineUser implements NamedSource {
     }
 
     public static Collection<User> getUsers() { return users.values(); }
+
+    public static @Nullable User getUser(Audience audience) {
+        if (audience instanceof Player)
+            return getUser((Player) audience);
+
+        return null;
+    }
 
     public static User getUser(Player player) {
         UUID uuid = player.getUniqueId();

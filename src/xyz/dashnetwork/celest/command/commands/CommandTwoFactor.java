@@ -22,8 +22,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.CastUtils;
-import xyz.dashnetwork.celest.utils.SecureUtils;
+import xyz.dashnetwork.celest.utils.SecretUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -67,7 +66,7 @@ public final class CommandTwoFactor extends CelestCommand {
             return;
         }
 
-        User user = CastUtils.toUser(source);
+        User user = User.getUser(source);
         assert user != null;
 
         UUID uuid = user.getUuid();
@@ -81,7 +80,7 @@ public final class CommandTwoFactor extends CelestCommand {
                     return;
                 }
 
-                String generated = SecureUtils.generateSecret();
+                String generated = SecretUtils.generateSecret();
                 tempKeyMap.put(uuid, generated);
 
                 MessageBuilder builder = new MessageBuilder();
@@ -103,7 +102,7 @@ public final class CommandTwoFactor extends CelestCommand {
                     return;
                 }
 
-                if (optionalCode.get().equals(SecureUtils.getTOTP(twoFactor))) {
+                if (optionalCode.get().equals(SecretUtils.getTOTP(twoFactor))) {
                     data.setTwoFactor(null);
                     MessageUtils.message(source, "&6&l»&7 You have disabled 2fa.");
                     return;
@@ -125,7 +124,7 @@ public final class CommandTwoFactor extends CelestCommand {
 
                 String secret = tempKeyMap.get(uuid);
 
-                if (optionalCode.get().equals(SecureUtils.getTOTP(secret))) {
+                if (optionalCode.get().equals(SecretUtils.getTOTP(secret))) {
                     tempKeyMap.remove(uuid);
 
                     data.setTwoFactor(secret);

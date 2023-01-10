@@ -20,13 +20,14 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.proxy.messages.ChannelMessageSink;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.channel.Channel;
 
 public final class PluginMessageListener {
 
     @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
-        if (event.getSource() instanceof ChannelMessageSink) {
+        if (event.getSource() instanceof RegisteredServer) {
             ChannelMessageSink sink = (ChannelMessageSink) event.getSource();
             boolean handled = Channel.callIn(event.getIdentifier(), sink, event.dataAsDataStream());
 

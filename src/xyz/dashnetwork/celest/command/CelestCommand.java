@@ -27,7 +27,6 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentSection;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ArgumentUtils;
-import xyz.dashnetwork.celest.utils.CastUtils;
 import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
@@ -100,7 +99,7 @@ public abstract class CelestCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        User user = CastUtils.toUser(invocation.source());
+        User user = User.getUser(invocation.source());
 
         if (user != null)
             return predicate.test(user);
@@ -110,7 +109,7 @@ public abstract class CelestCommand implements SimpleCommand {
 
     @Override
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
-        User user = CastUtils.toUser(invocation.source());
+        User user = User.getUser(invocation.source());
 
         if (user == null)
             return CompletableFuture.completedFuture(Collections.emptyList());

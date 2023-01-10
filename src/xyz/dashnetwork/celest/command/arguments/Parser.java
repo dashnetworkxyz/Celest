@@ -15,14 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.command.arguments.suggester;
+package xyz.dashnetwork.celest.command.arguments;
 
 import xyz.dashnetwork.celest.utils.connection.User;
 
-import java.util.List;
+public interface Parser {
 
-public interface Suggester {
-
-    List<String> suggest(User user, String input);
+    Object parse(User user, String input);
 
 }

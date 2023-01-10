@@ -17,6 +17,7 @@
 
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
+import com.velocitypowered.api.proxy.ServerConnection;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
@@ -26,6 +27,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public final class NamedSourceFormat implements Format {
 
@@ -50,8 +52,12 @@ public final class NamedSourceFormat implements Format {
         if (source instanceof User) {
             User user = (User) source;
 
-            section.hover("\n&7Address: &6" + user.getAddress().getString(), User::showAddress)
-                    .click(ClickEvent.suggestCommand(user.getUuid().toString()));
+            section.hover("\n&7Address: &6" + user.getAddress().getString(), User::showAddress);
+            section.click(ClickEvent.suggestCommand(user.getUuid().toString()));
+
+            user.getPlayer().getCurrentServer().ifPresent(
+                    server -> section.hover("\n&7Server: &6" + server.getServerInfo().getName())
+            );
         }
 
         sections.add(section);

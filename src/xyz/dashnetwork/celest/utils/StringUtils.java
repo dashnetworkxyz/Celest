@@ -53,4 +53,8 @@ public final class StringUtils {
         return string.matches("^(?:(https?)://)?([-\\w_.]{2,}\\.[a-z]{2,4})(/\\S*)?$");
     }
 
+    public static boolean matchesIp(@NotNull String string) {
+        return string.matches("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+    }
+
 }

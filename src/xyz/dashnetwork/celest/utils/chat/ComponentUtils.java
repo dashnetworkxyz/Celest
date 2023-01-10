@@ -27,11 +27,11 @@ public final class ComponentUtils {
     private static final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacySection();
     private static final GsonComponentSerializer gson = GsonComponentSerializer.gson();
 
-    public static Component fromLegacyString(@NotNull String string) {
+    public static Component fromString(@NotNull String string) {
          return legacy.deserialize(ColorUtils.fromAmpersand(string));
     }
 
-    public static String toLegacyString(@NotNull Component component) { return legacy.serialize(component); }
+    public static String toString(@NotNull Component component) { return legacy.serialize(component); }
 
     public static Component fromJson(@NotNull String json) { return gson.deserialize(json); }
 

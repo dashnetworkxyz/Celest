@@ -53,14 +53,14 @@ public final class CommandFakeLeave extends CelestCommand {
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&c&l»&r ");
-        builder.append(displayname).hover(username);
+        builder.append(displayname).hover("&6" + username);
         builder.append("&c left.");
 
         MessageUtils.broadcast(each -> !each.isStaff(), builder::build);
 
         builder = new MessageBuilder();
         builder.append("&6&l»&r ");
-        builder.append(displayname).hover(username);
+        builder.append(displayname).hover("&6" + username);
         builder.append("&7 fake-left by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));
 

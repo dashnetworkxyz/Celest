@@ -63,7 +63,7 @@ public final class ProxyPingListener {
             if (!user.getData().getVanish())
                 online++;
 
-        Component description = ComponentUtils.fromLegacyString(ConfigurationList.MOTD_DESCRIPTION);
+        Component description = ComponentUtils.fromString(ConfigurationList.MOTD_DESCRIPTION);
         String software = ConfigurationList.MOTD_SOFTWARE;
 
         builder.clearMods().clearSamplePlayers();

@@ -27,7 +27,7 @@ import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
 import xyz.dashnetwork.celest.utils.PunishUtils;
-import xyz.dashnetwork.celest.utils.SecureUtils;
+import xyz.dashnetwork.celest.utils.SecretUtils;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
@@ -56,7 +56,7 @@ public final class PlayerChatListener {
         String message = event.getMessage();
 
         if (!user.isAuthenticated()) {
-            if (message.equals(SecureUtils.getTOTP(userData.getTwoFactor()))) {
+            if (message.equals(SecretUtils.getTOTP(userData.getTwoFactor()))) {
                 user.getData().setAuthenticated(true);
 
                 Channel.callOut("twofactor", user);

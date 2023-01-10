@@ -23,7 +23,7 @@ import org.apache.commons.codec.binary.Hex;
 
 import java.security.SecureRandom;
 
-public final class SecureUtils {
+public final class SecretUtils {
 
     private static final Base32 base32 = new Base32();
 

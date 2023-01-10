@@ -15,21 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.command.arguments.parser.parsers;
+package xyz.dashnetwork.celest.command.arguments;
 
-import xyz.dashnetwork.celest.command.arguments.parser.Parser;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-public final class ChatTypeParser implements Parser {
+import java.util.List;
 
-    @Override
-    public Object parse(User user, String input) {
-        for (ChatType type : ChatType.values())
-            if (type.hasPermission(user) && type.name().equalsIgnoreCase(input))
-                return type;
+public interface Suggester {
 
-        return null;
-    }
+    List<String> suggest(User user, String input);
 
 }

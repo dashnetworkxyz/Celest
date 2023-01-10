@@ -17,10 +17,8 @@
 
 package xyz.dashnetwork.celest.command.arguments;
 
-import xyz.dashnetwork.celest.command.arguments.parser.Parser;
-import xyz.dashnetwork.celest.command.arguments.parser.parsers.*;
-import xyz.dashnetwork.celest.command.arguments.suggester.Suggester;
-import xyz.dashnetwork.celest.command.arguments.suggester.suggesters.*;
+import xyz.dashnetwork.celest.command.arguments.parsers.*;
+import xyz.dashnetwork.celest.command.arguments.suggesters.*;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.Collections;
@@ -28,12 +26,13 @@ import java.util.List;
 
 public enum ArgumentType {
 
+    ADDRESS(new AddressParser(), new AddressSuggester()),
     CHAT_TYPE(new ChatTypeParser(), new ChatTypeSuggester()),
     INTEGER(new IntegerParser(), new IntegerSuggester()),
     LONG(new LongParser(), new LongSuggester()),
+    OFFLINE_USER(new OfflineUserParser(), new OfflineUserSuggester()),
     PLAYER(new PlayerParser(), new PlayerSuggester()),
     PLAYER_LIST(new PlayerListParser(), new PlayerListSuggester()),
-    OFFLINE_USER(new OfflineUserParser(), new OfflineUserSuggester()),
     SERVER(new ServerParser(), new ServerSuggester()),
     UNIQUE_ID(new UniqueIdParser(), (user, string) -> Collections.emptyList()),
     STRING((user, string) -> string, (user, string) -> Collections.emptyList()),

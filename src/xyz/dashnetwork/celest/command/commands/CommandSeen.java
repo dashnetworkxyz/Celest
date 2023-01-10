@@ -22,7 +22,6 @@ import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.CastUtils;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
@@ -55,7 +54,7 @@ public final class CommandSeen extends CelestCommand {
             return;
         }
 
-        User user = CastUtils.toUser(source);
+        User user = User.getUser(source);
 
         OfflineUser offline = optional.get();
         UserData data = offline.getData();

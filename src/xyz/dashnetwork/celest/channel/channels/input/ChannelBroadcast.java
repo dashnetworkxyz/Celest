@@ -31,13 +31,14 @@ public final class ChannelBroadcast extends Channel {
     @Override
     public void handle(ByteArrayDataInput input) {
         boolean json = input.readBoolean();
+        boolean console = input.readBoolean();
         Predicate<User> permission = PermissionType.valueOf(input.readUTF()).getPermission();
         String string = input.readUTF();
 
         if (json)
-            MessageUtils.broadcast(permission, ComponentUtils.fromJson(string));
+            MessageUtils.broadcast(console, permission, ComponentUtils.fromJson(string));
         else
-            MessageUtils.broadcast(permission, string);
+            MessageUtils.broadcast(console, permission, string);
     }
 
 }

@@ -59,10 +59,7 @@ public final class LoginListener {
             builder.append("\n\n" + ban.getReason());
 
             event.setResult(ResultedEvent.ComponentResult.denied(builder.build(user)));
-            user.remove();
         }
-
-        // TODO: RealJoin. Will need injection.
     }
 
 }

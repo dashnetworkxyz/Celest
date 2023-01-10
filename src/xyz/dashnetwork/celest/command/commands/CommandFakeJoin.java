@@ -53,14 +53,14 @@ public final class CommandFakeJoin extends CelestCommand {
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&a&l»&r ");
-        builder.append(displayname).hover(username);
+        builder.append(displayname).hover("&6" + username);
         builder.append("&a joined.");
 
         MessageUtils.broadcast(each -> !each.isStaff(), builder::build);
 
         builder = new MessageBuilder();
         builder.append("&6&l»&r ");
-        builder.append(displayname).hover(username);
+        builder.append(displayname).hover("&6" + username);
         builder.append("&7 fake-joined by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));
 

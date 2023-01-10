@@ -19,6 +19,7 @@ package xyz.dashnetwork.celest.inject;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.util.GameProfile;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.backend.handler.CelestClientPlaySessionHandler;
@@ -45,7 +46,7 @@ public final class Injector {
             ReflectedServerChannelInitializerHolder holder = connectionManager.getServerChannelInitializer();
 
             holder.set(new CelestServerChannelInitializer(holder.get()));
-        } catch (ReflectiveOperationException | RuntimeException exception) {
+        } catch (ReflectiveOperationException exception) {
             logger.error("Failed to inject server channel initializer.", exception);
         }
     }
@@ -69,7 +70,7 @@ public final class Injector {
                 }
             });
             connected.setPlayerKey(null);
-        } catch (ReflectiveOperationException | RuntimeException exception) {
+        } catch (ReflectiveOperationException exception) {
             logger.error("Failed to inject play session handler.", exception);
         }
     }

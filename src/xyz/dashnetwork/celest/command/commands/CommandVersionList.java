@@ -21,7 +21,6 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.network.ProtocolVersion;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.CastUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.VersionUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
@@ -41,7 +40,7 @@ public final class CommandVersionList extends CelestCommand {
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
         Map<ProtocolVersion, List<NamedSource>> map = new TreeMap<>(ProtocolVersion::compareTo);
-        User user = CastUtils.toUser(source);
+        User user = User.getUser(source);
 
         for (User each : User.getUsers()) {
             if (user == null || user.canSee(each)) {

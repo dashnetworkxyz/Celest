@@ -21,14 +21,14 @@ import com.velocitypowered.api.scheduler.ScheduledTask;
 import com.velocitypowered.api.scheduler.Scheduler;
 import xyz.dashnetwork.celest.Celest;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 public final class Limbo<T> implements Runnable {
 
-    private static final List<Limbo<?>> limbos = new ArrayList<>();
+    private static final List<Limbo<?>> limbos = new CopyOnWriteArrayList<>();
     private static final Celest celest = Celest.getInstance();
     private static final Scheduler scheduler = Celest.getServer().getScheduler();
     private final T object;

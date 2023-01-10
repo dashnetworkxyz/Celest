@@ -45,14 +45,14 @@ public final class CommandMute extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<OfflineUser> optionalOffline = arguments.get(OfflineUser.class);
+        Optional<OfflineUser> optional = arguments.get(OfflineUser.class);
 
-        if (optionalOffline.isEmpty()) {
+        if (optional.isEmpty()) {
             sendUsage(source, label);
             return;
         }
 
-        OfflineUser offline = optionalOffline.get();
+        OfflineUser offline = optional.get();
         String reason = arguments.get(String.class).orElse("No reason provided.");
         UUID uuid = null;
 
