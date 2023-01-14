@@ -20,7 +20,10 @@ package xyz.dashnetwork.celest.command.arguments;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.utils.*;
+import xyz.dashnetwork.celest.utils.ArgumentUtils;
+import xyz.dashnetwork.celest.utils.LazyUtils;
+import xyz.dashnetwork.celest.utils.MathUtils;
+import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.connection.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 

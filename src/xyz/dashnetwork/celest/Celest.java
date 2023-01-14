@@ -146,6 +146,7 @@ public final class Celest {
         new CommandGlobalList();
         new CommandHideAddress();
         new CommandIpBan();
+        new CommandIpMute();
         new CommandKick();
         new CommandLocalChat();
         new CommandMattsArmorStands();
@@ -159,7 +160,10 @@ public final class Celest {
         new CommandSeen();
         new CommandServer();
         new CommandStaffChat();
+        new CommandSudo();
         new CommandTempBan();
+        new CommandTempIpBan();
+        new CommandTempIpMute();
         new CommandTempMute();
         new CommandTest();
         new CommandTheFurpySong();

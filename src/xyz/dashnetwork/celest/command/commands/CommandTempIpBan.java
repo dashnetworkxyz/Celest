@@ -3,14 +3,14 @@
  * Copyright (C) 2023  DashNetwork
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
-
+ * it under the terms of the GNU General Public License version 2 as published by
+ * the Free Software Foundation.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -27,36 +27,35 @@ import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
-import xyz.dashnetwork.celest.utils.connection.OfflineUser;
+import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public final class CommandTempMute extends CelestCommand {
+public final class CommandTempIpBan extends CelestCommand {
 
-    public CommandTempMute() {
-        super("tempmute", "mutetemp");
+    public CommandTempIpBan() {
+        super("tempipban", "tempbanip");
 
         setPermission(User::isAdmin, true);
-        addArguments(ArgumentType.OFFLINE_USER, ArgumentType.LONG);
+        addArguments(ArgumentType.ADDRESS, ArgumentType.LONG);
         addArguments(ArgumentType.MESSAGE);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<OfflineUser> optionalOffline = arguments.get(OfflineUser.class);
+        Optional<Address> optionalAddress = arguments.get(Address.class);
         Optional<Long> optionalLong = arguments.get(Long.class);
 
-        if (optionalOffline.isEmpty() || optionalLong.isEmpty()) {
+        if (optionalAddress.isEmpty() || optionalLong.isEmpty()) {
             sendUsage(source, label);
             return;
         }
 
-        OfflineUser offline = optionalOffline.get();
-        long duration = System.currentTimeMillis() + optionalLong.get();
+        Address address = optionalAddress.get();
+        long duration = optionalLong.get();
         String date = TimeUtils.longToDate(duration);
         String reason = arguments.get(String.class).orElse("No reason provided.");
         UUID uuid = null;
@@ -64,26 +63,27 @@ public final class CommandTempMute extends CelestCommand {
         if (source instanceof Player)
             uuid = ((Player) source).getUniqueId();
 
-        offline.getData().setMute(new PunishData(uuid, reason, duration));
+        address.getData().setBan(new PunishData(uuid, reason, duration));
 
         NamedSource named = NamedSource.of(source);
         String username = named.getUsername();
         MessageBuilder builder;
 
-        if (offline instanceof User) {
-            builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have been temporarily muted. Hover for more info.")
-                    .hover("&7You were muted by &6" + username
-                            + "\n&7Your mute will expire on &6" + date
-                            + "\n\n" + reason);
+        for (User user : User.getUsers()) {
+            if (user.getAddress().equals(address)) {
+                builder = new MessageBuilder();
+                builder.append("&6&lDashNetwork");
+                builder.append("\n&7You have been temporarily banned");
+                builder.append("\n&7You were banned by &6" + username);
+                builder.append("\n&7Your ban will expire on &6" + date);
+                builder.append("\n\n" + reason);
 
-            MessageUtils.message(((User) offline).getPlayer(), builder::build);
+                user.getPlayer().disconnect(builder.build(null));
+            }
         }
 
         builder = new MessageBuilder();
-        builder.append("&6&l»&r ");
-        builder.append(new PlayerProfileFormat(offline)).prefix("&6");
-        builder.append("&7 temporarily muted by ");
+        builder.append("&6&l»&6 " + address.getString() + "&7 temporarily banned by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("\n&6&l»&7 Hover here for details.")
                 .hover("&7Judge: &6" + username

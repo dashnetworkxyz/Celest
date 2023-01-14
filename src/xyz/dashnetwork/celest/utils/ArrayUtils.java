@@ -20,10 +20,8 @@ package xyz.dashnetwork.celest.utils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.IntFunction;
 
 public final class ArrayUtils {
 

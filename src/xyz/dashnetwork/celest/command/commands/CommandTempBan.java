@@ -41,7 +41,8 @@ public final class CommandTempBan extends CelestCommand {
         super("tempban", "bantemp");
 
         setPermission(User::isAdmin, true);
-        addArguments(ArgumentType.OFFLINE_USER, ArgumentType.LONG, ArgumentType.MESSAGE);
+        addArguments(ArgumentType.OFFLINE_USER, ArgumentType.LONG);
+        addArguments(ArgumentType.MESSAGE);
     }
 
     @Override
@@ -67,13 +68,14 @@ public final class CommandTempBan extends CelestCommand {
         offline.getData().setBan(new PunishData(uuid, reason, duration));
 
         NamedSource named = NamedSource.of(source);
+        String username = named.getUsername();
         MessageBuilder builder;
 
         if (offline instanceof User) {
             builder = new MessageBuilder();
             builder.append("&6&lDashNetwork");
             builder.append("\n&7You have been temporarily banned");
-            builder.append("\n&7You were banned by &6" + named.getUsername());
+            builder.append("\n&7You were banned by &6" + username);
             builder.append("\n&7Your ban will expire on &6" + date);
             builder.append("\n\n" + reason);
 
@@ -86,9 +88,9 @@ public final class CommandTempBan extends CelestCommand {
         builder.append("&7 temporarily banned by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("\n&6&l»&7 Hover here for details.")
-                .hover("&7Judge: &6" + named.getUsername())
-                .hover("\n&7Expiration: &6" + date)
-                .hover("\n&7Reason: &6" + reason);
+                .hover("&7Judge: &6" + username
+                        + "\n&7Expiration: &6" + date
+                        + "\n&7Reason: &6" + reason);
 
         MessageUtils.broadcast(User::isStaff, builder::build);
     }

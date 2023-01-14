@@ -17,10 +17,8 @@
 
 package xyz.dashnetwork.celest.utils.chat.builder;
 
-import com.velocitypowered.api.network.ProtocolVersion;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -19,6 +19,8 @@ package xyz.dashnetwork.celest.utils.connection;
 
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
@@ -36,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public final class User extends OfflineUser implements NamedSource {
+public final class User extends OfflineUser implements NamedSource, Audience {
 
     private static final Map<UUID, User> users = new HashMap<>();
     private static final Vault vault = Celest.getVault();
@@ -187,5 +189,8 @@ public final class User extends OfflineUser implements NamedSource {
 
         return prefix + nickname + suffix;
     }
+
+    @Override
+    public void sendMessage(@NotNull Component component) { player.sendMessage(component); }
 
 }

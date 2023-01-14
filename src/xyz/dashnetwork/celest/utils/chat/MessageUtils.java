@@ -89,7 +89,7 @@ public final class MessageUtils {
     public static void broadcast(boolean console, @NotNull Predicate<User> predicate, @NotNull Function<@Nullable User, Component> function) {
         for (User user : User.getUsers())
             if (predicate.test(user))
-                message(user.getPlayer(), function.apply(user));
+                message(user, function.apply(user));
 
         if (console)
             message(consoleCommandSource, function.apply(null));

@@ -19,7 +19,6 @@ package xyz.dashnetwork.celest.inject;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
-import com.velocitypowered.api.util.GameProfile;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.backend.handler.CelestClientPlaySessionHandler;

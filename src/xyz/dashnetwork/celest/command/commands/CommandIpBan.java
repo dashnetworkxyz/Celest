@@ -62,6 +62,7 @@ public final class CommandIpBan extends CelestCommand {
         address.getData().setBan(new PunishData(uuid, reason, null));
 
         NamedSource named = NamedSource.of(source);
+        String username = named.getUsername();
         MessageBuilder builder;
 
         for (User user : User.getUsers()) {
@@ -69,7 +70,7 @@ public final class CommandIpBan extends CelestCommand {
                 builder = new MessageBuilder();
                 builder.append("&6&lDashNetwork");
                 builder.append("\n&7You have been permanently banned");
-                builder.append("\n&7You were banned by &6" + named.getUsername());
+                builder.append("\n&7You were banned by &6" + username);
                 builder.append("\n\n" + reason);
 
                 user.getPlayer().disconnect(builder.build(null));
@@ -80,8 +81,8 @@ public final class CommandIpBan extends CelestCommand {
         builder.append("&6&l»&7 " + address.getString() + " permanently banned by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("\n&6&l»&7 Hover for details.")
-                .hover("&7Judge: &6" + named.getUsername())
-                .hover("\n&7Reason: &6" + reason);
+                .hover("&7Judge: &6" + username
+                        + "\n&7Reason: &6" + reason);
 
         MessageUtils.broadcast(User::isStaff, builder::build);
     }

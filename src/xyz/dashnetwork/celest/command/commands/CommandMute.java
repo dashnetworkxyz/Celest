@@ -40,7 +40,8 @@ public final class CommandMute extends CelestCommand {
         super("mute");
 
         setPermission(User::isAdmin, true);
-        addArguments(ArgumentType.OFFLINE_USER, ArgumentType.MESSAGE);
+        addArguments(ArgumentType.OFFLINE_USER);
+        addArguments(ArgumentType.MESSAGE);
     }
 
     @Override
@@ -62,15 +63,26 @@ public final class CommandMute extends CelestCommand {
         offline.getData().setMute(new PunishData(uuid, reason, null));
 
         NamedSource named = NamedSource.of(source);
+        String username = named.getUsername();
+        MessageBuilder builder;
 
-        MessageBuilder builder = new MessageBuilder();
+        if (offline instanceof User) {
+            builder = new MessageBuilder();
+            builder.append("&6&l»&7 You have been permanently muted. Hover for more info.")
+                    .hover("&7You were muted by &6" + username
+                            + "\n\n" + reason);
+
+            MessageUtils.message(((User) offline).getPlayer(), builder::build);
+        }
+
+        builder = new MessageBuilder();
         builder.append("&6&l»&r ");
         builder.append(new PlayerProfileFormat(offline)).prefix("&6");
         builder.append("&7 permanently muted by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("\n&6&l»&7 Hover here for details.")
-                .hover("&7Judge: &6" + named.getUsername())
-                .hover("\n&7Reason: &6" + reason);
+                .hover("&7Judge: &6" + username
+                        + "\n&7Reason: &6" + reason);
 
         MessageUtils.broadcast(User::isStaff, builder::build);
     }
