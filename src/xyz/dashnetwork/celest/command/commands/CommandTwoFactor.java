@@ -104,6 +104,8 @@ public final class CommandTwoFactor extends CelestCommand {
 
                 if (optionalCode.get().equals(SecretUtils.getTOTP(twoFactor))) {
                     data.setTwoFactor(null);
+                    data.setAuthenticated(false);
+
                     MessageUtils.message(source, "&6&l»&7 You have disabled 2fa.");
                     return;
                 }

@@ -62,9 +62,10 @@ public final class PlayerChatListener {
                 Channel.callOut("twofactor", user);
 
                 MessageUtils.message(player, "&6&l»&7 You have been successfully authenticated.");
-            } else
-                MessageUtils.message(player, "&6&l»&7 Invalid TOTP code.");
+                return;
+            }
 
+            MessageUtils.message(player, "&6&l»&7 Invalid TOTP code.");
             return;
         }
 

@@ -38,14 +38,19 @@ public class OfflineUser extends PlayerProfile implements Savable {
         super(uuid, username);
 
         stringUuid = uuid.toString();
+        userData = null;
 
-        Limbo<OfflineUser> limbo = Limbo.get(OfflineUser.class, each -> each.getUuid().equals(uuid));
+        if (!shouldLimbo) {
+            Limbo<OfflineUser> limbo = Limbo.get(OfflineUser.class, each -> each.getUuid().equals(uuid));
 
-        if (limbo != null) {
-            limbo.cancel();
+            if (limbo != null) {
+                limbo.cancel();
 
-            userData = limbo.getObject().getData();
-        } else
+                userData = limbo.getObject().getData();
+            }
+        }
+
+        if (userData == null)
             userData = Storage.read(stringUuid, Storage.Directory.USER, UserData.class);
 
         if (userData == null) {
