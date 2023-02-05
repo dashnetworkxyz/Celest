@@ -38,7 +38,7 @@ import xyz.dashnetwork.celest.channel.channels.output.ChannelVanish;
 import xyz.dashnetwork.celest.command.commands.*;
 import xyz.dashnetwork.celest.inject.Injector;
 import xyz.dashnetwork.celest.listeners.*;
-import xyz.dashnetwork.celest.tasks.ClearTask;
+import xyz.dashnetwork.celest.tasks.CacheTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
 import xyz.dashnetwork.celest.utils.storage.Cache;
@@ -55,7 +55,7 @@ import java.util.concurrent.TimeUnit;
 public final class Celest {
 
     private static final Gson gson = new Gson();
-    private static final ClearTask clearTask = new ClearTask();
+    private static final CacheTask cacheTask = new CacheTask();
     private static final SaveTask saveTask = new SaveTask();
     private static Celest instance;
     private static ProxyServer server;
@@ -176,10 +176,10 @@ public final class Celest {
 
         logger.info("Registering tasks...");
         Scheduler scheduler = server.getScheduler();
-        scheduler.buildTask(this, clearTask).repeat(1, TimeUnit.HOURS).schedule();
+        scheduler.buildTask(this, cacheTask).repeat(1, TimeUnit.HOURS).schedule();
         scheduler.buildTask(this, saveTask).repeat(1, TimeUnit.MINUTES).schedule();
 
-        clearTask.run();
+        cacheTask.run();
         logger.info("Startup complete. (took " + (System.currentTimeMillis() - start) + "ms)");
     }
 

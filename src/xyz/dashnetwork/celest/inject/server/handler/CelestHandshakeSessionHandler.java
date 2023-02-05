@@ -17,9 +17,7 @@
 
 package xyz.dashnetwork.celest.inject.server.handler;
 
-import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.network.ProtocolVersion;
-import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
 import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedHandshakeSessionHandler;
 import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedInitialInboundConnection;
@@ -31,7 +29,6 @@ import java.util.Arrays;
 
 public final class CelestHandshakeSessionHandler implements InvocationHandler {
 
-    private static final EventManager eventManager = Celest.getServer().getEventManager();
     private final ReflectedHandshakeSessionHandler handler;
     private final ReflectedMinecraftConnection connection;
 
@@ -73,8 +70,9 @@ public final class CelestHandshakeSessionHandler implements InvocationHandler {
             }
 
             return true;
-        } else
-            return handler.passOriginalMethod(method, args);
+        }
+
+        return handler.passOriginalMethod(method, args);
     }
 
 }

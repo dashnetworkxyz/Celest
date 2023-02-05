@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public final class TextSection {
+public final class TextSection implements Cloneable {
 
     public static final class Hover {
 
@@ -51,25 +51,25 @@ public final class TextSection {
     }
 
     String text;
+    String insertion;
     List<Hover> hovers;
     ClickEvent click;
     Predicate<User> predicate;
 
-    public TextSection(String text, List<Hover> hovers, ClickEvent click, Predicate<User> predicate) {
+    public TextSection(String text, String insertion, List<Hover> hovers, ClickEvent click, Predicate<User> predicate) {
         this.text = text;
+        this.insertion = insertion;
         this.hovers = hovers;
         this.click = click;
         this.predicate = predicate;
     }
 
     public TextSection(String text, String hover, Predicate<User> predicate) {
-        this(text, new ArrayList<>(), null, predicate);
+        this(text, null, new ArrayList<>(), null, predicate);
 
         if (hover != null)
             hover(hover);
     }
-
-    TextSection copy() { return new TextSection(text, new ArrayList<>(hovers), click, predicate); }
 
     public TextSection hover(String hover) { return hover(hover, null); }
 
@@ -89,9 +89,23 @@ public final class TextSection {
         return this;
     }
 
+    public TextSection insertion(String insertion) {
+        this.insertion = insertion;
+        return this;
+    }
+
     public TextSection onlyIf(Predicate<User> predicate) {
         this.predicate = predicate;
         return this;
+    }
+
+    @Override
+    public TextSection clone() {
+        try {
+            return (TextSection) super.clone();
+        } catch (CloneNotSupportedException exception) {
+            throw new RuntimeException();
+        }
     }
 
 }

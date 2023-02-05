@@ -63,7 +63,7 @@ public final class MessageBuilder {
                         components.add(toComponent(user, last));
                 }
 
-                last = section.copy();
+                last = section.clone();
             }
         }
 
@@ -89,7 +89,13 @@ public final class MessageBuilder {
     private Component toComponent(User user, TextSection section) {
         Component component = ComponentUtils.fromString(section.text);
 
-        if (!section.hovers.isEmpty() && user != null) {
+        if (user == null)
+            return component;
+
+        if (section.insertion != null)
+            component = component.insertion(section.insertion);
+
+        if (!section.hovers.isEmpty()) {
             StringBuilder builder = new StringBuilder();
 
             for (TextSection.Hover hover : section.hovers)
@@ -100,7 +106,7 @@ public final class MessageBuilder {
                 component = component.hoverEvent(HoverEvent.showText(ComponentUtils.fromString(builder.toString())));
         }
 
-        if (section.click != null && user != null)
+        if (section.click != null)
             component = component.clickEvent(section.click);
 
         return component;

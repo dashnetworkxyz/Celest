@@ -19,7 +19,7 @@ package xyz.dashnetwork.celest.tasks;
 
 import xyz.dashnetwork.celest.utils.storage.Cache;
 
-public final class ClearTask implements Runnable {
+public final class CacheTask implements Runnable {
 
     @Override
     public void run() {

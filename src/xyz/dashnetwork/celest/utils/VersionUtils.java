@@ -34,7 +34,7 @@ public final class VersionUtils {
         String latest = version.getMostRecentSupportedVersion();
 
         if (earliest.equals(latest))
-            return latest;
+            return earliest;
 
         return earliest + "-" + latest;
     }

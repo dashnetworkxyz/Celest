@@ -22,8 +22,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 @Deprecated
 public final class CastUtils {
 
-    public static User toUser(Object object) {
-        throw new UnsupportedOperationException();
-    }
+    @Deprecated
+    public static User toUser(Object object) { throw new UnsupportedOperationException(); }
 
 }

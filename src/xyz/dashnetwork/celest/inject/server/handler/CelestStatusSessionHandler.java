@@ -75,8 +75,9 @@ public final class CelestStatusSessionHandler implements InvocationHandler {
                     .exceptionally((exception) -> null);
 
             return true;
-        } else
-            return handler.passOriginalMethod(method, args);
+        }
+
+        return handler.passOriginalMethod(method, args);
     }
 
 }
