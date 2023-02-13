@@ -66,9 +66,10 @@ public final class CommandTwoFactor extends CelestCommand {
             return;
         }
 
-        User user = User.getUser(source);
-        assert user != null;
+        Optional<User> optional = User.getUser(source);
+        assert optional.isPresent();
 
+        User user = optional.get();
         UUID uuid = user.getUuid();
         UserData data = user.getData();
         String twoFactor = data.getTwoFactor();

@@ -43,7 +43,7 @@ public final class MessageUtils {
     }
 
     public static void message(@NotNull Audience audience, @NotNull Function<User, Component> function) {
-        message(audience, function.apply(User.getUser(audience)));
+        message(audience, function.apply(User.getUser(audience).orElse(null)));
     }
 
     public static void broadcast(@NotNull String message) { broadcast(ComponentUtils.fromString(message)); }

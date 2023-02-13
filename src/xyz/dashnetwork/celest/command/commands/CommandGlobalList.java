@@ -36,10 +36,10 @@ public final class CommandGlobalList extends CelestCommand {
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
         Map<String, List<NamedSource>> map = new TreeMap<>(String::compareTo);
-        User user = User.getUser(source);
+        Optional<User> user = User.getUser(source);
 
         for (User each : User.getUsers()) {
-            if (user == null || user.canSee(each)) {
+            if (user.map(u -> u.canSee(each)).orElse(true)) {
                 Optional<ServerConnection> optional = each.getPlayer().getCurrentServer();
 
                 if (optional.isEmpty())

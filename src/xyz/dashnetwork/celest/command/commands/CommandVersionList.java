@@ -28,10 +28,7 @@ import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public final class CommandVersionList extends CelestCommand {
 
@@ -40,10 +37,10 @@ public final class CommandVersionList extends CelestCommand {
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
         Map<ProtocolVersion, List<NamedSource>> map = new TreeMap<>(ProtocolVersion::compareTo);
-        User user = User.getUser(source);
+        Optional<User> optional = User.getUser(source);
 
         for (User each : User.getUsers()) {
-            if (user == null || user.canSee(each)) {
+            if (optional.map(u -> u.canSee(each)).orElse(true)) {
                 ProtocolVersion version = each.getPlayer().getProtocolVersion();
                 List<NamedSource> list = map.getOrDefault(version, new ArrayList<>());
 

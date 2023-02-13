@@ -20,6 +20,7 @@ package xyz.dashnetwork.celest.utils;
 import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.utils.connection.User;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public enum PermissionType {
@@ -36,12 +37,9 @@ public enum PermissionType {
     public Predicate<User> getPermission() { return permission; }
 
     public boolean hasPermission(CommandSource source) {
-        User user = User.getUser(source);
+        Optional<User> optional = User.getUser(source);
 
-        if (user != null)
-            return permission.test(user);
-
-        return true;
+        return optional.map(permission::test).orElse(true);
     }
 
 }

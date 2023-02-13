@@ -18,12 +18,8 @@
 package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.network.ProtocolVersion;
-import com.velocitypowered.api.util.ProxyVersion;
-import xyz.dashnetwork.celest.Celest;
 
 public final class VersionUtils {
-
-    private static final ProxyVersion version = Celest.getServer().getVersion();
 
     public static boolean isLegacy(ProtocolVersion version) {
         return LazyUtils.anyEquals(version, ProtocolVersion.MINECRAFT_1_7_2, ProtocolVersion.MINECRAFT_1_7_6);
@@ -38,9 +34,5 @@ public final class VersionUtils {
 
         return earliest + "-" + latest;
     }
-
-    public static String getProxyName() { return version.getName(); }
-
-    public static String getProxyVersion() { return version.getVersion(); }
 
 }

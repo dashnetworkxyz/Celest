@@ -99,21 +99,19 @@ public abstract class CelestCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        User user = User.getUser(invocation.source());
+        Optional<User> optional = User.getUser(invocation.source());
 
-        if (user != null)
-            return predicate.test(user);
-
-        return console;
+        return optional.map(user -> predicate.test(user)).orElseGet(() -> console);
     }
 
     @Override
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
-        User user = User.getUser(invocation.source());
+        Optional<User> optional = User.getUser(invocation.source());
 
-        if (user == null)
+        if (optional.isEmpty())
             return CompletableFuture.completedFuture(Collections.emptyList());
 
+        User user = optional.get();
         String[] args = invocation.arguments();
         List<ArgumentType> list = ArgumentUtils.typesFromSections(user, sections);
         int length = args.length;

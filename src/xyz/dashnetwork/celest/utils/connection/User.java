@@ -21,7 +21,6 @@ import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.NamedSource;
@@ -33,10 +32,7 @@ import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 import xyz.dashnetwork.celest.vault.Vault;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public final class User extends OfflineUser implements NamedSource, Audience {
 
@@ -68,11 +64,11 @@ public final class User extends OfflineUser implements NamedSource, Audience {
 
     public static Collection<User> getUsers() { return users.values(); }
 
-    public static @Nullable User getUser(Audience audience) {
+    public static Optional<User> getUser(Audience audience) {
         if (audience instanceof Player)
-            return getUser((Player) audience);
+            return Optional.of(getUser((Player) audience));
 
-        return null;
+        return Optional.empty();
     }
 
     public static User getUser(Player player) {

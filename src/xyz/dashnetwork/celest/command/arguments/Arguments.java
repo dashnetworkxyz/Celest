@@ -39,7 +39,7 @@ public final class Arguments {
     private int index = 0;
 
     public Arguments(CommandSource source, String[] array, List<ArgumentSection> sections) {
-        User user = User.getUser(source);
+        User user = User.getUser(source).orElse(null);
         List<ArgumentType> list = ArgumentUtils.typesFromSections(user, sections);
         int size = MathUtils.getLowest(array.length, list.size());
 

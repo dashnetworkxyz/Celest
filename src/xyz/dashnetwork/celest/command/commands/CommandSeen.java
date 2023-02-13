@@ -27,7 +27,6 @@ import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.utils.connection.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
@@ -54,14 +53,11 @@ public final class CommandSeen extends CelestCommand {
             return;
         }
 
-        User user = User.getUser(source);
+        Optional<User> user = User.getUser(source);
 
         OfflineUser offline = optional.get();
         UserData data = offline.getData();
         MessageBuilder builder = new MessageBuilder();
-
-        builder.append("&6&l»&r ");
-        builder.append(new OfflineUserFormat(offline)).prefix("&6");
 
         Long lastPlayed = data.getLastPlayed();
         String uuid = offline.getUuid().toString();
@@ -69,27 +65,31 @@ public final class CommandSeen extends CelestCommand {
         PunishData ban = data.getBan();
         PunishData mute = data.getMute();
 
+        builder.append("&6&l»&6 " + offline.getUsername());
+
         if (lastPlayed == null)
             builder.append("&7 has never joined the server before.");
-        else if (offline instanceof User)
+        else if (offline instanceof User && user.map(u -> u.canSee((User) offline)).orElse(true))
             builder.append("&7 is &aonline");
-        else {
-            builder.append("&7 has been &coffline&7 since ");
-            builder.append("&6" + TimeUtils.longToDate(lastPlayed))
-                    .hover("&7Click to copy &6" + lastPlayed)
-                    .click(ClickEvent.suggestCommand(lastPlayed.toString()));
-        }
+        else
+            builder.append("&7 is &coffline");
 
         builder.append("\n&6&l»&7 UUID: ");
         builder.append("&6" + uuid)
                 .hover("&7Click to copy &6" + uuid)
                 .click(ClickEvent.suggestCommand(uuid));
 
-        if ((user == null || user.showAddress()) && address != null) {
+        if (user.map(User::showAddress).orElse(true) && address != null) {
             builder.append("\n&6&l»&7 Address: ");
             builder.append("&6" + address)
                     .hover("&7Click to copy &6" + address)
                     .click(ClickEvent.suggestCommand(address));
+        }
+
+        if (lastPlayed != null) {
+            builder.append("\n&6&l»&7 Last Login: &6" + TimeUtils.longToDate(lastPlayed))
+                    .hover("&7Click to copy &6" + lastPlayed)
+                    .click(ClickEvent.suggestCommand(lastPlayed.toString()));
         }
 
         if (PunishUtils.isValid(ban)) {

@@ -43,11 +43,11 @@ public final class ArgumentTypeFormat implements Format {
             case CHAT_TYPE:
                 section.hover("&6Chat selector&7" +
                         "\nThis requires the name of a Chat type." +
-                        "\nChat types: &6global");
-                section.hover("&6, local", User::isOwner);
-                section.hover("&6, staff", User::isStaff);
-                section.hover("&6, admin", User::isAdmin);
-                section.hover("&6, owner", User::isOwner);
+                        "\nChat types: &6Global");
+                section.hover(", Local", User::isOwner);
+                section.hover(", Staff", User::isStaff);
+                section.hover(", Admin", User::isAdmin);
+                section.hover(", Owner", User::isOwner);
                 break;
             case INTEGER:
                 section.hover("&6Integer selector&7" +
