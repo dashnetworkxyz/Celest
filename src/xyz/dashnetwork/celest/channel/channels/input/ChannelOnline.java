@@ -25,14 +25,18 @@ public final class ChannelOnline extends Channel {
 
     @Override
     public void handle(ByteArrayDataInput input) {
-        boolean showVanished = input.readBoolean();
+        int vanished = 0;
         int online = 0;
 
-        for (User user : User.getUsers())
-            if (showVanished || !user.getData().getVanish())
-                online++;
+        for (User user : User.getUsers()) {
+            online++;
+
+            if (user.getData().getVanish())
+                vanished++;
+        }
 
         output.writeInt(online);
+        output.writeInt(vanished);
     }
 
 }
