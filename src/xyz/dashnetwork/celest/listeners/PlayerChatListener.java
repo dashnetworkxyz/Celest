@@ -32,6 +32,7 @@ import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.ArgumentTypeFormat;
@@ -113,56 +114,7 @@ public final class PlayerChatListener {
         } else
             type = ChatType.GLOBAL;
 
-        Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(user, type, message));
-
-        MessageBuilder builder = new MessageBuilder();
-        Predicate<User> predicate;
-
-        switch (type) {
-            case OWNER:
-                builder.append("&9&lOwner&r ");
-                builder.append(new NamedSourceFormat(user));
-                builder.append("&r &c&l»&c");
-
-                predicate = each -> each.isOwner() || each.getData().getChatType().equals(ChatType.OWNER);
-                break;
-            case ADMIN:
-                builder.append("&9&lAdmin&r ");
-                builder.append(new NamedSourceFormat(user));
-                builder.append("&r &3&l»&3");
-
-                predicate = each -> each.isAdmin() || each.getData().getChatType().equals(ChatType.ADMIN);
-                break;
-            case STAFF:
-                builder.append("&9&lStaff&r ");
-                builder.append(new NamedSourceFormat(user));
-                builder.append("&r &6&l»&6");
-
-                predicate = each -> each.isStaff() || each.getData().getChatType().equals(ChatType.STAFF);
-                break;
-            case LOCAL:
-                player.spoofChatInput(message);
-                return;
-            default:
-                builder.append(new NamedSourceFormat(user));
-                builder.append("&r &e&l»&r");
-
-                predicate = each -> true;
-        }
-
-        for (String split : message.split(" ")) {
-            if (split.length() > 0) {
-                TextSection section = builder.append(" " + split);
-
-                if (StringUtils.matchesUrl(split)) {
-                    String url = split.toLowerCase().startsWith("http") ? split : "https://" + split;
-
-                    section.hover("&7Click to open &6" + url).click(ClickEvent.openUrl(url));
-                }
-            }
-        }
-
-        MessageUtils.broadcast(predicate, builder::build);
+        Messages.chatMessage(player, type, message);
     }
 
 }

@@ -51,7 +51,7 @@ import xyz.dashnetwork.celest.vault.api.LuckPermsAPI;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "0.12", authors = {"MasterDash5"})
+@Plugin(id = "celest", name = "Celest", version = "0.13", authors = {"MasterDash5"})
 public final class Celest {
 
     private static final Gson gson = new Gson();
@@ -113,7 +113,7 @@ public final class Celest {
         Channel.registerOut("twofactor", ChannelTwoFactor::new);
         Channel.registerOut("vanish", ChannelVanish::new);
 
-        logger.info("Registering events...");
+        logger.info("Registering listeners...");
         EventManager eventManager = server.getEventManager();
         eventManager.register(this, new CommandExecuteListener());
         eventManager.register(this, new DisconnectListener());
@@ -161,6 +161,7 @@ public final class Celest {
         new CommandServer();
         new CommandStaffChat();
         new CommandSudo();
+        new CommandTalk();
         new CommandTempBan();
         new CommandTempIpBan();
         new CommandTempIpMute();
@@ -174,7 +175,7 @@ public final class Celest {
         new CommandVanish();
         new CommandVersionList();
 
-        logger.info("Registering tasks...");
+        logger.info("Scheduling tasks...");
         Scheduler scheduler = server.getScheduler();
         scheduler.buildTask(this, cacheTask).repeat(1, TimeUnit.HOURS).schedule();
         scheduler.buildTask(this, saveTask).repeat(1, TimeUnit.MINUTES).schedule();

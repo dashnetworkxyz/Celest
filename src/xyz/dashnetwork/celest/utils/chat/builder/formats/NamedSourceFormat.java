@@ -18,7 +18,6 @@
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
 import com.velocitypowered.api.proxy.Player;
-import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
