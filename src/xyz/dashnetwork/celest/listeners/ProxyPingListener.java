@@ -102,7 +102,7 @@ public final class ProxyPingListener {
                 String clean = socket.getHostString();
 
                 // Filter Cloudflare proxy.
-                if (clean.matches("_dc-srv\\.([a-f0-9]{12})\\._minecraft\\._tcp\\.([A-z0-9]+)\\.(?i)dashnetwork\\.xyz"))
+                if (StringUtils.matchesCloudflare(clean))
                     clean = clean.replaceFirst("_dc-srv\\.([a-f0-9]{12})\\._minecraft\\._tcp\\.", "");
 
                 virtual = new InetSocketAddress(clean, socket.getPort());
