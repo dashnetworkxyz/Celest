@@ -70,7 +70,7 @@ public final class CommandTempMute extends CelestCommand {
         String username = named.getUsername();
         MessageBuilder builder;
 
-        if (offline instanceof User) {
+        if (offline.isActive()) {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 You have been temporarily muted. Hover for more info.")
                     .hover("&7You were muted by &6" + username

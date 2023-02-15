@@ -48,7 +48,7 @@ public final class CommandCelest extends CelestCommand {
         builder.append("\n&6&l»&7 /celest reload").hover("&6Reload config.yml");
         builder.append("\n&6&l»&7 /celest save").hover("&6Force an auto-save");
         builder.append("\n&6&l»&7 /celest legacy-import &c(unsafe)").hover("&6Import legacy data &c(unsafe)");
-        builder.append("\n&6&l»&7 /celest clear-limbo").hover("&6Force clear & save all objects in Limbo.");
+        builder.append("\n&6&l»&7 /celest clear-limbo").hover("&6Clear & save all objects in Limbo.");
 
         MessageUtils.message(source, builder::build);
     }

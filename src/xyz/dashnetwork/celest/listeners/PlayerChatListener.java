@@ -108,7 +108,7 @@ public final class PlayerChatListener {
         } else
             type = ChatType.GLOBAL;
 
-        Messages.chatMessage(player, type, message);
+        Messages.chatMessage(user, type, message);
     }
 
 }

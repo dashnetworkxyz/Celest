@@ -71,7 +71,7 @@ public final class CommandTempBan extends CelestCommand {
         String username = named.getUsername();
         MessageBuilder builder;
 
-        if (offline instanceof User) {
+        if (offline.isActive()) {
             builder = new MessageBuilder();
             builder.append("&6&lDashNetwork");
             builder.append("\n&7You have been temporarily banned");

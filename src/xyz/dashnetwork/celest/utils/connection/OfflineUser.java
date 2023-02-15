@@ -87,6 +87,8 @@ public class OfflineUser extends PlayerProfile implements Savable {
             Storage.write(stringUuid, Storage.Directory.USER, userData);
     }
 
+    public boolean isActive() { return this instanceof User && ((User) this).getPlayer().isActive(); }
+
     public void setData(UserData userData) { this.userData = userData; }
 
     public UserData getData() { return userData; }

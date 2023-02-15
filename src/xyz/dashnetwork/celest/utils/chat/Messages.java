@@ -17,8 +17,6 @@
 
 package xyz.dashnetwork.celest.utils.chat;
 
-import com.velocitypowered.api.command.CommandSource;
-import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
@@ -33,8 +31,7 @@ import java.util.function.Predicate;
 
 public final class Messages {
 
-    public static void chatMessage(CommandSource source, ChatType type, String message) {
-        NamedSource named = NamedSource.of(source);
+    public static void chatMessage(NamedSource named, ChatType type, String message) {
         MessageBuilder builder = new MessageBuilder();
         Predicate<User> predicate;
 
@@ -63,10 +60,8 @@ public final class Messages {
                 predicate = each -> each.isStaff() || each.getData().getChatType().equals(ChatType.STAFF);
                 break;
             case LOCAL:
-                if (source instanceof Player)
-                    ((Player) source).spoofChatInput(message);
-                else
-                    MessageUtils.message(source, "&6&l»&7 Local is only supported by players.");
+                if (named instanceof User)
+                    ((User) named).getPlayer().spoofChatInput(message);
                 return;
             default:
                 builder.append(new NamedSourceFormat(named));

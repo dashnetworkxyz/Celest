@@ -21,6 +21,7 @@ import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
+import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -46,7 +47,7 @@ public final class CommandTalk extends CelestCommand {
             return;
         }
 
-        Messages.chatMessage(source, optionalChatType.get(), optionalMessage.get());
+        Messages.chatMessage(NamedSource.console, optionalChatType.get(), optionalMessage.get());
     }
 
 }

@@ -31,7 +31,7 @@ public final class OfflineUserFormat implements Format {
     private final List<TextSection> sections;
 
     public OfflineUserFormat(OfflineUser offline) {
-        if (offline instanceof User)
+        if (offline.isActive())
             sections = new NamedSourceFormat((User) offline).sections();
         else
             sections = new PlayerProfileFormat(offline).sections();

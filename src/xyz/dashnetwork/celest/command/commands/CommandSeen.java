@@ -69,7 +69,7 @@ public final class CommandSeen extends CelestCommand {
 
         if (lastPlayed == null)
             builder.append("&7 has never joined the server before.");
-        else if (offline instanceof User && user.map(u -> u.canSee((User) offline)).orElse(true))
+        else if (offline.isActive() && user.map(u -> u.canSee((User) offline)).orElse(true))
             builder.append("&7 is &aonline");
         else
             builder.append("&7 is &coffline");
