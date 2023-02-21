@@ -25,13 +25,11 @@ import java.lang.reflect.Method;
 
 public final class ReflectedHandshakeSessionHandler {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.HANDSHAKE_SESSION_HANDLER;
     private static Method cleanVhost, getStateForProtocol, handleLogin;
     private final Object original;
 
     static {
-        clazz = ClassList.HANDSHAKE_SESSION_HANDLER;
-
         try {
             cleanVhost = clazz.getDeclaredMethod("cleanVhost", String.class);
             getStateForProtocol = clazz.getDeclaredMethod("getStateForProtocol", int.class);

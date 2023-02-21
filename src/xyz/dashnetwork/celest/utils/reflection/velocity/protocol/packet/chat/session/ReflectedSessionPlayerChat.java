@@ -23,15 +23,12 @@ import java.lang.reflect.Field;
 
 public final class ReflectedSessionPlayerChat {
 
-    private static final Class<?> clazz;
-    private static final Class<?>[] array;
+    private static final Class<?> clazz = ClassList.SESSION_PLAYER_CHAT;
+    private static final Class<?>[] array = new Class<?>[] { clazz };
     private static Field unsigned;
     private final Object original;
 
     static {
-        clazz = ClassList.SESSION_PLAYER_CHAT;
-        array = new Class<?>[] { clazz };
-
         try {
             unsigned = clazz.getDeclaredField("signed");
             unsigned.setAccessible(true);

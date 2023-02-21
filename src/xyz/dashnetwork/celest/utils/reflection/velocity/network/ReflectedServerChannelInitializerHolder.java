@@ -24,13 +24,11 @@ import java.lang.reflect.Field;
 
 public final class ReflectedServerChannelInitializerHolder {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.SERVER_CHANNEL_INITIALIZER_HOLDER;
     private static Field initializer; // Use field to avoid warning message.
     private final Object original;
 
     static {
-        clazz = ClassList.SERVER_CHANNEL_INITIALIZER_HOLDER;
-
         try {
             initializer = clazz.getDeclaredField("initializer");
             initializer.setAccessible(true);

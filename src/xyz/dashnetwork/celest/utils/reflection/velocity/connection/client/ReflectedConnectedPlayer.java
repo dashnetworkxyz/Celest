@@ -26,14 +26,12 @@ import java.lang.reflect.Method;
 
 public final class ReflectedConnectedPlayer {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.CONNECTED_PLAYER;
     private static Field playerKey;
     private static Method getConnectedServer;
     private final Object original;
 
     static {
-        clazz = ClassList.CONNECTED_PLAYER;
-
         try {
             playerKey = clazz.getDeclaredField("playerKey");
             playerKey.setAccessible(true);

@@ -24,15 +24,12 @@ import java.lang.reflect.Method;
 
 public final class ReflectedHandshake {
 
-    private static final Class<?> clazz;
-    private static final Class<?>[] array;
+    private static final Class<?> clazz = ClassList.HANDSHAKE;
+    private static final Class<?>[] array = new Class<?>[] { clazz };
     private static Method getProtocolVersion, getServerAddress, getPort, getNextStatus;
     private final Object original;
 
     static {
-        clazz = ClassList.HANDSHAKE;
-        array = new Class<?>[] { clazz };
-
         try {
             getProtocolVersion = clazz.getMethod("getProtocolVersion");
             getServerAddress = clazz.getMethod("getServerAddress");

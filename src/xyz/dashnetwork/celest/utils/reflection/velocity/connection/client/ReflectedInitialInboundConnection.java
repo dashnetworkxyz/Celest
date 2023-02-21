@@ -25,13 +25,11 @@ import java.lang.reflect.Constructor;
 
 public final class ReflectedInitialInboundConnection {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.INITIAL_INBOUND_CONNECTION;
     private static Constructor<?> constructor;
     private final Object original;
 
     static {
-        clazz = ClassList.INITIAL_INBOUND_CONNECTION;
-
         try {
             constructor = clazz.getDeclaredConstructor(ClassList.MINECRAFT_CONNECTION, String.class, ClassList.HANDSHAKE);
             constructor.setAccessible(true);

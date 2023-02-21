@@ -81,18 +81,16 @@ public class OfflineUser extends PlayerProfile implements Savable {
     @Override
     public void save() {
         if (userData.isObsolete()) {
-            if (!isGenerated())
+            if (!generated)
                 Storage.delete(stringUuid, Storage.Directory.USER);
         } else
             Storage.write(stringUuid, Storage.Directory.USER, userData);
     }
 
-    public boolean isActive() { return this instanceof User && ((User) this).getPlayer().isActive(); }
+    public boolean isActive() { return false; }
 
     public void setData(UserData userData) { this.userData = userData; }
 
     public UserData getData() { return userData; }
-
-    public boolean isGenerated() { return generated; }
 
 }

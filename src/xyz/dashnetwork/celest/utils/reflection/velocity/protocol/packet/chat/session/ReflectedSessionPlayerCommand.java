@@ -23,15 +23,12 @@ import java.lang.reflect.Field;
 
 public final class ReflectedSessionPlayerCommand {
 
-    private static final Class<?> clazz;
-    private static final Class<?>[] array;
+    private static final Class<?> clazz = ClassList.SESSION_PLAYER_COMMAND;
+    private static final Class<?>[] array = new Class<?>[] { clazz };
     private static Field salt;
     private final Object original;
 
     static {
-        clazz = ClassList.SESSION_PLAYER_COMMAND;
-        array = new Class<?>[] { clazz };
-
         try {
             salt = clazz.getDeclaredField("salt");
             salt.setAccessible(true);

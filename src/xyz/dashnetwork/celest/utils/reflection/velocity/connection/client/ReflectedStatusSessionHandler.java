@@ -26,14 +26,12 @@ import java.lang.reflect.Method;
 
 public final class ReflectedStatusSessionHandler {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.STATUS_SESSION_HANDLER;
     private static Constructor<?> constructor;
     private static Field pingReceived;
     private final Object original;
 
     static {
-        clazz = ClassList.STATUS_SESSION_HANDLER;
-
         try {
             constructor = clazz.getDeclaredConstructor(ClassList.VELOCITY_SERVER, ClassList.VELOCITY_INBOUND_CONNECTION);
             constructor.setAccessible(true);

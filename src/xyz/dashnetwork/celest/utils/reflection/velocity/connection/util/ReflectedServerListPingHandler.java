@@ -26,13 +26,11 @@ import java.util.concurrent.CompletableFuture;
 
 public final class ReflectedServerListPingHandler {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.SERVER_LIST_PING_HANDLER;
     private static Method getInitialPing;
     private final Object original;
 
     static {
-        clazz = ClassList.SERVER_LIST_PING_HANDLER;
-
         try {
             getInitialPing = clazz.getMethod("getInitialPing", ClassList.VELOCITY_INBOUND_CONNECTION);
         } catch (ReflectiveOperationException exception) {

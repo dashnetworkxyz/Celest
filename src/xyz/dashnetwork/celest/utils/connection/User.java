@@ -180,6 +180,9 @@ public final class User extends OfflineUser implements NamedSource, Audience {
     }
 
     @Override
+    public boolean isActive() { return getPlayer().isActive(); }
+
+    @Override
     public String getDisplayname() {
         updateDisplayname();
 

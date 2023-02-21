@@ -29,14 +29,12 @@ import java.lang.reflect.Method;
 
 public final class ReflectedVelocityServer {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.VELOCITY_SERVER;
     private static Field cm;
     private static Method getPingGsonInstance, getServerListPingHandler;
     private final ProxyServer original;
 
     static {
-        clazz = ClassList.VELOCITY_SERVER;
-
         try {
             cm = clazz.getDeclaredField("cm");
             cm.setAccessible(true);

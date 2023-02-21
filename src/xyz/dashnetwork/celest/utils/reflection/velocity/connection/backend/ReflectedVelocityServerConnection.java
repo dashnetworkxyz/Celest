@@ -24,13 +24,11 @@ import java.lang.reflect.Method;
 
 public final class ReflectedVelocityServerConnection {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.VELOCITY_SERVER_CONNECTION;
     private static Method ensureConnected;
     private final Object original;
 
     static {
-        clazz = ClassList.VELOCITY_SERVER_CONNECTION;
-
         try {
             ensureConnected = clazz.getMethod("ensureConnected");
         } catch (ReflectiveOperationException exception) {

@@ -29,13 +29,11 @@ import java.lang.reflect.Proxy;
 
 public final class ReflectedMinecraftConnection {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.MINECRAFT_CONNECTION;
     private static Method close, write, eventLoop, getSessionHandler, setSessionHandler, setState, getProtocolVersion, setProtocolVersion, setAssociation;
     private final Object original;
 
     static {
-        clazz = ClassList.MINECRAFT_CONNECTION;
-
         try {
             close = clazz.getMethod("close", boolean.class);
             write = clazz.getMethod("write", Object.class);

@@ -23,13 +23,11 @@ import java.lang.reflect.Method;
 
 public final class ReflectedConnectionManager {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.CONNECTION_MANAGER;
     private static Method getServerChannelInitializer;
     private final Object original;
 
     static {
-        clazz = ClassList.CONNECTION_MANAGER;
-
         try {
             getServerChannelInitializer = clazz.getMethod("getServerChannelInitializer");
         } catch (ReflectiveOperationException exception) {

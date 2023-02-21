@@ -23,13 +23,11 @@ import java.lang.reflect.Constructor;
 
 public final class ReflectedStatusResponse {
 
-    private static final Class<?> clazz;
+    private static final Class<?> clazz = ClassList.STATUS_RESPONSE;
     private static Constructor<?> constructor;
     private final Object original;
 
     static {
-        clazz = ClassList.STATUS_RESPONSE;
-
         try {
             constructor = clazz.getConstructor(CharSequence.class);
         } catch (ReflectiveOperationException exception) {
