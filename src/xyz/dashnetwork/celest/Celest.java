@@ -156,6 +156,7 @@ public final class Celest {
         new CommandOwnerChat();
         new CommandPing();
         new CommandPingSpy();
+        new CommandRandom();
         new CommandRealName();
         new CommandSeen();
         new CommandServer();
