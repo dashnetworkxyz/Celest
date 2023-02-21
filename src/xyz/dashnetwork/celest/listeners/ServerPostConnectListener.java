@@ -21,11 +21,17 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.messages.ChannelIdentifier;
+import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.inject.Injector;
+import xyz.dashnetwork.celest.utils.BrandUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 public final class ServerPostConnectListener {
+
+    private static final ChannelIdentifier brand = MinecraftChannelIdentifier.create("minecraft", "brand");
+    private static final byte[] name = BrandUtils.toBytes("play.dashnetwork.xyz");
 
     @SuppressWarnings("UnstableApiUsage")
     @Subscribe
@@ -37,8 +43,13 @@ public final class ServerPostConnectListener {
         Channel.callOut("twofactor", user);
         Channel.callOut("displayname", user);
 
-        if (player.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19) >= 0)
+        ProtocolVersion version = player.getProtocolVersion();
+
+        if (version.compareTo(ProtocolVersion.MINECRAFT_1_19) >= 0)
             Injector.injectSessionHandler(player);
+
+        if (version.compareTo(ProtocolVersion.MINECRAFT_1_13) >= 0)
+            player.sendPluginMessage(brand, name);
     }
 
 }
