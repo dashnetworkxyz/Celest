@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity.connection.client;
+package xyz.dashnetwork.celest.inject.reflection.velocity.connection.client;
 
-import xyz.dashnetwork.celest.utils.reflection.ClassList;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftSessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.ReflectedHandshake;
+import xyz.dashnetwork.celest.inject.reflection.ClassList;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.ReflectedMinecraftSessionHandler;
+import xyz.dashnetwork.celest.inject.reflection.velocity.protocol.packet.ReflectedHandshake;
 
 import java.lang.reflect.Method;
 

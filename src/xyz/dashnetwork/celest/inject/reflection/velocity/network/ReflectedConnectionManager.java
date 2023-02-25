@@ -15,31 +15,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity.connection.backend;
+package xyz.dashnetwork.celest.inject.reflection.velocity.network;
 
-import xyz.dashnetwork.celest.utils.reflection.ClassList;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
+import xyz.dashnetwork.celest.inject.reflection.ClassList;
 
 import java.lang.reflect.Method;
 
-public final class ReflectedVelocityServerConnection {
+public final class ReflectedConnectionManager {
 
-    private static final Class<?> clazz = ClassList.VELOCITY_SERVER_CONNECTION;
-    private static Method ensureConnected;
+    private static final Class<?> clazz = ClassList.CONNECTION_MANAGER;
+    private static Method getServerChannelInitializer;
     private final Object original;
 
     static {
         try {
-            ensureConnected = clazz.getMethod("ensureConnected");
+            getServerChannelInitializer = clazz.getMethod("getServerChannelInitializer");
         } catch (ReflectiveOperationException exception) {
             exception.printStackTrace();
         }
     }
 
-    public ReflectedVelocityServerConnection(Object original) { this.original = original; }
+    public ReflectedConnectionManager(Object original) { this.original = original; }
 
-    public ReflectedMinecraftConnection ensureConnected() throws ReflectiveOperationException {
-        return new ReflectedMinecraftConnection(ensureConnected.invoke(original));
+    public ReflectedServerChannelInitializerHolder getServerChannelInitializer() throws ReflectiveOperationException {
+        return new ReflectedServerChannelInitializerHolder(getServerChannelInitializer.invoke(original));
     }
 
 }

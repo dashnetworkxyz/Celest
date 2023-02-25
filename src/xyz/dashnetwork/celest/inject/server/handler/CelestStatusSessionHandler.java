@@ -22,12 +22,12 @@ import com.velocitypowered.api.proxy.InboundConnection;
 import com.velocitypowered.api.proxy.ProxyServer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.api.CelestServerPing;
-import xyz.dashnetwork.celest.utils.reflection.velocity.ReflectedVelocityServer;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedInitialInboundConnection;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedStatusSessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.ReflectedStatusRequest;
-import xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.ReflectedStatusResponse;
+import xyz.dashnetwork.celest.inject.reflection.velocity.ReflectedVelocityServer;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.ReflectedMinecraftConnection;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.client.ReflectedInitialInboundConnection;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.client.ReflectedStatusSessionHandler;
+import xyz.dashnetwork.celest.inject.reflection.velocity.protocol.packet.ReflectedStatusRequest;
+import xyz.dashnetwork.celest.inject.reflection.velocity.protocol.packet.ReflectedStatusResponse;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

@@ -50,14 +50,9 @@ public final class ProxyPingListener {
     public void onProxyPing(ProxyPingEvent event) {
         final InboundConnection connection = event.getConnection();
         final ProtocolVersion version = connection.getProtocolVersion();
+        int protocol = VersionUtils.isLegacy(version) ? 48 : version.getProtocol();
         ServerPing.Builder builder = event.getPing().asBuilder();
         int online = 0;
-        int protocol;
-
-        if (VersionUtils.isLegacy(version))
-            protocol = 48;
-        else
-            protocol = version.getProtocol();
 
         for (User user : User.getUsers())
             if (!user.getData().getVanish())

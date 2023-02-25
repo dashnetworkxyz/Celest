@@ -21,16 +21,11 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.inject.backend.handler.CelestClientPlaySessionHandler;
 import xyz.dashnetwork.celest.inject.server.CelestServerChannelInitializer;
-import xyz.dashnetwork.celest.utils.reflection.velocity.ReflectedVelocityServer;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.backend.ReflectedBackendPlaySessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.backend.ReflectedVelocityServerConnection;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedClientPlaySessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedConnectedPlayer;
-import xyz.dashnetwork.celest.utils.reflection.velocity.network.ReflectedConnectionManager;
-import xyz.dashnetwork.celest.utils.reflection.velocity.network.ReflectedServerChannelInitializerHolder;
+import xyz.dashnetwork.celest.inject.reflection.velocity.ReflectedVelocityServer;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.client.ReflectedConnectedPlayer;
+import xyz.dashnetwork.celest.inject.reflection.velocity.network.ReflectedConnectionManager;
+import xyz.dashnetwork.celest.inject.reflection.velocity.network.ReflectedServerChannelInitializerHolder;
 
 public final class Injector {
 
@@ -52,22 +47,9 @@ public final class Injector {
 
     // Hacky workaround for issue #804. (https://github.com/PaperMC/Velocity/issues/804)
     // This completely disables chat signatures.
-    public static void injectSessionHandler(Player player) {
+    public static void injectPlayerKey(Player player) {
         try {
             ReflectedConnectedPlayer connected = new ReflectedConnectedPlayer(player);
-            ReflectedVelocityServerConnection server = connected.getConnectedServer();
-            ReflectedMinecraftConnection serverConnection = server.ensureConnected();
-            ReflectedBackendPlaySessionHandler backend = new ReflectedBackendPlaySessionHandler(serverConnection.getSessionHandler());
-            ReflectedMinecraftConnection playerConnection = backend.playerConnection();
-            ReflectedClientPlaySessionHandler client = new ReflectedClientPlaySessionHandler(playerConnection.getSessionHandler());
-
-            playerConnection.eventLoop().execute(() -> {
-                try {
-                    playerConnection.setSessionHandler(new CelestClientPlaySessionHandler(client));
-                } catch (ReflectiveOperationException exception) {
-                    exception.printStackTrace();
-                }
-            });
             connected.setPlayerKey(null);
         } catch (ReflectiveOperationException exception) {
             logger.error("Failed to inject play session handler.", exception);

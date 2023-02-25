@@ -15,23 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity.connection;
+package xyz.dashnetwork.celest.inject.reflection.velocity.protocol.packet;
 
-import xyz.dashnetwork.celest.utils.reflection.ClassList;
+import xyz.dashnetwork.celest.inject.reflection.ClassList;
 
-public final class ReflectedMinecraftSessionHandler {
+public final class ReflectedStatusRequest {
 
-    private static final Class<?> clazz = ClassList.MINECRAFT_SESSION_HANDLER;
-    private static final ClassLoader loader = clazz.getClassLoader();
-    private static final Class<?>[] array = new Class<?>[] { clazz };
-    private final Object original;
-
-    public static ClassLoader loader() { return loader; }
+    private static final Class<?>[] array = new Class<?>[] { ClassList.STATUS_REQUEST };
 
     public static Class<?>[] array() { return array; }
-
-    public ReflectedMinecraftSessionHandler(Object original) { this.original = original; }
-
-    public Object original() { return original; }
 
 }

@@ -18,10 +18,10 @@
 package xyz.dashnetwork.celest.inject.server.handler;
 
 import com.velocitypowered.api.network.ProtocolVersion;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedHandshakeSessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedInitialInboundConnection;
-import xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.ReflectedHandshake;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.ReflectedMinecraftConnection;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.client.ReflectedHandshakeSessionHandler;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.client.ReflectedInitialInboundConnection;
+import xyz.dashnetwork.celest.inject.reflection.velocity.protocol.packet.ReflectedHandshake;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

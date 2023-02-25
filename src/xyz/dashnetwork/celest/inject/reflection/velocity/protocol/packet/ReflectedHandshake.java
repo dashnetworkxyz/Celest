@@ -15,10 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet;
+package xyz.dashnetwork.celest.inject.reflection.velocity.protocol.packet;
 
 import com.velocitypowered.api.network.ProtocolVersion;
-import xyz.dashnetwork.celest.utils.reflection.ClassList;
+import xyz.dashnetwork.celest.inject.reflection.ClassList;
 
 import java.lang.reflect.Method;
 

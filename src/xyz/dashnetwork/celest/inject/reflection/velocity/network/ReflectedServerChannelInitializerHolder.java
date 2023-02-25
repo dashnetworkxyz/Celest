@@ -15,10 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity.network;
+package xyz.dashnetwork.celest.inject.reflection.velocity.network;
 
 import io.netty.channel.ChannelInitializer;
-import xyz.dashnetwork.celest.utils.reflection.ClassList;
+import xyz.dashnetwork.celest.inject.reflection.ClassList;
 
 import java.lang.reflect.Field;
 

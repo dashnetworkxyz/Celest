@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity.connection.util;
+package xyz.dashnetwork.celest.inject.reflection.velocity.connection.util;
 
 import com.velocitypowered.api.proxy.server.ServerPing;
-import xyz.dashnetwork.celest.utils.reflection.ClassList;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedInitialInboundConnection;
+import xyz.dashnetwork.celest.inject.reflection.ClassList;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.client.ReflectedInitialInboundConnection;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.CompletableFuture;

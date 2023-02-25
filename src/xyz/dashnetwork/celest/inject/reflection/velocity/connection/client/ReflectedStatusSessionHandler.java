@@ -15,10 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity.connection.client;
+package xyz.dashnetwork.celest.inject.reflection.velocity.connection.client;
 
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.reflection.ClassList;
+import xyz.dashnetwork.celest.inject.reflection.ClassList;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

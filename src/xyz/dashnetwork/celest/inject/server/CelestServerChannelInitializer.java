@@ -20,8 +20,8 @@ package xyz.dashnetwork.celest.inject.server;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import xyz.dashnetwork.celest.inject.server.handler.CelestHandshakeSessionHandler;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.client.ReflectedHandshakeSessionHandler;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.ReflectedMinecraftConnection;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.client.ReflectedHandshakeSessionHandler;
 
 import java.lang.reflect.Method;
 

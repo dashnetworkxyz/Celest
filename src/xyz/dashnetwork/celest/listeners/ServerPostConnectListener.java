@@ -45,11 +45,12 @@ public final class ServerPostConnectListener {
 
         ProtocolVersion version = player.getProtocolVersion();
 
-        if (version.compareTo(ProtocolVersion.MINECRAFT_1_19) >= 0)
-            Injector.injectSessionHandler(player);
-
         if (version.compareTo(ProtocolVersion.MINECRAFT_1_13) >= 0)
             player.sendPluginMessage(brand, name);
+
+        // TODO: Fix SessionPlayerChat & SessionPlayerCommand (1.19.3)
+        if (version.compareTo(ProtocolVersion.MINECRAFT_1_19) >= 0)
+            Injector.injectPlayerKey(player);
     }
 
 }

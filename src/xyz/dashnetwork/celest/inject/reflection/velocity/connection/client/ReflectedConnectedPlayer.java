@@ -15,28 +15,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity.connection.client;
+package xyz.dashnetwork.celest.inject.reflection.velocity.connection.client;
 
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.reflection.ClassList;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.backend.ReflectedVelocityServerConnection;
+import xyz.dashnetwork.celest.inject.reflection.ClassList;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 public final class ReflectedConnectedPlayer {
 
     private static final Class<?> clazz = ClassList.CONNECTED_PLAYER;
     private static Field playerKey;
-    private static Method getConnectedServer;
     private final Object original;
 
     static {
         try {
             playerKey = clazz.getDeclaredField("playerKey");
             playerKey.setAccessible(true);
-
-            getConnectedServer = clazz.getMethod("getConnectedServer");
         } catch (ReflectiveOperationException exception) {
             exception.printStackTrace();
         }
@@ -46,10 +41,6 @@ public final class ReflectedConnectedPlayer {
 
     public void setPlayerKey(Object object) throws ReflectiveOperationException {
         playerKey.set(original, object);
-    }
-
-    public ReflectedVelocityServerConnection getConnectedServer() throws ReflectiveOperationException {
-        return new ReflectedVelocityServerConnection(getConnectedServer.invoke(original));
     }
 
 }

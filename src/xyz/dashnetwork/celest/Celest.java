@@ -167,7 +167,6 @@ public final class Celest {
         new CommandTempIpBan();
         new CommandTempIpMute();
         new CommandTempMute();
-        new CommandTest();
         new CommandTheFurpySong();
         new CommandTwoFactor();
         new CommandUnban();

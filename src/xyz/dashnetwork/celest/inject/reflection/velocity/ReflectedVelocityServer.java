@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity;
+package xyz.dashnetwork.celest.inject.reflection.velocity;
 
 import com.google.gson.Gson;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.ProxyServer;
-import xyz.dashnetwork.celest.utils.reflection.ClassList;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.util.ReflectedServerListPingHandler;
-import xyz.dashnetwork.celest.utils.reflection.velocity.network.ReflectedConnectionManager;
+import xyz.dashnetwork.celest.inject.reflection.ClassList;
+import xyz.dashnetwork.celest.inject.reflection.velocity.connection.util.ReflectedServerListPingHandler;
+import xyz.dashnetwork.celest.inject.reflection.velocity.network.ReflectedConnectionManager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

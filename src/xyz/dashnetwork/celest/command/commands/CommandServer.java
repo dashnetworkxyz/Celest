@@ -18,14 +18,19 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.ConnectionRequestBuilder;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
+import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.NamedSource;
+import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -59,8 +64,6 @@ public final class CommandServer extends CelestCommand {
         MessageBuilder builder;
 
         for (Player player : players) {
-            player.createConnectionRequest(server);
-
             builder = new MessageBuilder();
             builder.append("&6&l»&7 You have been sent to &6" + name);
 
@@ -70,6 +73,23 @@ public final class CommandServer extends CelestCommand {
             }
 
             MessageUtils.message(player, builder::build);
+
+            player.createConnectionRequest(server).connect().thenAccept(u -> {
+                if (LazyUtils.anyEquals(u.getStatus(),
+                        ConnectionRequestBuilder.Status.CONNECTION_CANCELLED,
+                        ConnectionRequestBuilder.Status.SERVER_DISCONNECTED)) {
+                    Optional<Component> component = u.getReasonComponent();
+
+                    MessageBuilder kick = new MessageBuilder();
+                    TextSection section = kick.append("&6&l»&7 Failed to connect to &6" + name + "&7. Hover for more info.");
+
+                    component.ifPresentOrElse(
+                            c -> section.hover("&6" + ComponentUtils.toString(c)),
+                            () -> section.hover("&7No kick message provided."));
+
+                    MessageUtils.message(player, kick::build);
+                }
+            });
         }
 
         if (source instanceof Player)

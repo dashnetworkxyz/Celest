@@ -15,31 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils.reflection.velocity.connection.client;
+package xyz.dashnetwork.celest.inject.reflection.velocity.protocol.packet;
 
-import xyz.dashnetwork.celest.utils.reflection.ClassList;
-import xyz.dashnetwork.celest.utils.reflection.velocity.connection.ReflectedMinecraftConnection;
-import xyz.dashnetwork.celest.utils.reflection.velocity.protocol.packet.ReflectedHandshake;
+import xyz.dashnetwork.celest.inject.reflection.ClassList;
 
 import java.lang.reflect.Constructor;
 
-public final class ReflectedInitialInboundConnection {
+public final class ReflectedStatusResponse {
 
-    private static final Class<?> clazz = ClassList.INITIAL_INBOUND_CONNECTION;
+    private static final Class<?> clazz = ClassList.STATUS_RESPONSE;
     private static Constructor<?> constructor;
     private final Object original;
 
     static {
         try {
-            constructor = clazz.getDeclaredConstructor(ClassList.MINECRAFT_CONNECTION, String.class, ClassList.HANDSHAKE);
-            constructor.setAccessible(true);
+            constructor = clazz.getConstructor(CharSequence.class);
         } catch (ReflectiveOperationException exception) {
             exception.printStackTrace();
         }
     }
 
-    public ReflectedInitialInboundConnection(ReflectedMinecraftConnection connection, String address, ReflectedHandshake handshake) throws ReflectiveOperationException {
-        original = constructor.newInstance(connection.original(), address, handshake.original());
+    public ReflectedStatusResponse(CharSequence sequence) throws ReflectiveOperationException {
+        original = constructor.newInstance(sequence);
     }
 
     public Object original() { return original; }
