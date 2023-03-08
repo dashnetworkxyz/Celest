@@ -58,8 +58,8 @@ public final class NamedSourceFormat implements Format {
             player.getCurrentServer().ifPresent(server -> {
                 String name = server.getServerInfo().getName();
 
-                if (player.hasPermission("dashnetwork.server." + name.toLowerCase()))
-                    section.hover("\n&7Server: &6" + name);
+                section.hover("\n&7Server: &6" + name,
+                        each -> each.getPlayer().hasPermission("dashnetwork.server." + name.toLowerCase()));
             });
         }
 

@@ -121,7 +121,7 @@ public final class Celest {
         eventManager.register(this, new PlayerChatListener());
         eventManager.register(this, new PluginMessageListener());
         eventManager.register(this, new PostLoginListener());
-        eventManager.register(this, new PreLoginListener());
+        // eventManager.register(this, new PreLoginListener());
         eventManager.register(this, new ProxyPingListener());
         eventManager.register(this, new ServerConnectedListener());
         eventManager.register(this, new ServerPostConnectListener());

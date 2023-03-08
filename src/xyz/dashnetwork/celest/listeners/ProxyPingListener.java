@@ -87,6 +87,10 @@ public final class ProxyPingListener {
             if (TimeUtils.isRecent(address.getServerPingTime(), TimeType.MINUTE))
                 return; // Skip ping spammers.
 
+            for (User user : User.getUsers())
+                if (user.getAddress().equals(address))
+                    return; // Skip players already online.
+
             address.setServerPingTime(System.currentTimeMillis());
 
             Optional<InetSocketAddress> optional = connection.getVirtualHost();
