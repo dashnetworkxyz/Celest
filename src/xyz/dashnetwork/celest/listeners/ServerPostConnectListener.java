@@ -24,7 +24,6 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.messages.ChannelIdentifier;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.inject.Injector;
 import xyz.dashnetwork.celest.utils.BrandUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
@@ -43,14 +42,8 @@ public final class ServerPostConnectListener {
         Channel.callOut("twofactor", user);
         Channel.callOut("displayname", user);
 
-        ProtocolVersion version = player.getProtocolVersion();
-
-        if (version.compareTo(ProtocolVersion.MINECRAFT_1_13) >= 0)
+        if (player.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_13) >= 0)
             player.sendPluginMessage(brand, name);
-
-        // TODO: Fix SessionPlayerChat & SessionPlayerCommand (1.19.3)
-        if (version.compareTo(ProtocolVersion.MINECRAFT_1_19) >= 0)
-            Injector.injectPlayerKey(player);
     }
 
 }

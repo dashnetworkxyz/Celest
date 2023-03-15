@@ -17,15 +17,13 @@
 
 package xyz.dashnetwork.celest.inject;
 
-import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.inject.server.CelestServerChannelInitializer;
 import xyz.dashnetwork.celest.inject.reflection.velocity.ReflectedVelocityServer;
-import xyz.dashnetwork.celest.inject.reflection.velocity.connection.client.ReflectedConnectedPlayer;
 import xyz.dashnetwork.celest.inject.reflection.velocity.network.ReflectedConnectionManager;
 import xyz.dashnetwork.celest.inject.reflection.velocity.network.ReflectedServerChannelInitializerHolder;
+import xyz.dashnetwork.celest.inject.server.CelestServerChannelInitializer;
 
 public final class Injector {
 
@@ -42,17 +40,6 @@ public final class Injector {
             holder.set(new CelestServerChannelInitializer(holder.get()));
         } catch (ReflectiveOperationException exception) {
             logger.error("Failed to inject server channel initializer.", exception);
-        }
-    }
-
-    // Hacky workaround for issue #804. (https://github.com/PaperMC/Velocity/issues/804)
-    // This completely disables chat signatures.
-    public static void injectPlayerKey(Player player) {
-        try {
-            ReflectedConnectedPlayer connected = new ReflectedConnectedPlayer(player);
-            connected.setPlayerKey(null);
-        } catch (ReflectiveOperationException exception) {
-            logger.error("Failed to inject play session handler.", exception);
         }
     }
 

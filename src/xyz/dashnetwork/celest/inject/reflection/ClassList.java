@@ -22,7 +22,7 @@ public final class ClassList {
     public static Class<?>
             VELOCITY_SERVER,
             MINECRAFT_CONNECTION, MINECRAFT_CONNECTION_ASSOCIATION, MINECRAFT_SESSION_HANDLER,
-            CONNECTED_PLAYER, HANDSHAKE_SESSION_HANDLER, INITIAL_INBOUND_CONNECTION, STATUS_SESSION_HANDLER,
+            HANDSHAKE_SESSION_HANDLER, INITIAL_INBOUND_CONNECTION, STATUS_SESSION_HANDLER,
             SERVER_LIST_PING_HANDLER, VELOCITY_INBOUND_CONNECTION,
             CONNECTION_MANAGER, SERVER_CHANNEL_INITIALIZER_HOLDER,
             STATE_REGISTRY,
@@ -34,7 +34,6 @@ public final class ClassList {
             MINECRAFT_CONNECTION = Class.forName("com.velocitypowered.proxy.connection.MinecraftConnection");
             MINECRAFT_CONNECTION_ASSOCIATION = Class.forName("com.velocitypowered.proxy.connection.MinecraftConnectionAssociation");
             MINECRAFT_SESSION_HANDLER = Class.forName("com.velocitypowered.proxy.connection.MinecraftSessionHandler");
-            CONNECTED_PLAYER = Class.forName("com.velocitypowered.proxy.connection.client.ConnectedPlayer");
             HANDSHAKE_SESSION_HANDLER = Class.forName("com.velocitypowered.proxy.connection.client.HandshakeSessionHandler");
             INITIAL_INBOUND_CONNECTION = Class.forName("com.velocitypowered.proxy.connection.client.InitialInboundConnection");
             STATUS_SESSION_HANDLER = Class.forName("com.velocitypowered.proxy.connection.client.StatusSessionHandler");
