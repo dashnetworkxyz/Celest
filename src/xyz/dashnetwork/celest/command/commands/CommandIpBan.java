@@ -22,12 +22,12 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.NamedSource;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 
 import java.util.Optional;

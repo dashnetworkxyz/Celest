@@ -17,8 +17,8 @@
 
 package xyz.dashnetwork.celest.events;
 
-import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
 public final class CelestChatEvent {
 

@@ -18,10 +18,10 @@
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
 import java.util.ArrayList;
 import java.util.Collection;

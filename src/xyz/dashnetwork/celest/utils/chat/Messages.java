@@ -20,12 +20,12 @@ package xyz.dashnetwork.celest.utils.chat;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
-import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
 import java.util.function.Predicate;
 

@@ -22,7 +22,6 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.NamedSource;
 import xyz.dashnetwork.celest.utils.PermissionType;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
@@ -30,6 +29,7 @@ import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
 import java.util.List;
 import java.util.Optional;

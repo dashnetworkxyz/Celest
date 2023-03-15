@@ -50,7 +50,6 @@ public final class ProxyPingListener {
     public void onProxyPing(ProxyPingEvent event) {
         final InboundConnection connection = event.getConnection();
         final ProtocolVersion version = connection.getProtocolVersion();
-        int protocol = version.compareTo(ProtocolVersion.MINECRAFT_1_7_6) <= 0 ? 48 : version.getProtocol();
         ServerPing.Builder builder = event.getPing().asBuilder();
         int online = 0;
 
@@ -65,7 +64,7 @@ public final class ProxyPingListener {
         builder.onlinePlayers(online);
         builder.maximumPlayers(Calendar.getInstance().get(Calendar.YEAR));
         builder.description(description);
-        builder.version(new ServerPing.Version(protocol, software));
+        builder.version(new ServerPing.Version(version.getProtocol(), software));
 
         for (String line : ConfigurationList.MOTD_HOVER)
             builder.samplePlayers(new ServerPing.SamplePlayer(line, UUID.randomUUID()));
