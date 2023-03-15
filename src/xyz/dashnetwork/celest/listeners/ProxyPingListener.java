@@ -50,7 +50,7 @@ public final class ProxyPingListener {
     public void onProxyPing(ProxyPingEvent event) {
         final InboundConnection connection = event.getConnection();
         final ProtocolVersion version = connection.getProtocolVersion();
-        int protocol = VersionUtils.isLegacy(version) ? 48 : version.getProtocol();
+        int protocol = version.compareTo(ProtocolVersion.MINECRAFT_1_7_6) <= 0 ? 48 : version.getProtocol();
         ServerPing.Builder builder = event.getPing().asBuilder();
         int online = 0;
 
