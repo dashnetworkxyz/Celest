@@ -23,6 +23,7 @@ import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
+import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -51,7 +52,13 @@ import xyz.dashnetwork.celest.vault.api.LuckPermsAPI;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "celest", name = "Celest", version = "0.13", authors = {"MasterDash5"})
+@Plugin(
+        id = "celest",
+        name = "Celest",
+        version = "0.13",
+        authors = {"MasterDash5"},
+        dependencies = {@Dependency(id = "unsignedvelocity")}
+)
 public final class Celest {
 
     private static final Gson gson = new Gson();
