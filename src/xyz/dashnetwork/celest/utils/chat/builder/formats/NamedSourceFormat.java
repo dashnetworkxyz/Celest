@@ -47,9 +47,7 @@ public final class NamedSourceFormat implements Format {
         String displayname = source.getDisplayname();
         TextSection section = new TextSection(displayname, "&6" + username, null);
 
-        if (source instanceof User) {
-            User user = (User) source;
-
+        if (source instanceof User user) {
             section.hover("\n&7Address: &6" + user.getAddress().getString(), User::showAddress);
             section.insertion(user.getUuid().toString());
 

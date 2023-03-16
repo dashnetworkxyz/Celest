@@ -62,8 +62,8 @@ public final class CommandTempBan extends CelestCommand {
 
         UUID uuid = null;
 
-        if (source instanceof Player)
-            uuid = ((Player) source).getUniqueId();
+        if (source instanceof Player player)
+            uuid = player.getUniqueId();
 
         offline.getData().setBan(new PunishData(uuid, reason, duration));
 
@@ -84,7 +84,7 @@ public final class CommandTempBan extends CelestCommand {
 
         builder = new MessageBuilder();
         builder.append("&6&l»&r ");
-        builder.append(new PlayerProfileFormat(offline)).prefix("&6");
+        builder.append(new PlayerProfileFormat(offline.toPlayerProfile())).prefix("&6");
         builder.append("&7 temporarily banned by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("\n&6&l»&7 Hover here for details.")

@@ -63,14 +63,14 @@ public final class PostLoginListener {
         }
 
         List<PlayerProfile> list = new ArrayList<>(List.of(user.getAddress().getData().getProfiles()));
-        list.removeIf(each -> each.getUuid().equals(player.getUniqueId()));
+        list.removeIf(each -> each.uuid().equals(player.getUniqueId()));
 
         if (!list.isEmpty()) {
             builder = new MessageBuilder();
             builder.append("&6&l»&r ");
             builder.append("&7Hover for &6" + list.size() + "&7 alts of")
                     .hover("&7Alts for " + player.getUsername() + ":\n&6"
-                            + ListUtils.convertToString(list, PlayerProfile::getUsername, "\n"));
+                            + ListUtils.convertToString(list, PlayerProfile::username, "\n"));
             builder.append("&r ");
             builder.append(format);
 

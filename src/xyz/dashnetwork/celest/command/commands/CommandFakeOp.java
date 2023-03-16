@@ -49,7 +49,7 @@ public final class CommandFakeOp extends CelestCommand {
             return;
         }
 
-        String username = source instanceof Player ? ((Player) source).getUsername() : "Server";
+        String username = source instanceof Player player ? player.getUsername() : "Server";
         List<Player> players = new ArrayList<>(List.of(optional.get()));
         MessageBuilder builder;
 

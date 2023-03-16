@@ -37,7 +37,7 @@ public final class MojangUtils {
         if (username.length() > 16)
             return null;
 
-        Limbo<PlayerProfile> limbo = Limbo.get(PlayerProfile.class, each -> each.getUsername().equalsIgnoreCase(username));
+        Limbo<PlayerProfile> limbo = Limbo.get(PlayerProfile.class, each -> each.username().equalsIgnoreCase(username));
 
         if (limbo != null) {
             limbo.reset();
@@ -52,7 +52,7 @@ public final class MojangUtils {
             if (response == null)
                 return null;
 
-            PlayerProfile profile = response.toProfile();
+            PlayerProfile profile = response.toPlayerProfile();
             new Limbo<>(profile);
 
             return profile;
@@ -64,7 +64,7 @@ public final class MojangUtils {
     }
 
     public static PlayerProfile fromUuid(@NotNull UUID uuid) {
-        Limbo<PlayerProfile> limbo = Limbo.get(PlayerProfile.class, each -> each.getUuid().equals(uuid));
+        Limbo<PlayerProfile> limbo = Limbo.get(PlayerProfile.class, each -> each.uuid().equals(uuid));
 
         if (limbo != null) {
             limbo.reset();
@@ -79,7 +79,7 @@ public final class MojangUtils {
             if (response == null)
                 return null;
 
-            PlayerProfile profile = response.toProfile();
+            PlayerProfile profile = response.toPlayerProfile();
             new Limbo<>(profile);
 
             return profile;
@@ -94,7 +94,7 @@ public final class MojangUtils {
 
         private String name, id;
 
-        public PlayerProfile toProfile() {
+        public PlayerProfile toPlayerProfile() {
             return new PlayerProfile(
                     UUID.fromString(id.replaceFirst(
                             "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",

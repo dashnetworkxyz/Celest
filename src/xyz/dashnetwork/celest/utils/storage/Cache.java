@@ -99,7 +99,7 @@ public final class Cache {
 
         for (PlayerProfile profile : profiles)
             for (CacheData each : cache)
-                if (profile.getUuid().equals(each.getUUID()))
+                if (profile.uuid().equals(each.getUUID()))
                     list.add(each);
 
         return list;

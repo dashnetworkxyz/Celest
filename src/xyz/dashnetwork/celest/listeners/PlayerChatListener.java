@@ -74,7 +74,7 @@ public final class PlayerChatListener {
             UUID uuid = mute.getJudge();
 
             String type = expiration == null ? "permanently" : "temporarily";
-            String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).getUsername();
+            String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).username();
 
             MessageBuilder builder = new MessageBuilder();
             TextSection section = builder.append("&6&l»&7 You have been " + type + " muted. Hover for more info.");

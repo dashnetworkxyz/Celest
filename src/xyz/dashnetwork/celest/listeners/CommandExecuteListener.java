@@ -34,8 +34,8 @@ public final class CommandExecuteListener {
     public void onCommandExecute(CommandExecuteEvent event) {
         CommandSource source = event.getCommandSource();
 
-        if (source instanceof Player) {
-            User user = User.getUser((Player) source);
+        if (source instanceof Player player) {
+            User user = User.getUser(player);
 
             if (!user.isAuthenticated()) {
                 event.setResult(CommandExecuteEvent.CommandResult.denied());

@@ -56,7 +56,7 @@ public final class CommandAccounts extends CelestCommand {
         Address address = Address.getAddress(offline.getData().getAddress(), true);
         List<PlayerProfile> profiles = new ArrayList<>(List.of(address.getData().getProfiles()));
 
-        profiles.removeIf(profile -> profile.getUuid().equals(offline.getUuid()));
+        profiles.removeIf(profile -> profile.uuid().equals(offline.getUuid()));
 
         MessageBuilder builder = new MessageBuilder();
 

@@ -108,7 +108,7 @@ public final class ProxyPingListener {
                 virtual = new InetSocketAddress("Unknown", 0);
 
             String range = VersionUtils.getVersionString(version);
-            String name = profiles[0].getUsername();
+            String name = profiles[0].username();
 
             if (profiles.length > 1) {
                 CacheData recent = Cache.findMostRecent(profiles);
@@ -123,7 +123,7 @@ public final class ProxyPingListener {
             section.hover("&6" + address.getString() + "\n", User::showAddress);
             section.hover("&7Virtual: &6" + virtual.getHostName() + ":" + virtual.getPort());
             section.hover("\n&7Version: &6" + range + "&7 (" + version.getProtocol() + ")");
-            section.hover("\n&7Accounts: &6" + ArrayUtils.convertToString(profiles, PlayerProfile::getUsername, ", "));
+            section.hover("\n&7Accounts: &6" + ArrayUtils.convertToString(profiles, PlayerProfile::username, ", "));
 
             MessageUtils.broadcast(user -> user.getData().getPingSpy(), message::build);
         }).schedule();

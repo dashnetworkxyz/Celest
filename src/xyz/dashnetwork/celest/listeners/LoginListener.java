@@ -46,7 +46,7 @@ public final class LoginListener {
             UUID uuid = ban.getJudge();
 
             String type = expiration == null ? "permanently" : "temporarily";
-            String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).getUsername();
+            String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).username();
 
             MessageBuilder builder = new MessageBuilder();
             builder.append("&6&lDashNetwork");

@@ -83,7 +83,7 @@ public final class LegacyParser {
 
                         username = data.getUsername();
                     } else if (uuid.getMostSignificantBits() != 0) { // This shouldn't happen, but in theory it can.
-                        username = ProfileUtils.fromUuid(uuid).getUsername();
+                        username = ProfileUtils.fromUuid(uuid).username();
 
                         if (username == null)
                             continue;

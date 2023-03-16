@@ -32,8 +32,8 @@ public interface NamedSource {
     };
 
     static NamedSource of(CommandSource source) {
-        if (source instanceof Player)
-            return User.getUser((Player) source);
+        if (source instanceof Player player)
+            return User.getUser(player);
 
         return console;
     }

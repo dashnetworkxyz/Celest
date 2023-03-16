@@ -65,8 +65,8 @@ public final class User extends OfflineUser implements NamedSource, Audience {
     public static Collection<User> getUsers() { return users.values(); }
 
     public static Optional<User> getUser(Audience audience) {
-        if (audience instanceof Player)
-            return Optional.of(getUser((Player) audience));
+        if (audience instanceof Player player)
+            return Optional.of(getUser(player));
 
         return Optional.empty();
     }

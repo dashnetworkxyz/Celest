@@ -78,10 +78,10 @@ public final class Address implements Savable {
         PlayerProfile[] profiles = addressData.getProfiles();
 
         for (PlayerProfile profile : profiles)
-            if (!profile.getUuid().equals(uuid))
+            if (!profile.uuid().equals(uuid))
                 list.add(profile);
 
-        System.out.println("Remove: " + ListUtils.convertToString(list, PlayerProfile::getUsername, ", "));
+        System.out.println("Remove: " + ListUtils.convertToString(list, PlayerProfile::username, ", "));
 
         addressData.setProfiles(list.toArray(PlayerProfile[]::new));
     }
@@ -90,7 +90,7 @@ public final class Address implements Savable {
         PlayerProfile[] profiles = addressData.getProfiles();
 
         for (PlayerProfile profile : profiles)
-            if (profile.getUuid().equals(uuid))
+            if (profile.uuid().equals(uuid))
                 return;
 
         addressData.setProfiles(ArrayUtils.add(profiles, new PlayerProfile(uuid, username)));

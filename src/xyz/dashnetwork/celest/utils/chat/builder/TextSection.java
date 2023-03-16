@@ -39,11 +39,8 @@ public final class TextSection implements Cloneable {
 
         @Override
         public boolean equals(Object object) {
-            if (object instanceof Hover) {
-                Hover hover = (Hover) object;
-
+            if (object instanceof Hover hover)
                 return text.equals(hover.text) && CompareUtils.equalsWithNull(predicate, hover.predicate);
-            }
 
             return false;
         }

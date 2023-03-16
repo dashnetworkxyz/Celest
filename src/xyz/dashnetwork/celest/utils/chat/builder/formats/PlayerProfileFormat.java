@@ -36,9 +36,9 @@ public final class PlayerProfileFormat implements Format {
             if (!sections.isEmpty())
                 sections.add(new TextSection(", ", null, null));
 
-            String stringUuid = profile.getUuid().toString();
+            String stringUuid = profile.uuid().toString();
 
-            sections.add(new TextSection(profile.getUsername(), "&6" + stringUuid, null)
+            sections.add(new TextSection(profile.username(), "&6" + stringUuid, null)
                     .click(ClickEvent.suggestCommand(stringUuid)));
         }
     }

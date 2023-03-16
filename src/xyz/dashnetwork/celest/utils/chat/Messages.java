@@ -38,36 +38,34 @@ public final class Messages {
         Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(named, type, message));
 
         switch (type) {
-            case OWNER:
+            case OWNER -> {
                 builder.append("&9&lOwner&r ");
                 builder.append(new NamedSourceFormat(named));
                 builder.append("&r &c&l»&c");
-
                 predicate = each -> each.isOwner() || each.getData().getChatType().equals(ChatType.OWNER);
-                break;
-            case ADMIN:
+            }
+            case ADMIN -> {
                 builder.append("&9&lAdmin&r ");
                 builder.append(new NamedSourceFormat(named));
                 builder.append("&r &3&l»&3");
-
                 predicate = each -> each.isAdmin() || each.getData().getChatType().equals(ChatType.ADMIN);
-                break;
-            case STAFF:
+            }
+            case STAFF -> {
                 builder.append("&9&lStaff&r ");
                 builder.append(new NamedSourceFormat(named));
                 builder.append("&r &6&l»&6");
-
                 predicate = each -> each.isStaff() || each.getData().getChatType().equals(ChatType.STAFF);
-                break;
-            case LOCAL:
-                if (named instanceof User)
-                    ((User) named).getPlayer().spoofChatInput(message);
+            }
+            case LOCAL -> {
+                if (named instanceof User user)
+                    user.getPlayer().spoofChatInput(message);
                 return;
-            default:
+            }
+            default -> {
                 builder.append(new NamedSourceFormat(named));
                 builder.append("&r &e&l»&r");
-
                 predicate = each -> true;
+            }
         }
 
         for (String split : message.split(" ")) {

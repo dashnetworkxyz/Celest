@@ -56,8 +56,8 @@ public final class CommandIpBan extends CelestCommand {
         String reason = arguments.get(String.class).orElse("No reason provided.");
         UUID uuid = null;
 
-        if (source instanceof Player)
-            uuid = ((Player) source).getUniqueId();
+        if (source instanceof Player player)
+            uuid = player.getUniqueId();
 
         address.getData().setBan(new PunishData(uuid, reason, null));
 

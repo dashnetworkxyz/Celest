@@ -28,20 +28,23 @@ import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import java.util.Optional;
 import java.util.UUID;
 
-public class OfflineUser extends PlayerProfile implements Savable {
+public class OfflineUser implements Savable {
 
+    protected final UUID uuid;
     protected final String stringUuid;
+    protected String username;
     protected UserData userData;
     private final boolean generated;
 
     protected OfflineUser(UUID uuid, String username, boolean shouldLimbo) {
-        super(uuid, username);
+        this.uuid = uuid;
+        this.stringUuid = uuid.toString();
+        this.username = username;
 
-        stringUuid = uuid.toString();
         userData = null;
 
         if (!shouldLimbo) {
-            Limbo<OfflineUser> limbo = Limbo.get(OfflineUser.class, each -> each.getUuid().equals(uuid));
+            Limbo<OfflineUser> limbo = Limbo.get(OfflineUser.class, each -> each.uuid.equals(uuid));
 
             if (limbo != null) {
                 limbo.cancel();
@@ -64,19 +67,25 @@ public class OfflineUser extends PlayerProfile implements Savable {
     }
 
     public static OfflineUser getOfflineUser(PlayerProfile profile) {
-        UUID uuid = profile.getUuid();
+        UUID uuid = profile.uuid();
         Optional<Player> optional = Celest.getServer().getPlayer(uuid);
 
         if (optional.isPresent())
             return User.getUser(optional.get());
 
-        Limbo<OfflineUser> limbo = Limbo.get(OfflineUser.class, each -> each.getUuid().equals(uuid));
+        Limbo<OfflineUser> limbo = Limbo.get(OfflineUser.class, each -> each.uuid.equals(uuid));
 
         if (limbo != null)
             return limbo.getObject();
 
-        return new OfflineUser(uuid, profile.getUsername(), true);
+        return new OfflineUser(uuid, profile.username(), true);
     }
+
+    public UUID getUuid() { return uuid; }
+
+    public String getUsername() { return username; }
+
+    public PlayerProfile toPlayerProfile() { return new PlayerProfile(uuid, username); }
 
     @Override
     public void save() {

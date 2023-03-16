@@ -40,36 +40,33 @@ public final class ArgumentTypeFormat implements Format {
             section.hover("&6Optional ");
 
         switch (type) {
-            case CHAT_TYPE:
-                section.hover("&6Chat selector&7" +
-                        "\nThis requires the name of a Chat type." +
-                        "\nChat types: &6Global");
+            case CHAT_TYPE -> {
+                section.hover("""
+                        &6Chat selector&7
+                        This requires the name of a Chat type.
+                        Chat types: &6Global""");
                 section.hover(", Local", User::isOwner);
                 section.hover(", Staff", User::isStaff);
                 section.hover(", Admin", User::isAdmin);
                 section.hover(", Owner", User::isOwner);
-                break;
-            case INTEGER:
-                section.hover("&6Integer selector&7" +
-                        "\nThis requires an integer." +
-                        "\nMust be within -2147483648 to 2147483647");
-                break;
-            case PLAYER:
-                section.hover("&6Player selector&7" +
-                        "\nThis requires a player." +
-                        "\nCan be specified by &6username&7 or &6UUID&7." +
-                        "\n&6@s&7 can be used to specify yourself.");
-                break;
-            case PLAYER_LIST:
-                section.hover("&6Player List selector&7" +
-                        "\nThis requires a player." +
-                        "\nMultiple players can given by separating with comas." +
-                        "\nCan be specified by &6username&7 or &6UUID&7." +
-                        "\n&6@s&7 can be used to specify yourself." +
-                        "\n&6@a&7 can be used to specify all players.");
-                break;
-            default:
-                section.hover("//TODO");
+            }
+            case INTEGER -> section.hover("""
+                    &6Integer selector&7
+                    This requires an integer.
+                    Must be within -2147483648 to 2147483647""");
+            case PLAYER -> section.hover("""
+                    &6Player selector&7
+                    This requires a player.
+                    Can be specified by &6username&7 or &6UUID&7.
+                    &6@s&7 can be used to specify yourself.""");
+            case PLAYER_LIST -> section.hover("""
+                    &6Player List selector&7
+                    This requires a player.
+                    Multiple players can given by separating with comas.
+                    Can be specified by &6username&7 or &6UUID&7.
+                    &6@s&7 can be used to specify yourself.
+                    &6@a&7 can be used to specify all players.""");
+            default -> section.hover("//TODO");
         }
 
         sections.add(section);

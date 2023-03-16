@@ -58,14 +58,9 @@ public final class CelestHandshakeSessionHandler implements InvocationHandler {
                 connection.setAssociation(inbound);
 
                 switch (state.name()) {
-                    case "STATUS":
-                        connection.setSessionHandler(new CelestStatusSessionHandler(inbound, connection));
-                        break;
-                    case "LOGIN":
-                        handler.handleLogin(handshake, inbound);
-                        break;
-                    default:
-                        throw new AssertionError("getStateForProtocol provided invalid state!");
+                    case "STATUS" -> connection.setSessionHandler(new CelestStatusSessionHandler(inbound, connection));
+                    case "LOGIN" -> handler.handleLogin(handshake, inbound);
+                    default -> throw new AssertionError("getStateForProtocol provided invalid state!");
                 }
             }
 

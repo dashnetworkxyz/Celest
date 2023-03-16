@@ -46,7 +46,7 @@ public final class ProfileUtils {
         if (profile == null)
             return null;
 
-        UUID uuid = profile.getUuid();
+        UUID uuid = profile.uuid();
         UserData userData = Storage.read(uuid.toString(), Storage.Directory.USER, UserData.class);
 
         if (userData != null)

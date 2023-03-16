@@ -60,7 +60,7 @@ public final class CommandRealName extends CelestCommand {
                 builder.append("&6&l»&7 ");
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&7 real name is ");
-                builder.append(new PlayerProfileFormat(user)).prefix("&6");
+                builder.append(new PlayerProfileFormat(user.toPlayerProfile())).prefix("&6");
             }
         }
 

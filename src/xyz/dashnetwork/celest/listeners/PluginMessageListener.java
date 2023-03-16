@@ -26,9 +26,8 @@ public final class PluginMessageListener {
 
     @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
-        if (event.getSource() instanceof ServerConnection) {
-            ServerConnection sink = (ServerConnection) event.getSource();
-            boolean handled = Channel.callIn(event.getIdentifier(), sink, event.dataAsDataStream());
+        if (event.getSource() instanceof ServerConnection connection) {
+            boolean handled = Channel.callIn(event.getIdentifier(), connection, event.dataAsDataStream());
 
             if (handled)
                 event.setResult(PluginMessageEvent.ForwardResult.handled());

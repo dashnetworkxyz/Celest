@@ -57,8 +57,8 @@ public final class CommandBan extends CelestCommand {
         String reason = arguments.get(String.class).orElse("No reason provided.");
         UUID uuid = null;
 
-        if (source instanceof Player)
-            uuid = ((Player) source).getUniqueId();
+        if (source instanceof Player player)
+            uuid = player.getUniqueId();
 
         offline.getData().setBan(new PunishData(uuid, reason, null));
 
@@ -78,7 +78,7 @@ public final class CommandBan extends CelestCommand {
 
         builder = new MessageBuilder();
         builder.append("&6&l»&r ");
-        builder.append(new PlayerProfileFormat(offline)).prefix("&6");
+        builder.append(new PlayerProfileFormat(offline.toPlayerProfile())).prefix("&6");
         builder.append("&7 permanently banned by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("\n&6&l»&7 Hover for details.")

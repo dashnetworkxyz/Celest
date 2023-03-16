@@ -63,38 +63,35 @@ public final class CommandCelest extends CelestCommand {
         }
 
         switch (optionalCommand.get().toLowerCase()) {
-            case "reload":
+            case "reload" -> {
                 Configuration.load();
                 ConfigurationList.load();
-
                 MessageUtils.message(source, "&6&l»&7 config.yml reloaded.");
-                break;
-            case "save":
+            }
+            case "save" -> {
                 Celest.getSaveTask().run();
                 MessageUtils.message(source, "&6&l»&7 Save complete.");
-                break;
-            case "legacy-import":
+            }
+            case "legacy-import" -> {
                 MessageUtils.message(source, "&6&l»&7 Reading legacy data...");
 
                 LegacyParser parser = new LegacyParser();
                 parser.read();
 
                 MessageUtils.message(source, "&6&l»&7 Writing legacy data...");
-
                 parser.write();
 
                 MessageUtils.message(source, "&6&l»&7 Legacy import complete.");
-                break;
-            case "clear-limbo":
+            }
+            case "clear-limbo" -> {
                 for (Limbo<?> limbo : Limbo.getLimbos()) {
                     limbo.cancel();
                     limbo.save();
                 }
 
                 MessageUtils.message(source, "&6&l»&7 All objects in limbo cleared & saved.");
-                break;
-            default:
-                sendHelpMessage(source);
+            }
+            default -> sendHelpMessage(source);
         }
     }
 

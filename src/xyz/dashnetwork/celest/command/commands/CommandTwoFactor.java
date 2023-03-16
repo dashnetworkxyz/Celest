@@ -75,7 +75,7 @@ public final class CommandTwoFactor extends CelestCommand {
         String twoFactor = data.getTwoFactor();
 
         switch (optionalCommand.get().toLowerCase()) {
-            case "setup":
+            case "setup" -> {
                 if (twoFactor != null) {
                     MessageUtils.message(source, "&6&l»&7 You have already setup 2fa.");
                     return;
@@ -91,8 +91,8 @@ public final class CommandTwoFactor extends CelestCommand {
                 builder.append("\n&6&l»&7 Type &6/" + label + " verify <totp>&7 to finish 2fa setup.");
 
                 MessageUtils.message(source, builder::build);
-                break;
-            case "disable":
+            }
+            case "disable" -> {
                 if (twoFactor == null) {
                     MessageUtils.message(source, "&6&l»&7 You haven't setup 2fa.");
                     return;
@@ -112,9 +112,8 @@ public final class CommandTwoFactor extends CelestCommand {
                 }
 
                 MessageUtils.message(source, "&6&l»&7 Incorrect TOTP code.");
-                break;
-            case "verify":
-            case "totp":
+            }
+            case "verify", "totp" -> {
                 if (!tempKeyMap.containsKey(uuid)) {
                     MessageUtils.message(source, "&6&l»&7 Use &6/" + label + " setup&7 to setup 2fa.");
                     return;
@@ -138,9 +137,8 @@ public final class CommandTwoFactor extends CelestCommand {
                 }
 
                 MessageUtils.message(source, "&6&l»&7 Incorrect TOTP code.");
-                break;
-            default:
-                sendHelpMessage(source, label);
+            }
+            default -> sendHelpMessage(source, label);
         }
     }
 
