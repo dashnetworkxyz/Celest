@@ -69,7 +69,7 @@ public final class CommandKick extends CelestCommand {
             player.disconnect(message);
         }
 
-        builder.append("&7 kicked by");
+        builder.append("&7 kicked by ");
         builder.append(new NamedSourceFormat(named));
 
         MessageUtils.broadcast(builder::build);
