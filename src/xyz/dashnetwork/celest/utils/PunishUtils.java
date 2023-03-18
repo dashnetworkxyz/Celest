@@ -25,7 +25,7 @@ public final class PunishUtils {
         if (data == null)
             return false;
 
-        Long expiration = data.getExpiration();
+        Long expiration = data.expiration();
 
         return expiration == null || expiration > System.currentTimeMillis();
     }

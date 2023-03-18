@@ -25,10 +25,14 @@ import java.util.List;
 
 public final class ConfigurationList {
 
+    public static boolean DEBUG, INJECTOR;
     public static String MOTD_DESCRIPTION, MOTD_SOFTWARE;
     public static String[] MOTD_HOVER;
 
     public static void load() {
+        DEBUG = Configuration.get(boolean.class, "debug");
+        INJECTOR = Configuration.get(boolean.class, "injector");
+
         MOTD_DESCRIPTION = parse(Configuration.get(String.class, "motd.description"));
         MOTD_SOFTWARE = parse(Configuration.get(String.class, "motd.software"));
         MOTD_HOVER = parse(Configuration.get(String[]::new, "motd.hover"));

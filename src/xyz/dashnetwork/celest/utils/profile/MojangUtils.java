@@ -19,18 +19,17 @@ package xyz.dashnetwork.celest.utils.profile;
 
 import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
+import xyz.dashnetwork.celest.utils.log.LogType;
+import xyz.dashnetwork.celest.utils.log.Logger;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.UUID;
 
 public final class MojangUtils {
 
-    private static final Logger logger = Celest.getLogger();
     private static final Gson gson = Celest.getGson();
 
     public static PlayerProfile fromUsername(@NotNull String username) {
@@ -47,7 +46,12 @@ public final class MojangUtils {
 
         try {
             URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + username);
-            Response response = gson.fromJson(new InputStreamReader(url.openStream()), Response.class);
+            String json = new String(url.openStream().readAllBytes());
+
+            if (json.contains("/profile/"))
+                return null;
+
+            Response response = gson.fromJson(json, Response.class);
 
             if (response == null)
                 return null;
@@ -57,8 +61,7 @@ public final class MojangUtils {
 
             return profile;
         } catch (IOException exception) {
-            logger.warn("Failed to pull response from Mojang API.");
-            exception.printStackTrace();
+            Logger.log(LogType.WARN, true, "Failed to pull response from Mojang API.");
             return null;
         }
     }
@@ -74,7 +77,12 @@ public final class MojangUtils {
 
         try {
             URL url = new URL("https://api.mojang.com/user/profile/" + uuid);
-            Response response = gson.fromJson(new InputStreamReader(url.openStream()), Response.class);
+            String json = new String(url.openStream().readAllBytes());
+
+            if (json.contains("/profile/"))
+                return null;
+
+            Response response = gson.fromJson(json, Response.class);
 
             if (response == null)
                 return null;
@@ -84,15 +92,14 @@ public final class MojangUtils {
 
             return profile;
         } catch (IOException exception) {
-            logger.warn("Failed to pull response from Mojang API.");
-            exception.printStackTrace();
+            Logger.log(LogType.WARN, true, "Failed to pull response from Mojang API.");
             return null;
         }
     }
 
     private static class Response {
 
-        private String name, id;
+        private String name, id, error;
 
         public PlayerProfile toPlayerProfile() {
             return new PlayerProfile(

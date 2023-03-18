@@ -43,6 +43,13 @@ public final class ProfileUtils {
 
         PlayerProfile profile = MojangUtils.fromUsername(username);
 
+        if (profile == null) {
+            String uuid = Storage.read(username.toLowerCase(), Storage.Directory.LOOKUP, String.class);
+
+            if (uuid != null && StringUtils.matchesUuid(uuid))
+                profile = MojangUtils.fromUuid(UUID.fromString(uuid));
+        }
+
         if (profile == null)
             return null;
 

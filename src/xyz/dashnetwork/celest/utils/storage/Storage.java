@@ -20,6 +20,8 @@ package xyz.dashnetwork.celest.utils.storage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.utils.log.LogType;
+import xyz.dashnetwork.celest.utils.log.Logger;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import xyz.dashnetwork.celest.utils.storage.data.serializer.UserDataSerializer;
 
@@ -40,6 +42,7 @@ public final class Storage {
 
         PARENT(folder),
         ADDRESS(new File(folder, "address")),
+        LOOKUP(new File(folder, "lookup")),
         USER(new File(folder, "user"));
 
         private final File file;
@@ -55,12 +58,17 @@ public final class Storage {
             File file = directory.getFile();
 
             if (!file.exists() && !file.mkdirs())
-                Celest.getLogger().error("Failed to create " + directory.name() + " folder");
+                Logger.log(LogType.ERROR, false,
+                        "Failed to create folder: " + file.getAbsolutePath()
+                );
         }
     }
 
     public static void delete(String fileName, Directory directory) {
-        new File(directory.getFile(), fileName + ".json").delete();
+        if (!new File(directory.getFile(), fileName + ".json").delete())
+            Logger.log(LogType.WARN, true,
+                    "Failed to delete file for " + fileName + ".json (" + directory.name() + ")"
+            );
     }
 
     public static void write(String fileName, Directory directory, Object object) {
@@ -69,13 +77,16 @@ public final class Storage {
 
         try {
             if (!file.exists())
-                file.createNewFile();
+                if (!file.createNewFile())
+                    Logger.log(LogType.WARN, true,
+                            "Failed to create file for " + fileName + ".json (" + directory.name() + ")"
+                    );
 
             FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8);
             writer.write(json);
             writer.close();
         } catch (IOException exception) {
-            exception.printStackTrace();
+            Logger.throwable(exception);
         }
     }
 
@@ -110,7 +121,8 @@ public final class Storage {
             data = stream.readAllBytes();
             stream.close();
         } catch (IOException exception) {
-            throw new RuntimeException(exception);
+            Logger.throwable(exception);
+            return null;
         }
 
         return gson.fromJson(new String(data, StandardCharsets.UTF_8), clazz);

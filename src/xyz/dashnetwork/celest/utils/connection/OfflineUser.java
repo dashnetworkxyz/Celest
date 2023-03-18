@@ -92,8 +92,10 @@ public class OfflineUser implements Savable {
         if (userData.isObsolete()) {
             if (!generated)
                 Storage.delete(stringUuid, Storage.Directory.USER);
-        } else
+        } else {
             Storage.write(stringUuid, Storage.Directory.USER, userData);
+            Storage.write(username.toLowerCase(), Storage.Directory.LOOKUP, uuid);
+        }
     }
 
     public boolean isActive() { return false; }

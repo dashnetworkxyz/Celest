@@ -28,7 +28,7 @@ public final class TimeUtils {
 
     static {
         formatter = new SimpleDateFormat("MMM d, yyyy, hh:mm a z");
-        formatter.setTimeZone(TimeZone.getTimeZone("MST"));
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     public static String longToDate(long time) { return formatter.format(time); }

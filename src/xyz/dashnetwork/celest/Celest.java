@@ -25,6 +25,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginManager;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
@@ -55,9 +56,12 @@ import java.util.concurrent.TimeUnit;
 @Plugin(
         id = "celest",
         name = "Celest",
-        version = "0.13",
+        version = "0.14",
         authors = {"MasterDash5"},
-        dependencies = {@Dependency(id = "unsignedvelocity")}
+        dependencies = {
+                @Dependency(id = "luckperms", optional = true),
+                @Dependency(id = "unsignedvelocity", optional = true)
+        }
 )
 public final class Celest {
 
@@ -102,15 +106,20 @@ public final class Celest {
         ConfigurationList.load();
         Cache.load();
 
-        if (server.getPluginManager().isLoaded("luckperms"))
+        PluginManager pluginManager = server.getPluginManager();
+
+        if (pluginManager.isLoaded("luckperms"))
             vault = new LuckPermsAPI();
         else {
-            logger.warn("Couldn't find a permissions plugin for Vault, using fallback.");
+            logger.warn("Couldn't find LuckPerms plugin for Vault, using fallback.");
             vault = new DummyAPI();
         }
 
-        logger.info("Injecting channel initializer...");
-        Injector.injectChannelInitializer(server);
+        if (ConfigurationList.INJECTOR) {
+            logger.info("Injecting channel initializer...");
+            Injector.injectChannelInitializer(server);
+        } else
+            logger.info("Skipping injector...");
 
         logger.info("Registering channels...");
         Channel.registerIn("broadcast", ChannelBroadcast::new);
@@ -125,7 +134,6 @@ public final class Celest {
         eventManager.register(this, new CommandExecuteListener());
         eventManager.register(this, new DisconnectListener());
         eventManager.register(this, new LoginListener());
-        eventManager.register(this, new PlayerChatListener());
         eventManager.register(this, new PluginMessageListener());
         eventManager.register(this, new PostLoginListener());
         eventManager.register(this, new PreLoginListener());
@@ -133,6 +141,11 @@ public final class Celest {
         eventManager.register(this, new ServerConnectedListener());
         eventManager.register(this, new ServerPostConnectListener());
         eventManager.register(this, new ServerPreConnectListener());
+
+        if (pluginManager.isLoaded("unsignedvelocity"))
+            eventManager.register(this, new PlayerChatListener());
+        else
+            logger.warn("unsignedvelocity is not loaded! Skipping PlayerChatListener...");
 
         logger.info("Registering commands...");
         new CommandAccounts();

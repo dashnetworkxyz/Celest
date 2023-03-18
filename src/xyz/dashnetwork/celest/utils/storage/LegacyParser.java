@@ -24,6 +24,7 @@ import xyz.dashnetwork.celest.utils.ConsumerPair;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.log.Logger;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 import xyz.dashnetwork.celest.utils.storage.data.AddressData;
@@ -130,8 +131,12 @@ public final class LegacyParser {
 
                 user.setData(data);
                 user.save();
-            } else if (!data.isObsolete())
+            } else if (!data.isObsolete()) {
+                String username = data.getUsername().toLowerCase();
+
                 Storage.write(uuid.toString(), Storage.Directory.USER, data);
+                Storage.write(username, Storage.Directory.LOOKUP, uuid);
+            }
         }
     }
 
@@ -168,7 +173,7 @@ public final class LegacyParser {
         try {
             return yaml.load(new FileReader(file));
         } catch (IOException exception) {
-            exception.printStackTrace();
+            Logger.throwable(exception);
             return null;
         }
     }

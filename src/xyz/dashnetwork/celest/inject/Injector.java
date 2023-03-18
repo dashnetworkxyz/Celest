@@ -18,16 +18,15 @@
 package xyz.dashnetwork.celest.inject;
 
 import com.velocitypowered.api.proxy.ProxyServer;
-import org.slf4j.Logger;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.reflection.velocity.ReflectedVelocityServer;
 import xyz.dashnetwork.celest.inject.reflection.velocity.network.ReflectedConnectionManager;
 import xyz.dashnetwork.celest.inject.reflection.velocity.network.ReflectedServerChannelInitializerHolder;
 import xyz.dashnetwork.celest.inject.server.CelestServerChannelInitializer;
+import xyz.dashnetwork.celest.utils.log.LogType;
+import xyz.dashnetwork.celest.utils.log.Logger;
 
 public final class Injector {
-
-    private static final Logger logger = Celest.getLogger();
 
     // Hook into Server Ping.
     // Allows custom ServerPing response for custom entry preventsChatReports:true (CelestServerPing)
@@ -39,7 +38,8 @@ public final class Injector {
 
             holder.set(new CelestServerChannelInitializer(holder.get()));
         } catch (ReflectiveOperationException exception) {
-            logger.error("Failed to inject server channel initializer.", exception);
+            Logger.log(LogType.ERROR, false, "Failed to inject server channel initializer.");
+            Logger.throwable(exception);
         }
     }
 

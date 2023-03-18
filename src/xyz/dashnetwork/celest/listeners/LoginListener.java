@@ -42,8 +42,8 @@ public final class LoginListener {
             ban = user.getAddress().getData().getBan();
 
         if (PunishUtils.isValid(ban)) {
-            Long expiration = ban.getExpiration();
-            UUID uuid = ban.getJudge();
+            Long expiration = ban.expiration();
+            UUID uuid = ban.judge();
 
             String type = expiration == null ? "permanently" : "temporarily";
             String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).username();
@@ -56,7 +56,7 @@ public final class LoginListener {
             if (expiration != null)
                 builder.append("\n&7Your ban will expire on &6" + TimeUtils.longToDate(expiration));
 
-            builder.append("\n\n" + ban.getReason());
+            builder.append("\n\n" + ban.reason());
 
             event.setResult(ResultedEvent.ComponentResult.denied(builder.build(user)));
         }

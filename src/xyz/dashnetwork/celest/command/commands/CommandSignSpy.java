@@ -113,4 +113,5 @@ public final class CommandSignSpy extends CelestCommand {
             MessageUtils.message(source, builder::build);
         }
     }
+
 }

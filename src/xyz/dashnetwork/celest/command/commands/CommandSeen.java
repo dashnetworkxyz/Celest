@@ -95,7 +95,7 @@ public final class CommandSeen extends CelestCommand {
         if (PunishUtils.isValid(ban)) {
             builder.append("\n&6&l»&7 Ban: ");
 
-            Long duration = ban.getExpiration();
+            Long duration = ban.expiration();
             TextSection section;
             String date = duration == null ? null : TimeUtils.longToDate(duration);
 
@@ -104,7 +104,7 @@ public final class CommandSeen extends CelestCommand {
             else
                 section = builder.append("&6Until " + date);
 
-            UUID judge = ban.getJudge();
+            UUID judge = ban.judge();
             String name = judge == null ? "Console" : ProfileUtils.fromUuid(judge).username();
 
             section.hover("&7Banned by &6" + name);
@@ -112,13 +112,13 @@ public final class CommandSeen extends CelestCommand {
             if (duration != null)
                 section.hover("\n&7Expires on &6" + date);
 
-            section.hover("\n\n&7For: &6" + ban.getReason());
+            section.hover("\n\n&7For: &6" + ban.reason());
         }
 
         if (PunishUtils.isValid(mute)) {
             builder.append("\n&6&l»&7 Mute: ");
 
-            Long duration = mute.getExpiration();
+            Long duration = mute.expiration();
             TextSection section;
             String date = duration == null ? null : TimeUtils.longToDate(duration);
 
@@ -127,7 +127,7 @@ public final class CommandSeen extends CelestCommand {
             else
                 section = builder.append("&6Until " + date);
 
-            UUID judge = mute.getJudge();
+            UUID judge = mute.judge();
             String name = judge == null ? "Console" : ProfileUtils.fromUuid(judge).username();
 
             section.hover("&7Muted by &6" + name);
@@ -135,7 +135,7 @@ public final class CommandSeen extends CelestCommand {
             if (duration != null)
                 section.hover("\n&7Expires on &6" + date);
 
-            section.hover("\n\n&7For: &6" + mute.getReason());
+            section.hover("\n\n&7For: &6" + mute.reason());
         }
 
         MessageUtils.message(source, builder::build);

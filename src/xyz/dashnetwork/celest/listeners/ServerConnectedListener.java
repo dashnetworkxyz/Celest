@@ -22,6 +22,9 @@ import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
+import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 
 public final class ServerConnectedListener {
 
@@ -34,6 +37,15 @@ public final class ServerConnectedListener {
         player.sendPlayerListHeaderAndFooter(
                 ComponentUtils.fromString("&6&lDashNetwork&7\nYou are connected to &6" + name + "\n"),
                 ComponentUtils.fromString("&6\nplay.dashnetwork.xyz"));
+
+        if (event.getPreviousServer().isPresent()) {
+            MessageBuilder builder = new MessageBuilder();
+            builder.append("&6&l»&7 ");
+            builder.append(new PlayerFormat(player));
+            builder.append("&7 has connected to &6" + name);
+
+            MessageUtils.broadcast(builder::build);
+        }
     }
 
 }

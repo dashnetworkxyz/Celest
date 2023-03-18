@@ -19,4 +19,4 @@ package xyz.dashnetwork.celest.utils.profile;
 
 import java.util.UUID;
 
-public record PlayerProfile (UUID uuid, String username) {}
+public record PlayerProfile(UUID uuid, String username) {}

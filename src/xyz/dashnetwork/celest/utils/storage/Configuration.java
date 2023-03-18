@@ -22,13 +22,14 @@ import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.utils.log.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.function.IntFunction;
 
 public final class Configuration {
@@ -45,7 +46,7 @@ public final class Configuration {
             try {
                 Files.copy(resource.openStream(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException exception) {
-                exception.printStackTrace();
+                Logger.throwable(exception);
             }
         }
 
@@ -58,7 +59,7 @@ public final class Configuration {
         try {
             config = loader.load(options);
         } catch (IOException exception) {
-            exception.printStackTrace();
+            Logger.throwable(exception);
         }
     }
 
@@ -69,7 +70,7 @@ public final class Configuration {
     public static <T> T[] get(IntFunction<T[]> function, String node) {
         Class<?> type = function.apply(0).getClass();
 
-        return ((ArrayList<T>) config.getNode(node).getValue(type)).toArray(function);
+        return ((List<T>) config.getNode(node).getValue(type)).toArray(function);
     }
 
 }

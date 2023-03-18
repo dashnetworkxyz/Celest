@@ -19,7 +19,6 @@ package xyz.dashnetwork.celest.utils.connection;
 
 import xyz.dashnetwork.celest.utils.ArrayUtils;
 import xyz.dashnetwork.celest.utils.LazyUtils;
-import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.limbo.Savable;
@@ -80,8 +79,6 @@ public final class Address implements Savable {
         for (PlayerProfile profile : profiles)
             if (!profile.uuid().equals(uuid))
                 list.add(profile);
-
-        System.out.println("Remove: " + ListUtils.convertToString(list, PlayerProfile::username, ", "));
 
         addressData.setProfiles(list.toArray(PlayerProfile[]::new));
     }

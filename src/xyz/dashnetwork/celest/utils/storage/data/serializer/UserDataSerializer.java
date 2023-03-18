@@ -54,6 +54,9 @@ public final class UserDataSerializer implements JsonSerializer<UserData>, JsonD
         if (!userData.getHideAddress())
             object.remove("hideAddress");
 
+        if (!userData.getDebug())
+            object.remove("debug");
+
         return object;
     }
 

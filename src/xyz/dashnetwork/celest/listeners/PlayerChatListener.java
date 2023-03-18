@@ -70,8 +70,8 @@ public final class PlayerChatListener {
             mute = user.getAddress().getData().getMute();
 
         if (PunishUtils.isValid(mute)) {
-            Long expiration = mute.getExpiration();
-            UUID uuid = mute.getJudge();
+            Long expiration = mute.expiration();
+            UUID uuid = mute.judge();
 
             String type = expiration == null ? "permanently" : "temporarily";
             String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).username();
@@ -84,7 +84,7 @@ public final class PlayerChatListener {
             if (expiration != null)
                 section.hover("\n&7Your mute will expire on &6" + TimeUtils.longToDate(expiration));
 
-            section.hover("\n\n" + mute.getReason());
+            section.hover("\n\n" + mute.reason());
 
             MessageUtils.message(player, builder::build);
             return;
