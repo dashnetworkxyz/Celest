@@ -57,8 +57,19 @@ public final class Messages {
                 predicate = each -> each.isStaff() || each.getData().getChatType().equals(ChatType.STAFF);
             }
             case LOCAL -> {
-                if (named instanceof User user)
+                if (named instanceof User user) {
                     user.getPlayer().spoofChatInput(message);
+
+                    if (message.startsWith("/")) {
+                        builder = new MessageBuilder();
+                        builder.append("&6&l»&r ");
+                        builder.append(new NamedSourceFormat(named));
+                        builder.append("&r &b&l»&b " + message);
+
+                        MessageUtils.broadcast(each -> each.getData().getCommandSpy(), builder::build);
+                    }
+                }
+
                 return;
             }
             default -> {

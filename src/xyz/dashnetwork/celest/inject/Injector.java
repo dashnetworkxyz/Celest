@@ -18,7 +18,6 @@
 package xyz.dashnetwork.celest.inject;
 
 import com.velocitypowered.api.proxy.ProxyServer;
-import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.inject.reflection.velocity.ReflectedVelocityServer;
 import xyz.dashnetwork.celest.inject.reflection.velocity.network.ReflectedConnectionManager;
 import xyz.dashnetwork.celest.inject.reflection.velocity.network.ReflectedServerChannelInitializerHolder;
