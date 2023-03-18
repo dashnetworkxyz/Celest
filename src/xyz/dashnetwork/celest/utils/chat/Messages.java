@@ -64,7 +64,7 @@ public final class Messages {
                         builder = new MessageBuilder();
                         builder.append("&6&l»&r ");
                         builder.append(new NamedSourceFormat(named));
-                        builder.append("&r &b&l»&b " + message);
+                        builder.append("&r &b&l»&b @lc" + message);
 
                         MessageUtils.broadcast(each -> each.getData().getCommandSpy(), builder::build);
                     }
