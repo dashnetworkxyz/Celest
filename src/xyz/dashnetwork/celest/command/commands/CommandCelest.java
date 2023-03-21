@@ -47,7 +47,7 @@ public final class CommandCelest extends CelestCommand {
 
         setPermission(User::isOwner, true);
         addArguments(ArgumentType.STRING);
-        setCompletions(0, "reload", "save", "build", "debug", "flush");
+        setCompletions(0, "reload", "save", "version", "debug", "flush");
     }
 
     private void sendHelpMessage(CommandSource source) {
@@ -56,7 +56,7 @@ public final class CommandCelest extends CelestCommand {
         builder.append("\n&6&l»&7 /celest legacy-import &c(unsafe)").hover("&6Import legacy data &c(unsafe)");
         builder.append("\n&6&l»&7 /celest flush").hover("&6Clear & save all objects in Limbo.");
         builder.append("\n&6&l»&7 /celest debug").hover("&6View debug information");
-        builder.append("\n&6&l»&7 /celest build").hover("&6View build properties");
+        builder.append("\n&6&l»&7 /celest version").hover("&6View build properties");
         builder.append("\n&6&l»&7 /celest save").hover("&6Force an auto-save");
         builder.append("\n&6&l»&7 /celest reload").hover("&6Reload config.yml");
 
@@ -82,7 +82,7 @@ public final class CommandCelest extends CelestCommand {
                 Celest.getSaveTask().run();
                 MessageUtils.message(source, "&6&l»&7 Save complete.");
             }
-            case "build" -> {
+            case "version", "ver" -> {
                 URL resource = CommandCelest.class.getClassLoader().getResource("build.properties");
                 assert resource != null;
 
@@ -96,33 +96,34 @@ public final class CommandCelest extends CelestCommand {
                     return;
                 }
 
-                if (properties[0].equals("${describe}") && properties[1].equals("${project.build.outputTimestamp}")) {
+                if (properties[3].equals("${describe}") && properties[4].equals("${project.build.outputTimestamp}")) {
                     MessageUtils.message(source, "&6&l»&7 No build information is available.");
                     return;
                 }
 
-                String date = TimeUtils.longToDate(Long.parseLong(properties[1]));
+                String date = TimeUtils.longToDate(Long.parseLong(properties[4]) * 1000);
 
                 MessageBuilder builder = new MessageBuilder();
-                builder.append("&6&l»&7 ");
-                builder.append("&6" + properties[0])
-                        .hover("&7Click to copy &6" + properties[0])
-                        .click(ClickEvent.suggestCommand(properties[0]));
+                builder.append("&6&l»&7 " + properties[0] + " &6" + properties[1] + " " + properties[2]);
+                builder.append("\n&6&l»&7 ");
+                builder.append("&6" + properties[3])
+                        .hover("&7Click to copy &6" + properties[3])
+                        .click(ClickEvent.suggestCommand(properties[3]));
                 builder.append("&7 ");
                 builder.append("&7(" + date + ")")
-                        .hover("&7Click to copy &6" + properties[1])
-                        .click(ClickEvent.suggestCommand(properties[1]));
+                        .hover("&7Click to copy &6" + properties[4])
+                        .click(ClickEvent.suggestCommand(properties[4]));
+                builder.append("\n&6&l»&7 Checking for updates...");
 
                 MessageUtils.message(source, builder::build);
-                MessageUtils.message(source, "&6&l»&7 Checking for updates...");
 
-                String hash = properties[0].split("-")[2];
-                int version = GithubUtils.getGitDistance("dashnetworkxyz/Celest", "master", hash);
+                String hash = properties[3].split("-")[2];
+                int distance = GithubUtils.getGitDistance("dashnetworkxyz/Celest", "master", hash);
 
-                switch (version) {
+                switch (distance) {
                     case -1 -> MessageUtils.message(source, "&6&l»&7 Unable to fetch version from Github");
                     case 0 -> MessageUtils.message(source, "&6&l»&7 You are using the &6latest version");
-                    default -> MessageUtils.message(source, "&6&l»&7 You are &6" + version + " versions&7 behind");
+                    default -> MessageUtils.message(source, "&6&l»&7 You are &6" + distance + " versions&7 behind");
                 }
             }
             case "debug" -> {
