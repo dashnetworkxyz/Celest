@@ -17,9 +17,12 @@
 
 package xyz.dashnetwork.celest.utils.chat;
 
+import com.velocitypowered.api.network.ProtocolVersion;
+import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
+import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
@@ -58,9 +61,15 @@ public final class Messages {
             }
             case LOCAL -> {
                 if (named instanceof User user) {
-                    user.getPlayer().spoofChatInput(message);
+                    Player player = user.getPlayer();
 
                     if (message.startsWith("/")) {
+                        if (LazyUtils.anyEquals(player.getProtocolVersion(),
+                                ProtocolVersion.MINECRAFT_1_19, ProtocolVersion.MINECRAFT_1_19_1)) {
+                            MessageUtils.message(player, "&6&l»&7 Using commands in &6@lc&7 is disabled in &61.19-1.19.2");
+                            return;
+                        }
+
                         builder = new MessageBuilder();
                         builder.append("&6&l»&r ");
                         builder.append(new NamedSourceFormat(named));
@@ -68,6 +77,8 @@ public final class Messages {
 
                         MessageUtils.broadcast(each -> each.getData().getCommandSpy(), builder::build);
                     }
+
+                    player.spoofChatInput(message);
                 }
 
                 return;
