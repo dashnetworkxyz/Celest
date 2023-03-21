@@ -27,21 +27,33 @@ public final class PreLoginListener {
     @Subscribe
     public void onPreLogin(PreLoginEvent event) {
         ProtocolVersion version = event.getConnection().getProtocolVersion();
+        String username = event.getUsername();
 
         if (version.compareTo(ProtocolVersion.MINECRAFT_1_7_6) <= 0) {
             event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
-                    "&6&lDashNetwork" +
-                            "\n&61.7&7 is no longer supported." +
-                            "\nPlease update to &61.8 or newer."
+                    """
+                            &6&lDashNetwork
+                            &61.7&7 is no longer supported.
+                            Please update to &61.8 or newer."""
             )));
         }
 
         if (version.compareTo(ProtocolVersion.MINECRAFT_1_9) >= 0
                 && version.compareTo(ProtocolVersion.MINECRAFT_1_10) <= 0) {
             event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
-                    "&6&lDashNetwork" +
-                            "\n&61.9-1.10&7 is no longer supported." +
-                            "\nPlease revert to 1.8 or update to &61.11 or newer."
+                    """
+                            &6&lDashNetwork
+                            &61.9-1.10&7 is no longer supported.
+                            Please revert to 1.8 or update to &61.11 or newer."""
+            )));
+        }
+
+        // Some usernames break the rules. I'm not accounting for any of these.
+        if (!username.matches("([0-z]|_){1,16}")) {
+            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
+                    """
+                            &6&lDashNetwork
+                            &7Your username is not supported."""
             )));
         }
     }

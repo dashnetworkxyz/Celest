@@ -57,7 +57,7 @@ public final class ProfileUtils {
         UserData userData = Storage.read(uuid.toString(), Storage.Directory.USER, UserData.class);
 
         if (userData != null)
-            Cache.generate(uuid, userData.getUsername(), userData.getAddress());
+            Cache.generate(uuid, profile.username(), userData.getAddress());
 
         return profile;
     }

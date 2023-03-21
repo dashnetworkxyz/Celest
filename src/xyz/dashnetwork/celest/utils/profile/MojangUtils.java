@@ -25,10 +25,24 @@ import xyz.dashnetwork.celest.utils.log.LogType;
 import xyz.dashnetwork.celest.utils.log.Logger;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.UUID;
 
 public final class MojangUtils {
+
+    private record Response(String name, String id) {
+
+        public PlayerProfile toPlayerProfile() {
+            return new PlayerProfile(
+                    UUID.fromString(id.replaceFirst(
+                            "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
+                            "$1-$2-$3-$4-$5")),
+                    name);
+        }
+
+    }
 
     private static final Gson gson = Celest.getGson();
 
@@ -45,21 +59,17 @@ public final class MojangUtils {
         }
 
         try {
-            URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + username);
-            String json = new String(url.openStream().readAllBytes());
+            HttpURLConnection connection = (HttpURLConnection)
+                    new URL("https://api.mojang.com/users/profiles/minecraft/" + username).openConnection();
+            connection.connect();
 
-            if (json.contains("/profile/"))
+            if (connection.getResponseCode() != 200)
                 return null;
 
-            Response response = gson.fromJson(json, Response.class);
+            InputStreamReader reader = new InputStreamReader(connection.getInputStream());
+            Response response = gson.fromJson(reader, Response.class);
 
-            if (response == null)
-                return null;
-
-            PlayerProfile profile = response.toPlayerProfile();
-            new Limbo<>(profile);
-
-            return profile;
+            return response.toPlayerProfile();
         } catch (IOException exception) {
             Logger.log(LogType.WARN, true, "Failed to pull response from Mojang API.");
             return null;
@@ -76,39 +86,21 @@ public final class MojangUtils {
         }
 
         try {
-            URL url = new URL("https://api.mojang.com/user/profile/" + uuid);
-            String json = new String(url.openStream().readAllBytes());
+            HttpURLConnection connection = (HttpURLConnection)
+                    new URL("https://api.mojang.com/user/profile/" + uuid).openConnection();
+            connection.connect();
 
-            if (json.contains("/profile/"))
+            if (connection.getResponseCode() != 200)
                 return null;
 
-            Response response = gson.fromJson(json, Response.class);
+            InputStreamReader reader = new InputStreamReader(connection.getInputStream());
+            Response response = gson.fromJson(reader, Response.class);
 
-            if (response == null)
-                return null;
-
-            PlayerProfile profile = response.toPlayerProfile();
-            new Limbo<>(profile);
-
-            return profile;
+            return response.toPlayerProfile();
         } catch (IOException exception) {
             Logger.log(LogType.WARN, true, "Failed to pull response from Mojang API.");
             return null;
         }
-    }
-
-    private static class Response {
-
-        private String name, id, error;
-
-        public PlayerProfile toPlayerProfile() {
-            return new PlayerProfile(
-                    UUID.fromString(id.replaceFirst(
-                            "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
-                            "$1-$2-$3-$4-$5")),
-                    name);
-        }
-
     }
 
 }
