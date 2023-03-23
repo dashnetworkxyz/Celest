@@ -36,7 +36,8 @@ public final class ServerConnectedListener {
 
         player.sendPlayerListHeaderAndFooter(
                 ComponentUtils.fromString("&6&lDashNetwork&7\nYou are connected to &6" + name + "\n"),
-                ComponentUtils.fromString("&6\nplay.dashnetwork.xyz"));
+                ComponentUtils.fromString("&6\nplay.dashnetwork.xyz")
+        );
 
         if (event.getPreviousServer().isPresent()) {
             MessageBuilder builder = new MessageBuilder();
@@ -44,7 +45,7 @@ public final class ServerConnectedListener {
             builder.append(new PlayerFormat(player));
             builder.append("&7 has connected to &6" + name);
 
-            MessageUtils.broadcast(builder::build);
+            MessageUtils.broadcast(each -> !each.getPlayer().equals(player), builder::build);
         }
     }
 

@@ -17,8 +17,10 @@
 
 package xyz.dashnetwork.celest.utils.chat;
 
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
@@ -30,6 +32,8 @@ import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public final class Messages {
@@ -103,6 +107,33 @@ public final class Messages {
         }
 
         MessageUtils.broadcast(predicate, builder::build);
+    }
+
+    public static void serverlistMessage(CommandSource source) {
+        Optional<User> optional = User.getUser(source);
+        MessageBuilder builder = new MessageBuilder();
+
+        builder.append("&6&l»&7 Available servers: ");
+
+        for (RegisteredServer server : Celest.getServer().getAllServers()) {
+            String name = server.getServerInfo().getName();
+            Function<User, Boolean> permission =
+                    user -> user.isOwner() || user.getPlayer().hasPermission("dashnetwork.server." + name);
+
+            if (optional.map(permission).orElse(true)) {
+                if (builder.length() > 1)
+                    builder.append("&7, ");
+
+                builder.append("&6" + name)
+                        .hover("&7Click to copy &6/server " + name)
+                        .click(ClickEvent.suggestCommand("/server " + name));
+            }
+        }
+
+        if (builder.length() == 1)
+            builder.append("&cNo servers found");
+
+        MessageUtils.message(source, builder::build);
     }
 
 }

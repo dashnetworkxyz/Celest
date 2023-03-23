@@ -61,4 +61,8 @@ public final class StringUtils {
         return string.matches("_dc-srv\\.([a-f0-9]{12})\\._minecraft\\._tcp\\.(?:([A-z0-9]+)\\.)?(?i)dashnetwork\\.xyz");
     }
 
+    public static boolean matchesUsername(@NotNull String string) {
+        return string.matches("([0-z]|_){1,16}");
+    }
+
 }

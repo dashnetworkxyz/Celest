@@ -22,22 +22,24 @@ import com.velocitypowered.api.util.Favicon;
 import com.velocitypowered.api.util.ModInfo;
 import net.kyori.adventure.text.Component;
 
-public final class CelestServerPing {
-
-    private final ServerPing.Version version;
-    private final ServerPing.Players players;
-    private final Component description;
-    private final Favicon favicon;
-    private final ModInfo modinfo;
-    private final boolean preventsChatReports;
+public record CelestServerPing(
+        ServerPing.Version version,
+        ServerPing.Players players,
+        Component description,
+        Favicon favicon,
+        ModInfo modinfo,
+        boolean preventsChatReports
+) {
 
     public CelestServerPing(ServerPing original) {
-        this.version = original.getVersion();
-        this.players = original.getPlayers().orElse(null);
-        this.description = original.getDescriptionComponent();
-        this.favicon = original.getFavicon().orElse(null);
-        this.modinfo = original.getModinfo().orElse(null);
-        this.preventsChatReports = true;
+        this(
+                original.getVersion(),
+                original.getPlayers().orElse(null),
+                original.getDescriptionComponent(),
+                original.getFavicon().orElse(null),
+                original.getModinfo().orElse(null),
+                true
+        );
     }
 
 }

@@ -96,7 +96,7 @@ public final class CommandCelest extends CelestCommand {
                     return;
                 }
 
-                if (properties[3].equals("${describe}") && properties[4].equals("${project.build.outputTimestamp}")) {
+                if (properties[3].equals("${describe}")) {
                     MessageUtils.message(source, "&6&l»&7 No build information is available.");
                     return;
                 }

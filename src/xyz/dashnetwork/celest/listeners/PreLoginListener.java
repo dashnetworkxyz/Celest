@@ -20,6 +20,7 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
+import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 
 public final class PreLoginListener {
@@ -27,7 +28,6 @@ public final class PreLoginListener {
     @Subscribe
     public void onPreLogin(PreLoginEvent event) {
         ProtocolVersion version = event.getConnection().getProtocolVersion();
-        String username = event.getUsername();
 
         if (version.compareTo(ProtocolVersion.MINECRAFT_1_7_6) <= 0) {
             event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
@@ -49,11 +49,11 @@ public final class PreLoginListener {
         }
 
         // Some usernames break the rules. I'm not accounting for any of these.
-        if (!username.matches("([0-z]|_){1,16}")) {
+        if (!StringUtils.matchesUsername(event.getUsername())) {
             event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
                     """
                             &6&lDashNetwork
-                            &7Your username is not supported."""
+                            &7Illegal usernames are not supported."""
             )));
         }
     }

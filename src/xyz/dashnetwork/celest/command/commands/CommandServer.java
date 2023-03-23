@@ -28,6 +28,7 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
@@ -50,15 +51,16 @@ public final class CommandServer extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<RegisteredServer> optional = arguments.get(RegisteredServer.class);
+        Optional<RegisteredServer> optionalServer = arguments.get(RegisteredServer.class);
         List<Player> players = arguments.playerListOrSelf(source);
 
-        if (optional.isEmpty() || players.isEmpty()) {
+        if (optionalServer.isEmpty() || players.isEmpty()) {
+            Messages.serverlistMessage(source);
             sendUsage(source, label);
             return;
         }
 
-        RegisteredServer server = optional.get();
+        RegisteredServer server = optionalServer.get();
         String name = server.getServerInfo().getName();
         NamedSource named = NamedSource.of(source);
         MessageBuilder builder;

@@ -180,6 +180,7 @@ public final class Celest {
         new CommandRealName();
         new CommandSeen();
         new CommandServer();
+        new CommandServerList();
         new CommandStaffChat();
         new CommandSudo();
         new CommandTalk();
