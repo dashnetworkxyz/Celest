@@ -158,6 +158,7 @@ public final class Celest {
         new CommandClearChat();
         new CommandColorList();
         new CommandCommandSpy();
+        new CommandCreative();
         new CommandDiscord();
         new CommandFakeJoin();
         new CommandFakeLeave();
@@ -177,13 +178,17 @@ public final class Celest {
         new CommandOwnerChat();
         new CommandPing();
         new CommandPingSpy();
+        new CommandPvp();
         new CommandRandom();
         new CommandRealName();
         new CommandSeen();
         new CommandServer();
         new CommandServerList();
+        new CommandSignSpy();
+        new CommandSkyblock();
         new CommandStaffChat();
         new CommandSudo();
+        new CommandSurvival();
         new CommandTalk();
         new CommandTempBan();
         new CommandTempIpBan();
