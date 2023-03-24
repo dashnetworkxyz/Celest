@@ -41,14 +41,14 @@ public final class ProfileUtils {
         if (data != null)
             return new PlayerProfile(data.getUUID(), data.getUsername());
 
-        PlayerProfile profile = MojangUtils.fromUsername(username);
+        String stringUuid = Storage.read(username.toLowerCase(), Storage.Directory.LOOKUP, String.class);
+        PlayerProfile profile = null;
 
-        if (profile == null) {
-            String uuid = Storage.read(username.toLowerCase(), Storage.Directory.LOOKUP, String.class);
+        if (stringUuid != null && StringUtils.matchesUuid(stringUuid))
+            profile = MojangUtils.fromUuid(UUID.fromString(stringUuid));
 
-            if (uuid != null && StringUtils.matchesUuid(uuid))
-                profile = MojangUtils.fromUuid(UUID.fromString(uuid));
-        }
+        if (profile == null)
+            profile = MojangUtils.fromUsername(username);
 
         if (profile == null)
             return null;
