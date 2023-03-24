@@ -13,31 +13,33 @@ import xyz.dashnetwork.celest.command.arguments.Parser;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class PlayerListParser implements Parser {
 
     @Override
     public Object parse(User user, String input) {
-        List<Player> list = new ArrayList<>();
+        Set<Player> set = new HashSet<>();
 
         if (input.equalsIgnoreCase("@a")) {
             for (User each : User.getUsers())
                 if (user == null || user.canSee(each))
-                    list.add(each.getPlayer());
+                    set.add(each.getPlayer());
         } else {
             for (String each : input.split(",")) {
                 Object player = ArgumentType.PLAYER.parse(user, each);
 
                 if (player != null)
-                    list.add((Player) player);
+                    set.add((Player) player);
             }
         }
 
-        if (list.isEmpty())
+        if (set.isEmpty())
             return null;
 
-        return list.toArray(Player[]::new);
+        return set.toArray(Player[]::new);
     }
 
 }

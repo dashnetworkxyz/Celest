@@ -11,7 +11,7 @@ import xyz.dashnetwork.celest.command.arguments.Parser;
 import xyz.dashnetwork.celest.utils.chat.ChatType;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-public final class ChatTypeParser implements Parser {
+public final class ChannelParser implements Parser {
 
     @Override
     public Object parse(User user, String input) {

@@ -38,8 +38,8 @@ public final class ServerPreConnectListener {
         Optional<RegisteredServer> server = event.getResult().getServer();
         assert server.isPresent();
 
-        String name = server.get().getServerInfo().getName().toLowerCase();
-        String permission = "dashnetwork.server." + name;
+        String name = server.get().getServerInfo().getName();
+        String permission = "dashnetwork.server." + name.toLowerCase();
 
         if (!user.isOwner() && !player.hasPermission(permission)) {
             event.setResult(ServerPreConnectEvent.ServerResult.denied());

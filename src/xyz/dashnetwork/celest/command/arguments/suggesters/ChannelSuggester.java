@@ -15,7 +15,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ChatTypeSuggester implements Suggester {
+public final class ChannelSuggester implements Suggester {
 
     @Override
     public List<String> suggest(User user, String input) {

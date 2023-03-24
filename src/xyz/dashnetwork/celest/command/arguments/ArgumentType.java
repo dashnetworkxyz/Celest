@@ -26,25 +26,30 @@ import java.util.List;
 
 public enum ArgumentType {
 
-    ADDRESS(new AddressParser(), new AddressSuggester()),
-    CHAT_TYPE(new ChatTypeParser(), new ChatTypeSuggester()),
-    INTEGER(new IntegerParser(), new IntegerSuggester()),
-    LONG(new LongParser(), new LongSuggester()),
-    OFFLINE_USER(new OfflineUserParser(), new OfflineUserSuggester()),
-    PLAYER(new PlayerParser(), new PlayerSuggester()),
-    PLAYER_LIST(new PlayerListParser(), new PlayerListSuggester()),
-    SERVER(new ServerParser(), new ServerSuggester()),
-    UNIQUE_ID(new UniqueIdParser(), (user, string) -> Collections.emptyList()),
-    STRING((user, string) -> string, (user, string) -> Collections.emptyList()),
-    MESSAGE((user, string) -> string, (user, string) -> Collections.emptyList());
+    ADDRESS("ip address", new AddressParser(), new AddressSuggester()),
+    CHANNEL("channel", new ChannelParser(), new ChannelSuggester()),
+    INTEGER("integer", new IntegerParser(), new IntegerSuggester()),
+    LONG("long", new LongParser(), new LongSuggester()),
+    OFFLINE_USER("target", new OfflineUserParser(), new OfflineUserSuggester()),
+    OFFLINE_USER_LIST("target(s)", new OfflineUserListParser(), new OfflineUserListSuggester()),
+    PLAYER("target", new PlayerParser(), new PlayerSuggester()),
+    PLAYER_LIST("target(s)", new PlayerListParser(), new PlayerListSuggester()),
+    SERVER("server", new ServerParser(), new ServerSuggester()),
+    UNIQUE_ID("uuid", new UniqueIdParser(), (user, string) -> Collections.emptyList()),
+    STRING("string", (user, string) -> string, (user, string) -> Collections.emptyList()),
+    MESSAGE("message", (user, string) -> string, (user, string) -> Collections.emptyList());
 
+    private final String name;
     private final Parser parser;
     private final Suggester suggester;
 
-    ArgumentType(Parser parser, Suggester suggester) {
+    ArgumentType(String name, Parser parser, Suggester suggester) {
+        this.name = name;
         this.parser = parser;
         this.suggester = suggester;
     }
+
+    public String getName() { return name; }
 
     public Object parse(User user, String text) { return parser.parse(user, text); }
 

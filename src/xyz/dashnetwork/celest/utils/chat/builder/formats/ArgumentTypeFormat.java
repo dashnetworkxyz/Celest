@@ -30,17 +30,19 @@ public final class ArgumentTypeFormat implements Format {
     private final List<TextSection> sections = new ArrayList<>();
 
     public ArgumentTypeFormat(boolean required, ArgumentType type) {
-        String name = type.name().toLowerCase().replace("_", "-");
-        String open = required ? "<" : "(";
-        String close = required ? ">" : ")";
+        String name = type.getName();
+        String open = required ? "<" : "[";
+        String close = required ? ">" : "]";
 
         TextSection section = new TextSection(open + name + close, null, null);
 
-        if (!required)
-            section.hover("&6Optional ");
+        if (required)
+            section.hover("&6Required argument\n");
+        else
+            section.hover("&6Optional argument\n");
 
         switch (type) {
-            case CHAT_TYPE -> {
+            case CHANNEL -> {
                 section.hover("""
                         &6Chat selector&7
                         This requires the name of a Chat type.
@@ -65,7 +67,7 @@ public final class ArgumentTypeFormat implements Format {
                     Multiple players can given by separating with comas.
                     Can be specified by &6username&7 or &6UUID&7.
                     &6@s&7 can be used to specify yourself.
-                    &6@a&7 can be used to specify all players.""");
+                    &6@a&7 can be used to specify all online players.""");
             default -> section.hover("//TODO");
         }
 

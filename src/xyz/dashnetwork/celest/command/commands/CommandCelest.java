@@ -26,9 +26,11 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
 import xyz.dashnetwork.celest.utils.GithubUtils;
+import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.connection.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.log.Logger;
@@ -38,7 +40,7 @@ import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
+import java.util.*;
 
 public final class CommandCelest extends CelestCommand {
 
@@ -47,13 +49,15 @@ public final class CommandCelest extends CelestCommand {
 
         setPermission(User::isOwner, true);
         addArguments(ArgumentType.STRING);
+        addArguments(ArgumentType.STRING);
         setCompletions(0, "reload", "save", "version", "debug", "flush");
     }
 
     private void sendHelpMessage(CommandSource source) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&6 Celest debug commands");
-        builder.append("\n&6&l»&7 /celest legacy-import &c(unsafe)").hover("&6Import legacy data &c(unsafe)");
+        builder.append("\n&6&l»&7 /celest legacy-import &c&o(unsafe)").hover("&6Import legacy data &c(unsafe)");
+        builder.append("\n&6&l»&7 /celest data <user/address/lookup> // TODO"); // TODO
         builder.append("\n&6&l»&7 /celest flush").hover("&6Clear & save all objects in Limbo.");
         builder.append("\n&6&l»&7 /celest debug").hover("&6View debug information");
         builder.append("\n&6&l»&7 /celest version").hover("&6View build properties");
@@ -151,6 +155,9 @@ public final class CommandCelest extends CelestCommand {
                 }
 
                 MessageUtils.message(source, "&6&l»&7 All objects in limbo cleared & saved.");
+            }
+            case "data" -> {
+                MessageUtils.message(source, "//TODO"); // TODO
             }
             case "legacy-import" -> {
                 MessageUtils.message(source, "&6&l»&7 Reading legacy data...");

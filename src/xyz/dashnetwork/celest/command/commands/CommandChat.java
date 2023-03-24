@@ -38,7 +38,7 @@ public final class CommandChat extends CelestCommand {
     public CommandChat() {
         super("chat");
 
-        addArguments(ArgumentType.CHAT_TYPE);
+        addArguments(ArgumentType.CHANNEL);
         addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
     }
 
