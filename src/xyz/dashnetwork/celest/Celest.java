@@ -168,6 +168,7 @@ public final class Celest {
         new CommandIpBan();
         new CommandIpMute();
         new CommandKick();
+        new CommandLobby();
         new CommandLocalChat();
         new CommandMattsArmorStands();
         new CommandMommy();
