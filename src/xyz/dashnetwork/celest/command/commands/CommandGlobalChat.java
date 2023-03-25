@@ -21,7 +21,7 @@ import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.Channel;
+import xyz.dashnetwork.celest.utils.chat.ChatChannel;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
@@ -53,7 +53,7 @@ public final class CommandGlobalChat extends CelestCommand {
         MessageBuilder builder;
 
         for (OfflineUser offline : users) {
-            offline.getData().setChannel(Channel.GLOBAL);
+            offline.getData().setChannel(ChatChannel.GLOBAL);
 
             if (offline.isActive()) {
                 User user = (User) offline;
@@ -66,6 +66,8 @@ public final class CommandGlobalChat extends CelestCommand {
                     builder.append(new NamedSourceFormat(named));
                 }
 
+                builder.append("&7.");
+
                 MessageUtils.message(user, builder::build);
             }
         }
@@ -77,7 +79,7 @@ public final class CommandGlobalChat extends CelestCommand {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 You have moved ");
             builder.append(new OfflineUserFormat(users));
-            builder.append("&7 to &6GlobalChat");
+            builder.append("&7 to &6GlobalChat&7.");
 
             MessageUtils.message(source, builder::build);
         }

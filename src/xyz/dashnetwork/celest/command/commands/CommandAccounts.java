@@ -62,12 +62,13 @@ public final class CommandAccounts extends CelestCommand {
 
         if (profiles.isEmpty()) {
             builder.append("&6&l»&7 No known alts for ");
-            builder.append(new OfflineUserFormat(offline)).prefix("&6");
+            builder.append(new OfflineUserFormat(offline));
+            builder.append("&7.");
         } else {
             builder.append("&6&l»&7 Known alts for ");
-            builder.append(new OfflineUserFormat(offline)).prefix("&6");
+            builder.append(new OfflineUserFormat(offline));
             builder.append("&7: ");
-            builder.append(new PlayerProfileFormat(profiles)).prefix("&6");
+            builder.append(new PlayerProfileFormat(profiles));
         }
 
         MessageUtils.message(source, builder::build);

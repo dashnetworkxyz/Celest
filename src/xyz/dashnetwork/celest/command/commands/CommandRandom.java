@@ -25,7 +25,9 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 
+import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class CommandRandom extends CelestCommand {
 
@@ -39,11 +41,18 @@ public final class CommandRandom extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        int bound = arguments.get(Integer.class).orElse(Integer.MAX_VALUE);
-        int generated = random.nextInt(bound);
+        Optional<Integer> optional = arguments.get(Integer.class);
+        AtomicInteger atomic = new AtomicInteger();
+
+        optional.ifPresentOrElse(
+                i -> atomic.set(random.nextInt(i)),
+                () -> atomic.set(random.nextInt())
+        );
+
+        int generated = atomic.get();
 
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&7 Generated &6" + generated)
+        builder.append("&6&l»&7 Generated &6" + generated + "&7.")
                 .hover("&7Click to copy &6" + generated)
                 .click(ClickEvent.suggestCommand(String.valueOf(generated)));
 

@@ -53,6 +53,7 @@ public final class ChannelSignSpy extends Channel {
             builder.append(" ");
             builder.append("&7placed sign in &6" + server + "&7 at &6" + x + " " + y + " " + z)
                     .hover("&6" + line1 + "\n&6" + line2 + "\n&6" + line3 + "\n&6" + line4);
+            builder.append("&7.");
 
             MessageUtils.broadcast(true, each -> each.getData().getSignSpy(), builder::build);
         }

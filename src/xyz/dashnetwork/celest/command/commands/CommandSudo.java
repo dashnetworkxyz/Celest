@@ -56,7 +56,7 @@ public final class CommandSudo extends CelestCommand {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&7 Spoofed ");
         builder.append(new PlayerFormat(player));
-        builder.append("&7 to say &6" + message);
+        builder.append("&7 to say &6" + message + "&7.");
 
         MessageUtils.message(source, builder::build);
     }

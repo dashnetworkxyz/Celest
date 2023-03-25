@@ -27,6 +27,7 @@ import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
 import xyz.dashnetwork.celest.utils.connection.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
@@ -65,14 +66,15 @@ public final class CommandSeen extends CelestCommand {
         PunishData ban = data.getBan();
         PunishData mute = data.getMute();
 
-        builder.append("&6&l»&6 " + offline.getUsername());
+        builder.append("&6&l»&7 ");
+        builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
 
         if (lastPlayed == null)
             builder.append("&7 has never joined the server before.");
         else if (offline.isActive() && user.map(u -> u.canSee((User) offline)).orElse(true))
-            builder.append("&7 is &aonline");
+            builder.append("&7 is &aonline&7.");
         else
-            builder.append("&7 is &coffline");
+            builder.append("&7 is &coffline&7.");
 
         builder.append("\n&6&l»&7 UUID: ");
         builder.append("&6" + uuid)

@@ -84,9 +84,10 @@ public final class CommandTempBan extends CelestCommand {
 
         builder = new MessageBuilder();
         builder.append("&6&l»&r ");
-        builder.append(new PlayerProfileFormat(offline.toPlayerProfile())).prefix("&6");
+        builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
         builder.append("&7 temporarily banned by ");
         builder.append(new NamedSourceFormat(named));
+        builder.append("&7.");
         builder.append("\n&6&l»&7 Hover here for details.")
                 .hover("&7Judge: &6" + username
                         + "\n&7Expiration: &6" + date

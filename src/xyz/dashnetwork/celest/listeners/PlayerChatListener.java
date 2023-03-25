@@ -25,7 +25,7 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.SecretUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
-import xyz.dashnetwork.celest.utils.chat.Channel;
+import xyz.dashnetwork.celest.utils.chat.ChatChannel;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
@@ -89,7 +89,7 @@ public final class PlayerChatListener {
             return;
         }
 
-        Channel channel = Channel.parseSelector(message);
+        ChatChannel channel = ChatChannel.parseSelector(message);
 
         if (channel == null)
             channel = userData.getChannel();
@@ -105,7 +105,7 @@ public final class PlayerChatListener {
                 return;
             }
         } else
-            channel = Channel.GLOBAL;
+            channel = ChatChannel.GLOBAL;
 
         Messages.chatMessage(user, channel, message);
     }

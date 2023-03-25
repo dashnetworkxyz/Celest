@@ -75,7 +75,7 @@ public final class CommandHideAddress extends CelestCommand {
                     off.add(player);
             }
 
-            builder.append(" see &6IP Addresses");
+            builder.append(" see &6IP Addresses&7.");
 
             MessageUtils.message(player, builder::build);
         }
@@ -87,7 +87,7 @@ public final class CommandHideAddress extends CelestCommand {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 ");
             builder.append(new PlayerFormat(on));
-            builder.append(" will no longer see &6IP Addresses");
+            builder.append(" will no longer see &6IP Addresses&7.");
 
             MessageUtils.message(source, builder::build);
         }
@@ -96,7 +96,7 @@ public final class CommandHideAddress extends CelestCommand {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 ");
             builder.append(new PlayerFormat(on));
-            builder.append(" will now see &6IP Addresses");
+            builder.append(" will now see &6IP Addresses&7.");
 
             MessageUtils.message(source, builder::build);
         }

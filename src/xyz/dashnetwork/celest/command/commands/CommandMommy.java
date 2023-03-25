@@ -42,7 +42,7 @@ public final class CommandMommy extends CelestCommand {
         Celest.getServer().getScheduler().buildTask(Celest.getInstance(), () -> {
             String random = mommies[ThreadLocalRandom.current().nextInt(mommies.length)];
 
-            MessageUtils.message(source, "&6&l»&7 Face identified. Your " + member + " is &6" + random);
+            MessageUtils.message(source, "&6&l»&7 Face identified. Your " + member + " is &6" + random + "&7.");
         }).delay(1, TimeUnit.SECONDS).schedule();
     }
 

@@ -87,6 +87,7 @@ public final class CommandTwoFactor extends CelestCommand {
                 MessageBuilder builder = new MessageBuilder();
                 builder.append("&6&l»&7 Your generated key is ");
                 builder.append("&6" + generated).hover("&7Click to copy &6" + generated).click(ClickEvent.suggestCommand(generated));
+                builder.append("&7.");
                 builder.append("\n&6&l»&7 Do not share this key with anyone.");
                 builder.append("\n&6&l»&7 Type &6/" + label + " verify <totp>&7 to finish 2fa setup.");
 

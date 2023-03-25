@@ -97,6 +97,8 @@ public final class CommandNickName extends CelestCommand {
                 builder.append(new NamedSourceFormat(named));
             }
 
+            builder.append("&7.");
+
             MessageUtils.message(player, builder::build);
         }
 
@@ -109,9 +111,9 @@ public final class CommandNickName extends CelestCommand {
                 builder.append(new PlayerFormat(players));
 
                 if (off)
-                    builder.append("&7 have been cleared");
+                    builder.append("&7 have been cleared.");
                 else
-                    builder.append("&7 have been set to &6" + string);
+                    builder.append("&7 have been set to &6" + string + "&7.");
 
                 MessageUtils.message(source, builder::build);
             }

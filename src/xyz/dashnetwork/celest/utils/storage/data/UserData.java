@@ -18,13 +18,13 @@
 package xyz.dashnetwork.celest.utils.storage.data;
 
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.utils.chat.Channel;
+import xyz.dashnetwork.celest.utils.chat.ChatChannel;
 
 public final class UserData {
 
     private String username, address, twoFactor, nickname;
     private PunishData ban, mute;
-    private Channel channel;
+    private ChatChannel channel;
     private Long lastPlayed;
     private boolean authenticated, altSpy, commandSpy, pingSpy, signSpy, vanish, hideAddress, debug;
 
@@ -33,7 +33,7 @@ public final class UserData {
 
         ban = null;
         mute = null;
-        channel = Channel.GLOBAL;
+        channel = ChatChannel.GLOBAL;
         address = null;
         nickname = null;
         twoFactor = null;
@@ -68,7 +68,7 @@ public final class UserData {
 
     public PunishData getMute() { return mute; }
 
-    public Channel getChannel() { return channel; }
+    public ChatChannel getChannel() { return channel; }
 
     public Long getLastPlayed() { return lastPlayed; }
 
@@ -96,7 +96,7 @@ public final class UserData {
 
     public void setMute(PunishData mute) { this.mute = mute; }
 
-    public void setChannel(@NotNull Channel channel) { this.channel = channel; }
+    public void setChannel(@NotNull ChatChannel channel) { this.channel = channel; }
 
     public void setLastPlayed(long lastPlayed) { this.lastPlayed = lastPlayed; }
 
@@ -119,7 +119,7 @@ public final class UserData {
     public boolean isObsolete() {
         return ban == null
                 && mute == null
-                && channel == Channel.GLOBAL
+                && channel == ChatChannel.GLOBAL
                 && address == null
                 && nickname == null
                 && lastPlayed == null

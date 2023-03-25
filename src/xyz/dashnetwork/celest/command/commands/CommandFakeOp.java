@@ -67,6 +67,7 @@ public final class CommandFakeOp extends CelestCommand {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 Fake-op sent to ");
             builder.append(new PlayerFormat(players));
+            builder.append("&7.");
 
             MessageUtils.message(source, builder::build);
         }

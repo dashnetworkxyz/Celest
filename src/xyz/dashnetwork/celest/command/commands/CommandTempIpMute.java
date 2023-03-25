@@ -84,6 +84,7 @@ public final class CommandTempIpMute extends CelestCommand {
         builder = new MessageBuilder();
         builder.append("&6&l»&6 " + address.getString() + "&7 temporarily muted by ");
         builder.append(new NamedSourceFormat(named));
+        builder.append("&7.");
         builder.append("\n&6&l»&7 Hover here for details.")
                 .hover("&7Judge: &6" + username
                         + "\n&7Expiration: &6" + date

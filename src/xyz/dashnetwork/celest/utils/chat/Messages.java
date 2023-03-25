@@ -38,30 +38,28 @@ import java.util.function.Predicate;
 
 public final class Messages {
 
-    public static void chatMessage(NamedSource named, Channel channel, String message) {
+    public static void chatMessage(NamedSource named, ChatChannel channel, String message) {
         MessageBuilder builder = new MessageBuilder();
         Predicate<User> predicate;
-
-        Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(named, channel, message));
 
         switch (channel) {
             case OWNER -> {
                 builder.append("&9&lOwner&r ");
                 builder.append(new NamedSourceFormat(named));
                 builder.append("&r &c&l»&c");
-                predicate = each -> each.isOwner() || each.getData().getChannel().equals(Channel.OWNER);
+                predicate = each -> each.isOwner() || each.getData().getChannel().equals(ChatChannel.OWNER);
             }
             case ADMIN -> {
                 builder.append("&9&lAdmin&r ");
                 builder.append(new NamedSourceFormat(named));
                 builder.append("&r &3&l»&3");
-                predicate = each -> each.isAdmin() || each.getData().getChannel().equals(Channel.ADMIN);
+                predicate = each -> each.isAdmin() || each.getData().getChannel().equals(ChatChannel.ADMIN);
             }
             case STAFF -> {
                 builder.append("&9&lStaff&r ");
                 builder.append(new NamedSourceFormat(named));
                 builder.append("&r &6&l»&6");
-                predicate = each -> each.isStaff() || each.getData().getChannel().equals(Channel.STAFF);
+                predicate = each -> each.isStaff() || each.getData().getChannel().equals(ChatChannel.STAFF);
             }
             case LOCAL -> {
                 if (named instanceof User user) {
@@ -70,7 +68,8 @@ public final class Messages {
                     if (message.startsWith("/")) {
                         if (LazyUtils.anyEquals(player.getProtocolVersion(),
                                 ProtocolVersion.MINECRAFT_1_19, ProtocolVersion.MINECRAFT_1_19_1)) {
-                            MessageUtils.message(player, "&6&l»&7 Using commands in &6@lc&7 is disabled in &61.19-1.19.2");
+                            MessageUtils.message(player,
+                                    "&6&l»&7 Using commands in &6@lc&7 is disabled in &61.19-1.19.2&7.");
                             return;
                         }
 
@@ -107,6 +106,7 @@ public final class Messages {
         }
 
         MessageUtils.broadcast(predicate, builder::build);
+        Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(named, channel, message));
     }
 
     public static void serverlistMessage(CommandSource source) {

@@ -52,7 +52,7 @@ public final class CommandCreative extends CelestCommand {
         List<Player> players = arguments.playerListOrSelf(source);
 
         if (optional.isEmpty()) {
-            MessageUtils.message(source, "&6&l»&7 No server for &6Creative was found.");
+            MessageUtils.message(source, "&6&l»&7 No server for &6Creative&7 was found.");
             return;
         }
 
@@ -75,6 +75,8 @@ public final class CommandCreative extends CelestCommand {
                 builder.append(new NamedSourceFormat(named));
             }
 
+            builder.append("&7.");
+
             MessageUtils.message(player, builder::build);
 
             player.createConnectionRequest(server).connect().thenAccept(u -> {
@@ -84,7 +86,8 @@ public final class CommandCreative extends CelestCommand {
                     Optional<Component> component = u.getReasonComponent();
 
                     MessageBuilder kick = new MessageBuilder();
-                    TextSection section = kick.append("&6&l»&7 Failed to connect to &6" + name + "&7. Hover for more info.");
+                    TextSection section = kick.append(
+                            "&6&l»&7 Failed to connect to &6" + name + "&7. Hover for more info.");
 
                     component.ifPresentOrElse(
                             c -> section.hover("&6" + ComponentUtils.toString(c)),
@@ -102,7 +105,7 @@ public final class CommandCreative extends CelestCommand {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 You have sent ");
             builder.append(new PlayerFormat(players));
-            builder.append("&7 to &6" + name);
+            builder.append("&7 to &6" + name + "&7.");
 
             MessageUtils.message(source, builder::build);
         }

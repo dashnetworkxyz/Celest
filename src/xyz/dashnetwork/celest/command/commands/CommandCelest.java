@@ -93,7 +93,7 @@ public final class CommandCelest extends CelestCommand {
                 try {
                     properties = new String(resource.openStream().readAllBytes()).split("\r\n");
                 } catch (IOException exception) {
-                    MessageUtils.message(source, "&6&l»&7 Failed to get build properties");
+                    MessageUtils.message(source, "&6&l»&7 Failed to get build properties.");
                     Logger.throwable(exception);
                     return;
                 }
@@ -123,9 +123,9 @@ public final class CommandCelest extends CelestCommand {
                 int distance = GithubUtils.getGitDistance("dashnetworkxyz/Celest", "master", hash);
 
                 switch (distance) {
-                    case -1 -> MessageUtils.message(source, "&6&l»&7 Unable to fetch version from Github");
-                    case 0 -> MessageUtils.message(source, "&6&l»&7 You are using the &6latest version");
-                    default -> MessageUtils.message(source, "&6&l»&7 You are &6" + distance + " versions&7 behind");
+                    case -1 -> MessageUtils.message(source, "&6&l»&7 Unable to fetch version from Github.");
+                    case 0 -> MessageUtils.message(source, "&6&l»&7 You are using the &6latest version&7.");
+                    default -> MessageUtils.message(source, "&6&l»&7 You are &6" + distance + " versions&7 behind.");
                 }
             }
             case "debug" -> {
@@ -142,9 +142,9 @@ public final class CommandCelest extends CelestCommand {
                 }
 
                 if (state)
-                    MessageUtils.message(source, "&6&l»&7 You are now in &6Debug");
+                    MessageUtils.message(source, "&6&l»&7 You are now in &6Debug&7.");
                 else
-                    MessageUtils.message(source, "&6&l»&7 You are no longer in &6Debug");
+                    MessageUtils.message(source, "&6&l»&7 You are no longer in &6Debug&7.");
             }
             case "flush", "f" -> {
                 for (Limbo<?> limbo : Limbo.getLimbos()) {

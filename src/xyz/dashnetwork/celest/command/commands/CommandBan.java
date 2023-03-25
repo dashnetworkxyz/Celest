@@ -78,9 +78,10 @@ public final class CommandBan extends CelestCommand {
 
         builder = new MessageBuilder();
         builder.append("&6&l»&r ");
-        builder.append(new PlayerProfileFormat(offline.toPlayerProfile())).prefix("&6");
+        builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
         builder.append("&7 permanently banned by ");
         builder.append(new NamedSourceFormat(named));
+        builder.append("&7.");
         builder.append("\n&6&l»&7 Hover for details.")
                 .hover("&7Judge: &6" + username
                         + "\n&7Reason: &6" + reason);

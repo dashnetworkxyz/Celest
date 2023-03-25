@@ -19,6 +19,7 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.ServerConnection;
+import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
@@ -64,7 +65,13 @@ public final class CommandGlobalList extends CelestCommand {
             if (builder.length() > 0)
                 builder.append("\n");
 
-            builder.append("&6&l»&7 [" + entry.getKey() + "] ");
+            String name = entry.getKey();
+
+            builder.append("&6&l»&7 [");
+            builder.append("&7" + name)
+                    .hover("&7Click to copy &6/server " + name)
+                    .click(ClickEvent.suggestCommand("/server " + name));
+            builder.append("&7] ");
             builder.append(new NamedSourceFormat(entry.getValue()));
         }
 

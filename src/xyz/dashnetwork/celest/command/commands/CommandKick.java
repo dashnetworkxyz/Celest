@@ -26,6 +26,7 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
@@ -61,16 +62,15 @@ public final class CommandKick extends CelestCommand {
 
         Component message = builder.build(null);
 
+        for (Player player : players)
+            player.disconnect(message);
+
         builder = new MessageBuilder();
         builder.append("&6&l»&6");
-
-        for (Player player : players) {
-            builder.append(" " + player.getUsername());
-            player.disconnect(message);
-        }
-
+        builder.append(new PlayerFormat(players));
         builder.append("&7 kicked by ");
         builder.append(new NamedSourceFormat(named));
+        builder.append("&7.");
 
         MessageUtils.broadcast(builder::build);
     }

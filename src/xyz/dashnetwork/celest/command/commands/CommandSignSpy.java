@@ -65,7 +65,7 @@ public final class CommandSignSpy extends CelestCommand {
                 builder = new MessageBuilder();
                 builder.append("&6&l»&7 You are ");
                 builder.append(spy ? "now" : "no longer");
-                builder.append(" in &6SignSpy");
+                builder.append(" in &6SignSpy&7.");
 
                 MessageUtils.message((User) offline, builder::build);
             }
@@ -91,7 +91,7 @@ public final class CommandSignSpy extends CelestCommand {
             else
                 builder.append("&7 is");
 
-            builder.append(" now in &6SignSpy");
+            builder.append(" now in &6SignSpy&7.");
 
             MessageUtils.message(source, builder::build);
         }
@@ -106,7 +106,7 @@ public final class CommandSignSpy extends CelestCommand {
             else
                 builder.append("&7 is");
 
-            builder.append(" no longer in &6SignSpy");
+            builder.append(" no longer in &6SignSpy&7.");
 
             MessageUtils.message(source, builder::build);
         }

@@ -25,7 +25,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.function.Predicate;
 
-public enum Channel {
+public enum ChatChannel {
 
     OWNER(PermissionType.OWNER.getPermission(), "@oc", "@dc"),
     ADMIN(PermissionType.ADMIN.getPermission(), "@ac"),
@@ -37,7 +37,7 @@ public enum Channel {
     private final Predicate<User> permission;
     private final String[] selectors;
 
-    Channel(Predicate<User> permission, String... selectors) {
+    ChatChannel(Predicate<User> permission, String... selectors) {
         this.permission = permission;
         this.selectors = selectors;
     }
@@ -50,13 +50,13 @@ public enum Channel {
 
     public String[] getSelectors() { return selectors; }
 
-    public static Channel parseSelector(@NotNull String message) {
+    public static ChatChannel parseSelector(@NotNull String message) {
         if (message.length() < 3)
             return null;
 
-        for (Channel type : values())
-            if (LazyUtils.anyEqualsIgnoreCase(message.substring(0, 3), type.selectors))
-                return type;
+        for (ChatChannel channel : values())
+            if (LazyUtils.anyEqualsIgnoreCase(message.substring(0, 3), channel.selectors))
+                return channel;
 
         return null;
     }

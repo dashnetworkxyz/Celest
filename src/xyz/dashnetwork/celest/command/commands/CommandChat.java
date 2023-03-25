@@ -21,7 +21,7 @@ import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.Channel;
+import xyz.dashnetwork.celest.utils.chat.ChatChannel;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
@@ -44,7 +44,7 @@ public final class CommandChat extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<Channel> optional = arguments.get(Channel.class);
+        Optional<ChatChannel> optional = arguments.get(ChatChannel.class);
         List<OfflineUser> users = arguments.offlineListOrSelf(source);
 
         if (optional.isEmpty() || users.isEmpty()) {
@@ -53,7 +53,7 @@ public final class CommandChat extends CelestCommand {
         }
 
         NamedSource named = NamedSource.of(source);
-        Channel channel = optional.get();
+        ChatChannel channel = optional.get();
         String name = channel.getName();
         MessageBuilder builder;
 
@@ -71,6 +71,8 @@ public final class CommandChat extends CelestCommand {
                     builder.append(new NamedSourceFormat(named));
                 }
 
+                builder.append("&7.");
+
                 MessageUtils.message(user, builder::build);
             }
         }
@@ -82,7 +84,7 @@ public final class CommandChat extends CelestCommand {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 You have moved ");
             builder.append(new OfflineUserFormat(users));
-            builder.append("&7 to &6" + name + "Chat");
+            builder.append("&7 to &6" + name + "Chat&7.");
 
             MessageUtils.message(source, builder::build);
         }

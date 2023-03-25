@@ -56,7 +56,7 @@ public final class CommandSkyblock extends CelestCommand {
         List<Player> players = arguments.playerListOrSelf(source);
 
         if (optional.isEmpty()) {
-            MessageUtils.message(source, "&6&l»&7 No server for &6Skyblock was found.");
+            MessageUtils.message(source, "&6&l»&7 No server for &6Skyblock&7 was found.");
             return;
         }
 
@@ -78,6 +78,8 @@ public final class CommandSkyblock extends CelestCommand {
                 builder.append("&7 by ");
                 builder.append(new NamedSourceFormat(named));
             }
+
+            builder.append("&7.");
 
             MessageUtils.message(player, builder::build);
 
@@ -106,7 +108,7 @@ public final class CommandSkyblock extends CelestCommand {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 You have sent ");
             builder.append(new PlayerFormat(players));
-            builder.append("&7 to &6" + name);
+            builder.append("&7 to &6" + name + "&7.");
 
             MessageUtils.message(source, builder::build);
         }

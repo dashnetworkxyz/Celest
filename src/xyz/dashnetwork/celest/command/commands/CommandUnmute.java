@@ -58,9 +58,10 @@ public final class CommandUnmute extends CelestCommand {
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&r ");
-        builder.append(new PlayerProfileFormat(offline.toPlayerProfile())).prefix("&6");
+        builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
         builder.append("&7 unmuted by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));
+        builder.append("&7.");
 
         MessageUtils.broadcast(User::isStaff, builder::build);
     }

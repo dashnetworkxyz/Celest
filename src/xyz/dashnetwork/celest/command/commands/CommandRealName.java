@@ -60,12 +60,13 @@ public final class CommandRealName extends CelestCommand {
                 builder.append("&6&l»&7 ");
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&7 real name is ");
-                builder.append(new PlayerProfileFormat(user.toPlayerProfile())).prefix("&6");
+                builder.append(new PlayerProfileFormat(user.toPlayerProfile()));
+                builder.append("&7.");
             }
         }
 
         if (builder.length() == 0)
-            builder.append("&6&l»&7 No player found for &6" + search);
+            builder.append("&6&l»&7 No player found for &6" + search + "&7.");
 
         MessageUtils.message(source, builder::build);
     }

@@ -63,6 +63,7 @@ public final class CommandClearChat extends CelestCommand {
         if (players.length > 1) {
             builder.append("&6&l»&7 Chat was cleared by ").onlyIf(notSelf);
             builder.append(new NamedSourceFormat(named)).onlyIf(notSelf);
+            builder.append("&7.").onlyIf(notSelf);
         }
 
         for (Player player : players)
@@ -71,6 +72,7 @@ public final class CommandClearChat extends CelestCommand {
         builder = new MessageBuilder();
         builder.append("&6&l»&7 Chat was cleared for ");
         builder.append(new PlayerFormat(players));
+        builder.append("&7.");
 
         MessageUtils.message(source, builder::build);
     }
