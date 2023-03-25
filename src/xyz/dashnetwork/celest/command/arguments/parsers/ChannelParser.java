@@ -8,14 +8,14 @@
 package xyz.dashnetwork.celest.command.arguments.parsers;
 
 import xyz.dashnetwork.celest.command.arguments.Parser;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.chat.Channel;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 public final class ChannelParser implements Parser {
 
     @Override
     public Object parse(User user, String input) {
-        for (ChatType type : ChatType.values())
+        for (Channel type : Channel.values())
             if (type.hasPermission(user) && type.name().equalsIgnoreCase(input))
                 return type;
 

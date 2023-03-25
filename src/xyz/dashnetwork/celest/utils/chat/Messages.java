@@ -38,30 +38,30 @@ import java.util.function.Predicate;
 
 public final class Messages {
 
-    public static void chatMessage(NamedSource named, ChatType type, String message) {
+    public static void chatMessage(NamedSource named, Channel channel, String message) {
         MessageBuilder builder = new MessageBuilder();
         Predicate<User> predicate;
 
-        Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(named, type, message));
+        Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(named, channel, message));
 
-        switch (type) {
+        switch (channel) {
             case OWNER -> {
                 builder.append("&9&lOwner&r ");
                 builder.append(new NamedSourceFormat(named));
                 builder.append("&r &c&l»&c");
-                predicate = each -> each.isOwner() || each.getData().getChatType().equals(ChatType.OWNER);
+                predicate = each -> each.isOwner() || each.getData().getChannel().equals(Channel.OWNER);
             }
             case ADMIN -> {
                 builder.append("&9&lAdmin&r ");
                 builder.append(new NamedSourceFormat(named));
                 builder.append("&r &3&l»&3");
-                predicate = each -> each.isAdmin() || each.getData().getChatType().equals(ChatType.ADMIN);
+                predicate = each -> each.isAdmin() || each.getData().getChannel().equals(Channel.ADMIN);
             }
             case STAFF -> {
                 builder.append("&9&lStaff&r ");
                 builder.append(new NamedSourceFormat(named));
                 builder.append("&r &6&l»&6");
-                predicate = each -> each.isStaff() || each.getData().getChatType().equals(ChatType.STAFF);
+                predicate = each -> each.isStaff() || each.getData().getChannel().equals(Channel.STAFF);
             }
             case LOCAL -> {
                 if (named instanceof User user) {

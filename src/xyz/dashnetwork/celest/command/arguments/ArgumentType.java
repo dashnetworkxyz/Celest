@@ -29,7 +29,7 @@ public enum ArgumentType {
     ADDRESS("ip address", new AddressParser(), new AddressSuggester()),
     CHANNEL("channel", new ChannelParser(), new ChannelSuggester()),
     INTEGER("integer", new IntegerParser(), new IntegerSuggester()),
-    LONG("long", new LongParser(), new LongSuggester()),
+    LONG("duration", new LongParser(), new LongSuggester()),
     OFFLINE_USER("target", new OfflineUserParser(), new OfflineUserSuggester()),
     OFFLINE_USER_LIST("target(s)", new OfflineUserListParser(), new OfflineUserListSuggester()),
     PLAYER("target", new PlayerParser(), new PlayerSuggester()),

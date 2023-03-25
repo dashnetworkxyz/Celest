@@ -18,18 +18,19 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
-import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
+import xyz.dashnetwork.celest.utils.connection.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public final class CommandCommandSpy extends CelestCommand {
 
@@ -37,47 +38,44 @@ public final class CommandCommandSpy extends CelestCommand {
         super("commandspy", "cmdspy", "cs");
 
         setPermission(User::isAdmin, true);
-        addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
+        addArguments(User::isOwner, true, ArgumentType.OFFLINE_USER_LIST);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        List<Player> players = arguments.playerListOrSelf(source);
+        List<OfflineUser> users = arguments.offlineListOrSelf(source);
 
-        if (players.isEmpty()) {
+        if (users.isEmpty()) {
             sendUsage(source, label);
             return;
         }
 
-        List<Player> on = new ArrayList<>();
-        List<Player> off = new ArrayList<>();
+        Optional<User> optional = User.getUser(source);
+        List<OfflineUser> on = new ArrayList<>();
+        List<OfflineUser> off = new ArrayList<>();
         MessageBuilder builder;
 
-        for (Player player : players) {
-            User user = User.getUser(player);
-            UserData data = user.getData();
+        for (OfflineUser offline : users) {
+            UserData data = offline.getData();
             boolean spy = !data.getCommandSpy();
 
             data.setCommandSpy(spy);
 
-            builder = new MessageBuilder();
-            builder.append("&6&l»&7 You are ");
+            if (offline.isActive()) {
+                builder = new MessageBuilder();
+                builder.append("&6&l»&7 You are ");
+                builder.append(spy ? "now" : "no longer");
+                builder.append(" in &6CommandSpy");
 
-            if (spy) {
-                builder.append("now");
-
-                if (!source.equals(player))
-                    on.add(player);
-            } else {
-                builder.append("no longer");
-
-                if (!source.equals(player))
-                    off.add(player);
+                MessageUtils.message((User) offline, builder::build);
             }
 
-            builder.append(" in &6CommandSpy");
-
-            MessageUtils.message(player, builder::build);
+            if (optional.map(user -> !user.equals(offline)).orElse(false)) {
+                if (spy)
+                    on.add(offline);
+                else
+                    off.add(offline);
+            }
         }
 
         int onSize = on.size();
@@ -86,7 +84,7 @@ public final class CommandCommandSpy extends CelestCommand {
         if (onSize > 0) {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 ");
-            builder.append(new PlayerFormat(on));
+            builder.append(new OfflineUserFormat(on));
 
             if (onSize > 1)
                 builder.append("&7 are");
@@ -101,7 +99,7 @@ public final class CommandCommandSpy extends CelestCommand {
         if (offSize > 0) {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 ");
-            builder.append(new PlayerFormat(off));
+            builder.append(new OfflineUserFormat(off));
 
             if (offSize > 1)
                 builder.append("&7 are");

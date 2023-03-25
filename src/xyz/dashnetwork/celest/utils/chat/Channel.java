@@ -25,19 +25,19 @@ import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.function.Predicate;
 
-public enum ChatType {
+public enum Channel {
 
     OWNER(PermissionType.OWNER.getPermission(), "@oc", "@dc"),
     ADMIN(PermissionType.ADMIN.getPermission(), "@ac"),
     STAFF(PermissionType.STAFF.getPermission(), "@sc"),
     LOCAL(PermissionType.OWNER.getPermission(), "@lc"),
     GLOBAL(user -> user.isStaff() ||
-            LazyUtils.anyEquals(user.getData().getChatType(), OWNER, ADMIN, STAFF, LOCAL), "@gc");
+            LazyUtils.anyEquals(user.getData().getChannel(), OWNER, ADMIN, STAFF, LOCAL), "@gc");
 
     private final Predicate<User> permission;
     private final String[] selectors;
 
-    ChatType(Predicate<User> permission, String... selectors) {
+    Channel(Predicate<User> permission, String... selectors) {
         this.permission = permission;
         this.selectors = selectors;
     }
@@ -45,16 +45,16 @@ public enum ChatType {
     public String getName() { return GrammarUtils.capitalization(name().toLowerCase()); }
 
     public boolean hasPermission(User user) {
-        return user == null || permission.test(user) || user.getData().getChatType().equals(this);
+        return user == null || permission.test(user) || user.getData().getChannel().equals(this);
     }
 
     public String[] getSelectors() { return selectors; }
 
-    public static ChatType parseSelector(@NotNull String message) {
+    public static Channel parseSelector(@NotNull String message) {
         if (message.length() < 3)
             return null;
 
-        for (ChatType type : values())
+        for (Channel type : values())
             if (LazyUtils.anyEqualsIgnoreCase(message.substring(0, 3), type.selectors))
                 return type;
 

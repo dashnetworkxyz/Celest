@@ -19,11 +19,10 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.chat.Channel;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
@@ -74,8 +73,8 @@ public final class CommandVanish extends CelestCommand {
 
                 data.setLastPlayed(System.currentTimeMillis());
 
-                if (data.getChatType().equals(ChatType.GLOBAL)) {
-                    data.setChatType(ChatType.STAFF);
+                if (data.getChannel().equals(Channel.GLOBAL)) {
+                    data.setChannel(Channel.STAFF);
 
                     MessageUtils.message(player, "&6&l»&7 You have been moved to &6StaffChat&7 because you vanished.");
                 }
@@ -91,7 +90,7 @@ public final class CommandVanish extends CelestCommand {
 
             MessageUtils.broadcast(false, predicate.negate(), builder::build);
 
-            Channel.callOut("vanish", user);
+            xyz.dashnetwork.celest.channel.Channel.callOut("vanish", user);
         }
 
         if (on.size() > 0) {

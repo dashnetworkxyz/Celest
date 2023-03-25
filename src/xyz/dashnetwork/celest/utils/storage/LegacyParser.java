@@ -21,7 +21,7 @@ import com.velocitypowered.api.proxy.Player;
 import org.yaml.snakeyaml.Yaml;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.ConsumerPair;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.chat.Channel;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.log.Logger;
@@ -102,9 +102,9 @@ public final class LegacyParser {
 
         parseMap(nicknames, UserData::setNickName);
         parseMap(lastPlayed, UserData::setLastPlayed);
-        parseList(staffchat, data -> data.setChatType(ChatType.STAFF));
-        parseList(adminchat, data -> data.setChatType(ChatType.ADMIN));
-        parseList(ownerchat, data -> data.setChatType(ChatType.OWNER));
+        parseList(staffchat, data -> data.setChannel(Channel.STAFF));
+        parseList(adminchat, data -> data.setChannel(Channel.ADMIN));
+        parseList(ownerchat, data -> data.setChannel(Channel.OWNER));
         parseList(altspy, data -> data.setAltSpy(true));
         parseList(commandspy, data -> data.setCommandSpy(true));
         parseList(pingspy, data -> data.setPingSpy(true));

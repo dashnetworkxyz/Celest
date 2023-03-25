@@ -31,12 +31,12 @@ public final class OfflineUserListParser implements Parser {
     public Object parse(User user, String input) {
         Set<OfflineUser> set = new HashSet<>();
 
-        if (input.equalsIgnoreCase("@a")) {
-            for (User each : User.getUsers())
-                if (user == null || user.canSee(each))
-                    set.add(each);
-        } else {
-            for (String each : input.split(",")) {
+        for (String each : input.split(",")) {
+            if (each.equalsIgnoreCase("@a")) {
+                for (User online : User.getUsers())
+                    if (user.canSee(online))
+                        set.add(online);
+            } else {
                 Object offline = ArgumentType.OFFLINE_USER.parse(user, each);
 
                 if (offline != null)

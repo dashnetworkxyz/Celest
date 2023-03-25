@@ -44,7 +44,7 @@ public final class OfflineUserFormat implements Format {
 
         for (OfflineUser each : offlines) {
             if (!sections.isEmpty())
-                sections.add(new TextSection("&6, ", null, null));
+                sections.add(new TextSection("&7, ", null, null));
 
             sections.addAll(new OfflineUserFormat(each).sections);
         }

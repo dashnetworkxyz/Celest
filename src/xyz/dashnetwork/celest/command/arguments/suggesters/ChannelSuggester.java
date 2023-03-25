@@ -9,7 +9,7 @@ package xyz.dashnetwork.celest.command.arguments.suggesters;
 
 import xyz.dashnetwork.celest.command.arguments.Suggester;
 import xyz.dashnetwork.celest.utils.ListUtils;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.chat.Channel;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public final class ChannelSuggester implements Suggester {
     public List<String> suggest(User user, String input) {
         List<String> list = new ArrayList<>();
 
-        for (ChatType type : ChatType.values())
+        for (Channel type : Channel.values())
             if (type.hasPermission(user))
                 ListUtils.addIfStarts(list, input, type.name().toLowerCase());
 

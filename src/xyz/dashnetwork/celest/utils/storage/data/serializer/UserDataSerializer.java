@@ -19,7 +19,7 @@ package xyz.dashnetwork.celest.utils.storage.data.serializer;
 
 import com.google.gson.*;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.chat.Channel;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.lang.reflect.Type;
@@ -31,10 +31,10 @@ public final class UserDataSerializer implements JsonSerializer<UserData>, JsonD
     @Override
     public JsonElement serialize(UserData userData, Type type, JsonSerializationContext context) {
         JsonObject object = (JsonObject) gson.toJsonTree(userData);
-        ChatType chatType = userData.getChatType();
+        Channel channel = userData.getChannel();
 
-        if (chatType != null && chatType.equals(ChatType.GLOBAL))
-            object.remove("chatType");
+        if (channel.equals(Channel.GLOBAL))
+            object.remove("channel");
 
         if (!userData.getAuthenticated())
             object.remove("authenticated");
@@ -64,8 +64,8 @@ public final class UserDataSerializer implements JsonSerializer<UserData>, JsonD
     public UserData deserialize(JsonElement element, Type type, JsonDeserializationContext context) {
         UserData userData = gson.fromJson(element, UserData.class);
 
-        if (userData.getChatType() == null)
-            userData.setChatType(ChatType.GLOBAL);
+        if (userData.getChannel() == null)
+            userData.setChannel(Channel.GLOBAL);
 
         return userData;
     }

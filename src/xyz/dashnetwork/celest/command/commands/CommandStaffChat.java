@@ -18,15 +18,15 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
-import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.chat.Channel;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
+import xyz.dashnetwork.celest.utils.connection.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
@@ -38,14 +38,14 @@ public final class CommandStaffChat extends CelestCommand {
         super("staffchat", "sc");
 
         setPermission(User::isStaff, true);
-        addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
+        addArguments(User::isOwner, true, ArgumentType.OFFLINE_USER_LIST);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        List<Player> players = arguments.playerListOrSelf(source);
+        List<OfflineUser> users = arguments.offlineListOrSelf(source);
 
-        if (players.isEmpty()) {
+        if (users.isEmpty()) {
             sendUsage(source, label);
             return;
         }
@@ -53,28 +53,31 @@ public final class CommandStaffChat extends CelestCommand {
         NamedSource named = NamedSource.of(source);
         MessageBuilder builder;
 
-        for (Player player : players) {
-            User user = User.getUser(player);
-            user.getData().setChatType(ChatType.STAFF);
+        for (OfflineUser offline : users) {
+            offline.getData().setChannel(Channel.STAFF);
 
-            builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have been moved to &6StaffChat");
+            if (offline.isActive()) {
+                User user = (User) offline;
 
-            if (!source.equals(player)) {
-                builder.append("&7 by ");
-                builder.append(new NamedSourceFormat(named));
+                builder = new MessageBuilder();
+                builder.append("&6&l»&7 You have been moved to &6StaffChat");
+
+                if (!named.equals(user)) {
+                    builder.append("&7 by ");
+                    builder.append(new NamedSourceFormat(named));
+                }
+
+                MessageUtils.message(user, builder::build);
             }
-
-            MessageUtils.message(player, builder::build);
         }
 
-        if (source instanceof Player)
-            players.remove(source);
+        if (named instanceof User)
+            users.remove(named);
 
-        if (players.size() > 0) {
+        if (users.size() > 0) {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 You have moved ");
-            builder.append(new PlayerFormat(players));
+            builder.append(new OfflineUserFormat(users));
             builder.append("&7 to &6StaffChat");
 
             MessageUtils.message(source, builder::build);

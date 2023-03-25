@@ -17,24 +17,24 @@
 
 package xyz.dashnetwork.celest.events;
 
-import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.chat.Channel;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
 public final class CelestChatEvent {
 
     private final NamedSource named;
-    private final ChatType type;
+    private final Channel channel;
     private final String message;
 
-    public CelestChatEvent(NamedSource named, ChatType type, String message) {
+    public CelestChatEvent(NamedSource named, Channel channel, String message) {
         this.named = named;
-        this.type = type;
+        this.channel = channel;
         this.message = message;
     }
 
     public NamedSource getNamedSource() { return named; }
 
-    public ChatType getChatType() { return type; }
+    public Channel getChannel() { return channel; }
 
     public String getMessage() { return message; }
 

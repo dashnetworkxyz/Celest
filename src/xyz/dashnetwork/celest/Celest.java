@@ -56,7 +56,7 @@ import java.util.concurrent.TimeUnit;
 @Plugin(
         id = "celest",
         name = "Celest",
-        version = "0.14",
+        version = "0.15",
         authors = {"MasterDash5"},
         dependencies = {
                 @Dependency(id = "luckperms", optional = true),
@@ -186,6 +186,7 @@ public final class Celest {
         new CommandServerList();
         new CommandSignSpy();
         new CommandSkyblock();
+        new CommandStaff();
         new CommandStaffChat();
         new CommandSudo();
         new CommandSurvival();

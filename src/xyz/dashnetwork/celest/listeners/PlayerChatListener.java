@@ -21,12 +21,11 @@ import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.SecretUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
-import xyz.dashnetwork.celest.utils.chat.ChatType;
+import xyz.dashnetwork.celest.utils.chat.Channel;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
@@ -54,7 +53,7 @@ public final class PlayerChatListener {
             if (message.equals(SecretUtils.getTOTP(userData.getTwoFactor()))) {
                 user.getData().setAuthenticated(true);
 
-                Channel.callOut("twofactor", user);
+                xyz.dashnetwork.celest.channel.Channel.callOut("twofactor", user);
 
                 MessageUtils.message(player, "&6&l»&7 You have been successfully authenticated.");
                 return;
@@ -90,25 +89,25 @@ public final class PlayerChatListener {
             return;
         }
 
-        ChatType type = ChatType.parseSelector(message);
+        Channel channel = Channel.parseSelector(message);
 
-        if (type == null)
-            type = userData.getChatType();
-        else if (type.hasPermission(user)) {
+        if (channel == null)
+            channel = userData.getChannel();
+        else if (channel.hasPermission(user)) {
             message = message.substring(3);
 
             if (message.isBlank()) {
                 MessageBuilder builder = new MessageBuilder();
-                builder.append("&6&l»&c Usage:&7 " + type.getSelectors()[0]);
+                builder.append("&6&l»&c Usage:&7 " + channel.getSelectors()[0]);
                 builder.append(new ArgumentTypeFormat(true, ArgumentType.MESSAGE)).prefix("&7");
 
                 MessageUtils.message(player, builder::build);
                 return;
             }
         } else
-            type = ChatType.GLOBAL;
+            channel = Channel.GLOBAL;
 
-        Messages.chatMessage(user, type, message);
+        Messages.chatMessage(user, channel, message);
     }
 
 }
