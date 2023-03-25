@@ -43,7 +43,7 @@ import java.util.Optional;
 public final class CommandCelest extends CelestCommand {
 
     public CommandCelest() {
-        super("celest");
+        super("celest", "cel");
 
         setPermission(User::isOwner, true);
         addArguments(ArgumentType.STRING);
