@@ -19,9 +19,12 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
+import xyz.dashnetwork.celest.events.CelestVanishEvent;
 import xyz.dashnetwork.celest.utils.chat.ChatChannel;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
@@ -90,7 +93,8 @@ public final class CommandVanish extends CelestCommand {
 
             MessageUtils.broadcast(false, predicate.negate(), builder::build);
 
-            xyz.dashnetwork.celest.channel.Channel.callOut("vanish", user);
+            Channel.callOut("vanish", user);
+            Celest.getServer().getEventManager().fireAndForget(new CelestVanishEvent(user, vanish));
         }
 
         if (on.size() > 0) {
