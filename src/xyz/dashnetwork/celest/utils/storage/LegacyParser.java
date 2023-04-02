@@ -83,14 +83,14 @@ public final class LegacyParser {
                         data.setAddress(address);
 
                         username = data.getUsername();
-                    } else if (uuid.getMostSignificantBits() != 0) { // This shouldn't happen, but in theory it can.
+                    } else if (uuid.getMostSignificantBits() != 0) {
                         username = ProfileUtils.fromUuid(uuid).username();
 
                         if (username == null)
                             continue;
 
                         userDataMap.put(uuid, new UserData(username));
-                    } else
+                    } else // This shouldn't happen, but in theory it can.
                         continue;
 
                     profiles.add(new PlayerProfile(uuid, username));

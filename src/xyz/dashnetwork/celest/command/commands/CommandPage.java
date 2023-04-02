@@ -49,7 +49,7 @@ public final class CommandPage extends CelestCommand {
         assert optionalUser.isPresent();
 
         User user = optionalUser.get();
-        PageBuilder message = user.getPagedMessage();
+        PageBuilder message = user.getPageBuilder();
 
         if (message == null) {
             MessageUtils.message(source, "&6&l»&7 You have no pages to view!");
