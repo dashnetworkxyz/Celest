@@ -32,7 +32,7 @@ import java.util.*;
 
 public final class CommandVersionList extends CelestCommand {
 
-    public CommandVersionList() { super("versionlist", "verlist"); }
+    public CommandVersionList() { super("versionlist", "verlist", "vlist"); }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {

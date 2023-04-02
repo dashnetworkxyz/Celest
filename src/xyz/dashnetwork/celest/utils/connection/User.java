@@ -26,6 +26,7 @@ import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
+import xyz.dashnetwork.celest.utils.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 import xyz.dashnetwork.celest.utils.storage.Cache;
@@ -40,6 +41,7 @@ public final class User extends OfflineUser implements NamedSource, Audience {
     private static final Vault vault = Celest.getVault();
     private Player player;
     private Address address;
+    private PageBuilder pageBuilder;
     private String prefix, suffix, nickname;
     private long vaultUpdateTime;
 
@@ -48,6 +50,7 @@ public final class User extends OfflineUser implements NamedSource, Audience {
 
         this.player = player;
         this.address = Address.getAddress(player.getRemoteAddress().getHostString(), false);
+        this.pageBuilder = null;
         this.vaultUpdateTime = -1;
 
         String old = userData.getAddress();
@@ -146,6 +149,10 @@ public final class User extends OfflineUser implements NamedSource, Audience {
     public Player getPlayer() { return player; }
 
     public Address getAddress() { return address; }
+
+    public PageBuilder getPageBuilder() { return pageBuilder; }
+
+    public void setPageBuilder(PageBuilder pageBuilder) { this.pageBuilder = pageBuilder; }
 
     public boolean isStaff() { return player.hasPermission("dashnetwork.staff") || isAdmin(); }
 

@@ -29,15 +29,18 @@ import xyz.dashnetwork.celest.utils.GithubUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.log.Logger;
 import xyz.dashnetwork.celest.utils.storage.Configuration;
 import xyz.dashnetwork.celest.utils.storage.LegacyParser;
+import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 public final class CommandCelest extends CelestCommand {
@@ -48,19 +51,21 @@ public final class CommandCelest extends CelestCommand {
         setPermission(User::isOwner, true);
         addArguments(ArgumentType.STRING);
         addArguments(ArgumentType.STRING);
-        setCompletions(0, "reload", "save", "version", "debug", "flush", "data");
+        setCompletions(0, "reload", "save", "version", "debug", "users", "cache", "flush", "data");
     }
 
     private void sendHelpMessage(CommandSource source) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&6 Celest debug commands");
-        builder.append("\n&6&l»&7 /celest legacy-import &c&o(unsafe)").hover("&6Import legacy data &c(unsafe)");
-        builder.append("\n&6&l»&7 /celest data <directory> <file> [write]// TODO"); // TODO
+        builder.append("\n&6&l»&7 /celest legacy-import &c&o(unsafe)").hover("&6Import legacy data &c(unsafe).");
+        builder.append("\n&6&l»&7 /celest data <directory> <file> [write] // TODO"); // TODO
         builder.append("\n&6&l»&7 /celest flush").hover("&6Clear & save all objects in Limbo.");
-        builder.append("\n&6&l»&7 /celest debug").hover("&6View debug information");
-        builder.append("\n&6&l»&7 /celest version").hover("&6View build properties");
-        builder.append("\n&6&l»&7 /celest save").hover("&6Force an auto-save");
-        builder.append("\n&6&l»&7 /celest reload").hover("&6Reload config.yml");
+        builder.append("\n&6&l»&7 /celest cache").hover("&6Refresh and clear old cache.");
+        builder.append("\n&6&l»&7 /celest users").hover("&6Get and view all users from userdata.");
+        builder.append("\n&6&l»&7 /celest debug").hover("&6View debug information.");
+        builder.append("\n&6&l»&7 /celest version").hover("&6View build properties.");
+        builder.append("\n&6&l»&7 /celest save").hover("&6Force an auto-save.");
+        builder.append("\n&6&l»&7 /celest reload").hover("&6Reload config.yml.");
 
         MessageUtils.message(source, builder::build);
     }
@@ -145,6 +150,13 @@ public final class CommandCelest extends CelestCommand {
                     MessageUtils.message(source, "&6&l»&7 You are now in &6Debug&7.");
                 else
                     MessageUtils.message(source, "&6&l»&7 You are no longer in &6Debug&7.");
+            }
+            case "users" -> {
+                MessageUtils.message(source, "//TODO"); // TODO
+            }
+            case "cache", "c" -> {
+                Celest.getCacheTask().run();
+                MessageUtils.message(source, "&6&l»&7 Cache refreshed and old entries removed.");
             }
             case "flush", "f" -> {
                 for (Limbo<?> limbo : Limbo.getLimbos()) {

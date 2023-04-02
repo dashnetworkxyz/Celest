@@ -66,8 +66,8 @@ import java.util.concurrent.TimeUnit;
 public final class Celest {
 
     private static final Gson gson = new Gson();
-    private static final CacheTask cacheTask = new CacheTask();
-    private static final SaveTask saveTask = new SaveTask();
+    private static CacheTask cacheTask;
+    private static SaveTask saveTask;
     private static Celest instance;
     private static ProxyServer server;
     private static Logger logger;
@@ -75,6 +75,8 @@ public final class Celest {
     private static Vault vault;
 
     public static Gson getGson() { return gson; }
+
+    public static CacheTask getCacheTask() { return cacheTask; }
 
     public static SaveTask getSaveTask() { return saveTask; }
 
@@ -176,6 +178,7 @@ public final class Celest {
         new CommandMute();
         new CommandNickName();
         new CommandOwnerChat();
+        new CommandPage();
         new CommandPing();
         new CommandPingSpy();
         new CommandPvp();
@@ -203,7 +206,12 @@ public final class Celest {
         new CommandVanish();
         new CommandVersionList();
 
+        new CommandTest();
+
         logger.info("Scheduling tasks...");
+        cacheTask = new CacheTask();
+        saveTask = new SaveTask();
+
         Scheduler scheduler = server.getScheduler();
         scheduler.buildTask(this, cacheTask).repeat(1, TimeUnit.HOURS).schedule();
         scheduler.buildTask(this, saveTask).repeat(1, TimeUnit.MINUTES).schedule();

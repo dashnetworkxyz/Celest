@@ -44,6 +44,10 @@ public final class MessageBuilder {
         return section;
     }
 
+    public void append(@NotNull TextSection section) {
+        sections.add(section);
+    }
+
     public FormatSection append(@NotNull Format format) {
         sections.addAll(format.sections());
         return new FormatSection(format.sections());

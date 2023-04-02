@@ -123,7 +123,7 @@ public final class ProxyPingListener {
             section.hover("&6" + address.getString() + "\n", User::showAddress);
             section.hover("&7Virtual: &6" + virtual.getHostName() + ":" + virtual.getPort());
             section.hover("\n&7Version: &6" + range + "&7 (" + version.getProtocol() + ")");
-            section.hover("\n&7Accounts: &6" + ArrayUtils.convertToString(profiles, PlayerProfile::username, ", "));
+            section.hover("\n&7Accounts: &6" + ArrayUtils.convertToString(profiles, PlayerProfile::username, "&7, &6"));
 
             MessageUtils.broadcast(user -> user.getData().getPingSpy(), message::build);
         }).schedule();
