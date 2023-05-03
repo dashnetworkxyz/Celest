@@ -78,7 +78,7 @@ public final class CommandIpBan extends CelestCommand {
         }
 
         builder = new MessageBuilder();
-        builder.append("&6&l»&7 " + address.getString() + " permanently banned by ");
+        builder.append("&6&l»&6 " + address.getString() + " permanently banned by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("&7.");
         builder.append("\n&6&l»&7 Hover for details.")
