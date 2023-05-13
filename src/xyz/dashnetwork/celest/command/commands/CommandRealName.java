@@ -35,19 +35,12 @@ public final class CommandRealName extends CelestCommand {
     public CommandRealName() {
         super("realname");
 
-        addArguments(ArgumentType.STRING);
+        addArguments(true, ArgumentType.STRING);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<String> optional = arguments.get(String.class);
-
-        if (optional.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        String search = optional.get();
+        String search = arguments.required(String.class);
         MessageBuilder builder = new MessageBuilder();
 
         for (User user : User.getUsers()) {

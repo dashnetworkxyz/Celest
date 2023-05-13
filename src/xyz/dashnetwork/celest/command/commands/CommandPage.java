@@ -33,18 +33,12 @@ public final class CommandPage extends CelestCommand {
         super("page");
 
         setPermission(user -> true, false);
-        addArguments(ArgumentType.INTEGER);
+        addArguments(true, ArgumentType.INTEGER);
     }
 
     @Override
     public void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<Integer> optionalInteger = arguments.get(Integer.class);
-
-        if (optionalInteger.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
+        int page = arguments.required(Integer.class);
         Optional<User> optionalUser = User.getUser(source);
         assert optionalUser.isPresent();
 
@@ -56,7 +50,7 @@ public final class CommandPage extends CelestCommand {
             return;
         }
 
-        MessageUtils.message(source, message.build(user, optionalInteger.get()));
+        MessageUtils.message(source, message.build(user, page));
     }
 
 }

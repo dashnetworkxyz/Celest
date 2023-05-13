@@ -38,19 +38,12 @@ public final class CommandUnmute extends CelestCommand {
         super("unmute");
 
         setPermission(User::isAdmin, true);
-        addArguments(ArgumentType.OFFLINE_USER);
+        addArguments(true, ArgumentType.OFFLINE_USER);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<OfflineUser> optional = arguments.get(OfflineUser.class);
-
-        if (optional.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        OfflineUser offline = optional.get();
+        OfflineUser offline = arguments.required(OfflineUser.class);
         UserData data = offline.getData();
 
         if (data != null)

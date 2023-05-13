@@ -49,9 +49,9 @@ public final class CommandCelest extends CelestCommand {
         super("celest", "cel");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.STRING);
-        addArguments(ArgumentType.STRING);
-        setCompletions(0, "reload", "save", "version", "debug", "users", "cache", "flush", "data");
+        addArguments(false, ArgumentType.STRING);
+        // addArguments(ArgumentType.STRING); TODO
+        setSuggestions(0, "reload", "save", "version", "debug", "users", "cache", "flush", "data");
     }
 
     private void sendHelpMessage(CommandSource source) {
@@ -72,7 +72,7 @@ public final class CommandCelest extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<String> optionalCommand = arguments.get(String.class);
+        Optional<String> optionalCommand = arguments.optional(String.class);
 
         if (optionalCommand.isEmpty()) {
             sendHelpMessage(source);

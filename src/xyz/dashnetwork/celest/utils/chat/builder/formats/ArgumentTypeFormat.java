@@ -140,7 +140,7 @@ public final class ArgumentTypeFormat implements Format {
             case STRING -> section.hover("""
                     &7Specify one &6word&7.
                     No spaces allowed.""");
-            case MESSAGE -> section.hover("""
+            case MULTI_STRING -> section.hover("""
                     &7Write your &6message&7.""");
         }
 

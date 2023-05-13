@@ -38,22 +38,21 @@ public final class CommandChat extends CelestCommand {
     public CommandChat() {
         super("chat");
 
-        addArguments(ArgumentType.CHANNEL);
+        addArguments(true, ArgumentType.CHANNEL);
         addArguments(User::isOwner, true, ArgumentType.OFFLINE_USER_LIST);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<ChatChannel> optional = arguments.get(ChatChannel.class);
         List<OfflineUser> users = arguments.offlineListOrSelf(source);
 
-        if (optional.isEmpty() || users.isEmpty()) {
+        if (users.isEmpty()) {
             sendUsage(source, label);
             return;
         }
 
         NamedSource named = NamedSource.of(source);
-        ChatChannel channel = optional.get();
+        ChatChannel channel = arguments.required(ChatChannel.class);
         String name = channel.getName();
         MessageBuilder builder;
 

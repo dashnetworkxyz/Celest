@@ -40,24 +40,16 @@ public final class CommandTempIpMute extends CelestCommand {
         super("tempipmute", "tempmuteip");
 
         setPermission(User::isAdmin, true);
-        addArguments(ArgumentType.ADDRESS, ArgumentType.LONG);
-        addArguments(ArgumentType.MESSAGE);
+        addArguments(true, ArgumentType.ADDRESS, ArgumentType.LONG);
+        addArguments(false, ArgumentType.MULTI_STRING);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<Address> optionalAddress = arguments.get(Address.class);
-        Optional<Long> optionalLong = arguments.get(Long.class);
-
-        if (optionalAddress.isEmpty() || optionalLong.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        Address address = optionalAddress.get();
-        long duration = optionalLong.get();
-        String date = TimeUtils.longToDate(duration);
-        String reason = arguments.get(String.class).orElse("No reason provided.");
+        Address address = arguments.required(Address.class);
+        long duration = arguments.required(Long.class);
+        String reason = arguments.optional(String.class).orElse("No reason provided.");
+        String date = TimeUtils.longToDate(System.currentTimeMillis() + duration);
         UUID uuid = null;
 
         if (source instanceof Player player)

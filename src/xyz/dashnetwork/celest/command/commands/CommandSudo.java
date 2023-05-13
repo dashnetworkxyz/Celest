@@ -35,21 +35,13 @@ public final class CommandSudo extends CelestCommand {
         super("sudo");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.PLAYER, ArgumentType.MESSAGE);
+        addArguments(true, ArgumentType.PLAYER, ArgumentType.MULTI_STRING);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<Player> optionalPlayer = arguments.get(Player.class);
-        Optional<String> optionalMessage = arguments.get(String.class);
-
-        if (optionalPlayer.isEmpty() || optionalMessage.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        Player player = optionalPlayer.get();
-        String message = optionalMessage.get();
+        Player player = arguments.required(Player.class);
+        String message = arguments.required(String.class);
 
         player.spoofChatInput(message);
 

@@ -28,6 +28,7 @@ import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class CommandColorList extends CelestCommand {
 
@@ -44,12 +45,12 @@ public final class CommandColorList extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        List<Player> players = arguments.playerListOrSelf(source);
+        Optional<Player[]> optional = arguments.optional(Player[].class);
 
-        if (players.isEmpty())
+        if (optional.isEmpty())
             MessageUtils.message(source, message);
         else
-            for (Player player : players)
+            for (Player player : optional.get())
                 MessageUtils.message(player, message);
     }
 

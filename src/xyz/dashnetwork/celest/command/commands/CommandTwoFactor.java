@@ -19,6 +19,7 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import net.kyori.adventure.text.event.ClickEvent;
+import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
@@ -41,12 +42,13 @@ public final class CommandTwoFactor extends CelestCommand {
         super("twofactor", "2fa");
 
         setPermission(User::isStaff, false);
-        addArguments(ArgumentType.STRING);
-        addArguments(ArgumentType.STRING);
-        setCompletions(0, "setup", "disable", "verify");
+        addArguments(true, ArgumentType.STRING);
+        addArguments(false, ArgumentType.STRING);
+        setSuggestions(0, "setup", "disable", "verify");
     }
 
-    private void sendHelpMessage(CommandSource source, String label) {
+    @Override
+    protected void sendUsage(@NotNull CommandSource source, @NotNull String label) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&6 Two-Factor Commands");
         builder.append("\n&6&l»&7 /" + label + " setup").hover("&6Setup 2fa.");
@@ -58,23 +60,16 @@ public final class CommandTwoFactor extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<String> optionalCommand = arguments.get(String.class);
-        Optional<String> optionalCode = arguments.get(String.class);
+        Optional<String> optionalCode = arguments.optional(String.class);
+        Optional<User> optionalUser = User.getUser(source);
+        assert optionalUser.isPresent();
 
-        if (optionalCommand.isEmpty()) {
-            sendHelpMessage(source, label);
-            return;
-        }
-
-        Optional<User> optional = User.getUser(source);
-        assert optional.isPresent();
-
-        User user = optional.get();
+        User user = optionalUser.get();
         UUID uuid = user.getUuid();
         UserData data = user.getData();
         String twoFactor = data.getTwoFactor();
 
-        switch (optionalCommand.get().toLowerCase()) {
+        switch (arguments.required(String.class).toLowerCase()) {
             case "setup" -> {
                 if (twoFactor != null) {
                     MessageUtils.message(source, "&6&l»&7 You have already setup 2fa.");
@@ -139,7 +134,7 @@ public final class CommandTwoFactor extends CelestCommand {
 
                 MessageUtils.message(source, "&6&l»&7 Incorrect TOTP code.");
             }
-            default -> sendHelpMessage(source, label);
+            default -> sendUsage(source, label);
         }
     }
 

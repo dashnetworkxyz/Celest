@@ -36,12 +36,12 @@ public final class CommandRandom extends CelestCommand {
     public CommandRandom() {
         super("random", "rng");
 
-        addArguments(ArgumentType.INTEGER);
+        addArguments(false, ArgumentType.INTEGER);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<Integer> optional = arguments.get(Integer.class);
+        Optional<Integer> optional = arguments.optional(Integer.class);
         AtomicInteger atomic = new AtomicInteger();
 
         optional.ifPresentOrElse(

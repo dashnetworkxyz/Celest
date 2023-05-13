@@ -29,42 +29,85 @@ import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 
 public final class Arguments {
 
     private final List<Object> parsed = new ArrayList<>();
-    private boolean playersSuccessfullyParsed = true;
+    private final boolean empty;
+    private boolean required = true;
     private int index = 0;
 
     public Arguments(CommandSource source, String[] array, List<ArgumentSection> sections) {
+        empty = array.length == 0;
+
         User user = User.getUser(source).orElse(null);
-        List<ArgumentType> list = ArgumentUtils.typesFromSections(user, sections);
-        int size = MathUtils.getLowest(array.length, list.size());
+        int index = 0;
 
-        for (int i = 0; i < size; i++) {
-            ArgumentType argument = list.get(i);
-            String string = argument == ArgumentType.MESSAGE ?
-                    StringUtils.unsplit(i, " ", array) :
-                    array[i];
+        for (ArgumentSection section : sections) {
+            for (ArgumentType type : section.types()) {
+                if (array.length <= index) {
+                    if (section.required())
+                        required = false;
 
-            Object object = argument.parse(user, string);
+                    return;
+                }
 
-            if (object != null)
+                String string = type == ArgumentType.MULTI_STRING ?
+                        StringUtils.unsplit(index, " ", array) :
+                        array[index];
+
+                index++;
+                Object object = type.parse(user, string);
+
+                if (object == null && section.required()) {
+                    required = false;
+                    return;
+                }
+
                 parsed.add(object);
-            else if (LazyUtils.anyEquals(argument,
-                    ArgumentType.PLAYER, ArgumentType.PLAYER_LIST, ArgumentType.OFFLINE_USER))
-                playersSuccessfullyParsed = false;
+            }
         }
     }
 
+    // TODO
+    public boolean isEmpty() { return empty; }
+
+    public boolean hasRequired() { return required; }
+
     @SuppressWarnings("unchecked")
-    public <T> Optional<T> get(@NotNull Class<T> clazz) {
+    public <T> T required(@NotNull Class<T> clazz) {
+        if (parsed.size() <= index)
+            throw new NoSuchElementException("Required argument doesn't exist.");
+
+        Object object = parsed.get(index);
+
+        if (object == null) {
+            index++;
+            throw new NoSuchElementException("Required argument doesn't exist.");
+        }
+
+        if (clazz.isInstance(object)) {
+            index++;
+            return (T) object;
+        }
+
+        throw new NoSuchElementException("Required argument doesn't exist.");
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> Optional<T> optional(@NotNull Class<T> clazz) {
         if (parsed.size() <= index)
             return Optional.empty();
 
         Object object = parsed.get(index);
+
+        if (object == null) {
+            index++;
+            return Optional.empty();
+        }
 
         if (clazz.isInstance(object)) {
             index++;
@@ -91,10 +134,10 @@ public final class Arguments {
     }
 
     private <T> T getOrSelf(@NotNull Class<T> clazz, @NotNull CommandSource source, @NotNull Function<CommandSource, T> function) {
-        Optional<T> optional = get(clazz);
+        Optional<T> optional = optional(clazz);
 
         if (optional.isEmpty()) {
-            if (source instanceof Player && playersSuccessfullyParsed)
+            if (source instanceof Player)
                 return function.apply(source);
 
             return null;
@@ -105,10 +148,10 @@ public final class Arguments {
 
     private <T> List<T> getListOrSelf(@NotNull Class<T[]> clazz, @NotNull CommandSource source, @NotNull Function<CommandSource, T> function) {
         List<T> list = new ArrayList<>();
-        Optional<T[]> optional = get(clazz);
+        Optional<T[]> optional = optional(clazz);
 
         if (optional.isEmpty()) {
-            if (source instanceof Player && playersSuccessfullyParsed)
+            if (source instanceof Player)
                 list.add(function.apply(source));
 
             return list;

@@ -37,20 +37,13 @@ public final class CommandFakeOp extends CelestCommand {
         super("fakeop");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.PLAYER_LIST);
+        addArguments(true, ArgumentType.PLAYER_LIST);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<Player[]> optional = arguments.get(Player[].class);
-
-        if (optional.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
         String username = source instanceof Player player ? player.getUsername() : "Server";
-        List<Player> players = new ArrayList<>(List.of(optional.get()));
+        List<Player> players = new ArrayList<>(List.of(arguments.required(Player[].class)));
         MessageBuilder builder;
 
         for (Player player : players) {

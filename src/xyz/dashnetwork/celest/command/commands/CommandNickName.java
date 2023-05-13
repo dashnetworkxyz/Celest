@@ -19,6 +19,7 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
+import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
@@ -39,23 +40,27 @@ public final class CommandNickName extends CelestCommand {
     public CommandNickName() {
         super("nickname", "nick");
 
-        addArguments(ArgumentType.STRING);
+        addArguments(true, ArgumentType.STRING);
         addArguments(User::isAdmin, true, ArgumentType.PLAYER_LIST);
-        setCompletions(0, "off");
+        setSuggestions(0, "off");
+    }
+
+    @Override
+    protected void sendUsage(@NotNull CommandSource source, @NotNull String label) {
+        super.sendUsage(source, label);
+        MessageUtils.message(source, "&6&l»&7 \"&6/" + label + " off&7\" will clear your nickname.");
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<String> optional = arguments.get(String.class);
         List<Player> players = arguments.playerListOrSelf(source);
 
-        if (optional.isEmpty() || players.isEmpty()) {
+        if (players.isEmpty()) {
             sendUsage(source, label);
-            MessageUtils.message(source, "&6&l»&7 \"&6/" + label + " off&7\" will clear your nickname.");
             return;
         }
 
-        String string = optional.get();
+        String string = arguments.required(String.class);
         boolean off = string.equals("off");
         boolean admin = PermissionType.ADMIN.hasPermission(source);
 

@@ -41,14 +41,14 @@ import java.util.function.Predicate;
 public abstract class CelestCommand implements SimpleCommand {
 
     private static final CommandManager commandManager = Celest.getServer().getCommandManager();
-    private final Map<Integer, String[]> customCompletions;
+    private final Map<Integer, String[]> customSuggestions;
     private final List<ArgumentSection> sections;
     private final List<String> labels;
     private Predicate<User> predicate;
     private boolean console;
 
     public CelestCommand(String label, String... aliases) {
-        customCompletions = new HashMap<>();
+        customSuggestions = new HashMap<>();
         sections = new ArrayList<>();
         labels = new ArrayList<>();
         predicate = user -> true;
@@ -74,12 +74,14 @@ public abstract class CelestCommand implements SimpleCommand {
         this.console = console;
     }
 
-    protected void setCompletions(int place, String... completions) { customCompletions.put(place, completions); }
+    protected void setSuggestions(int place, String... suggestions) { customSuggestions.put(place, suggestions); }
 
-    protected void addArguments(@NotNull ArgumentType... types) { addArguments(user -> true, true, types); }
+    protected void addArguments(boolean required, @NotNull ArgumentType... types) {
+        sections.add(new ArgumentSection(user -> true, true, required, types));
+    }
 
     protected void addArguments(@NotNull Predicate<User> predicate, boolean console, @NotNull ArgumentType... types) {
-        sections.add(new ArgumentSection(predicate, console, types));
+        sections.add(new ArgumentSection(predicate, console, false, types));
     }
 
     protected void sendUsage(@NotNull CommandSource source, @NotNull String label) {
@@ -94,7 +96,15 @@ public abstract class CelestCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         CommandSource source = invocation.source();
-        execute(source, invocation.alias(), new Arguments(source, invocation.arguments(), sections));
+        String alias = invocation.alias();
+        Arguments arguments = new Arguments(source, invocation.arguments(), sections);
+
+        if (!arguments.hasRequired()) {
+            sendUsage(source, alias);
+            return;
+        }
+
+        execute(source, alias, arguments);
     }
 
     @Override
@@ -123,10 +133,10 @@ public abstract class CelestCommand implements SimpleCommand {
             if (length > 0)
                 length--;
 
-            if (customCompletions.containsKey(length)) {
+            if (customSuggestions.containsKey(length)) {
                 List<String> custom = new ArrayList<>();
 
-                for (String each : customCompletions.get(length))
+                for (String each : customSuggestions.get(length))
                     ListUtils.addIfStarts(custom, selected, each);
 
                 return CompletableFuture.completedFuture(custom);

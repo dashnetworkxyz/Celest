@@ -34,26 +34,17 @@ import java.util.function.Predicate;
 
 public final class CommandClearChat extends CelestCommand {
 
-    // TODO: Tab Completion
-
     public CommandClearChat() {
         super("clearchat", "cc");
 
         setPermission(User::isStaff, true);
-        addArguments(ArgumentType.PLAYER_LIST);
+        addArguments(true, ArgumentType.PLAYER_LIST);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<Player[]> optional = arguments.get(Player[].class);
-
-        if (optional.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
         NamedSource named = NamedSource.of(source);
-        Player[] players = optional.get();
+        Player[] players = arguments.required(Player[].class);
         MessageBuilder builder = new MessageBuilder();
         Predicate<User> notSelf = user -> !user.getPlayer().equals(source);
 

@@ -22,6 +22,7 @@ import com.velocitypowered.api.proxy.ConnectionRequestBuilder;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
@@ -44,23 +45,26 @@ public final class CommandServer extends CelestCommand {
     public CommandServer() {
         super("server");
 
-        setPermission(user -> true, true);
-        addArguments(ArgumentType.SERVER);
+        addArguments(true, ArgumentType.SERVER);
         addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
     }
 
     @Override
+    protected void sendUsage(@NotNull CommandSource source, @NotNull String label) {
+        super.sendUsage(source, label);
+        Messages.serverlistMessage(source);
+    }
+
+    @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<RegisteredServer> optionalServer = arguments.get(RegisteredServer.class);
         List<Player> players = arguments.playerListOrSelf(source);
 
-        if (optionalServer.isEmpty() || players.isEmpty()) {
-            Messages.serverlistMessage(source);
+        if (players.isEmpty()) {
             sendUsage(source, label);
             return;
         }
 
-        RegisteredServer server = optionalServer.get();
+        RegisteredServer server = arguments.required(RegisteredServer.class);
         String name = server.getServerInfo().getName();
         NamedSource named = NamedSource.of(source);
         MessageBuilder builder;

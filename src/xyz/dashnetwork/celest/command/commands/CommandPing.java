@@ -31,7 +31,7 @@ public final class CommandPing extends CelestCommand {
     public CommandPing() {
         super("ping", "p");
 
-        addArguments(ArgumentType.PLAYER);
+        addArguments(false, ArgumentType.PLAYER);
     }
 
     @Override

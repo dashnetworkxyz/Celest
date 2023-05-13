@@ -30,8 +30,8 @@ public final class ArgumentUtils {
         List<ArgumentType> list = new ArrayList<>();
 
         for (ArgumentSection section : sections)
-            if (user == null ? section.allowsConsole() : section.getPredicate().test(user))
-                list.addAll(List.of(section.getArgumentTypes()));
+            if (user == null ? section.console() : section.predicate().test(user))
+                list.addAll(List.of(section.types()));
 
         return list;
     }

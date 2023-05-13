@@ -31,12 +31,12 @@ public final class CommandTest extends CelestCommand {
         super("test");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.INTEGER);
+        addArguments(false, ArgumentType.INTEGER);
     }
 
     @Override
     public void execute(CommandSource source, String label, Arguments arguments) {
-        int page = arguments.get(Integer.class).orElse(1);
+        int page = arguments.optional(Integer.class).orElse(1);
 
         MessageUtils.message(source, "Page: " + page);
 

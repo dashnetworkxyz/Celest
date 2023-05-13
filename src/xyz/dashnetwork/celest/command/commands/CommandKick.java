@@ -31,6 +31,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class CommandKick extends CelestCommand {
 
@@ -38,21 +39,15 @@ public final class CommandKick extends CelestCommand {
         super("kick");
 
         setPermission(User::isAdmin, true);
-        addArguments(ArgumentType.PLAYER_LIST);
-        addArguments(ArgumentType.MESSAGE);
+        addArguments(true, ArgumentType.PLAYER_LIST);
+        addArguments(false, ArgumentType.MULTI_STRING);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        List<Player> players = arguments.playerListOrSelf(source);
-
-        if (players.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
+        Player[] players = arguments.required(Player[].class);
+        String reason = arguments.optional(String.class).orElse("No reason provided.");
         NamedSource named = NamedSource.of(source);
-        String reason = arguments.get(String.class).orElse("No reason provided.");
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&lDashNetwork");

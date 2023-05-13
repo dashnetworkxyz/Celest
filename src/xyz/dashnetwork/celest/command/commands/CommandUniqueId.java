@@ -33,12 +33,12 @@ public final class CommandUniqueId extends CelestCommand {
     public CommandUniqueId() {
         super("uniqueid", "uuid");
 
-        addArguments(ArgumentType.UNIQUE_ID);
+        addArguments(false, ArgumentType.UNIQUE_ID);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        UUID uuid = arguments.get(UUID.class).orElse(UUID.randomUUID());
+        UUID uuid = arguments.optional(UUID.class).orElse(UUID.randomUUID());
 
         long most = uuid.getMostSignificantBits();
         long least = uuid.getLeastSignificantBits();

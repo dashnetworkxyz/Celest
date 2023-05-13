@@ -37,7 +37,7 @@ public enum ArgumentType {
     SERVER("server", new ServerParser(), new ServerSuggester()),
     UNIQUE_ID("uuid", new UniqueIdParser(), (user, string) -> Collections.emptyList()),
     STRING("string", (user, string) -> string, (user, string) -> Collections.emptyList()),
-    MESSAGE("message", (user, string) -> string, (user, string) -> Collections.emptyList());
+    MULTI_STRING("multi string", (user, string) -> string, (user, string) -> Collections.emptyList());
 
     private final String name;
     private final Parser parser;

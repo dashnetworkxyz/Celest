@@ -33,24 +33,17 @@ public final class ArgumentSectionFormat implements Format {
     private final List<TextSection> sections = new ArrayList<>();
 
     public ArgumentSectionFormat(CommandSource source, Collection<ArgumentSection> list) {
-        boolean required = true;
-
-        for (ArgumentSection each : list) {
-            if (each.allowsConsole() || source instanceof Player) {
-                sections.addAll(new ArgumentSectionFormat(required, each).sections());
-
-                if (required)
-                    required = false;
-            }
-        }
+        for (ArgumentSection each : list)
+            if (each.console() || source instanceof Player)
+                sections.addAll(new ArgumentSectionFormat(each).sections());
     }
 
-    public ArgumentSectionFormat(boolean required, ArgumentSection section) {
-        for (ArgumentType type : section.getArgumentTypes()) {
-            TextSection text = new ArgumentTypeFormat(required, type).sections().get(0);
-            text.onlyIf(section.getPredicate());
+    public ArgumentSectionFormat(ArgumentSection section) {
+        for (ArgumentType type : section.types()) {
+            TextSection text = new ArgumentTypeFormat(section.required(), type).sections().get(0);
+            text.onlyIf(section.predicate());
 
-            sections.add(new TextSection(" ", null, section.getPredicate()));
+            sections.add(new TextSection(" ", null, section.predicate()));
             sections.add(text);
         }
     }

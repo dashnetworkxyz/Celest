@@ -38,7 +38,7 @@ public final class CommandLocalChat extends CelestCommand {
         super("localchat", "lc");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.OFFLINE_USER_LIST);
+        addArguments(false, ArgumentType.OFFLINE_USER_LIST);
     }
 
     @Override

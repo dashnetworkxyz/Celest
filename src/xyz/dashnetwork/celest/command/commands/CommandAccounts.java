@@ -40,19 +40,12 @@ public final class CommandAccounts extends CelestCommand {
         super("accounts", "alts");
 
         setPermission(User::isStaff, true);
-        addArguments(ArgumentType.OFFLINE_USER);
+        addArguments(true, ArgumentType.OFFLINE_USER);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<OfflineUser> optional = arguments.get(OfflineUser.class);
-
-        if (optional.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        OfflineUser offline = optional.get();
+        OfflineUser offline = arguments.required(OfflineUser.class);
         Address address = Address.getAddress(offline.getData().getAddress(), true);
         List<PlayerProfile> profiles = new ArrayList<>(List.of(address.getData().getProfiles()));
 

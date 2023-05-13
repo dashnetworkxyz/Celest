@@ -41,24 +41,16 @@ public final class CommandTempBan extends CelestCommand {
         super("tempban", "bantemp");
 
         setPermission(User::isAdmin, true);
-        addArguments(ArgumentType.OFFLINE_USER, ArgumentType.LONG);
-        addArguments(ArgumentType.MESSAGE);
+        addArguments(true, ArgumentType.OFFLINE_USER, ArgumentType.LONG);
+        addArguments(false, ArgumentType.MULTI_STRING);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<OfflineUser> optionalOffline = arguments.get(OfflineUser.class);
-        Optional<Long> optionalLong = arguments.get(Long.class);
-
-        if (optionalOffline.isEmpty() || optionalLong.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        OfflineUser offline = optionalOffline.get();
-        long duration = System.currentTimeMillis() + optionalLong.get();
-        String date = TimeUtils.longToDate(duration);
-        String reason = arguments.get(String.class).orElse("No reason provided.");
+        OfflineUser offline = arguments.required(OfflineUser.class);
+        long duration = arguments.required(Long.class);
+        String reason = arguments.optional(String.class).orElse("No reason provided.");
+        String date = TimeUtils.longToDate(System.currentTimeMillis() + duration);
 
         UUID uuid = null;
 

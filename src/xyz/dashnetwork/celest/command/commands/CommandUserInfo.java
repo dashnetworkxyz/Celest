@@ -33,19 +33,12 @@ public final class CommandUserInfo extends CelestCommand {
         super("userinfo", "playerinfo");
 
         setPermission(User::isAdmin, true);
-        addArguments(ArgumentType.OFFLINE_USER);
+        addArguments(true, ArgumentType.OFFLINE_USER);
     }
 
     @Override
     public void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<OfflineUser> optional = arguments.get(OfflineUser.class);
-
-        if (optional.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        OfflineUser offline = optional.get();
+        OfflineUser offline = arguments.required(OfflineUser.class);
         MessageBuilder builder = new MessageBuilder();
 
         builder.append("&6&l»&7 "); // TODO

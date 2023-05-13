@@ -35,21 +35,13 @@ public final class CommandFakeJoin extends CelestCommand {
         super("fakejoin");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.STRING, ArgumentType.MESSAGE);
+        addArguments(true, ArgumentType.STRING, ArgumentType.MULTI_STRING);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<String> optional1 = arguments.get(String.class);
-        Optional<String> optional2 = arguments.get(String.class);
-
-        if (optional1.isEmpty() || optional2.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        String username = optional1.get();
-        String displayname = optional2.get();
+        String username = arguments.required(String.class);
+        String displayname = arguments.required(String.class);
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&a&l»&r ");

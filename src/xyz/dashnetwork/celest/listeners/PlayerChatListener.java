@@ -99,7 +99,7 @@ public final class PlayerChatListener {
             if (message.isBlank()) {
                 MessageBuilder builder = new MessageBuilder();
                 builder.append("&6&l»&c Usage:&7 " + channel.getSelectors()[0]);
-                builder.append(new ArgumentTypeFormat(true, ArgumentType.MESSAGE)).prefix("&7");
+                builder.append(new ArgumentTypeFormat(true, ArgumentType.MULTI_STRING)).prefix("&7");
 
                 MessageUtils.message(player, builder::build);
                 return;

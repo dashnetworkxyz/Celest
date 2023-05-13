@@ -39,21 +39,14 @@ public final class CommandIpBan extends CelestCommand {
         super("ipban", "banip");
 
         setPermission(User::isAdmin, true);
-        addArguments(ArgumentType.ADDRESS);
-        addArguments(ArgumentType.MESSAGE);
+        addArguments(true, ArgumentType.ADDRESS);
+        addArguments(false, ArgumentType.MULTI_STRING);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<Address> optional = arguments.get(Address.class);
-
-        if (optional.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        Address address = optional.get();
-        String reason = arguments.get(String.class).orElse("No reason provided.");
+        Address address = arguments.required(Address.class);
+        String reason = arguments.optional(String.class).orElse("No reason provided.");
         UUID uuid = null;
 
         if (source instanceof Player player)

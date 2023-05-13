@@ -38,19 +38,12 @@ public final class CommandBigMistakeBuddy extends CelestCommand {
         super("bigmistakebuddynowwehaveyourgamefiles", "bigmistakebuddy", "bmb");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.PLAYER_LIST);
+        addArguments(true, ArgumentType.PLAYER_LIST);
     }
 
     @Override
     public void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<Player[]> optional = arguments.get(Player[].class);
-
-        if (optional.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        Player[] players = optional.get();
+        Player[] players = arguments.required(Player[].class);
         Component title = ComponentUtils.fromString("&6Big mistake, buddy");
         Component subtitle = ComponentUtils.fromString("&cNow we have your game files");
 

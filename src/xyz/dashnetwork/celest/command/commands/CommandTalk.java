@@ -34,20 +34,15 @@ public final class CommandTalk extends CelestCommand {
         super("talk");
 
         setPermission(User::isOwner, true);
-        addArguments(ArgumentType.CHANNEL, ArgumentType.MESSAGE);
+        addArguments(true, ArgumentType.CHANNEL, ArgumentType.MULTI_STRING);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<ChatChannel> optionalChannel = arguments.get(ChatChannel.class);
-        Optional<String> optionalMessage = arguments.get(String.class);
+        ChatChannel channel = arguments.required(ChatChannel.class);
+        String message = arguments.required(String.class);
 
-        if (optionalChannel.isEmpty() || optionalMessage.isEmpty()) {
-            sendUsage(source, label);
-            return;
-        }
-
-        Messages.chatMessage(NamedSource.console, optionalChannel.get(), optionalMessage.get());
+        Messages.chatMessage(NamedSource.console, channel, message);
     }
 
 }
