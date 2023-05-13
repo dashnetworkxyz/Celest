@@ -25,12 +25,10 @@ import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
-import xyz.dashnetwork.celest.utils.connection.OfflineUser;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
-
-import java.util.Optional;
 
 public final class CommandUnban extends CelestCommand {
 

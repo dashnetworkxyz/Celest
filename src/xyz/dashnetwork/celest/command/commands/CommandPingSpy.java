@@ -24,7 +24,7 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
-import xyz.dashnetwork.celest.utils.connection.OfflineUser;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 

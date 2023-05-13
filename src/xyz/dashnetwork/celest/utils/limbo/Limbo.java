@@ -21,6 +21,7 @@ import com.velocitypowered.api.scheduler.ScheduledTask;
 import com.velocitypowered.api.scheduler.Scheduler;
 import xyz.dashnetwork.celest.Celest;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
@@ -86,6 +87,6 @@ public final class Limbo<T> implements Runnable {
         limbos.remove(this);
     }
 
-    private boolean isSavable() { return object.getClass().isAssignableFrom(Savable.class); }
+    private boolean isSavable() { return Arrays.asList(object.getClass().getInterfaces()).contains(Savable.class); }
 
 }

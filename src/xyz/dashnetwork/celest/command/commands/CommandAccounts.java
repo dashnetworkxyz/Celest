@@ -26,13 +26,12 @@ import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
 import xyz.dashnetwork.celest.utils.connection.Address;
-import xyz.dashnetwork.celest.utils.connection.OfflineUser;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public final class CommandAccounts extends CelestCommand {
 

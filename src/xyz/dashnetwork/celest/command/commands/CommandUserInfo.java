@@ -22,10 +22,8 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.connection.OfflineUser;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
-
-import java.util.Optional;
 
 public final class CommandUserInfo extends CelestCommand {
 

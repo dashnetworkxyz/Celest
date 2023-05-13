@@ -29,6 +29,7 @@ import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 import xyz.dashnetwork.celest.vault.Vault;

@@ -19,7 +19,7 @@ package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
-import xyz.dashnetwork.celest.utils.connection.OfflineUser;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;

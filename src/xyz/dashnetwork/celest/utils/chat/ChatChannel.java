@@ -27,10 +27,10 @@ import java.util.function.Predicate;
 
 public enum ChatChannel {
 
-    OWNER(PermissionType.OWNER.getPermission(), "@oc", "@dc"),
-    ADMIN(PermissionType.ADMIN.getPermission(), "@ac"),
-    STAFF(PermissionType.STAFF.getPermission(), "@sc"),
-    LOCAL(PermissionType.OWNER.getPermission(), "@lc"),
+    OWNER(PermissionType.OWNER.getPredicate(), "@oc", "@dc"),
+    ADMIN(PermissionType.ADMIN.getPredicate(), "@ac"),
+    STAFF(PermissionType.STAFF.getPredicate(), "@sc"),
+    LOCAL(PermissionType.OWNER.getPredicate(), "@lc"),
     GLOBAL(user -> user.isStaff() ||
             LazyUtils.anyEquals(user.getData().getChannel(), OWNER, ADMIN, STAFF, LOCAL), "@gc");
 

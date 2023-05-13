@@ -30,16 +30,16 @@ public enum PermissionType {
     ADMIN(User::isAdmin),
     OWNER(User::isOwner);
 
-    private final Predicate<User> permission;
+    private final Predicate<User> predicate;
 
-    PermissionType(Predicate<User> permission) { this.permission = permission; }
+    PermissionType(Predicate<User> predicate) { this.predicate = predicate; }
 
-    public Predicate<User> getPermission() { return permission; }
+    public Predicate<User> getPredicate() { return predicate; }
 
     public boolean hasPermission(CommandSource source) {
         Optional<User> optional = User.getUser(source);
 
-        return optional.map(permission::test).orElse(true);
+        return optional.map(predicate::test).orElse(true);
     }
 
 }

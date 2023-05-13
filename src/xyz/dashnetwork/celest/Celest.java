@@ -154,6 +154,7 @@ public final class Celest {
         new CommandAdminChat();
         new CommandAltSpy();
         new CommandBan();
+        new CommandBanList();
         new CommandBigMistakeBuddy();
         new CommandCelest();
         new CommandChat();

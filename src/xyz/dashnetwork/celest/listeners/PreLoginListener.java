@@ -38,16 +38,6 @@ public final class PreLoginListener {
             )));
         }
 
-        if (version.compareTo(ProtocolVersion.MINECRAFT_1_9) >= 0
-                && version.compareTo(ProtocolVersion.MINECRAFT_1_10) <= 0) {
-            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
-                    """
-                            &6&lDashNetwork
-                            &61.9-1.10&7 is no longer supported.
-                            Please revert to 1.8 or update to &61.11 or newer."""
-            )));
-        }
-
         // Some usernames break the rules. I'm not accounting for any of these.
         if (!StringUtils.matchesUsername(event.getUsername())) {
             event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(

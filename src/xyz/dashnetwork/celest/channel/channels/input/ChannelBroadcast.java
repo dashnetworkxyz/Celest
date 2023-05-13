@@ -32,7 +32,7 @@ public final class ChannelBroadcast extends Channel {
     public void handle(ByteArrayDataInput input) {
         boolean json = input.readBoolean();
         boolean console = input.readBoolean();
-        Predicate<User> permission = PermissionType.valueOf(input.readUTF()).getPermission();
+        Predicate<User> permission = PermissionType.valueOf(input.readUTF()).getPredicate();
         String string = input.readUTF();
 
         if (json)

@@ -27,9 +27,7 @@ import xyz.dashnetwork.celest.utils.storage.data.serializer.UserDataSerializer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public final class Storage {
 
@@ -99,18 +97,18 @@ public final class Storage {
         return readFile(file, clazz);
     }
 
-    public static <T> List<T> readAll(Directory directory, Class<T> clazz) {
+    public static <T> Map<String, T> readAll(Directory directory, Class<T> clazz) {
         File[] files = directory.getFile().listFiles();
 
         if (files == null || files.length == 0)
-            return Collections.emptyList();
+            return Collections.emptyMap();
 
-        List<T> list = new ArrayList<>();
+        Map<String, T> map = new HashMap<>();
 
         for (File file : files)
-            list.add(readFile(file, clazz));
+            map.put(file.getName().split("\\.")[0], readFile(file, clazz));
 
-        return list;
+        return map;
     }
 
     private static <T> T readFile(File file, Class<T> clazz) {

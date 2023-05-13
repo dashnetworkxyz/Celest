@@ -36,6 +36,8 @@ public final class PageBuilder {
         return section;
     }
 
+    public Component build(User user) { return build(user, 1); }
+
     // TODO: Cleanup
     public Component build(User user, int page) {
         if (user != null)
