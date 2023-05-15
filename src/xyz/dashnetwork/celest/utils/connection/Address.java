@@ -33,6 +33,7 @@ import java.util.UUID;
 public final class Address implements Savable {
 
     private final String address;
+    private final boolean generated;
     private AddressData addressData;
     private long serverPingTime;
 
@@ -41,8 +42,11 @@ public final class Address implements Savable {
 
         addressData = Storage.read(address, Storage.Directory.ADDRESS, AddressData.class);
 
-        if (addressData == null)
+        if (addressData == null) {
             addressData = new AddressData();
+            generated = true;
+        } else
+            generated = false;
 
         serverPingTime = -1;
 
@@ -97,7 +101,7 @@ public final class Address implements Savable {
     public void save() {
         if (addressData.getProfiles().length > 0 || LazyUtils.anyTrue(PunishUtils::isValid, addressData.getMute(), addressData.getBan()))
             Storage.write(address, Storage.Directory.ADDRESS, addressData);
-        else
+        else if (!generated)
             Storage.delete(address, Storage.Directory.ADDRESS); // Remove obsolete addresses.
     }
 
