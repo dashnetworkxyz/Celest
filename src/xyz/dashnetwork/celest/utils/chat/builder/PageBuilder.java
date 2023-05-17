@@ -62,7 +62,7 @@ public final class PageBuilder {
                     .hover("&7Click to go to &6page " + (page - 1))
                     .click(ClickEvent.runCommand("/page " + (page - 1)));
 
-        builder.append("&6" + (start + 1) + "-" + end + "&7 / &6" + size + " ");
+        builder.append("&6" + (start + 1) + "&7-&6" + end + "&7 / &6" + size + " ");
 
         if (page < pages)
             builder.append("&6&l»&r ")

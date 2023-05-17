@@ -57,15 +57,15 @@ public final class CommandCelest extends CelestCommand {
     private void sendHelpMessage(CommandSource source) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&6 Celest debug commands");
-        builder.append("\n&6&l»&7 /celest legacy-import &c&o(unsafe)").hover("&6Import legacy data &c(unsafe).");
-        builder.append("\n&6&l»&7 /celest data <directory> <file> [write] // TODO"); // TODO
-        builder.append("\n&6&l»&7 /celest flush").hover("&6Clear & save all objects in Limbo.");
-        builder.append("\n&6&l»&7 /celest cache").hover("&6Refresh and clear old cache.");
-        builder.append("\n&6&l»&7 /celest users").hover("&6Get and view all users from userdata.");
-        builder.append("\n&6&l»&7 /celest debug").hover("&6View debug information.");
-        builder.append("\n&6&l»&7 /celest version").hover("&6View build properties.");
-        builder.append("\n&6&l»&7 /celest save").hover("&6Force an auto-save.");
-        builder.append("\n&6&l»&7 /celest reload").hover("&6Reload config.yml.");
+        builder.append("\n&6&l»&b /celest legacy-import &c&o(unsafe)").hover("&6Import legacy data &c(unsafe).");
+        builder.append("\n&6&l»&b /celest data <directory> <file> [write] // TODO"); // TODO
+        builder.append("\n&6&l»&b /celest flush").hover("&6Clear & save all objects in Limbo.");
+        builder.append("\n&6&l»&b /celest cache").hover("&6Refresh and clear old cache.");
+        builder.append("\n&6&l»&b /celest users").hover("&6Get and view all users from userdata.");
+        builder.append("\n&6&l»&b /celest debug").hover("&6View debug information.");
+        builder.append("\n&6&l»&b /celest version").hover("&6View build properties.");
+        builder.append("\n&6&l»&b /celest save").hover("&6Force an auto-save.");
+        builder.append("\n&6&l»&b /celest reload").hover("&6Reload config.yml.");
 
         MessageUtils.message(source, builder::build);
     }

@@ -48,9 +48,9 @@ public final class CommandExecuteListener {
         NamedSource named = NamedSource.of(source);
 
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&r ");
+        builder.append("&b&l»&r ");
         builder.append(new NamedSourceFormat(named));
-        builder.append("&r &b&l»&b /" + event.getCommand());
+        builder.append("&b /" + event.getCommand());
 
         MessageUtils.broadcast(user -> user.getData().getCommandSpy(), builder::build);
     }

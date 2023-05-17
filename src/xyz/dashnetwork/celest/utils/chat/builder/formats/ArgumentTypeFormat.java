@@ -49,22 +49,22 @@ public final class ArgumentTypeFormat implements Format {
                     &7Specify one public &6IPv4 address&7 to use.
                     
                     Example:
-                    &654.54.255.255""");
+                    &b54.54.255.255""");
             case CHANNEL -> {
                 section.hover("""
                         &7Specify one &6chat channel&7.
-                        Channels: &6Global""");
-                section.hover("&7, &6Local", User::isOwner);
-                section.hover("&7, &6Staff", User::isStaff);
-                section.hover("&7, &6Admin", User::isAdmin);
-                section.hover("&7, &6Owner", User::isOwner);
+                        Channels: &bGlobal""");
+                section.hover("&7, &bLocal", User::isOwner);
+                section.hover("&7, &bStaff", User::isStaff);
+                section.hover("&7, &bAdmin", User::isAdmin);
+                section.hover("&7, &bOwner", User::isOwner);
             }
             case INTEGER -> section.hover("""
                     &7Specify an &6integer&7.
                     Some commands may only accept positive numbers.
                     
                     Examples:
-                    &6-2147483648
+                    &b-2147483648
                     2147483647""");
             case LONG -> section.hover("""
                     &7Duration in milliseconds.
@@ -72,7 +72,7 @@ public final class ArgumentTypeFormat implements Format {
                     Some commands may only accept positive numbers.
                     
                     Examples:
-                    &61h
+                    &b1h
                     2weeks
                     -9223372036854775808
                     9223372036854775807""");
@@ -82,7 +82,7 @@ public final class ArgumentTypeFormat implements Format {
                     &6@s&7 specifies yourself.
                     
                     Examples:
-                    &6069a79f4-44e9-4726-a5be-fca90e38aaf5
+                    &b069a79f4-44e9-4726-a5be-fca90e38aaf5
                     Notch""");
             case OFFLINE_USER_LIST -> section.hover("""
                     &7Specify &6one or multiple online or offline player(s)&7.
@@ -92,7 +92,7 @@ public final class ArgumentTypeFormat implements Format {
                     &6@a&7 specifies all online players.
                     
                     Examples:
-                    &6069a79f4-44e9-4726-a5be-fca90e38aaf5,@s
+                    &b069a79f4-44e9-4726-a5be-fca90e38aaf5,@s
                     @a,Notch""");
             case PLAYER -> section.hover("""
                     &7Specify &6one online player&7.
@@ -100,7 +100,7 @@ public final class ArgumentTypeFormat implements Format {
                     &6@s&7 specifies yourself.
                     
                     Examples:
-                    &6069a79f4-44e9-4726-a5be-fca90e38aaf5
+                    &b069a79f4-44e9-4726-a5be-fca90e38aaf5
                     Notch""");
             case PLAYER_LIST -> section.hover("""
                     &7Specify &6one or multiple online player(s)&7.
@@ -110,7 +110,7 @@ public final class ArgumentTypeFormat implements Format {
                     &6@a&7 specifies all online players.
                     
                     Examples:
-                    &6069a79f4-44e9-4726-a5be-fca90e38aaf5,@s
+                    &b069a79f4-44e9-4726-a5be-fca90e38aaf5,@s
                     Notch,Jeb_""");
             case SERVER -> {
                 section.hover("""
@@ -129,14 +129,14 @@ public final class ArgumentTypeFormat implements Format {
                     else
                         comma = true;
 
-                    section.hover("&6" + serverName, predicate);
+                    section.hover("&b" + serverName, predicate);
                 }
             }
             case UNIQUE_ID -> section.hover("""
                     &7Specify one &6UUID&7.
                     
                     Example:
-                    &6069a79f4-44e9-4726-a5be-fca90e38aaf5""");
+                    &b069a79f4-44e9-4726-a5be-fca90e38aaf5""");
             case STRING -> section.hover("""
                     &7Specify one &6word&7.
                     No spaces allowed.""");
