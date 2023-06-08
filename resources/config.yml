@@ -2,8 +2,7 @@
 debug: false
 injector: true
 
-# Message configuration
-# TODO: Move to a messages.yml
+# MOTD configuration
 motd.description: "&6&lDashNetwork &6&l»&7 [1.8-{$VERSION_HIGHEST}]"
 motd.software: "Requires 1.8-{$VERSION_HIGHEST}"
 motd.hover: ["&f          &6&n&lDashNetwork","&6&lMinecraft &7play.dashnetwork.xyz","&6&lDiscord &7discord.gg/3RDsNEE"]

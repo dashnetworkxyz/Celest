@@ -45,12 +45,14 @@ public final class CommandExecuteListener {
             }
         }
 
+        String command = "/" + event.getCommand();
         NamedSource named = NamedSource.of(source);
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&b&l»&r ");
         builder.append(new NamedSourceFormat(named));
-        builder.append("&b /" + event.getCommand());
+        builder.append(" ");
+        builder.append("&b" + command).insertion(command);
 
         MessageUtils.broadcast(user -> user.getData().getCommandSpy(), builder::build);
     }

@@ -88,7 +88,7 @@ public final class Messages {
             }
             default -> {
                 builder.append(new NamedSourceFormat(named));
-                builder.append("&r &e&l»&r");
+                builder.append("&r &l»&r");
                 predicate = each -> true;
             }
         }
