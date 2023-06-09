@@ -18,6 +18,7 @@
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.utils.VersionUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -52,12 +53,15 @@ public final class NamedSourceFormat implements Format {
             section.insertion(user.getUuid().toString());
 
             Player player = user.getPlayer();
+            String version = VersionUtils.getVersionString(player.getProtocolVersion());
 
             player.getCurrentServer().ifPresent(server -> {
                 String name = server.getServerInfo().getName();
 
                 section.hover("\n&7Server: &6" + name);
             });
+
+            section.hover("\n&7Version: &6" + version);
         }
 
         sections.add(section);
