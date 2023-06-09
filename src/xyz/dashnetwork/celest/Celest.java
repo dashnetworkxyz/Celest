@@ -182,6 +182,7 @@ public final class Celest {
         new CommandPage();
         new CommandPing();
         new CommandPingSpy();
+        new CommandProtocolList();
         new CommandPvp();
         new CommandRandom();
         new CommandRealName();
