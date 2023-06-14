@@ -49,10 +49,9 @@ public final class CelestHandshakeSessionHandler implements InvocationHandler {
             ReflectedInitialInboundConnection inbound = new ReflectedInitialInboundConnection(connection, cleaned, handshake);
             Enum<?> state = (Enum<?>) handler.getStateForProtocol(handshake.getNextStatus());
 
-            if (state == null) {
+            if (state == null)
                 connection.close(true);
-                return true;
-            } else {
+            else {
                 connection.setState(state);
                 connection.setProtocolVersion(version);
                 connection.setAssociation(inbound);

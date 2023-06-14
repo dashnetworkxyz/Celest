@@ -147,7 +147,7 @@ public final class Celest {
         if (pluginManager.isLoaded("unsignedvelocity"))
             eventManager.register(this, new PlayerChatListener());
         else
-            logger.warn("unsignedvelocity is not loaded! Skipping PlayerChatListener...");
+            logger.warn("UnSignedVelocity is not loaded! Skipping PlayerChatListener...");
 
         logger.info("Registering commands...");
         new CommandAccounts();

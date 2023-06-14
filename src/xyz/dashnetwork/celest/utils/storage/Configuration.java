@@ -47,6 +47,7 @@ public final class Configuration {
                 Files.copy(resource.openStream(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException exception) {
                 Logger.throwable(exception);
+                return;
             }
         }
 
