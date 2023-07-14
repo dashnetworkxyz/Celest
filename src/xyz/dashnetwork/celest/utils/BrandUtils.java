@@ -45,7 +45,6 @@ public final class BrandUtils {
                 part |= 0x80;
 
             buf.writeByte(part);
-
         } while (value != 0);
     }
 
