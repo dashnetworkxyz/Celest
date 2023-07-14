@@ -21,8 +21,8 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.StringUtils;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 
 import java.util.ArrayList;
 import java.util.List;

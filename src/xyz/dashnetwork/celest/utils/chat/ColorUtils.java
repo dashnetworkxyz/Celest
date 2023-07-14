@@ -18,6 +18,7 @@
 package xyz.dashnetwork.celest.utils.chat;
 
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.jetbrains.annotations.NotNull;
 
 public final class ColorUtils {
@@ -48,6 +49,16 @@ public final class ColorUtils {
             case 16733695 -> "§d";
             case 16777045 -> "§e";
             default -> "§f";
+        };
+    }
+
+    public static String fromTextDecoration(@NotNull TextDecoration decoration) {
+        return switch (decoration) {
+            case OBFUSCATED -> "§k";
+            case BOLD -> "§l";
+            case STRIKETHROUGH -> "§m";
+            case UNDERLINED -> "§n";
+            case ITALIC -> "§o";
         };
     }
 

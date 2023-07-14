@@ -27,9 +27,9 @@ import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 
 import java.util.UUID;
@@ -74,7 +74,7 @@ public final class CommandTempBan extends CelestCommand {
         }
 
         builder = new MessageBuilder();
-        builder.append("&6&l»&r ");
+        builder.append("&6&l»&f ");
         builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
         builder.append("&7 temporarily banned by ");
         builder.append(new NamedSourceFormat(named));
@@ -83,8 +83,7 @@ public final class CommandTempBan extends CelestCommand {
                 .hover("&7Judge: &6" + username
                         + "\n&7Expiration: &6" + date
                         + "\n&7Reason: &6" + reason);
-
-        MessageUtils.broadcast(User::isStaff, builder::build);
+        builder.broadcast(User::isStaff);
     }
 
 

@@ -27,7 +27,6 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-import java.util.List;
 import java.util.Optional;
 
 public final class CommandColorList extends CelestCommand {

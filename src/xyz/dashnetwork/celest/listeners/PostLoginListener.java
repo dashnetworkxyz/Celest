@@ -43,23 +43,20 @@ public final class PostLoginListener {
         Format format = new NamedSourceFormat(user);
 
         if (data.getVanish()) {
-            builder.append("&3&l»&r ");
+            builder.append("&3&l»&f ");
             builder.append(format);
             builder.append("&3 silently joined.");
-
-            MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(), builder::build);
+            builder.broadcast(each -> each.isStaff() || each.getData().getVanish());
         } else if (data.getLastPlayed() == null) {
             builder.append("&6&l»&6 Welcome, ");
             builder.append(format);
             builder.append("&6, to &lDashNetwork");
-
-            MessageUtils.broadcast(builder::build);
+            builder.broadcast();
         } else {
-            builder.append("&a&l»&r ");
+            builder.append("&a&l»&f ");
             builder.append(format);
             builder.append("&a joined.");
-
-            MessageUtils.broadcast(builder::build);
+            builder.broadcast();
         }
 
         List<PlayerProfile> list = new ArrayList<>(List.of(user.getAddress().getData().getProfiles()));
@@ -67,14 +64,13 @@ public final class PostLoginListener {
 
         if (!list.isEmpty()) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&r ");
+            builder.append("&6&l»&f ");
             builder.append("&7Hover for &6" + list.size() + "&7 alts of")
                     .hover("&7Alts for " + player.getUsername() + ":\n&6"
                             + ListUtils.convertToString(list, PlayerProfile::username, "\n"));
-            builder.append("&r ");
+            builder.append("&f ");
             builder.append(format);
-
-            MessageUtils.broadcast(each -> each.getData().getAltSpy(), builder::build);
+            builder.broadcast(each -> each.getData().getAltSpy());
         }
 
         if (!user.isAuthenticated())

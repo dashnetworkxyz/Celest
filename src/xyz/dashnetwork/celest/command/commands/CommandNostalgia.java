@@ -1,20 +1,3 @@
-/*
- * Celest
- * Copyright (C) 2023  DashNetwork
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as published by
- * the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
@@ -40,23 +23,24 @@ import xyz.dashnetwork.celest.utils.profile.NamedSource;
 import java.util.List;
 import java.util.Optional;
 
-public final class CommandPvp extends CelestCommand {
+public final class CommandNostalgia extends CelestCommand {
 
     private static final ProxyServer proxy = Celest.getServer();
 
-    public CommandPvp() {
-        super("pvp", "kitpvp", "duels", "pvpduels", "botbattles");
+    public CommandNostalgia() {
+        super("nostalgia");
 
+        setPermission(User::isStaff, true);
         addArguments(User::isOwner, true, ArgumentType.PLAYER_LIST);
     }
 
     @Override
     public void execute(CommandSource source, String label, Arguments arguments) {
-        Optional<RegisteredServer> optional = proxy.getServer("pvp");
+        Optional<RegisteredServer> optional = proxy.getServer("nostalgia");
         List<Player> players = arguments.playerListOrSelf(source);
 
         if (optional.isEmpty()) {
-            MessageUtils.message(source, "&6&l»&7 No server for &6PvP&7 was found.");
+            MessageUtils.message(source, "&6&l»&7 No server for &6Nostalgia&7 was found.");
             return;
         }
 

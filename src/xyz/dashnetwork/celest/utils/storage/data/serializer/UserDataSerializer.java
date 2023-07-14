@@ -48,6 +48,12 @@ public final class UserDataSerializer implements JsonSerializer<UserData>, JsonD
         if (!userData.getPingSpy())
             object.remove("pingSpy");
 
+        if (!userData.getSignSpy())
+            object.remove("signSpy");
+
+        if (!userData.getServerSpy())
+            object.remove("serverSpy");
+
         if (!userData.getVanish())
             object.remove("vanish");
 

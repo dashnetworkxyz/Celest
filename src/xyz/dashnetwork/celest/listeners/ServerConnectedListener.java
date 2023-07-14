@@ -21,8 +21,8 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 
@@ -43,9 +43,12 @@ public final class ServerConnectedListener {
             MessageBuilder builder = new MessageBuilder();
             builder.append("&6&l»&7 ");
             builder.append(new PlayerFormat(player));
-            builder.append("&7 has connected to &6" + name);
-
-            MessageUtils.broadcast(each -> !each.getPlayer().equals(player), builder::build);
+            builder.append("&7 has connected to ");
+            builder.append("&6" + name)
+                    .hover("&7Click to copy &6/server " + name)
+                    .click(ClickEvent.suggestCommand("/server " + name));
+            builder.append("&7.");
+            builder.broadcast(each -> each.getData().getServerSpy());
         }
     }
 

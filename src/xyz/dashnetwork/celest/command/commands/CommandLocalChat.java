@@ -26,9 +26,9 @@ import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 
 import java.util.List;
 
@@ -63,13 +63,12 @@ public final class CommandLocalChat extends CelestCommand {
                 builder.append("&6&l»&7 You have been moved to &6LocalChat");
 
                 if (!named.equals(user)) {
-                    builder.append("&7 by ");
+                    builder.append("&7 by &6");
                     builder.append(new NamedSourceFormat(named));
                 }
 
                 builder.append("&7.");
-
-                MessageUtils.message(user, builder::build);
+                builder.message(user);
             }
         }
 
@@ -78,11 +77,10 @@ public final class CommandLocalChat extends CelestCommand {
 
         if (users.size() > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have moved ");
-            builder.append(new OfflineUserFormat(users));
+            builder.append("&6&l»&7 You have moved &6");
+            builder.append(new OfflineUserFormat(users, "&7, &6"));
             builder.append("&7 to &6LocalChat&7.");
-
-            MessageUtils.message(source, builder::build);
+            builder.message(source);
         }
     }
 

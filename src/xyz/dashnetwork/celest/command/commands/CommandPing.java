@@ -22,7 +22,6 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 
@@ -47,8 +46,7 @@ public final class CommandPing extends CelestCommand {
         builder.append("&6&l»&7 ");
         builder.append(new PlayerFormat(selected));
         builder.append("&7 ping: &6" + selected.getPing() + "ms");
-
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

@@ -18,11 +18,11 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
+import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.chat.builder.PageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 public final class CommandTest extends CelestCommand {
@@ -36,34 +36,12 @@ public final class CommandTest extends CelestCommand {
 
     @Override
     public void execute(CommandSource source, String label, Arguments arguments) {
-        int page = arguments.optional(Integer.class).orElse(1);
+        MessageBuilder builder = new MessageBuilder();
+        builder.append("&6test1");
+        builder.append(" test2").click(ClickEvent.openUrl("https://www.google.com"));
+        builder.append(" test3").click(ClickEvent.openUrl("https://www.google.com")).hover("testy");
 
-        MessageUtils.message(source, "Page: " + page);
-
-        PageBuilder builder = new PageBuilder();
-        builder.append("1");
-        builder.append("2");
-        builder.append("3");
-        builder.append("4");
-        builder.append("5");
-        builder.append("6");
-        builder.append("7");
-        builder.append("8");
-        builder.append("9");
-        builder.append("10");
-        builder.append("11");
-        builder.append("12");
-        builder.append("13");
-        builder.append("14");
-        builder.append("15");
-        builder.append("16");
-        builder.append("17");
-        builder.append("18");
-        builder.append("19");
-        builder.append("20");
-        builder.append("21");
-
-        MessageUtils.message(source, builder.build(User.getUser(source).orElse(null), page));
+        builder.broadcast();
     }
 
 }

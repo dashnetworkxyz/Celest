@@ -27,7 +27,7 @@ import xyz.dashnetwork.celest.events.CelestChatEvent;
 import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
@@ -44,21 +44,21 @@ public final class Messages {
 
         switch (channel) {
             case OWNER -> {
-                builder.append("&9&lOwner&r ");
+                builder.append("&9&lOwner&f ");
                 builder.append(new NamedSourceFormat(named));
-                builder.append("&r &c&l»&c");
+                builder.append("&f &c&l»&c");
                 predicate = each -> each.isOwner() || each.getData().getChannel().equals(ChatChannel.OWNER);
             }
             case ADMIN -> {
-                builder.append("&9&lAdmin&r ");
+                builder.append("&9&lAdmin&f ");
                 builder.append(new NamedSourceFormat(named));
-                builder.append("&r &3&l»&3");
+                builder.append("&f &3&l»&3");
                 predicate = each -> each.isAdmin() || each.getData().getChannel().equals(ChatChannel.ADMIN);
             }
             case STAFF -> {
-                builder.append("&9&lStaff&r ");
+                builder.append("&9&lStaff&f ");
                 builder.append(new NamedSourceFormat(named));
-                builder.append("&r &6&l»&6");
+                builder.append("&f &6&l»&6");
                 predicate = each -> each.isStaff() || each.getData().getChannel().equals(ChatChannel.STAFF);
             }
             case LOCAL -> {
@@ -74,11 +74,10 @@ public final class Messages {
                         }
 
                         builder = new MessageBuilder();
-                        builder.append("&b&l»&r ");
+                        builder.append("&b&l»&f ");
                         builder.append(new NamedSourceFormat(named));
                         builder.append("&b @lc" + message);
-
-                        MessageUtils.broadcast(each -> each.getData().getCommandSpy(), builder::build);
+                        builder.broadcast(each -> each.getData().getCommandSpy());
                     }
 
                     player.spoofChatInput(message);
@@ -88,14 +87,14 @@ public final class Messages {
             }
             default -> {
                 builder.append(new NamedSourceFormat(named));
-                builder.append("&r &l»&r");
+                builder.append("&f &l»&f");
                 predicate = each -> true;
             }
         }
 
         for (String split : message.split(" ")) {
             if (split.length() > 0) {
-                TextSection section = builder.append(" " + split);
+                Section section = builder.append(" " + split);
 
                 if (StringUtils.matchesUrl(split)) {
                     String url = split.toLowerCase().startsWith("http") ? split : "https://" + split;
@@ -105,7 +104,7 @@ public final class Messages {
             }
         }
 
-        MessageUtils.broadcast(predicate, builder::build);
+        builder.broadcast(predicate);
         Celest.getServer().getEventManager().fireAndForget(new CelestChatEvent(named, channel, message));
     }
 
@@ -121,7 +120,7 @@ public final class Messages {
                     user -> user.isOwner() || user.getPlayer().hasPermission("dashnetwork.server." + name);
 
             if (optional.map(permission).orElse(true)) {
-                if (builder.length() > 1)
+                if (builder.size() > 1)
                     builder.append("&7, ");
 
                 builder.append("&6" + name)
@@ -130,10 +129,10 @@ public final class Messages {
             }
         }
 
-        if (builder.length() == 1)
+        if (builder.size() == 1)
             builder.append("&cNo servers found");
 
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

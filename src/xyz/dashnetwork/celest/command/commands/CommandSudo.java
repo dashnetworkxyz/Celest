@@ -22,12 +22,9 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
-
-import java.util.Optional;
 
 public final class CommandSudo extends CelestCommand {
 
@@ -49,8 +46,7 @@ public final class CommandSudo extends CelestCommand {
         builder.append("&6&l»&7 Spoofed ");
         builder.append(new PlayerFormat(player));
         builder.append("&7 to say &6" + message + "&7.");
-
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

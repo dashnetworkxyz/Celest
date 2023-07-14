@@ -30,7 +30,6 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public final class CommandIpBan extends CelestCommand {
@@ -71,14 +70,13 @@ public final class CommandIpBan extends CelestCommand {
         }
 
         builder = new MessageBuilder();
-        builder.append("&6&l»&6 " + address.getString() + " permanently banned by ");
+        builder.append("&6&l»&6 " + address.getString() + "&7 permanently banned by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("&7.");
         builder.append("\n&6&l»&7 Hover for details.")
                 .hover("&7Judge: &6" + username
                         + "\n&7Reason: &6" + reason);
-
-        MessageUtils.broadcast(User::isStaff, builder::build);
+        builder.broadcast(User::isStaff);
     }
 
 }

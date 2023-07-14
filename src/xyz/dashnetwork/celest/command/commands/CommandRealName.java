@@ -28,8 +28,6 @@ import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-import java.util.Optional;
-
 public final class CommandRealName extends CelestCommand {
 
     public CommandRealName() {
@@ -47,7 +45,7 @@ public final class CommandRealName extends CelestCommand {
             String nickname = user.getData().getNickName();
 
             if (nickname != null && ColorUtils.strip(nickname).toLowerCase().contains(search.toLowerCase())) {
-                if (builder.length() > 0)
+                if (builder.size() > 0)
                     builder.append("\n");
 
                 builder.append("&6&l»&7 ");
@@ -58,10 +56,10 @@ public final class CommandRealName extends CelestCommand {
             }
         }
 
-        if (builder.length() == 0)
+        if (builder.size() == 0)
             builder.append("&6&l»&7 No player found for &6" + search + "&7.");
 
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

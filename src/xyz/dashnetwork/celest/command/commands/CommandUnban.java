@@ -25,9 +25,9 @@ import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 public final class CommandUnban extends CelestCommand {
@@ -48,13 +48,12 @@ public final class CommandUnban extends CelestCommand {
             data.setBan(null);
 
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&r ");
+        builder.append("&6&l»&f ");
         builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
         builder.append("&7 unbanned by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));
         builder.append("&7.");
-
-        MessageUtils.broadcast(User::isStaff, builder::build);
+        builder.broadcast(User::isStaff);
     }
 
 }

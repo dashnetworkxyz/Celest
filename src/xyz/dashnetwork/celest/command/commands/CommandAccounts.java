@@ -26,8 +26,8 @@ import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
 import xyz.dashnetwork.celest.utils.connection.Address;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 
 import java.util.ArrayList;
@@ -53,17 +53,17 @@ public final class CommandAccounts extends CelestCommand {
         MessageBuilder builder = new MessageBuilder();
 
         if (profiles.isEmpty()) {
-            builder.append("&6&l»&7 No known alts for ");
+            builder.append("&6&l»&7 No known alts for &6");
             builder.append(new OfflineUserFormat(offline));
             builder.append("&7.");
         } else {
-            builder.append("&6&l»&7 Known alts for ");
+            builder.append("&6&l»&7 Known alts for &6");
             builder.append(new OfflineUserFormat(offline));
-            builder.append("&7: ");
-            builder.append(new PlayerProfileFormat(profiles));
+            builder.append("&7: &6");
+            builder.append(new PlayerProfileFormat(profiles, "&7, &6"));
         }
 
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

@@ -27,8 +27,6 @@ import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
-import java.util.Optional;
-
 public final class CommandFakeJoin extends CelestCommand {
 
     public CommandFakeJoin() {
@@ -44,20 +42,18 @@ public final class CommandFakeJoin extends CelestCommand {
         String displayname = arguments.required(String.class);
 
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&a&l»&r ");
+        builder.append("&a&l»&f ");
         builder.append(displayname).hover("&6" + username);
         builder.append("&a joined.");
-
-        MessageUtils.broadcast(each -> !each.isStaff(), builder::build);
+        builder.broadcast(each -> !each.isStaff());
 
         builder = new MessageBuilder();
-        builder.append("&6&l»&r ");
+        builder.append("&6&l»&f ");
         builder.append(displayname).hover("&6" + username);
         builder.append("&7 fake-joined by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));
         builder.append("&7.");
-
-        MessageUtils.broadcast(User::isStaff, builder::build);
+        builder.broadcast(User::isStaff);
     }
 
 }

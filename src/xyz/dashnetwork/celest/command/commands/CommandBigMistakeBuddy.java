@@ -30,8 +30,6 @@ import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-import java.util.Optional;
-
 public final class CommandBigMistakeBuddy extends CelestCommand {
 
     public CommandBigMistakeBuddy() {
@@ -53,11 +51,10 @@ public final class CommandBigMistakeBuddy extends CelestCommand {
         }
 
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&7 Title sent to ");
-        builder.append(new PlayerFormat(players));
+        builder.append("&6&l»&7 Title sent to &6");
+        builder.append(new PlayerFormat(players, "&7, &6"));
         builder.append("&7.");
-
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

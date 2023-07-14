@@ -76,8 +76,7 @@ public final class CommandHideAddress extends CelestCommand {
             }
 
             builder.append(" see &6IP Addresses&7.");
-
-            MessageUtils.message(player, builder::build);
+            builder.message(player);
         }
 
         int onSize = on.size();
@@ -85,20 +84,18 @@ public final class CommandHideAddress extends CelestCommand {
 
         if (onSize > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 ");
-            builder.append(new PlayerFormat(on));
+            builder.append("&6&l»&6 ");
+            builder.append(new PlayerFormat(on, "&7, &6"));
             builder.append(" will no longer see &6IP Addresses&7.");
-
-            MessageUtils.message(source, builder::build);
+            builder.message(source);
         }
 
         if (offSize > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 ");
-            builder.append(new PlayerFormat(on));
+            builder.append("&6&l»&6 ");
+            builder.append(new PlayerFormat(on, "&7, &6"));
             builder.append(" will now see &6IP Addresses&7.");
-
-            MessageUtils.message(source, builder::build);
+            builder.message(source);
         }
     }
 

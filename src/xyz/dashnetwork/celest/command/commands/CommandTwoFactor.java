@@ -54,12 +54,12 @@ public final class CommandTwoFactor extends CelestCommand {
         builder.append("\n&6&l»&7 /" + label + " setup").hover("&6Setup 2fa.");
         builder.append("\n&6&l»&7 /" + label + " disable").hover("&6Disable 2fa.");
         builder.append("\n&6&l»&7 /" + label + " verify").hover("&6Verify 2fa code during setup");
-
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
+        String subcommand = arguments.required(String.class).toLowerCase();
         Optional<String> optionalCode = arguments.optional(String.class);
         Optional<User> optionalUser = User.getUser(source);
         assert optionalUser.isPresent();
@@ -69,7 +69,7 @@ public final class CommandTwoFactor extends CelestCommand {
         UserData data = user.getData();
         String twoFactor = data.getTwoFactor();
 
-        switch (arguments.required(String.class).toLowerCase()) {
+        switch (subcommand) {
             case "setup" -> {
                 if (twoFactor != null) {
                     MessageUtils.message(source, "&6&l»&7 You have already setup 2fa.");
@@ -85,8 +85,7 @@ public final class CommandTwoFactor extends CelestCommand {
                 builder.append("&7.");
                 builder.append("\n&6&l»&7 Do not share this key with anyone.");
                 builder.append("\n&6&l»&7 Type &6/" + label + " verify <totp>&7 to finish 2fa setup.");
-
-                MessageUtils.message(source, builder::build);
+                builder.message(source);
             }
             case "disable" -> {
                 if (twoFactor == null) {

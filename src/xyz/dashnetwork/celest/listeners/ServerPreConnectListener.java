@@ -22,7 +22,6 @@ import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.event.ClickEvent;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -51,8 +50,7 @@ public final class ServerPreConnectListener {
             builder.append("&6" + name)
                     .hover("&7Click to copy &6" + permission)
                     .click(ClickEvent.suggestCommand(permission));
-
-            MessageUtils.broadcast(User::isOwner, builder::build);
+            builder.broadcast(each -> each.getData().getServerSpy());
         }
     }
 

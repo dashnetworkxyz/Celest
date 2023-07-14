@@ -33,14 +33,17 @@ import xyz.dashnetwork.celest.utils.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.log.Logger;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.storage.Configuration;
 import xyz.dashnetwork.celest.utils.storage.LegacyParser;
 import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public final class CommandCelest extends CelestCommand {
@@ -50,7 +53,6 @@ public final class CommandCelest extends CelestCommand {
 
         setPermission(User::isOwner, true);
         addArguments(false, ArgumentType.STRING);
-        // addArguments(ArgumentType.STRING); TODO
         setSuggestions(0, "reload", "save", "version", "debug", "users", "cache", "flush", "data");
     }
 
@@ -58,7 +60,6 @@ public final class CommandCelest extends CelestCommand {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&6 Celest debug commands");
         builder.append("\n&6&l»&b /celest legacy-import &c&o(unsafe)").hover("&6Import legacy data &c(unsafe).");
-        builder.append("\n&6&l»&b /celest data <directory> <file> [write] // TODO"); // TODO
         builder.append("\n&6&l»&b /celest flush").hover("&6Clear & save all objects in Limbo.");
         builder.append("\n&6&l»&b /celest cache").hover("&6Refresh and clear old cache.");
         builder.append("\n&6&l»&b /celest users").hover("&6Get and view all users from userdata.");
@@ -66,8 +67,7 @@ public final class CommandCelest extends CelestCommand {
         builder.append("\n&6&l»&b /celest version").hover("&6View build properties.");
         builder.append("\n&6&l»&b /celest save").hover("&6Force an auto-save.");
         builder.append("\n&6&l»&b /celest reload").hover("&6Reload config.yml.");
-
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
     @Override
@@ -96,7 +96,10 @@ public final class CommandCelest extends CelestCommand {
                 String[] properties;
 
                 try {
-                    properties = new String(resource.openStream().readAllBytes()).split("\r\n");
+                    InputStream stream = resource.openStream();
+                    properties = new String(stream.readAllBytes()).split("\r\n");
+
+                    stream.close();
                 } catch (IOException exception) {
                     MessageUtils.message(source, "&6&l»&7 Failed to get build properties.");
                     Logger.throwable(exception);
@@ -121,8 +124,7 @@ public final class CommandCelest extends CelestCommand {
                         .hover("&7Click to copy &6" + properties[4])
                         .click(ClickEvent.suggestCommand(properties[4]));
                 builder.append("\n&6&l»&7 Checking for updates...");
-
-                MessageUtils.message(source, builder::build);
+                builder.message(source);
 
                 String hash = properties[3].split("-")[2];
                 int distance = GithubUtils.getGitDistance("dashnetworkxyz/Celest", "master", hash);
@@ -152,7 +154,45 @@ public final class CommandCelest extends CelestCommand {
                     MessageUtils.message(source, "&6&l»&7 You are no longer in &6Debug&7.");
             }
             case "users" -> {
-                MessageUtils.message(source, "//TODO"); // TODO
+                MessageUtils.message(source, "&6&l»&7 Reading userdata...");
+
+                List<Limbo<OfflineUser>> limbos = Limbo.getAll(OfflineUser.class, each -> each.getData().getBan() != null);
+                Map<String, UserData> map = Storage.readAll(Storage.Directory.USER, UserData.class);
+                PageBuilder builder = new PageBuilder();
+
+                for (Limbo<OfflineUser> limbo : limbos) {
+                    OfflineUser offline = limbo.getObject();
+
+                    map.put(offline.getUuid().toString(), offline.getData());
+                }
+
+                for (Map.Entry<String, UserData> entry : map.entrySet()) {
+                    String uuid = entry.getKey();
+                    UserData data = entry.getValue();
+                    String username = data.getUsername();
+
+                    builder.append("&6" + username)
+                            .hover("&6" + uuid
+                                    + "\n&7address: &6" + data.getAddress()
+                                    + "\n&7username: &6" + username
+                                    + "\n&7nickname: &6" + data.getNickName()
+                                    + "\n&7ban: &6" + data.getBan()
+                                    + "\n&7mute: &6" + data.getMute()
+                                    + "\n&7channel: &6" + data.getChannel()
+                                    + "\n&7lastPlayed: &6" + data.getLastPlayed()
+                                    + "\n&7authenticated: &6" + data.getAuthenticated()
+                                    + "\n&7altSpy: &6" + data.getAltSpy()
+                                    + "\n&7commandSpy: &6" + data.getCommandSpy()
+                                    + "\n&7pingSpy: &6" + data.getPingSpy()
+                                    + "\n&7signSpy: &6" + data.getSignSpy()
+                                    + "\n&7serverSpy: &6" + data.getServerSpy()
+                                    + "\n&7vanish: &6" + data.getVanish()
+                                    + "\n&7hideAddress: &6" + data.getHideAddress()
+                                    + "\n&7debug: &6" + data.getDebug())
+                            .insertion(uuid);
+                }
+
+                MessageUtils.message(source, builder::build);
             }
             case "cache", "c" -> {
                 Celest.getCacheTask().run();
@@ -165,9 +205,6 @@ public final class CommandCelest extends CelestCommand {
                 }
 
                 MessageUtils.message(source, "&6&l»&7 All objects in limbo cleared & saved.");
-            }
-            case "data" -> {
-                MessageUtils.message(source, "//TODO"); // TODO
             }
             case "legacy-import" -> {
                 MessageUtils.message(source, "&6&l»&7 Reading legacy data...");

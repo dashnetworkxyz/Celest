@@ -3,14 +3,14 @@
  * Copyright (C) 2023  DashNetwork
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
-
+ * it under the terms of the GNU General Public License version 2 as published by
+ * the Free Software Foundation.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -18,56 +18,58 @@
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.ServerConnection;
 import xyz.dashnetwork.celest.utils.VersionUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
-import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public final class NamedSourceFormat implements Format {
 
-    private final List<TextSection> sections = new ArrayList<>();
+    private final List<ComponentSection> sections = new ArrayList<>();
 
-    public NamedSourceFormat(NamedSource... sources) { this(List.of(sources)); }
+    public NamedSourceFormat(NamedSource named) {
+        String username = named.getUsername();
+        String displayname = named.getDisplayname();
 
-    public NamedSourceFormat(Collection<NamedSource> sources) {
-        for (NamedSource named : sources) {
-            if (!sections.isEmpty())
-                sections.add(new TextSection("&6, ", null, null));
+        ComponentSection section = new ComponentSection(displayname);
+        section.hover("&6" + username);
 
-            sections.addAll(new NamedSourceFormat(named).sections());
-        }
-    }
-
-    public NamedSourceFormat(NamedSource source) {
-        String username = source.getUsername();
-        String displayname = source.getDisplayname();
-        TextSection section = new TextSection(displayname, "&6" + username, null);
-
-        if (source instanceof User user) {
-            section.hover("\n&7Address: &6" + user.getAddress().getString(), User::showAddress);
-            section.insertion(user.getUuid().toString());
-
+        if (named instanceof User user) {
             Player player = user.getPlayer();
+            String uuid = user.getUuid().toString();
+            String address = user.getAddress().getString();
             String version = VersionUtils.getVersionString(player.getProtocolVersion());
+            Optional<ServerConnection> optional = player.getCurrentServer();
+            Predicate<User> predicate = each -> each.isAdmin() && !each.getData().getHideAddress();
 
-            player.getCurrentServer().ifPresent(server -> {
-                String name = server.getServerInfo().getName();
+            section.hover("&7Address: &6" + address, predicate);
+            section.hover("&7Version: &6" + version);
+            section.insertion(uuid);
 
-                section.hover("\n&7Server: &6" + name);
-            });
-
-            section.hover("\n&7Version: &6" + version);
+            optional.ifPresent(server -> section.hover("&7Server: &6" + server.getServerInfo().getName()));
         }
 
         sections.add(section);
     }
 
+    public NamedSourceFormat(Collection<NamedSource> collection, String separator) {
+        for (NamedSource named : collection) {
+            if (!sections.isEmpty())
+                sections.add(new ComponentSection(separator));
+
+            sections.addAll(new NamedSourceFormat(named).sections());
+        }
+    }
+
     @Override
-    public List<TextSection> sections() { return sections; }
+    public List<ComponentSection> sections() { return sections; }
 
 }

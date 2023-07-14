@@ -29,7 +29,6 @@ import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 
 public final class CommandClearChat extends CelestCommand {
@@ -52,20 +51,19 @@ public final class CommandClearChat extends CelestCommand {
             builder.append("\n");
 
         if (players.length > 1) {
-            builder.append("&6&l»&7 Chat was cleared by ").onlyIf(notSelf);
-            builder.append(new NamedSourceFormat(named)).onlyIf(notSelf);
-            builder.append("&7.").onlyIf(notSelf);
+            builder.append("&6&l»&7 Chat was cleared by &6").filter(notSelf);
+            builder.append(new NamedSourceFormat(named)).filter(notSelf);
+            builder.append("&7.").filter(notSelf);
         }
 
         for (Player player : players)
-            MessageUtils.message(player, builder::build);
+            builder.message(player);
 
         builder = new MessageBuilder();
-        builder.append("&6&l»&7 Chat was cleared for ");
-        builder.append(new PlayerFormat(players));
+        builder.append("&6&l»&7 Chat was cleared for &6");
+        builder.append(new PlayerFormat(players, "&7, &6"));
         builder.append("&7.");
-
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

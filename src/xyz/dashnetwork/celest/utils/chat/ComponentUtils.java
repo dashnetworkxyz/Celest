@@ -22,17 +22,37 @@ import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class ComponentUtils {
 
     private static final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacySection();
     private static final GsonComponentSerializer gson = GsonComponentSerializer.gson();
 
     public static Component fromString(@NotNull String string) {
-         return legacy.deserialize(ColorUtils.fromAmpersand(string));
+        return legacy.deserialize(ColorUtils.fromAmpersand(string));
     }
 
     public static String toString(@NotNull Component component) { return legacy.serialize(component); }
 
     public static Component fromJson(@NotNull String json) { return gson.deserialize(json); }
+
+    public static List<Component> getAllChildren(Component component) {
+        return new ArrayList<>(findChildren(component));
+    }
+
+    private static List<Component> findChildren(Component component) {
+        List<Component> children = new ArrayList<>();
+
+        for (Component child : component.children()) {
+            children.add(child);
+
+            if (!child.children().isEmpty())
+                children.addAll(findChildren(child));
+        }
+
+        return children;
+    }
 
 }

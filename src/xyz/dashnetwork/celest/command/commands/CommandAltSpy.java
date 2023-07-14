@@ -24,8 +24,8 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.ArrayList;
@@ -66,8 +66,7 @@ public final class CommandAltSpy extends CelestCommand {
                 builder.append("&6&l»&7 You are ");
                 builder.append(spy ? "now" : "no longer");
                 builder.append(" in &6AltSpy&7.");
-
-                MessageUtils.message((User) offline, builder::build);
+                builder.message((User) offline);
             }
 
             if (optional.map(user -> !user.equals(offline)).orElse(false)) {
@@ -83,8 +82,8 @@ public final class CommandAltSpy extends CelestCommand {
 
         if (onSize > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 ");
-            builder.append(new OfflineUserFormat(on));
+            builder.append("&6&l»&6 ");
+            builder.append(new OfflineUserFormat(on, "&7, &6"));
 
             if (onSize > 1)
                 builder.append("&7 are");
@@ -92,14 +91,13 @@ public final class CommandAltSpy extends CelestCommand {
                 builder.append("&7 is");
 
             builder.append(" now in &6AltSpy&7.");
-
-            MessageUtils.message(source, builder::build);
+            builder.message(source);
         }
 
         if (offSize > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 ");
-            builder.append(new OfflineUserFormat(off));
+            builder.append("&6&l»&6 ");
+            builder.append(new OfflineUserFormat(off, "&7, &6"));
 
             if (offSize > 1)
                 builder.append("&7 are");
@@ -107,8 +105,7 @@ public final class CommandAltSpy extends CelestCommand {
                 builder.append("&7 is");
 
             builder.append(" no longer in &6AltSpy&7.");
-
-            MessageUtils.message(source, builder::build);
+            builder.message(source);
         }
     }
 

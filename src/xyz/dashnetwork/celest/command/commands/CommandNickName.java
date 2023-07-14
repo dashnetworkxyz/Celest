@@ -33,7 +33,6 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
 import java.util.List;
-import java.util.Optional;
 
 public final class CommandNickName extends CelestCommand {
 
@@ -103,8 +102,7 @@ public final class CommandNickName extends CelestCommand {
             }
 
             builder.append("&7.");
-
-            MessageUtils.message(player, builder::build);
+            builder.message(player);
         }
 
         if (source instanceof Player) {
@@ -112,15 +110,15 @@ public final class CommandNickName extends CelestCommand {
 
             if (players.size() > 0) {
                 builder = new MessageBuilder();
-                builder.append("&6&l»&7 Nicknames for ");
-                builder.append(new PlayerFormat(players));
+                builder.append("&6&l»&7 Nicknames for &6");
+                builder.append(new PlayerFormat(players, "&7, &6"));
 
                 if (off)
                     builder.append("&7 have been cleared.");
                 else
                     builder.append("&7 have been set to &6" + string + "&7.");
 
-                MessageUtils.message(source, builder::build);
+                builder.message(source);
             }
         }
     }

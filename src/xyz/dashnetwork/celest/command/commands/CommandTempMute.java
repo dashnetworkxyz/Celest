@@ -27,9 +27,9 @@ import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 
 import java.util.UUID;
@@ -67,13 +67,12 @@ public final class CommandTempMute extends CelestCommand {
                     .hover("&7You were muted by &6" + username
                             + "\n&7Your mute will expire on &6" + date
                             + "\n\n" + reason);
-
-            MessageUtils.message(((User) offline).getPlayer(), builder::build);
+            builder.message((User) offline);
         }
 
         builder = new MessageBuilder();
-        builder.append("&6&l»&r ");
-        builder.append(new PlayerProfileFormat(offline.toPlayerProfile())).prefix("&6");
+        builder.append("&6&l»&6 ");
+        builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
         builder.append("&7 temporarily muted by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("&7.");
@@ -81,8 +80,7 @@ public final class CommandTempMute extends CelestCommand {
                 .hover("&7Judge: &6" + username
                         + "\n&7Expiration: &6" + date
                         + "\n&7Reason: &6" + reason);
-
-        MessageUtils.broadcast(User::isStaff, builder::build);
+        builder.broadcast(User::isStaff);
     }
 
 }

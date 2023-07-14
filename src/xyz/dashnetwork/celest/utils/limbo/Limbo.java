@@ -21,6 +21,7 @@ import com.velocitypowered.api.scheduler.ScheduledTask;
 import com.velocitypowered.api.scheduler.Scheduler;
 import xyz.dashnetwork.celest.Celest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -54,6 +55,17 @@ public final class Limbo<T> implements Runnable {
                 return (Limbo<T>) limbo;
 
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> List<Limbo<T>> getAll(Class<T> clazz, Predicate<T> predicate) {
+        List<Limbo<T>> list = new ArrayList<>();
+
+        for (Limbo<?> limbo : limbos)
+            if (clazz.isInstance(limbo.object) && predicate.test((T) limbo.object))
+                list.add((Limbo<T>) limbo);
+
+        return list;
     }
 
     private void schedule() {

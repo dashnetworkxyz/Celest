@@ -3,14 +3,14 @@
  * Copyright (C) 2023  DashNetwork
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
-
+ * it under the terms of the GNU General Public License version 2 as published by
+ * the Free Software Foundation.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -21,7 +21,7 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
-import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
@@ -30,19 +30,19 @@ import java.util.function.Predicate;
 
 public final class ArgumentTypeFormat implements Format {
 
-    private final List<TextSection> sections = new ArrayList<>();
+    private final List<ComponentSection> sections = new ArrayList<>();
 
-    public ArgumentTypeFormat(boolean required, ArgumentType type) {
+    public ArgumentTypeFormat(ArgumentType type, boolean required) {
         String name = type.getName();
         String open = required ? "<" : "[";
         String close = required ? ">" : "]";
 
-        TextSection section = new TextSection(open + name + close, null, null);
+        ComponentSection section = new ComponentSection(open + name + close);
 
         if (required)
-            section.hover("&6Required:\n");
+            section.hover("&6Required:");
         else
-            section.hover("&6Optional:\n");
+            section.hover("&6Optional:");
 
         switch (type) {
             case ADDRESS -> section.hover("""
@@ -143,11 +143,9 @@ public final class ArgumentTypeFormat implements Format {
             case MULTI_STRING -> section.hover("""
                     &7Write your &6message&7.""");
         }
-
-        sections.add(section);
     }
 
     @Override
-    public List<TextSection> sections() { return sections; }
+    public List<ComponentSection> sections() { return sections; }
 
 }

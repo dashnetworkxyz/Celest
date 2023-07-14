@@ -31,7 +31,6 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public final class CommandTempIpBan extends CelestCommand {
@@ -82,8 +81,7 @@ public final class CommandTempIpBan extends CelestCommand {
                 .hover("&7Judge: &6" + username
                         + "\n&7Expiration: &6" + date
                         + "\n&7Reason: &6" + reason);
-
-        MessageUtils.broadcast(User::isStaff, builder::build);
+        builder.broadcast(User::isStaff);
     }
 
 }

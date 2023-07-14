@@ -22,7 +22,6 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.Address;
@@ -30,7 +29,6 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public final class CommandIpMute extends CelestCommand {
@@ -64,8 +62,7 @@ public final class CommandIpMute extends CelestCommand {
                 builder.append("&6&l»&7 You have been permanently muted. Hover for more info.")
                         .hover("&7You were muted by &6" + username
                                 + "\n\n" + reason);
-
-                MessageUtils.message(user, builder::build);
+                builder.message(user);
             }
         }
 
@@ -76,8 +73,7 @@ public final class CommandIpMute extends CelestCommand {
         builder.append("\n&6&l»&7 Hover for details.")
                 .hover("&7Judge: &6" + username
                         + "\n&7Reason: &6" + reason);
-
-        MessageUtils.broadcast(User::isStaff, builder::build);
+        builder.broadcast(User::isStaff);
     }
 
 }

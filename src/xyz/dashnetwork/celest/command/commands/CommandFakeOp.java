@@ -29,7 +29,6 @@ import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public final class CommandFakeOp extends CelestCommand {
 
@@ -49,8 +48,7 @@ public final class CommandFakeOp extends CelestCommand {
         for (Player player : players) {
             builder = new MessageBuilder();
             builder.append("&7&o[" + username + ": Opped " + player.getUsername() + "]");
-
-            MessageUtils.message(player, builder::build);
+            builder.message(player);
         }
 
         if (source instanceof Player)
@@ -58,11 +56,10 @@ public final class CommandFakeOp extends CelestCommand {
 
         if (players.size() > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 Fake-op sent to ");
-            builder.append(new PlayerFormat(players));
+            builder.append("&6&l»&7 Fake-op sent to &6");
+            builder.append(new PlayerFormat(players, "&7, &6"));
             builder.append("&7.");
-
-            MessageUtils.message(source, builder::build);
+            builder.message(source);
         }
     }
 

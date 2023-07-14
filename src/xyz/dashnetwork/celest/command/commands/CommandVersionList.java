@@ -57,14 +57,14 @@ public final class CommandVersionList extends CelestCommand {
         MessageBuilder builder = new MessageBuilder();
 
         for (Map.Entry<ProtocolVersion, List<NamedSource>> entry : map.entrySet()) {
-            if (builder.length() > 0)
+            if (builder.size() > 0)
                 builder.append("\n");
 
-            builder.append("&6&l»&7 [" + VersionUtils.getVersionString(entry.getKey()) + "] ");
-            builder.append(new NamedSourceFormat(entry.getValue()));
+            builder.append("&6&l»&7 [&6" + VersionUtils.getVersionString(entry.getKey()) + "&7] &6");
+            builder.append(new NamedSourceFormat(entry.getValue(), "&7, &6"));
         }
 
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

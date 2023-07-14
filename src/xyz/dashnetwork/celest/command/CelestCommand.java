@@ -28,7 +28,6 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ArgumentUtils;
 import xyz.dashnetwork.celest.utils.ListUtils;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.AliasesFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.ArgumentSectionFormat;
@@ -86,11 +85,11 @@ public abstract class CelestCommand implements SimpleCommand {
 
     protected void sendUsage(@NotNull CommandSource source, @NotNull String label) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&c Usage: ");
-        builder.append(new AliasesFormat(label, labels)).prefix("&7");
-        builder.append(new ArgumentSectionFormat(source, sections)).prefix("&7");
-
-        MessageUtils.message(source, builder::build);
+        builder.append("&6&l»&c Usage: &7");
+        builder.append(new AliasesFormat(label, labels));
+        builder.append("&7");
+        builder.append(new ArgumentSectionFormat(source, sections));
+        builder.message(source);
     }
 
     @Override

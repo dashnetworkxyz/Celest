@@ -36,8 +36,7 @@ public final class CommandDiscord extends CelestCommand {
                 .hover("&7Click to open &6https://discord.com/invite/3RDsNEE")
                 .click(ClickEvent.openUrl("https://discord.com/invite/3RDsNEE"));
         builder.append("&7.");
-
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

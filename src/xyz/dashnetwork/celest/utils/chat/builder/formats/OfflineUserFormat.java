@@ -3,14 +3,14 @@
  * Copyright (C) 2023  DashNetwork
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
-
+ * it under the terms of the GNU General Public License version 2 as published by
+ * the Free Software Foundation.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -18,9 +18,9 @@
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
-import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
+import xyz.dashnetwork.celest.utils.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public final class OfflineUserFormat implements Format {
 
-    private final List<TextSection> sections;
+    private final List<ComponentSection> sections;
 
     public OfflineUserFormat(OfflineUser offline) {
         if (offline.isActive())
@@ -37,20 +37,18 @@ public final class OfflineUserFormat implements Format {
             sections = new PlayerProfileFormat(offline.toPlayerProfile()).sections();
     }
 
-    public OfflineUserFormat(OfflineUser... offlines) { this(List.of(offlines)); }
-
-    public OfflineUserFormat(Collection<OfflineUser> offlines) {
+    public OfflineUserFormat(Collection<OfflineUser> collection, String separator) {
         sections = new ArrayList<>();
 
-        for (OfflineUser each : offlines) {
+        for (OfflineUser offline : collection) {
             if (!sections.isEmpty())
-                sections.add(new TextSection("&7, ", null, null));
+                sections.add(new ComponentSection(separator));
 
-            sections.addAll(new OfflineUserFormat(each).sections);
+            sections.addAll(new OfflineUserFormat(offline).sections());
         }
     }
 
     @Override
-    public List<TextSection> sections() { return sections; }
+    public List<ComponentSection> sections() { return sections; }
 
 }

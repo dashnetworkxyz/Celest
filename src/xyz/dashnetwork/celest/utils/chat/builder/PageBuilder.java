@@ -20,6 +20,7 @@ package xyz.dashnetwork.celest.utils.chat.builder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
+import xyz.dashnetwork.celest.utils.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
@@ -27,10 +28,10 @@ import java.util.List;
 
 public final class PageBuilder {
 
-    private final List<TextSection> sections = new ArrayList<>();
+    private final List<ComponentSection> sections = new ArrayList<>();
 
-    public TextSection append(String text) {
-        TextSection section = new TextSection(text, null, null);
+    public Section append(String text) {
+        ComponentSection section = new ComponentSection(text);
         sections.add(section);
 
         return section;

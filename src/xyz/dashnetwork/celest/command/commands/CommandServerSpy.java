@@ -1,20 +1,3 @@
-/*
- * Celest
- * Copyright (C) 2023  DashNetwork
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
@@ -32,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public final class CommandSignSpy extends CelestCommand {
+public final class CommandServerSpy extends CelestCommand {
 
-    public CommandSignSpy() {
-        super("signspy");
+    public CommandServerSpy() {
+        super("serverspy");
 
         setPermission(User::isStaff, true);
         addArguments(User::isOwner, true, ArgumentType.OFFLINE_USER_LIST);
@@ -57,15 +40,15 @@ public final class CommandSignSpy extends CelestCommand {
 
         for (OfflineUser offline : users) {
             UserData data = offline.getData();
-            boolean spy = !data.getSignSpy();
+            boolean spy = !data.getServerSpy();
 
-            data.setSignSpy(spy);
+            data.setServerSpy(spy);
 
             if (offline.isActive()) {
                 builder = new MessageBuilder();
                 builder.append("&6&l»&7 You are ");
                 builder.append(spy ? "now" : "no longer");
-                builder.append(" in &6SignSpy&7.");
+                builder.append(" in &6ServerSpy&7.");
                 builder.message((User) offline);
             }
 
@@ -90,7 +73,7 @@ public final class CommandSignSpy extends CelestCommand {
             else
                 builder.append("&7 is");
 
-            builder.append(" now in &6SignSpy&7.");
+            builder.append(" now in &6ServerSpy&7.");
             builder.message(source);
         }
 
@@ -104,7 +87,7 @@ public final class CommandSignSpy extends CelestCommand {
             else
                 builder.append("&7 is");
 
-            builder.append(" no longer in &6SignSpy&7.");
+            builder.append(" no longer in &6ServerSpy&7.");
             builder.message(source);
         }
     }

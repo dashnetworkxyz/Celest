@@ -70,7 +70,7 @@ public final class CommandVanish extends CelestCommand {
             builder = new MessageBuilder();
 
             if (vanish) {
-                builder.append("&c&l»&r ");
+                builder.append("&c&l»&6 ");
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&c left.");
 
@@ -84,7 +84,7 @@ public final class CommandVanish extends CelestCommand {
 
                 on.add(player);
             } else {
-                builder.append("&a&l»&r ");
+                builder.append("&a&l»&6 ");
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&a joined.");
 
@@ -99,20 +99,18 @@ public final class CommandVanish extends CelestCommand {
 
         if (on.size() > 0) {
             builder = new MessageBuilder();
-            builder.append("&3&l»&r ");
-            builder.append(new PlayerFormat(players));
+            builder.append("&3&l»&6 ");
+            builder.append(new PlayerFormat(players, "&7, &6"));
             builder.append("&3 is now vanished. Poof.");
-
-            MessageUtils.broadcast(predicate, builder::build);
+            builder.broadcast(predicate);
         }
 
         if (off.size() > 0) {
             builder = new MessageBuilder();
-            builder.append("&3&l»&r ");
-            builder.append(new PlayerFormat(players));
+            builder.append("&3&l»&6 ");
+            builder.append(new PlayerFormat(players, "&7, &6"));
             builder.append("&3 is no longer vanished.");
-
-            MessageUtils.broadcast(predicate, builder::build);
+            builder.broadcast(predicate);
         }
     }
 

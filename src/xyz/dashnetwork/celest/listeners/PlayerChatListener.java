@@ -29,7 +29,7 @@ import xyz.dashnetwork.celest.utils.chat.ChatChannel;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.ArgumentTypeFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
@@ -76,7 +76,7 @@ public final class PlayerChatListener {
             String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).username();
 
             MessageBuilder builder = new MessageBuilder();
-            TextSection section = builder.append("&6&l»&7 You have been " + type + " muted. Hover for more info.");
+            Section section = builder.append("&6&l»&7 You have been " + type + " muted. Hover for more info.");
 
             section.hover("&7You were muted by &6" + judge);
 
@@ -85,7 +85,7 @@ public final class PlayerChatListener {
 
             section.hover("\n\n" + mute.reason());
 
-            MessageUtils.message(player, builder::build);
+            builder.message(player);
             return;
         }
 
@@ -98,10 +98,9 @@ public final class PlayerChatListener {
 
             if (message.isBlank()) {
                 MessageBuilder builder = new MessageBuilder();
-                builder.append("&6&l»&c Usage:&7 " + channel.getSelectors()[0]);
-                builder.append(new ArgumentTypeFormat(true, ArgumentType.MULTI_STRING)).prefix("&7");
-
-                MessageUtils.message(player, builder::build);
+                builder.append("&6&l»&c Usage:&7 " + channel.getSelectors()[0] + "&7");
+                builder.append(new ArgumentTypeFormat(ArgumentType.MULTI_STRING, true));
+                builder.message(player);
                 return;
             }
         } else

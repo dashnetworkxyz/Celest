@@ -23,12 +23,15 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.PageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.limbo.Limbo;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.storage.Storage;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
+import java.util.List;
 import java.util.Map;
 
 public class CommandBanList extends CelestCommand {
@@ -43,9 +46,15 @@ public class CommandBanList extends CelestCommand {
     protected void execute(CommandSource source, String label, Arguments arguments) {
         MessageUtils.message(source, "&6&l»&7 Reading userdata...");
 
-        // TODO: Make sure this accounts for limbo
+        List<Limbo<OfflineUser>> limbos = Limbo.getAll(OfflineUser.class, each -> each.getData().getBan() != null);
         Map<String, UserData> map = Storage.readAll(Storage.Directory.USER, UserData.class);
         PageBuilder builder = new PageBuilder();
+
+        for (Limbo<OfflineUser> limbo : limbos) {
+            OfflineUser offline = limbo.getObject();
+
+            map.put(offline.getUuid().toString(), offline.getData());
+        }
 
         for (Map.Entry<String, UserData> entry : map.entrySet()) {
             UserData data = entry.getValue();
@@ -54,7 +63,7 @@ public class CommandBanList extends CelestCommand {
             if (ban == null)
                 continue;
 
-            TextSection section = builder.append("&6" + data.getUsername())
+            Section section = builder.append("&6" + data.getUsername())
                     .insertion(entry.getKey());
 
             Long expiration = ban.expiration();

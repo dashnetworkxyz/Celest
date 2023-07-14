@@ -26,7 +26,7 @@ public final class UserData {
     private PunishData ban, mute;
     private ChatChannel channel;
     private Long lastPlayed;
-    private boolean authenticated, altSpy, commandSpy, pingSpy, signSpy, vanish, hideAddress, debug;
+    private boolean authenticated, altSpy, commandSpy, pingSpy, signSpy, serverSpy, vanish, hideAddress, debug;
 
     public UserData(String username) {
         this.username = username;
@@ -43,6 +43,7 @@ public final class UserData {
         commandSpy = false;
         pingSpy = false;
         signSpy = false;
+        serverSpy = false;
         vanish = false;
         hideAddress = false;
         debug = false;
@@ -82,6 +83,8 @@ public final class UserData {
 
     public boolean getSignSpy() { return signSpy; }
 
+    public boolean getServerSpy() { return serverSpy; }
+
     public boolean getVanish() { return vanish; }
 
     public boolean getHideAddress() { return hideAddress; }
@@ -110,6 +113,8 @@ public final class UserData {
 
     public void setSignSpy(boolean signSpy) { this.signSpy = signSpy; }
 
+    public void setServerSpy(boolean serverSpy) { this.serverSpy = serverSpy; }
+
     public void setVanish(boolean vanish) { this.vanish = vanish; }
 
     public void setHideAddress(boolean hideAddress) { this.hideAddress = hideAddress; }
@@ -127,6 +132,7 @@ public final class UserData {
                 && !commandSpy
                 && !pingSpy
                 && !signSpy
+                && !serverSpy
                 && !vanish
                 && !hideAddress
                 && !debug;

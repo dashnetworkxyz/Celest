@@ -28,10 +28,9 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -79,8 +78,7 @@ public final class CommandServer extends CelestCommand {
             }
 
             builder.append("&7.");
-
-            MessageUtils.message(player, builder::build);
+            builder.message(player);
 
             player.createConnectionRequest(server).connect().thenAccept(u -> {
                 if (LazyUtils.anyEquals(u.getStatus(),
@@ -89,14 +87,14 @@ public final class CommandServer extends CelestCommand {
                     Optional<Component> component = u.getReasonComponent();
 
                     MessageBuilder kick = new MessageBuilder();
-                    TextSection section = kick.append(
+                    Section section = kick.append(
                             "&6&l»&7 Failed to connect to &6" + name + "&7. Hover for more info.");
 
                     component.ifPresentOrElse(
                             c -> section.hover("&6" + ComponentUtils.toString(c)),
                             () -> section.hover("&7No kick message provided."));
 
-                    MessageUtils.message(player, kick::build);
+                    kick.message(player);
                 }
             });
         }
@@ -106,11 +104,10 @@ public final class CommandServer extends CelestCommand {
 
         if (players.size() > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have sent ");
-            builder.append(new PlayerFormat(players));
+            builder.append("&6&l»&7 You have sent &6");
+            builder.append(new PlayerFormat(players, "&7, &6"));
             builder.append("&7 to &6" + name + "&7.");
-
-            MessageUtils.message(source, builder::build);
+            builder.message(source);
         }
     }
 

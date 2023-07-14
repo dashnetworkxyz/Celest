@@ -55,8 +55,7 @@ public final class CommandRandom extends CelestCommand {
         builder.append("&6&l»&7 Generated &6" + generated + "&7.")
                 .hover("&7Click to copy &6" + generated)
                 .click(ClickEvent.suggestCommand(String.valueOf(generated)));
-
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

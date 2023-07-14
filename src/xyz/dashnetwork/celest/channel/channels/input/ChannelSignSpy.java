@@ -21,7 +21,6 @@ import com.google.common.io.ByteArrayDataInput;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 
@@ -48,14 +47,13 @@ public final class ChannelSignSpy extends Channel {
             Player player = optional.get();
 
             MessageBuilder builder = new MessageBuilder();
-            builder.append("&6&l»&r ");
+            builder.append("&6&l»&f ");
             builder.append(new PlayerFormat(player));
             builder.append(" ");
             builder.append("&7placed sign in &6" + server + "&7 at &6" + x + " " + y + " " + z)
                     .hover("&6" + line1 + "\n&6" + line2 + "\n&6" + line3 + "\n&6" + line4);
             builder.append("&7.");
-
-            MessageUtils.broadcast(true, each -> each.getData().getSignSpy(), builder::build);
+            builder.broadcast(each -> each.getData().getSignSpy());
         }
     }
 

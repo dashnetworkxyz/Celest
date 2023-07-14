@@ -21,7 +21,7 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.Section;
 
 public final class Logger {
 
@@ -39,7 +39,7 @@ public final class Logger {
         String color = type.color();
 
         MessageBuilder builder = new MessageBuilder();
-        TextSection section = builder.append("&f&l»&f [" + color + type.name() + "&f]: " + color + string);
+        Section section = builder.append("&f&l»&f [" + color + type.name() + "&f]: " + color + string);
 
         for (String hover : hovers)
             section.hover(hover);

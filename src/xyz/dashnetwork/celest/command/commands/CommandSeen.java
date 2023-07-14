@@ -26,10 +26,10 @@ import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 import xyz.dashnetwork.celest.utils.storage.data.PunishData;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
@@ -91,7 +91,7 @@ public final class CommandSeen extends CelestCommand {
             builder.append("\n&6&l»&7 Ban: ");
 
             Long duration = ban.expiration();
-            TextSection section;
+            Section section;
             String date = duration == null ? null : TimeUtils.longToDate(duration);
 
             if (duration == null)
@@ -114,7 +114,7 @@ public final class CommandSeen extends CelestCommand {
             builder.append("\n&6&l»&7 Mute: ");
 
             Long duration = mute.expiration();
-            TextSection section;
+            Section section;
             String date = duration == null ? null : TimeUtils.longToDate(duration);
 
             if (duration == null)
@@ -133,7 +133,7 @@ public final class CommandSeen extends CelestCommand {
             section.hover("\n\n&7For: &6" + mute.reason());
         }
 
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

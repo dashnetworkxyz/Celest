@@ -27,7 +27,7 @@ import java.util.List;
 public enum ArgumentType {
 
     ADDRESS("ip address", new AddressParser(), new AddressSuggester()),
-    CHANNEL("channel", new ChannelParser(), new ChannelSuggester()),
+    CHANNEL("chat channel", new ChannelParser(), new ChannelSuggester()),
     INTEGER("integer", new IntegerParser(), new IntegerSuggester()),
     LONG("duration", new LongParser(), new LongSuggester()),
     OFFLINE_USER("target", new OfflineUserParser(), new OfflineUserSuggester()),

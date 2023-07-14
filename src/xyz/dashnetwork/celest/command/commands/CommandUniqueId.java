@@ -65,8 +65,7 @@ public final class CommandUniqueId extends CelestCommand {
         builder.append("\n&6&l»&7 Int Array:\n&6&l»&6 " + ints[0] + "\n&6&l»&6 " + ints[1] + "\n&6&l»&6 " + ints[2] + "\n&6&l»&6 " + ints[3])
                 .hover("&6" + stringInts)
                 .click(ClickEvent.suggestCommand(stringInts));
-
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

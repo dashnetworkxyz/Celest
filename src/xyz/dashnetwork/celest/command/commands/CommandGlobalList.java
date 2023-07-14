@@ -37,6 +37,7 @@ public final class CommandGlobalList extends CelestCommand {
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
         Map<String, List<NamedSource>> map = new TreeMap<>(String::compareTo);
+        int size = 0;
         Optional<User> user = User.getUser(source);
 
         for (User each : User.getUsers()) {
@@ -51,6 +52,7 @@ public final class CommandGlobalList extends CelestCommand {
 
                 list.add(each);
                 map.put(name, list);
+                size++;
             }
         }
 
@@ -60,22 +62,22 @@ public final class CommandGlobalList extends CelestCommand {
         }
 
         MessageBuilder builder = new MessageBuilder();
+        builder.append("&6&l»&6 " + size + "&7 players online.");
 
         for (Map.Entry<String, List<NamedSource>> entry : map.entrySet()) {
-            if (builder.length() > 0)
-                builder.append("\n");
+            builder.append("\n");
 
             String name = entry.getKey();
 
             builder.append("&6&l»&7 [");
-            builder.append("&7" + name)
+            builder.append("&6" + name)
                     .hover("&7Click to copy &6/server " + name)
                     .click(ClickEvent.suggestCommand("/server " + name));
-            builder.append("&7] ");
-            builder.append(new NamedSourceFormat(entry.getValue()));
+            builder.append("&7] &6");
+            builder.append(new NamedSourceFormat(entry.getValue(), "&7, &6"));
         }
 
-        MessageUtils.message(source, builder::build);
+        builder.message(source);
     }
 
 }

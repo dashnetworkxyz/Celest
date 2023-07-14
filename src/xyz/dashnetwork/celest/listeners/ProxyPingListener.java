@@ -29,7 +29,7 @@ import xyz.dashnetwork.celest.utils.*;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.TextSection;
+import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
@@ -118,14 +118,14 @@ public final class ProxyPingListener {
             }
 
             MessageBuilder message = new MessageBuilder();
-            TextSection section = message.append("&6&l»&6 " + name + "&7 pinged the server.");
+            Section section = message.append("&6&l»&6 " + name + "&7 pinged the server.");
 
             section.hover("&6" + address.getString() + "\n", User::showAddress);
             section.hover("&7Virtual: &6" + virtual.getHostName() + ":" + virtual.getPort());
             section.hover("\n&7Version: &6" + range + "&7 (" + version.getProtocol() + ")");
             section.hover("\n&7Accounts: &6" + ArrayUtils.convertToString(profiles, PlayerProfile::username, "&7, &6"));
 
-            MessageUtils.broadcast(user -> user.getData().getPingSpy(), message::build);
+            message.broadcast(user -> user.getData().getPingSpy());
         }).schedule();
     }
 

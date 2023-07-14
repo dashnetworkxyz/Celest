@@ -41,17 +41,15 @@ public final class DisconnectListener {
             MessageBuilder builder = new MessageBuilder();
 
             if (data.getVanish()) {
-                builder.append("&3&l»&r ");
+                builder.append("&3&l»&6 ");
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&3 silently left.");
-
-                MessageUtils.broadcast(each -> each.isStaff() || each.getData().getVanish(), builder::build);
+                builder.broadcast(each -> each.isStaff() || each.getData().getVanish());
             } else {
-                builder.append("&c&l»&r ");
+                builder.append("&c&l»&6 ");
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&c left.");
-
-                MessageUtils.broadcast(builder::build);
+                builder.broadcast();
 
                 data.setLastPlayed(System.currentTimeMillis());
             }

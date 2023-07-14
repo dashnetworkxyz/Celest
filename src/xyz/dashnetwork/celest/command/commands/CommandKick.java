@@ -31,7 +31,6 @@ import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
 import java.util.List;
-import java.util.Optional;
 
 public final class CommandKick extends CelestCommand {
 
@@ -62,12 +61,11 @@ public final class CommandKick extends CelestCommand {
 
         builder = new MessageBuilder();
         builder.append("&6&l»&6");
-        builder.append(new PlayerFormat(players));
-        builder.append("&7 kicked by ");
+        builder.append(new PlayerFormat(players, "&7, &6"));
+        builder.append("&7 kicked by &6");
         builder.append(new NamedSourceFormat(named));
         builder.append("&7.");
-
-        MessageUtils.broadcast(builder::build);
+        builder.broadcast();
     }
 
 }

@@ -19,4 +19,9 @@ package xyz.dashnetwork.celest.utils.storage.data;
 
 import java.util.UUID;
 
-public record PunishData(UUID judge, String reason, Long expiration) {}
+public record PunishData(UUID judge, String reason, Long expiration) {
+
+    @Override
+    public String toString() { return "{judge:" + judge + ",reason:" + reason + ",expiration:" + expiration + "}"; }
+
+}

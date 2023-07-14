@@ -26,8 +26,6 @@ import xyz.dashnetwork.celest.utils.chat.Messages;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
-import java.util.Optional;
-
 public final class CommandTalk extends CelestCommand {
 
     public CommandTalk() {

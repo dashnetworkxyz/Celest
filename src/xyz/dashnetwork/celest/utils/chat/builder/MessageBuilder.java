@@ -3,117 +3,128 @@
  * Copyright (C) 2023  DashNetwork
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
-
+ * it under the terms of the GNU General Public License version 2 as published by
+ * the Free Software Foundation.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package xyz.dashnetwork.celest.utils.chat.builder;
 
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import xyz.dashnetwork.celest.utils.CompareUtils;
-import xyz.dashnetwork.celest.utils.ListUtils;
-import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
+import xyz.dashnetwork.celest.utils.chat.ColorUtils;
+import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.chat.builder.sections.ComponentSection;
+import xyz.dashnetwork.celest.utils.chat.builder.sections.FormatSection;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public final class MessageBuilder {
 
-    private final List<TextSection> sections = new ArrayList<>();
+    private final List<ComponentSection> sections = new ArrayList<>();
 
-    public int length() { return sections.size(); }
+    public int size() { return sections.size(); }
 
-    public TextSection append(@NotNull String text) {
-        TextSection section = new TextSection(text, null, null);
+    public Section append(@NotNull String text) {
+        String prefix = "";
+
+        if (!sections.isEmpty())
+            prefix = getStyleFromPrevious(sections.get(sections.size() - 1));
+
+        ComponentSection section = new ComponentSection(prefix + text);
         sections.add(section);
 
         return section;
     }
 
-    public void append(@NotNull TextSection section) {
-        sections.add(section);
+    public Section append(@NotNull Format format) {
+        sections.addAll(format.sections());
+        return new FormatSection(format);
     }
 
-    public FormatSection append(@NotNull Format format) {
-        sections.addAll(format.sections());
-        return new FormatSection(format.sections());
+    public Section append(@NotNull ComponentSection section) {
+        sections.add(section);
+        return section;
     }
 
     public Component build(@Nullable User user) {
-        List<Component> components = new ArrayList<>();
-        TextSection last = null;
+        TextComponent.Builder builder = Component.text();
 
-        for (TextSection section : sections) {
-            if (checkPredicate(user, section.predicate)) {
-                if (last != null) {
-                    if (isSimilar(section, last)) {
-                        last.text += section.text;
-                        continue;
-                    } else
-                        components.add(toComponent(user, last));
+        for (ComponentSection section : sections) {
+            if (user == null || section.getFilter().test(user)) {
+                List<Component> hovers = new ArrayList<>();
+                TextComponent.Builder sectionBuilder = section.getBuilder();
+
+                for (ComponentSection hover : section.getHovers())
+                    if (user == null || section.getFilter().test(user))
+                        hovers.add(hover.getBuilder().build());
+
+                if (!hovers.isEmpty()) {
+                    Component hover = Component.join(JoinConfiguration.newlines(), hovers);
+                    sectionBuilder.hoverEvent(HoverEvent.showText(hover));
                 }
 
-                last = section.clone();
+                builder.append(sectionBuilder);
             }
         }
 
-        if (last != null)
-            components.add(toComponent(user, last));
-
-        return Component.join(JoinConfiguration.noSeparators(), components);
+        return builder.build();
     }
 
-    private boolean checkPredicate(User user, Predicate<User> predicate) {
-        if (user == null || predicate == null)
-            return true;
+    public void message(@NotNull Audience audience) { MessageUtils.message(audience, this::build); }
 
-        return predicate.test(user);
-    }
+    public void broadcast(@NotNull Predicate<User> filter) { MessageUtils.broadcast(filter, this::build); }
 
-    private boolean isSimilar(TextSection section1, TextSection section2) {
-        return ListUtils.equals(section1.hovers, section2.hovers) &&
-                CompareUtils.equalsWithNull(section1.click, section2.click) &&
-                CompareUtils.equalsWithNull(section1.predicate, section2.predicate);
-    }
+    public void broadcast() { MessageUtils.broadcast(this::build); }
 
-    private Component toComponent(User user, TextSection section) {
-        Component component = ComponentUtils.fromString(section.text);
+    private String getStyleFromPrevious(ComponentSection section) {
+        StringBuilder builder = new StringBuilder();
+        Style style = section.getLastStyle();
+        TextColor color = style.color();
 
-        if (user == null)
-            return component;
+        if (color != null) {
+            NamedTextColor named = NamedTextColor.namedColor(color.value());
 
-        if (section.insertion != null)
-            component = component.insertion(section.insertion);
+            if (named != null)
+                builder.append(ColorUtils.fromNamedTextColor(named));
+            else {
+                String hex = color.asHexString().replace("#", "");
+                StringBuilder serialized = new StringBuilder();
 
-        if (!section.hovers.isEmpty()) {
-            StringBuilder builder = new StringBuilder();
+                serialized.append("&x");
 
-            for (TextSection.Hover hover : section.hovers)
-                if (checkPredicate(user, hover.predicate))
-                    builder.append(hover.text);
+                for (char c : hex.toCharArray())
+                    serialized.append("&").append(c);
 
-            if (builder.length() > 0)
-                component = component.hoverEvent(HoverEvent.showText(ComponentUtils.fromString(builder.toString())));
+                builder.append(serialized);
+            }
         }
 
-        if (section.click != null)
-            component = component.clickEvent(section.click);
+        for (Map.Entry<TextDecoration, TextDecoration.State> entry : style.decorations().entrySet())
+            if (entry.getValue().equals(TextDecoration.State.TRUE))
+                builder.append(ColorUtils.fromTextDecoration(entry.getKey()));
 
-        return component;
+        return builder.toString();
     }
 
 }
