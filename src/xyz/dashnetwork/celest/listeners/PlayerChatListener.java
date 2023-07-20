@@ -81,9 +81,9 @@ public final class PlayerChatListener {
             section.hover("&7You were muted by &6" + judge);
 
             if (expiration != null)
-                section.hover("\n&7Your mute will expire on &6" + TimeUtils.longToDate(expiration));
+                section.hover("&7Your mute will expire on &6" + TimeUtils.longToDate(expiration));
 
-            section.hover("\n\n" + mute.reason());
+            section.hover(mute.reason());
 
             builder.message(player);
             return;

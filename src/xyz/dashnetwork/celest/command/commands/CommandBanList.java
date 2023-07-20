@@ -73,7 +73,7 @@ public class CommandBanList extends CelestCommand {
             else
                 section.hover("&7Expiration: &6" + TimeUtils.longToDate(expiration));
 
-            section.hover("\n&7Reason: &6" + ban.reason());
+            section.hover("&7Reason: &6" + ban.reason());
         }
 
         MessageUtils.message(source, builder::build);

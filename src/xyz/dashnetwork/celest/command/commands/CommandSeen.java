@@ -104,9 +104,9 @@ public final class CommandSeen extends CelestCommand {
             section.hover("&7Banned by &6" + name);
 
             if (duration != null)
-                section.hover("\n&7Expires on &6" + date);
+                section.hover("&7Expires on &6" + date);
 
-            section.hover("\n\n&7For: &6" + ban.reason());
+            section.hover("&7For: &6" + ban.reason());
         }
 
         if (PunishUtils.isValid(mute)) {
@@ -127,9 +127,9 @@ public final class CommandSeen extends CelestCommand {
             section.hover("&7Muted by &6" + name);
 
             if (duration != null)
-                section.hover("\n&7Expires on &6" + date);
+                section.hover("&7Expires on &6" + date);
 
-            section.hover("\n\n&7For: &6" + mute.reason());
+            section.hover("&7For: &6" + mute.reason());
         }
 
         builder.message(source);
