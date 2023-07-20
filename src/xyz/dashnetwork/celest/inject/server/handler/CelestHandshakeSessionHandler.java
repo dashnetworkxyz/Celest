@@ -48,8 +48,9 @@ public final class CelestHandshakeSessionHandler implements InvocationHandler {
             String cleaned = handler.cleanVhost(handshake.getServerAddress());
             ReflectedInitialInboundConnection inbound = new ReflectedInitialInboundConnection(connection, cleaned, handshake);
             Enum<?> state = (Enum<?>) handler.getStateForProtocol(handshake.getNextStatus());
+            boolean domain = handshake.getServerAddress().toLowerCase().contains("dashnetwork");
 
-            if (state == null)
+            if (state == null || !domain)
                 connection.close(true);
             else {
                 connection.setState(state);
