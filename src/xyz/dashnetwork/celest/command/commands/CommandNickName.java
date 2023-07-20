@@ -105,21 +105,20 @@ public final class CommandNickName extends CelestCommand {
             builder.message(player);
         }
 
-        if (source instanceof Player) {
+        if (source instanceof Player)
             players.remove(source);
 
-            if (players.size() > 0) {
-                builder = new MessageBuilder();
-                builder.append("&6&l»&7 Nicknames for &6");
-                builder.append(new PlayerFormat(players, "&7, &6"));
+        if (players.size() > 0) {
+            builder = new MessageBuilder();
+            builder.append("&6&l»&7 Nicknames for &6");
+            builder.append(new PlayerFormat(players, "&7, &6"));
 
-                if (off)
-                    builder.append("&7 have been cleared.");
-                else
-                    builder.append("&7 have been set to &6" + string + "&7.");
+            if (off)
+                builder.append("&7 have been cleared.");
+            else
+                builder.append("&7 have been set to &6" + string + "&7.");
 
-                builder.message(source);
-            }
+            builder.message(source);
         }
     }
 
