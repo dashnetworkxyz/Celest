@@ -20,14 +20,26 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
+import com.velocitypowered.api.proxy.InboundConnection;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
+
+import java.net.InetSocketAddress;
+import java.util.Optional;
 
 public final class PreLoginListener {
 
     @Subscribe
     public void onPreLogin(PreLoginEvent event) {
-        ProtocolVersion version = event.getConnection().getProtocolVersion();
+        InboundConnection connection = event.getConnection();
+        ProtocolVersion version = connection.getProtocolVersion();
+        Optional<InetSocketAddress> virtual = connection.getVirtualHost();
+
+        if (virtual.isEmpty() || !virtual.get().getHostName().toLowerCase().contains("dashnetwork")) {
+            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
+                    "Connection Refused"
+            )));
+        }
 
         if (version.compareTo(ProtocolVersion.MINECRAFT_1_7_6) <= 0) {
             event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(

@@ -27,7 +27,6 @@ import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.*;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.connection.Address;
