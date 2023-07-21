@@ -36,9 +36,7 @@ import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.data.AddressData;
 import xyz.dashnetwork.celest.utils.storage.data.CacheData;
 
-import java.net.InetSocketAddress;
 import java.util.Calendar;
-import java.util.Optional;
 import java.util.UUID;
 
 public final class ProxyPingListener {
@@ -91,21 +89,6 @@ public final class ProxyPingListener {
 
             address.setServerPingTime(System.currentTimeMillis());
 
-            Optional<InetSocketAddress> optional = connection.getVirtualHost();
-            InetSocketAddress virtual;
-
-            if (optional.isPresent()) {
-                InetSocketAddress socket = optional.get();
-                String clean = socket.getHostString();
-
-                // Filter Cloudflare proxy.
-                if (StringUtils.matchesCloudflare(clean))
-                    clean = clean.replaceFirst("_dc-srv\\.([a-f0-9]{12})\\._minecraft\\._tcp\\.", "");
-
-                virtual = new InetSocketAddress(clean, socket.getPort());
-            } else
-                virtual = new InetSocketAddress("Unknown", 0);
-
             String range = VersionUtils.getVersionString(version);
             String name = profiles[0].username();
 
@@ -120,7 +103,6 @@ public final class ProxyPingListener {
             Section section = message.append("&6&l»&6 " + name + "&7 pinged the server.");
 
             section.hover("&6" + address.getString(), User::showAddress);
-            section.hover("&7Virtual: &6" + virtual.getHostName() + ":" + virtual.getPort());
             section.hover("&7Version: &6" + range + "&7 (" + version.getProtocol() + ")");
             section.hover("&7Accounts: &6" + ArrayUtils.convertToString(profiles, PlayerProfile::username, "&7, &6"));
 
