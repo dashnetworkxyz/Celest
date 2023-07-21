@@ -23,6 +23,7 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.AddressFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -67,7 +68,9 @@ public final class CommandIpMute extends CelestCommand {
         }
 
         builder = new MessageBuilder();
-        builder.append("&6&l»&6 " + address.getString() + " permanently muted by ");
+        builder.append("&6&l»&6 ");
+        builder.append(new AddressFormat(address));
+        builder.append("&7 permanently muted by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("&7.");
         builder.append("\n&6&l»&7 Hover for details.")

@@ -170,6 +170,7 @@ public final class Celest {
         new CommandGlobalList();
         new CommandHideAddress();
         new CommandIpBan();
+        new CommandIpBanList();
         new CommandIpMute();
         new CommandKick();
         new CommandLobby();
@@ -205,12 +206,12 @@ public final class Celest {
         new CommandTheFurpySong();
         new CommandTwoFactor();
         new CommandUnban();
+        new CommandUnIpBan();
+        new CommandUnIpMute();
         new CommandUniqueId();
         new CommandUnmute();
         new CommandVanish();
         new CommandVersionList();
-
-        new CommandTest();
 
         logger.info("Scheduling tasks...");
         cacheTask = new CacheTask();

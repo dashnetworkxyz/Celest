@@ -21,11 +21,11 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.StyleUtils;
+import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.connection.User;
 
@@ -84,6 +84,12 @@ public final class ComponentSection implements Section {
     }
 
     @Override
+    public Section hover(Format format) {
+        hovers.addAll(format.sections());
+        return this;
+    }
+
+    @Override
     public Section click(ClickEvent event) {
         builder.clickEvent(event);
         return this;
@@ -92,12 +98,6 @@ public final class ComponentSection implements Section {
     @Override
     public Section insertion(String insertion) {
         builder.insertion(insertion);
-        return this;
-    }
-
-    @Override
-    public Section color(TextColor color) {
-        builder.color(color);
         return this;
     }
 

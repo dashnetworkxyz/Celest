@@ -73,7 +73,7 @@ public final class CommandTempBan extends CelestCommand {
         }
 
         builder = new MessageBuilder();
-        builder.append("&6&l»&f ");
+        builder.append("&6&l»&6 ");
         builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
         builder.append("&7 temporarily banned by ");
         builder.append(new NamedSourceFormat(named));

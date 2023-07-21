@@ -47,7 +47,7 @@ public final class CommandUnban extends CelestCommand {
             data.setBan(null);
 
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&f ");
+        builder.append("&6&l»&6 ");
         builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
         builder.append("&7 unbanned by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));

@@ -143,6 +143,8 @@ public final class ArgumentTypeFormat implements Format {
             case MULTI_STRING -> section.hover("""
                     &7Write your &6message&7.""");
         }
+
+        sections.add(section);
     }
 
     @Override

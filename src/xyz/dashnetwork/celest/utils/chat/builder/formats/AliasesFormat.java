@@ -33,13 +33,15 @@ public final class AliasesFormat implements Format {
         List<String> copy = new ArrayList<>(aliases);
         copy.remove(label);
 
-        if (copy.size() > 0) {
+        if (!copy.isEmpty()) {
             section.hover("&7Aliases for &6/" + label + "&7:");
 
             for (String each : copy)
                 section.hover("&6/" + each);
         } else
             section.hover("&7No aliases for &6/" + label);
+
+        sections.add(section);
     }
 
     @Override
