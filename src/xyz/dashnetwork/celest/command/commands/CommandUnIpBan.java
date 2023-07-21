@@ -29,10 +29,7 @@ public final class CommandUnIpBan extends CelestCommand {
             data.setBan(null);
 
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&6 ");
-        builder.append("&k").filter(each -> !each.showAddress());
-        builder.append(address.getString());
-        builder.append("&7 unbanned by ");
+        builder.append("&6&l»&6 " + address.getString() + "&7 unbanned by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));
         builder.append("&7.");
         builder.broadcast(User::isStaff);
