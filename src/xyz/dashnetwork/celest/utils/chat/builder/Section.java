@@ -28,8 +28,6 @@ public interface Section {
 
     Section hover(String hover, Predicate<User> filter);
 
-    Section hover(Format format);
-
     Section click(ClickEvent click);
 
     Section insertion(String insertion);

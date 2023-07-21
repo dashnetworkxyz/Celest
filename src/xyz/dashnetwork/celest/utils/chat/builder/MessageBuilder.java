@@ -46,23 +46,28 @@ public final class MessageBuilder {
     public int size() { return sections.size(); }
 
     public Section append(@NotNull String text) {
-        String prefix = "";
-
-        if (!sections.isEmpty())
-            prefix = getStyleFromPrevious(sections.get(sections.size() - 1));
-
-        ComponentSection section = new ComponentSection(prefix + text);
+        ComponentSection section = new ComponentSection(getStyleFromPrevious() + text);
         sections.add(section);
 
         return section;
     }
 
     public Section append(@NotNull Format format) {
+        String style = getStyleFromPrevious();
+
+        if (!style.isEmpty())
+            sections.add(new ComponentSection(style));
+
         sections.addAll(format.sections());
         return new FormatSection(format);
     }
 
     public Section append(@NotNull ComponentSection section) {
+        String style = getStyleFromPrevious();
+
+        if (!style.isEmpty())
+            sections.add(new ComponentSection(style));
+
         sections.add(section);
         return section;
     }
@@ -76,7 +81,7 @@ public final class MessageBuilder {
                 TextComponent.Builder sectionBuilder = section.getBuilder();
 
                 for (ComponentSection hover : section.getHovers())
-                    if (user == null || section.getFilter().test(user))
+                    if (user != null && hover.getFilter().test(user))
                         hovers.add(hover.getBuilder().build());
 
                 if (!hovers.isEmpty()) {
@@ -97,7 +102,11 @@ public final class MessageBuilder {
 
     public void broadcast() { MessageUtils.broadcast(this::build); }
 
-    private String getStyleFromPrevious(ComponentSection section) {
+    private String getStyleFromPrevious() {
+        if (sections.isEmpty())
+            return "";
+
+        ComponentSection section = sections.get(sections.size() - 1);
         StringBuilder builder = new StringBuilder();
         Style style = section.getLastStyle();
         TextColor color = style.color();

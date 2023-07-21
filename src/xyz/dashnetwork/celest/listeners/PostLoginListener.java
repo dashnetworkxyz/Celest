@@ -40,21 +40,20 @@ public final class PostLoginListener {
         User user = User.getUser(player);
         UserData data = user.getData();
         MessageBuilder builder = new MessageBuilder();
-        Format format = new NamedSourceFormat(user);
 
         if (data.getVanish()) {
             builder.append("&3&l»&f ");
-            builder.append(format);
+            builder.append(new NamedSourceFormat(user));
             builder.append("&3 silently joined.");
             builder.broadcast(each -> each.isStaff() || each.getData().getVanish());
         } else if (data.getLastPlayed() == null) {
             builder.append("&6&l»&6 Welcome, ");
-            builder.append(format);
+            builder.append(new NamedSourceFormat(user));
             builder.append("&6, to &lDashNetwork");
             builder.broadcast();
         } else {
             builder.append("&a&l»&f ");
-            builder.append(format);
+            builder.append(new NamedSourceFormat(user));
             builder.append("&a joined.");
             builder.broadcast();
         }
@@ -69,7 +68,7 @@ public final class PostLoginListener {
                     .hover("&7Alts for " + player.getUsername() + ":\n&6"
                             + ListUtils.convertToString(list, PlayerProfile::username, "\n"));
             builder.append("&f ");
-            builder.append(format);
+            builder.append(new NamedSourceFormat(user));
             builder.broadcast(each -> each.getData().getAltSpy());
         }
 

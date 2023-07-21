@@ -24,7 +24,6 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.AddressFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -73,7 +72,8 @@ public final class CommandTempIpMute extends CelestCommand {
 
         builder = new MessageBuilder();
         builder.append("&6&l»&6 ");
-        builder.append(new AddressFormat(address));
+        builder.append("&k").filter(each -> !each.showAddress());
+        builder.append(address.getString());
         builder.append("&7 temporarily muted by ");
         builder.append(new NamedSourceFormat(named));
         builder.append("&7.");

@@ -108,7 +108,7 @@ public final class Storage {
         Map<String, T> map = new HashMap<>();
 
         for (File file : files)
-            map.put(file.getName().split("\\.")[0], readFile(file, clazz));
+            map.put(file.getName().split("\\.json")[0], readFile(file, clazz));
 
         return map;
     }

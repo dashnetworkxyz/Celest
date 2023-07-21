@@ -29,7 +29,7 @@ public final class CommandMuteList extends CelestCommand {
     protected void execute(CommandSource source, String label, Arguments arguments) {
         MessageUtils.message(source, "&6&l»&7 Reading userdata...");
 
-        List<Limbo<OfflineUser>> limbos = Limbo.getAll(OfflineUser.class, each -> each.getData().getBan() != null);
+        List<Limbo<OfflineUser>> limbos = Limbo.getAll(OfflineUser.class, each -> each.getData().getMute() != null);
         Map<String, UserData> map = Storage.readAll(Storage.Directory.USER, UserData.class);
         PageBuilder builder = new PageBuilder();
 

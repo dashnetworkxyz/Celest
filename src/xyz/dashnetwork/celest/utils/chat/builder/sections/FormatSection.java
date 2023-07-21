@@ -50,12 +50,6 @@ public final class FormatSection implements Section {
     }
 
     @Override
-    public Section hover(Format format) {
-        forEach(section -> section.hover(format));
-        return this;
-    }
-
-    @Override
     public Section click(ClickEvent event) {
         forEach(section -> section.click(event));
         return this;

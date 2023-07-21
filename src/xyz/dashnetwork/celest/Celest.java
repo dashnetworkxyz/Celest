@@ -213,6 +213,8 @@ public final class Celest {
         new CommandVanish();
         new CommandVersionList();
 
+        new CommandTest();
+
         logger.info("Scheduling tasks...");
         cacheTask = new CacheTask();
         saveTask = new SaveTask();

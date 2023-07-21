@@ -25,7 +25,6 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.StyleUtils;
-import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.connection.User;
 
@@ -73,19 +72,13 @@ public final class ComponentSection implements Section {
 
     @Override
     public Section hover(String text) {
-        hovers.add(new ComponentSection(ColorUtils.fromAmpersand(text)));
+        hovers.add(new ComponentSection(text));
         return this;
     }
 
     @Override
     public Section hover(String text, Predicate<User> filter) {
-        hovers.add((ComponentSection) new ComponentSection(ColorUtils.fromAmpersand(text)).filter(filter));
-        return this;
-    }
-
-    @Override
-    public Section hover(Format format) {
-        hovers.addAll(format.sections());
+        hovers.add((ComponentSection) new ComponentSection(text).filter(filter));
         return this;
     }
 

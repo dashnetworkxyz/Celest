@@ -28,8 +28,6 @@ import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
-import java.util.function.Predicate;
-
 public final class CommandClearChat extends CelestCommand {
 
     public CommandClearChat() {
@@ -44,19 +42,19 @@ public final class CommandClearChat extends CelestCommand {
         NamedSource named = NamedSource.of(source);
         Player[] players = arguments.required(Player[].class);
         MessageBuilder builder = new MessageBuilder();
-        Predicate<User> notSelf = user -> !user.getPlayer().equals(source);
 
         for (int i = 0; i < 99; i++)
             builder.append("\n");
 
         if (players.length > 1) {
-            builder.append("&6&l»&7 Chat was cleared by &6").filter(notSelf);
-            builder.append(new NamedSourceFormat(named)).filter(notSelf);
-            builder.append("&7.").filter(notSelf);
+            builder.append("&6&l»&7 Chat was cleared by &6");
+            builder.append(new NamedSourceFormat(named));
+            builder.append("&7.");
         }
 
         for (Player player : players)
-            builder.message(player);
+            if (!player.equals(source))
+                builder.message(player);
 
         builder = new MessageBuilder();
         builder.append("&6&l»&7 Chat was cleared for &6");

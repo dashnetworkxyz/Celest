@@ -29,7 +29,7 @@ public final class CommandIpMuteList extends CelestCommand {
     protected void execute(CommandSource source, String label, Arguments arguments) {
         MessageUtils.message(source, "&6&l»&7 Reading addressdata...");
 
-        List<Limbo<Address>> limbos = Limbo.getAll(Address.class, each -> each.getData().getBan() != null);
+        List<Limbo<Address>> limbos = Limbo.getAll(Address.class, each -> each.getData().getMute() != null);
         Map<String, AddressData> map = Storage.readAll(Storage.Directory.ADDRESS, AddressData.class);
         PageBuilder builder = new PageBuilder();
 
