@@ -18,6 +18,7 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
+import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
@@ -53,13 +54,13 @@ public final class CommandAccounts extends CelestCommand {
 
         if (profiles.isEmpty()) {
             builder.append("&6&l»&7 No known alts for &6");
-            builder.append(new OfflineUserFormat(offline));
+            builder.append(new OfflineUserFormat(offline)).color(NamedTextColor.GOLD);
             builder.append("&7.");
         } else {
             builder.append("&6&l»&7 Known alts for &6");
-            builder.append(new OfflineUserFormat(offline));
+            builder.append(new OfflineUserFormat(offline)).color(NamedTextColor.GOLD);
             builder.append("&7: &6");
-            builder.append(new PlayerProfileFormat(profiles, "&7, &6"));
+            builder.append(new PlayerProfileFormat(profiles, "&7, ")).color(NamedTextColor.GOLD);
         }
 
         builder.message(source);

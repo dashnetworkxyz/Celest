@@ -18,11 +18,13 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
+import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.NamedSource;
@@ -48,7 +50,7 @@ public final class CommandUnmute extends CelestCommand {
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&6 ");
-        builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
+        builder.append(new OfflineUserFormat(offline)).color(NamedTextColor.GOLD);
         builder.append("&7 unmuted by ");
         builder.append(new NamedSourceFormat(NamedSource.of(source)));
         builder.append("&7.");

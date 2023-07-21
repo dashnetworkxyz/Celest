@@ -18,6 +18,7 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
+import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
@@ -50,7 +51,7 @@ public final class CommandRealName extends CelestCommand {
                 builder.append("&6&l»&7 ");
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&7 real name is ");
-                builder.append(new PlayerProfileFormat(user.toPlayerProfile()));
+                builder.append(new PlayerProfileFormat(user.toPlayerProfile())).color(NamedTextColor.GOLD);
                 builder.append("&7.");
             }
         }

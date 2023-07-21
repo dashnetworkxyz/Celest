@@ -18,6 +18,7 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
+import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
@@ -82,7 +83,7 @@ public final class CommandCommandSpy extends CelestCommand {
         if (onSize > 0) {
             builder = new MessageBuilder();
             builder.append("&6&l»&6 ");
-            builder.append(new OfflineUserFormat(on, "&7, &6"));
+            builder.append(new OfflineUserFormat(on, "&7, ")).color(NamedTextColor.GOLD);
 
             if (onSize > 1)
                 builder.append("&7 are");
@@ -96,7 +97,7 @@ public final class CommandCommandSpy extends CelestCommand {
         if (offSize > 0) {
             builder = new MessageBuilder();
             builder.append("&6&l»&6 ");
-            builder.append(new OfflineUserFormat(off, "&7, &6"));
+            builder.append(new OfflineUserFormat(off, "&7, ")).color(NamedTextColor.GOLD);
 
             if (offSize > 1)
                 builder.append("&7 are");

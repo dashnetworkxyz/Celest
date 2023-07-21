@@ -19,6 +19,7 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
@@ -26,6 +27,7 @@ import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.Section;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.OfflineUser;
@@ -59,7 +61,7 @@ public final class CommandSeen extends CelestCommand {
         PunishData mute = data.getMute();
 
         builder.append("&6&l»&7 ");
-        builder.append(new PlayerProfileFormat(offline.toPlayerProfile()));
+        builder.append(new OfflineUserFormat(offline)).color(NamedTextColor.GOLD);
 
         if (lastPlayed == null)
             builder.append("&7 has never joined the server before.");

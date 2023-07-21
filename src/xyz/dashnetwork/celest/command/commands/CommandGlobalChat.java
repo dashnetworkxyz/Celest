@@ -18,6 +18,7 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
+import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
@@ -61,7 +62,7 @@ public final class CommandGlobalChat extends CelestCommand {
                 builder.append("&6&l»&7 You have been moved to &6GlobalChat");
 
                 if (!named.equals(user)) {
-                    builder.append("&7 by &6");
+                    builder.append("&7 by ");
                     builder.append(new NamedSourceFormat(named));
                 }
 
@@ -75,8 +76,8 @@ public final class CommandGlobalChat extends CelestCommand {
 
         if (users.size() > 0) {
             builder = new MessageBuilder();
-            builder.append("&6&l»&7 You have moved &6");
-            builder.append(new OfflineUserFormat(users, "&7, &6"));
+            builder.append("&6&l»&7 You have moved ");
+            builder.append(new OfflineUserFormat(users, "&7, ")).color(NamedTextColor.GOLD);
             builder.append("&7 to &6GlobalChat&7.");
             builder.message(source);
         }

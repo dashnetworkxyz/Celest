@@ -18,6 +18,7 @@
 package xyz.dashnetwork.celest.utils.chat.builder.sections;
 
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.TextColor;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -58,6 +59,12 @@ public final class FormatSection implements Section {
     @Override
     public Section insertion(String insertion) {
         forEach(section -> section.insertion(insertion));
+        return this;
+    }
+
+    @Override
+    public Section color(TextColor color) {
+        forEach(section -> section.color(color));
         return this;
     }
 

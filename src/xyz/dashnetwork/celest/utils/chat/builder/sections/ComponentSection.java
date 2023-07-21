@@ -21,6 +21,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
@@ -91,6 +92,12 @@ public final class ComponentSection implements Section {
     @Override
     public Section insertion(String insertion) {
         builder.insertion(insertion);
+        return this;
+    }
+
+    @Override
+    public Section color(TextColor color) {
+        builder.colorIfAbsent(color);
         return this;
     }
 

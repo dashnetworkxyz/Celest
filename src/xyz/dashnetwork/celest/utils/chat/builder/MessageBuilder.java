@@ -53,21 +53,11 @@ public final class MessageBuilder {
     }
 
     public Section append(@NotNull Format format) {
-        String style = getStyleFromPrevious();
-
-        if (!style.isEmpty())
-            sections.add(new ComponentSection(style));
-
         sections.addAll(format.sections());
         return new FormatSection(format);
     }
 
     public Section append(@NotNull ComponentSection section) {
-        String style = getStyleFromPrevious();
-
-        if (!style.isEmpty())
-            sections.add(new ComponentSection(style));
-
         sections.add(section);
         return section;
     }

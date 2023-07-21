@@ -18,6 +18,7 @@
 package xyz.dashnetwork.celest.utils.chat.builder;
 
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.TextColor;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.function.Predicate;
@@ -31,6 +32,8 @@ public interface Section {
     Section click(ClickEvent click);
 
     Section insertion(String insertion);
+
+    Section color(TextColor color);
 
     Section filter(Predicate<User> filter);
 
