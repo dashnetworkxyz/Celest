@@ -56,7 +56,7 @@ import java.util.concurrent.TimeUnit;
 @Plugin(
         id = "celest",
         name = "Celest",
-        version = "1.0",
+        version = "1.0.1",
         authors = {"MasterDash5"},
         dependencies = {
                 @Dependency(id = "luckperms", optional = true),
@@ -212,8 +212,6 @@ public final class Celest {
         new CommandUnmute();
         new CommandVanish();
         new CommandVersionList();
-
-        new CommandTest();
 
         logger.info("Scheduling tasks...");
         cacheTask = new CacheTask();

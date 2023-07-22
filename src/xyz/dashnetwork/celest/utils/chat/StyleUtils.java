@@ -18,11 +18,9 @@
 
 package xyz.dashnetwork.celest.utils.chat;
 
-import com.google.common.annotations.Beta;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 
-@Beta
 public final class StyleUtils {
 
     public static boolean hasColor(Style style) {
