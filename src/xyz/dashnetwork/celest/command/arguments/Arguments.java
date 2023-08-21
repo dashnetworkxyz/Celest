@@ -35,14 +35,11 @@ import java.util.function.Function;
 public final class Arguments {
 
     private final List<Object> parsed = new ArrayList<>();
-    private final boolean empty;
     private boolean required = true;
     private boolean invalid = false;
     private int index = 0;
 
     public Arguments(CommandSource source, String[] array, List<ArgumentSection> sections) {
-        empty = array.length == 0;
-
         User user = User.getUser(source).orElse(null);
         int index = 0;
 
@@ -72,9 +69,6 @@ public final class Arguments {
             }
         }
     }
-
-    // TODO
-    public boolean isEmpty() { return empty; }
 
     public boolean hasRequired() { return required; }
 
