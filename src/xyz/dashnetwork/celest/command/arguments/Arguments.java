@@ -22,6 +22,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 
@@ -36,6 +37,7 @@ public final class Arguments {
     private final List<Object> parsed = new ArrayList<>();
     private final boolean empty;
     private boolean required = true;
+    private boolean invalid = false;
     private int index = 0;
 
     public Arguments(CommandSource source, String[] array, List<ArgumentSection> sections) {
@@ -60,8 +62,9 @@ public final class Arguments {
                 index++;
                 Object object = type.parse(user, string);
 
-                if (object == null && section.required()) {
-                    required = false;
+                if (object == null) {
+                    MessageUtils.message(source, "&6&l»&7 Couldn't find " + type.getName() + " for &6" + string);
+                    invalid = true;
                     return;
                 }
 
@@ -74,6 +77,8 @@ public final class Arguments {
     public boolean isEmpty() { return empty; }
 
     public boolean hasRequired() { return required; }
+
+    public boolean hasInvalid() { return invalid; }
 
     @SuppressWarnings("unchecked")
     public <T> T required(@NotNull Class<T> clazz) {

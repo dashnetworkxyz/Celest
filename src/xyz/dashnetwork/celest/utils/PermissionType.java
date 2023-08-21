@@ -25,7 +25,7 @@ import java.util.function.Predicate;
 
 public enum PermissionType {
 
-    GLOBAL(user -> true),
+    NONE(user -> true),
     STAFF(User::isStaff),
     ADMIN(User::isAdmin),
     OWNER(User::isOwner);

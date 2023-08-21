@@ -43,6 +43,7 @@ public abstract class Channel {
 
     @SuppressWarnings("UnstableApiUsage")
     protected final ByteArrayDataOutput output = ByteStreams.newDataOutput();
+    protected String server = "Unknown";
 
     public static void registerIn(String name, Supplier<Channel> supplier) {
         ChannelIdentifier identifier = MinecraftChannelIdentifier.create("dn", name);
@@ -82,6 +83,10 @@ public abstract class Channel {
     private static void call(ChannelIdentifier identifier, ChannelMessageSink sink,
                                       Supplier<Channel> supplier, Consumer<Channel> handler) {
         Channel channel = supplier.get();
+
+        if (sink instanceof ServerConnection connection)
+            channel.server = connection.getServerInfo().getName();
+
         handler.accept(channel);
 
         byte[] array = channel.output.toByteArray();

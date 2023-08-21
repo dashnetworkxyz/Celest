@@ -160,11 +160,11 @@ public final class User extends OfflineUser implements NamedSource, Audience {
 
     public boolean isAdmin() { return player.hasPermission("dashnetwork.admin") || isOwner(); }
 
-    public boolean isOwner() { return player.hasPermission("dashnetwork.owner") || isDash() || isKevin() || isGolden(); }
+    public boolean isOwner() { return player.hasPermission("dashnetwork.owner") || isDash() || isCryptic() || isGolden(); }
 
     public boolean isDash() { return stringUuid.equals("4f771152-ce61-4d6f-9541-1d2d9e725d0e"); }
 
-    public boolean isKevin() { return stringUuid.equals("a948c50c-ede2-4dfa-9b6c-688daf22197c"); }
+    public boolean isCryptic() { return stringUuid.equals("a948c50c-ede2-4dfa-9b6c-688daf22197c"); }
 
     public boolean isGolden() { return stringUuid.equals("bbeb983a-3111-4722-bcf0-e6aafbd5f7d2"); }
 

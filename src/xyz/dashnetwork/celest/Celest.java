@@ -57,7 +57,7 @@ import java.util.concurrent.TimeUnit;
 @Plugin(
         id = "celest",
         name = "Celest",
-        version = "1.0.1",
+        version = "1.0.2",
         authors = {"MasterDash5"},
         dependencies = {
                 @Dependency(id = "luckperms", optional = true),

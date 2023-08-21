@@ -22,6 +22,7 @@ import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.ArgumentSection;
@@ -41,14 +42,14 @@ import java.util.function.Predicate;
 public abstract class CelestCommand implements SimpleCommand {
 
     private static final CommandManager commandManager = Celest.getServer().getCommandManager();
-    private final Map<Integer, String[]> customSuggestions;
+    private final Map<Integer, String[]> suggestions;
     private final List<ArgumentSection> sections;
     private final List<String> labels;
     private Predicate<User> predicate;
     private boolean console;
 
     public CelestCommand(String label, String... aliases) {
-        customSuggestions = new HashMap<>();
+        suggestions = new HashMap<>();
         sections = new ArrayList<>();
         labels = new ArrayList<>();
         predicate = user -> true;
@@ -67,14 +68,12 @@ public abstract class CelestCommand implements SimpleCommand {
         commandManager.register(builder.build(), this);
     }
 
-    protected abstract void execute(CommandSource source, String label, Arguments arguments);
-
     protected void setPermission(@NotNull Predicate<User> predicate, boolean console) {
         this.predicate = predicate;
         this.console = console;
     }
 
-    protected void setSuggestions(int place, String... suggestions) { customSuggestions.put(place, suggestions); }
+    protected void setSuggestions(int place, String... suggestions) { this.suggestions.put(place, suggestions); }
 
     protected void addArguments(boolean required, @NotNull ArgumentType... types) {
         sections.add(new ArgumentSection(user -> true, true, required, types));
@@ -86,18 +85,22 @@ public abstract class CelestCommand implements SimpleCommand {
 
     protected void sendUsage(@NotNull CommandSource source, @NotNull String label) {
         MessageBuilder builder = new MessageBuilder();
-        builder.append("&6&l»&c Usage: &7");
-        builder.append(new AliasesFormat(label, labels));
-        builder.append("&7");
-        builder.append(new ArgumentSectionFormat(source, sections));
+        builder.append("&6&l»&c Usage: ");
+        builder.append(new AliasesFormat(label, labels)).color(NamedTextColor.AQUA);
+        builder.append(new ArgumentSectionFormat(source, sections)).color(NamedTextColor.AQUA);
         builder.message(source);
     }
+
+    protected abstract void execute(CommandSource source, String label, Arguments arguments);
 
     @Override
     public void execute(Invocation invocation) {
         CommandSource source = invocation.source();
         String alias = invocation.alias();
         Arguments arguments = new Arguments(source, invocation.arguments(), sections);
+
+        if (arguments.hasInvalid())
+            return;
 
         if (!arguments.hasRequired()) {
             sendUsage(source, alias);
@@ -109,7 +112,7 @@ public abstract class CelestCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return User.getUser(invocation.source()).map(user -> predicate.test(user)).orElseGet(() -> console);
+        return User.getUser(invocation.source()).map(predicate::test).orElse(console);
     }
 
     @Override
@@ -131,10 +134,10 @@ public abstract class CelestCommand implements SimpleCommand {
             if (length > 0)
                 length--;
 
-            if (customSuggestions.containsKey(length)) {
+            if (suggestions.containsKey(length)) {
                 List<String> custom = new ArrayList<>();
 
-                for (String each : customSuggestions.get(length))
+                for (String each : suggestions.get(length))
                     ListUtils.addIfStarts(custom, selected, each);
 
                 return CompletableFuture.completedFuture(custom);

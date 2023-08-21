@@ -33,7 +33,6 @@ public final class ChannelSignSpy extends Channel {
     @Override
     protected void handle(ByteArrayDataInput input) {
         UUID uuid = UUID.fromString(input.readUTF());
-        String server = input.readUTF();
         int x = input.readInt();
         int y = input.readInt();
         int z = input.readInt();

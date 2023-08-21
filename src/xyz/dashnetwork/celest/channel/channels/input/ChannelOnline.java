@@ -26,8 +26,8 @@ public final class ChannelOnline extends Channel {
 
     @Override
     public void handle(ByteArrayDataInput input) {
-        int vanished = 0;
         int online = 0;
+        int vanished = 0;
 
         for (User user : User.getUsers()) {
             online++;
