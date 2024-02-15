@@ -26,6 +26,8 @@ import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.PageBuilder;
 
+import java.util.stream.Collectors;
+
 public final class CommandProtocolList extends CelestCommand {
 
     public CommandProtocolList() { super("protocollist", "protocols"); }
@@ -37,7 +39,8 @@ public final class CommandProtocolList extends CelestCommand {
         for (ProtocolVersion version : ProtocolVersion.values())
             if (ProtocolVersion.isSupported(version))
                 page.append("&6" + version.getProtocol() + "&7: "
-                        + ListUtils.convertToString(version.getVersionsSupportedBy(), each -> each, ", "));
+                        + String.join(", ", version.getVersionsSupportedBy())
+                );
 
         MessageUtils.message(source, page::build);
     }

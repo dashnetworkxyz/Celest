@@ -24,7 +24,10 @@ import xyz.dashnetwork.celest.utils.log.Logger;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public final class GithubUtils {
@@ -34,26 +37,36 @@ public final class GithubUtils {
     private static final Gson gson = Celest.getGson();
 
     public static int getGitDistance(String repository, String branch, String hash) {
+        Reader reader = null;
+
         try {
-            HttpURLConnection connection = (HttpURLConnection)
-                    new URL("https://api.github.com/repos/" + repository + "/compare/" + branch + "..." + hash).openConnection();
+            URI uri = new URI("https://api.github.com/repos/" + repository + "/compare/" + branch + "..." + hash);
+            HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
+
             connection.connect();
 
             if (connection.getResponseCode() != 200)
                 return -1;
 
-            InputStreamReader reader = new InputStreamReader(connection.getInputStream());
+            reader = new InputStreamReader(connection.getInputStream());
             Response response = gson.fromJson(reader, Response.class);
 
             if (response.status().equals("behind"))
                 return response.behind_by();
 
             return 0;
-        } catch (IOException exception) {
+        } catch (URISyntaxException | IOException exception) {
             Logger.throwable(exception);
+            return -1;
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException exception) {
+                    Logger.throwable(exception);
+                }
+            }
         }
-
-        return -1;
     }
 
 }

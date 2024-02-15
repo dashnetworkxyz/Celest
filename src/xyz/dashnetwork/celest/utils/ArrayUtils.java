@@ -30,7 +30,7 @@ public final class ArrayUtils {
         StringBuilder builder = new StringBuilder();
 
         for (T each : array) {
-            if (builder.length() > 0)
+            if (!builder.isEmpty())
                 builder.append(separator);
 
             builder.append(function.apply(each));

@@ -22,33 +22,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public final class ListUtils {
 
+    @Deprecated
     public static <T> String convertToString(@NotNull List<T> list, @NotNull Function<T, String> function, @NotNull String separator) {
-        StringBuilder builder = new StringBuilder();
-
-        for (T each : list) {
-            if (builder.length() > 0)
-                builder.append(separator);
-
-            builder.append(function.apply(each));
-        }
-
-        return builder.toString();
+        return list.stream().map(function).collect(Collectors.joining(separator));
     }
 
+    @Deprecated
     public static <T> boolean equals(@NotNull List<T> list1, @NotNull List<T> list2) {
-        int size = list1.size();
-
-        if (size != list2.size())
-            return false;
-
-        for (int i = 0; i < size; i++)
-            if (!list1.get(i).equals(list2.get(i)))
-                return false;
-
-        return true;
+        return list1.equals(list2);
     }
 
     public static boolean containsOtherThan(@NotNull List<?> list, Object object) {

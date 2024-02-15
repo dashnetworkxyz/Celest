@@ -76,18 +76,21 @@ public final class Storage {
         File file = new File(directory.getFile(), fileName + ".json");
         String json = gson.toJson(object);
 
-        try {
-            if (!file.exists())
-                if (!file.createNewFile())
-                    Logger.log(LogType.WARN, true,
-                            "Failed to create file for " + fileName + ".json (" + directory.name() + ")"
-                    );
+        Writer writer = null;
 
-            FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8);
+        try {
+            writer = new FileWriter(file, StandardCharsets.UTF_8);
             writer.write(json);
-            writer.close();
         } catch (IOException exception) {
             Logger.throwable(exception);
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException exception) {
+                    Logger.throwable(exception);
+                }
+            }
         }
     }
 
@@ -115,18 +118,24 @@ public final class Storage {
     }
 
     private static <T> T readFile(File file, Class<T> clazz) {
-        byte[] data;
+        InputStream input = null;
 
         try {
-            InputStream stream = new FileInputStream(file);
-            data = stream.readAllBytes();
-            stream.close();
+            input = new FileInputStream(file);
+
+            return gson.fromJson(new String(input.readAllBytes(), StandardCharsets.UTF_8), clazz);
         } catch (IOException exception) {
             Logger.throwable(exception);
             return null;
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException exception) {
+                    Logger.throwable(exception);
+                }
+            }
         }
-
-        return gson.fromJson(new String(data, StandardCharsets.UTF_8), clazz);
     }
 
 }

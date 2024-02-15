@@ -31,6 +31,7 @@ import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class PostLoginListener {
 
@@ -66,7 +67,7 @@ public final class PostLoginListener {
             builder.append("&6&l»&f ");
             builder.append("&7Hover for &6" + list.size() + "&7 alts of")
                     .hover("&7Alts for " + player.getUsername() + ":\n&6"
-                            + ListUtils.convertToString(list, PlayerProfile::username, "\n"));
+                            + list.stream().map(PlayerProfile::username).collect(Collectors.joining("\n")));
             builder.append("&f ");
             builder.append(new NamedSourceFormat(user));
             builder.broadcast(each -> each.getData().getAltSpy());

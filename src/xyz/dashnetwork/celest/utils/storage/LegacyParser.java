@@ -21,7 +21,6 @@ package xyz.dashnetwork.celest.utils.storage;
 import com.velocitypowered.api.proxy.Player;
 import org.yaml.snakeyaml.Yaml;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.ConsumerPair;
 import xyz.dashnetwork.celest.utils.chat.ChatChannel;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -35,6 +34,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public final class LegacyParser {
@@ -141,7 +141,7 @@ public final class LegacyParser {
         }
     }
 
-    private <T> void parseMap(Map<String, T> map, ConsumerPair<UserData, T> consumer) {
+    private <T> void parseMap(Map<String, T> map, BiConsumer<UserData, T> consumer) {
         if (map == null)
             return;
 
