@@ -1,6 +1,5 @@
 # Debugging options
 debug: false
-injector: true
 
 # MOTD configuration
 motd.description: "&6&lDashNetwork &6&l»&7 [1.8-{$VERSION_HIGHEST}]"

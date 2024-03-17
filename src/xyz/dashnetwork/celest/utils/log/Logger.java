@@ -49,7 +49,7 @@ public final class Logger {
     }
 
     public static void throwable(Throwable throwable) {
-        throwable.printStackTrace();
+        logger.error(throwable.toString());
 
         String name = throwable.getClass().getName();
         StringBuilder hover = new StringBuilder();

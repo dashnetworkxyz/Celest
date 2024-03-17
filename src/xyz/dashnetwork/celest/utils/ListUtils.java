@@ -26,16 +26,6 @@ import java.util.stream.Collectors;
 
 public final class ListUtils {
 
-    @Deprecated
-    public static <T> String convertToString(@NotNull List<T> list, @NotNull Function<T, String> function, @NotNull String separator) {
-        return list.stream().map(function).collect(Collectors.joining(separator));
-    }
-
-    @Deprecated
-    public static <T> boolean equals(@NotNull List<T> list1, @NotNull List<T> list2) {
-        return list1.equals(list2);
-    }
-
     public static boolean containsOtherThan(@NotNull List<?> list, Object object) {
         return list.size() > (list.contains(object) ? 1 : 0);
     }

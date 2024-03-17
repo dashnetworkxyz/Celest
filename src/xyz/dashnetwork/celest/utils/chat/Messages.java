@@ -94,7 +94,7 @@ public final class Messages {
         }
 
         for (String split : message.split(" ")) {
-            if (split.length() > 0) {
+            if (!split.isEmpty()) {
                 Section section = builder.append(" " + split);
 
                 if (StringUtils.matchesUrl(split)) {

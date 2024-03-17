@@ -39,7 +39,6 @@ import xyz.dashnetwork.celest.channel.channels.output.ChannelDisplayName;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelTwoFactor;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelVanish;
 import xyz.dashnetwork.celest.command.commands.*;
-import xyz.dashnetwork.celest.inject.Injector;
 import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.tasks.CacheTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
@@ -57,7 +56,7 @@ import java.util.concurrent.TimeUnit;
 @Plugin(
         id = "celest",
         name = "Celest",
-        version = "1.0.2",
+        version = "1.0.3",
         authors = {"MasterDash5"},
         dependencies = {
                 @Dependency(id = "luckperms", optional = true),
@@ -117,12 +116,6 @@ public final class Celest {
             logger.warn("Couldn't find LuckPerms plugin for Vault, using fallback.");
             vault = new DummyAPI();
         }
-
-        if (ConfigurationList.INJECTOR) {
-            logger.info("Injecting channel initializer...");
-            Injector.injectChannelInitializer(server);
-        } else
-            logger.info("Skipping injector...");
 
         logger.info("Registering channels...");
         Channel.registerIn("broadcast", ChannelBroadcast::new);

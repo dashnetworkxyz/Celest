@@ -58,10 +58,6 @@ public final class StringUtils {
         return string.matches("((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)");
     }
 
-    public static boolean matchesCloudflare(@NotNull String string) {
-        return string.matches("_dc-srv\\.([a-f0-9]{12})\\._minecraft\\._tcp\\.(?:([A-z0-9]+)\\.)?(?i)dashnetwork\\.xyz");
-    }
-
     public static boolean matchesUsername(@NotNull String string) {
         return string.matches("([0-z]|_){1,16}");
     }
