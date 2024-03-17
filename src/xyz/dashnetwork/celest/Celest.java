@@ -61,7 +61,7 @@ import java.util.concurrent.TimeUnit;
         authors = {"MasterDash5"},
         dependencies = {
                 @Dependency(id = "luckperms", optional = true),
-                @Dependency(id = "unsignedvelocity", optional = true)
+                @Dependency(id = "signedvelocity", optional = true)
         }
 )
 public final class Celest {
@@ -145,10 +145,10 @@ public final class Celest {
         eventManager.register(this, new ServerPostConnectListener());
         eventManager.register(this, new ServerPreConnectListener());
 
-        if (pluginManager.isLoaded("unsignedvelocity"))
+        if (pluginManager.isLoaded("signedvelocity"))
             eventManager.register(this, new PlayerChatListener());
         else
-            logger.warn("UnSignedVelocity is not loaded! Skipping PlayerChatListener...");
+            logger.warn("SignedVelocity is not loaded! Skipping PlayerChatListener...");
 
         logger.info("Registering commands...");
         new CommandAccounts();
