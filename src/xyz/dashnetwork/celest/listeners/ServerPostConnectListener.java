@@ -20,24 +20,11 @@ package xyz.dashnetwork.celest.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
-import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.messages.ChannelIdentifier;
-import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
-import com.velocitypowered.api.scheduler.Scheduler;
-import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.utils.BrandUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-import java.util.concurrent.TimeUnit;
-
 public final class ServerPostConnectListener {
-
-    private static final Celest plugin = Celest.getInstance();
-    private static final Scheduler scheduler = Celest.getServer().getScheduler();
-    private static final ChannelIdentifier brand = MinecraftChannelIdentifier.create("minecraft", "brand");
-    private static final byte[] name = BrandUtils.toBytes("play.dashnetwork.xyz");
 
     @SuppressWarnings("UnstableApiUsage")
     @Subscribe
@@ -48,12 +35,6 @@ public final class ServerPostConnectListener {
         Channel.callOut("vanish", user);
         Channel.callOut("twofactor", user);
         Channel.callOut("displayname", user);
-
-        if (player.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_13) >= 0) {
-            scheduler.buildTask(plugin, () ->
-                    player.sendPluginMessage(brand, name)
-            ).delay(1, TimeUnit.SECONDS).schedule();
-        }
     }
 
 }
