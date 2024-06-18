@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.channel.channels.output;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-public final class ChannelTwoFactor extends Channel {
+public final class ChannelOutTwoFactor extends Channel {
 
     @Override
     protected void handle(User user) {

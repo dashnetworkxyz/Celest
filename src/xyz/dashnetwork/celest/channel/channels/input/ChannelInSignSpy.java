@@ -28,7 +28,7 @@ import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import java.util.Optional;
 import java.util.UUID;
 
-public final class ChannelSignSpy extends Channel {
+public final class ChannelInSignSpy extends Channel {
 
     @Override
     protected void handle(ByteArrayDataInput input) {

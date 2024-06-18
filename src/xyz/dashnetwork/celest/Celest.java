@@ -32,12 +32,12 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.channel.channels.input.ChannelBroadcast;
-import xyz.dashnetwork.celest.channel.channels.input.ChannelOnline;
-import xyz.dashnetwork.celest.channel.channels.input.ChannelSignSpy;
-import xyz.dashnetwork.celest.channel.channels.output.ChannelDisplayName;
-import xyz.dashnetwork.celest.channel.channels.output.ChannelTwoFactor;
-import xyz.dashnetwork.celest.channel.channels.output.ChannelVanish;
+import xyz.dashnetwork.celest.channel.channels.input.ChannelInBroadcast;
+import xyz.dashnetwork.celest.channel.channels.input.ChannelInOnline;
+import xyz.dashnetwork.celest.channel.channels.input.ChannelInSignSpy;
+import xyz.dashnetwork.celest.channel.channels.output.ChannelOutDisplayName;
+import xyz.dashnetwork.celest.channel.channels.output.ChannelOutTwoFactor;
+import xyz.dashnetwork.celest.channel.channels.output.ChannelOutVanish;
 import xyz.dashnetwork.celest.command.commands.*;
 import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.tasks.CacheTask;
@@ -118,12 +118,12 @@ public final class Celest {
         }
 
         logger.info("Registering channels...");
-        Channel.registerIn("broadcast", ChannelBroadcast::new);
-        Channel.registerIn("online", ChannelOnline::new);
-        Channel.registerIn("signspy", ChannelSignSpy::new);
-        Channel.registerOut("displayname", ChannelDisplayName::new);
-        Channel.registerOut("twofactor", ChannelTwoFactor::new);
-        Channel.registerOut("vanish", ChannelVanish::new);
+        Channel.registerIn("broadcast", ChannelInBroadcast::new);
+        Channel.registerIn("online", ChannelInOnline::new);
+        Channel.registerIn("signspy", ChannelInSignSpy::new);
+        Channel.registerOut("displayname", ChannelOutDisplayName::new);
+        Channel.registerOut("twofactor", ChannelOutTwoFactor::new);
+        Channel.registerOut("vanish", ChannelOutVanish::new);
 
         logger.info("Registering listeners...");
         EventManager eventManager = server.getEventManager();

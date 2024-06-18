@@ -27,7 +27,7 @@ import xyz.dashnetwork.celest.utils.connection.User;
 
 import java.util.function.Predicate;
 
-public final class ChannelBroadcast extends Channel {
+public final class ChannelInBroadcast extends Channel {
 
     @Override
     public void handle(ByteArrayDataInput input) {

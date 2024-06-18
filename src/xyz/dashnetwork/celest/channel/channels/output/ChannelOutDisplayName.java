@@ -16,28 +16,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.channel.channels.input;
+package xyz.dashnetwork.celest.channel.channels.output;
 
-import com.google.common.io.ByteArrayDataInput;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-public final class ChannelOnline extends Channel {
+public final class ChannelOutDisplayName extends Channel {
 
     @Override
-    public void handle(ByteArrayDataInput input) {
-        int online = 0;
-        int vanished = 0;
-
-        for (User user : User.getUsers()) {
-            online++;
-
-            if (user.getData().getVanish())
-                vanished++;
-        }
-
-        output.writeInt(online);
-        output.writeInt(vanished);
+    protected void handle(User user) {
+        output.writeUTF(user.getUuid().toString());
+        output.writeUTF(user.getDisplayname());
     }
 
 }
