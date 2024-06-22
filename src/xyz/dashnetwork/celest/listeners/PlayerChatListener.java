@@ -54,7 +54,7 @@ public final class PlayerChatListener {
             if (message.equals(SecretUtils.getTOTP(userData.getTwoFactor()))) {
                 user.getData().setAuthenticated(true);
 
-                xyz.dashnetwork.celest.channel.Channel.callOut("twofactor", user);
+                xyz.dashnetwork.celest.channel.Channel.callOut("userdata", user);
 
                 MessageUtils.message(player, "&6&l»&7 You have been successfully authenticated.");
                 return;

@@ -33,8 +33,9 @@ public final class ServerPostConnectListener {
         User user = User.getUser(player);
 
         Channel.callOut("vanish", user);
-        Channel.callOut("twofactor", user);
+        Channel.callOut("userdata", user);
         Channel.callOut("displayname", user);
+        Channel.callOut("version", user);
     }
 
 }

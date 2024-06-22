@@ -20,6 +20,7 @@ package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
+import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
@@ -77,6 +78,8 @@ public final class CommandHideAddress extends CelestCommand {
 
             builder.append(" see &6IP Addresses&7.");
             builder.message(player);
+
+            Channel.callOut("userdata", user);
         }
 
         int onSize = on.size();

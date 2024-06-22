@@ -36,8 +36,9 @@ import xyz.dashnetwork.celest.channel.channels.input.ChannelInBroadcast;
 import xyz.dashnetwork.celest.channel.channels.input.ChannelInOnline;
 import xyz.dashnetwork.celest.channel.channels.input.ChannelInSignSpy;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelOutDisplayName;
-import xyz.dashnetwork.celest.channel.channels.output.ChannelOutTwoFactor;
+import xyz.dashnetwork.celest.channel.channels.output.ChannelOutUserData;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelOutVanish;
+import xyz.dashnetwork.celest.channel.channels.output.ChannelOutVersion;
 import xyz.dashnetwork.celest.command.commands.*;
 import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.tasks.CacheTask;
@@ -122,8 +123,9 @@ public final class Celest {
         Channel.registerIn("online", ChannelInOnline::new);
         Channel.registerIn("signspy", ChannelInSignSpy::new);
         Channel.registerOut("displayname", ChannelOutDisplayName::new);
-        Channel.registerOut("twofactor", ChannelOutTwoFactor::new);
+        Channel.registerOut("userdata", ChannelOutUserData::new);
         Channel.registerOut("vanish", ChannelOutVanish::new);
+        Channel.registerOut("version", ChannelOutVersion::new);
 
         logger.info("Registering listeners...");
         EventManager eventManager = server.getEventManager();

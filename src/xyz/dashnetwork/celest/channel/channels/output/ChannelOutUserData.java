@@ -21,12 +21,13 @@ package xyz.dashnetwork.celest.channel.channels.output;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.connection.User;
 
-public final class ChannelOutTwoFactor extends Channel {
+public final class ChannelOutUserData extends Channel {
 
     @Override
     protected void handle(User user) {
         output.writeUTF(user.getUuid().toString());
         output.writeBoolean(user.isAuthenticated());
+        output.writeBoolean(user.getData().getHideAddress());
     }
 
 }
