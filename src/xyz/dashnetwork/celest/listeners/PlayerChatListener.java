@@ -107,7 +107,10 @@ public final class PlayerChatListener {
         } else
             channel = ChatChannel.GLOBAL;
 
-        Messages.chatMessage(user, channel, message);
+        if (user.getData().getChannel() == ChatChannel.LOCAL)
+            event.setResult(PlayerChatEvent.ChatResult.allowed());
+        else
+            Messages.chatMessage(user, channel, message);
     }
 
 }
