@@ -57,6 +57,7 @@ public final class CommandServer extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
+        RegisteredServer server = arguments.required(RegisteredServer.class);
         List<Player> players = arguments.playerListOrSelf(source);
 
         if (players.isEmpty()) {
@@ -64,7 +65,6 @@ public final class CommandServer extends CelestCommand {
             return;
         }
 
-        RegisteredServer server = arguments.required(RegisteredServer.class);
         String name = server.getServerInfo().getName();
         NamedSource named = NamedSource.of(source);
         MessageBuilder builder;
@@ -103,7 +103,7 @@ public final class CommandServer extends CelestCommand {
         if (source instanceof Player)
             players.remove(source);
 
-        if (players.size() > 0) {
+        if (!players.isEmpty()) {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 You have sent &6");
             builder.append(new PlayerFormat(players, "&7, &6"));
