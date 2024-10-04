@@ -23,6 +23,7 @@ import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.event.ClickEvent;
+import xyz.dashnetwork.celest.utils.GrammarUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
@@ -36,7 +37,7 @@ public final class ServerConnectedListener {
         String name = server.getServerInfo().getName();
 
         player.sendPlayerListHeaderAndFooter(
-                ComponentUtils.fromString("&6&lDashNetwork&7\nYou are connected to &6" + name + "\n"),
+                ComponentUtils.fromString("&6&lDashNetwork&7\nYou are connected to &6" + GrammarUtils.capitalization(name) + "\n"),
                 ComponentUtils.fromString("&6\nplay.dashnetwork.xyz")
         );
 

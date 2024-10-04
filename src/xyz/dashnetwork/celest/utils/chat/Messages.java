@@ -25,6 +25,7 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
+import xyz.dashnetwork.celest.utils.GrammarUtils;
 import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
@@ -124,7 +125,7 @@ public final class Messages {
                 if (builder.size() > 1)
                     builder.append("&7, ");
 
-                builder.append("&6" + name)
+                builder.append("&6" + GrammarUtils.capitalization(name))
                         .hover("&7Click to copy &6/server " + name)
                         .click(ClickEvent.suggestCommand("/server " + name));
             }
