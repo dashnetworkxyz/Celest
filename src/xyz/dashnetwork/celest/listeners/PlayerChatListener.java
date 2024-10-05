@@ -18,10 +18,10 @@
 
 package xyz.dashnetwork.celest.listeners;
 
-import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
+import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.SecretUtils;
@@ -41,7 +41,7 @@ import java.util.UUID;
 
 public final class PlayerChatListener {
 
-    @Subscribe(order = PostOrder.FIRST)
+    @Subscribe(priority = Short.MAX_VALUE)
     public void onPlayerChat(PlayerChatEvent event) {
         event.setResult(PlayerChatEvent.ChatResult.denied());
 
@@ -105,7 +105,7 @@ public final class PlayerChatListener {
             if (message.isBlank()) {
                 MessageBuilder builder = new MessageBuilder();
                 builder.append("&6&l»&c Usage:&7 " + channel.getSelectors()[0] + "&7");
-                builder.append(new ArgumentTypeFormat(ArgumentType.MULTI_STRING, true));
+                builder.append(new ArgumentTypeFormat(ArgumentType.MULTI_STRING, true)).color(NamedTextColor.GRAY);
                 builder.message(player);
                 return;
             }
