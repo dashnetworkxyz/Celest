@@ -92,9 +92,14 @@ public final class PlayerChatListener {
 
         ChatChannel channel = ChatChannel.parseSelector(message);
 
-        if (channel == null)
+        if (channel == null) {
             channel = userData.getChannel();
-        else if (channel.hasPermission(user)) {
+
+            if (channel == ChatChannel.LOCAL) {
+                event.setResult(PlayerChatEvent.ChatResult.allowed());
+                return;
+            }
+        } else if (channel.hasPermission(user)) {
             message = message.substring(3);
 
             if (message.isBlank()) {
@@ -107,10 +112,7 @@ public final class PlayerChatListener {
         } else
             channel = ChatChannel.GLOBAL;
 
-        if (user.getData().getChannel() == ChatChannel.LOCAL)
-            event.setResult(PlayerChatEvent.ChatResult.allowed());
-        else
-            Messages.chatMessage(user, channel, message);
+        Messages.chatMessage(user, channel, message);
     }
 
 }
