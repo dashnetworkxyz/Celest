@@ -117,15 +117,15 @@ public final class Messages {
         builder.append("&6&l»&7 Available servers: ");
 
         for (RegisteredServer server : Celest.getServer().getAllServers()) {
-            String name = server.getServerInfo().getName();
+            String name = GrammarUtils.capitalization(server.getServerInfo().getName());
             Function<User, Boolean> permission =
-                    user -> user.isOwner() || user.getPlayer().hasPermission("dashnetwork.server." + name);
+                    user -> user.isOwner() || user.getPlayer().hasPermission("dashnetwork.server." + name.toLowerCase());
 
             if (optional.map(permission).orElse(true)) {
                 if (builder.size() > 1)
                     builder.append("&7, ");
 
-                builder.append("&6" + GrammarUtils.capitalization(name))
+                builder.append("&6" + name)
                         .hover("&7Click to copy &6/server " + name)
                         .click(ClickEvent.suggestCommand("/server " + name));
             }

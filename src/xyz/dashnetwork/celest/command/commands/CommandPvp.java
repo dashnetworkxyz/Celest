@@ -28,6 +28,7 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
+import xyz.dashnetwork.celest.utils.GrammarUtils;
 import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
@@ -67,7 +68,7 @@ public final class CommandPvp extends CelestCommand {
         }
 
         RegisteredServer server = optional.get();
-        String name = server.getServerInfo().getName();
+        String name = GrammarUtils.capitalization(server.getServerInfo().getName());
         NamedSource named = NamedSource.of(source);
         MessageBuilder builder;
 

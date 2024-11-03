@@ -20,6 +20,7 @@ package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
+import xyz.dashnetwork.celest.utils.GrammarUtils;
 import xyz.dashnetwork.celest.utils.VersionUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.sections.ComponentSection;
@@ -55,7 +56,7 @@ public final class NamedSourceFormat implements Format {
             section.hover("&7Version: &6" + version);
             section.insertion(uuid);
 
-            optional.ifPresent(server -> section.hover("&7Server: &6" + server.getServerInfo().getName()));
+            optional.ifPresent(server -> section.hover("&7Server: &6" + GrammarUtils.capitalization(server.getServerInfo().getName())));
         }
 
         sections.add(section);

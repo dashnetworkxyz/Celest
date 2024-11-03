@@ -21,6 +21,7 @@ package xyz.dashnetwork.celest.command.arguments.suggesters;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.Suggester;
+import xyz.dashnetwork.celest.utils.GrammarUtils;
 import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.connection.User;
 
@@ -34,9 +35,9 @@ public final class ServerSuggester implements Suggester {
         List<String> list = new ArrayList<>();
 
         for (RegisteredServer server : Celest.getServer().getAllServers()) {
-            String name = server.getServerInfo().getName();
+            String name = GrammarUtils.capitalization(server.getServerInfo().getName());
 
-            if (user.isOwner() || user.getPlayer().hasPermission("dashnetwork.server." + name))
+            if (user.isOwner() || user.getPlayer().hasPermission("dashnetwork.server." + name.toLowerCase()))
                 ListUtils.addIfStarts(list, input, name);
         }
 

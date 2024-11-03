@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
+import xyz.dashnetwork.celest.utils.GrammarUtils;
 import xyz.dashnetwork.celest.utils.LazyUtils;
 import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
 import xyz.dashnetwork.celest.utils.chat.Messages;
@@ -65,7 +66,7 @@ public final class CommandServer extends CelestCommand {
             return;
         }
 
-        String name = server.getServerInfo().getName();
+        String name = GrammarUtils.capitalization(server.getServerInfo().getName());
         NamedSource named = NamedSource.of(source);
         MessageBuilder builder;
 

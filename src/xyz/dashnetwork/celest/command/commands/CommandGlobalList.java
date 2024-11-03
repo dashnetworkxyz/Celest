@@ -23,6 +23,7 @@ import com.velocitypowered.api.proxy.ServerConnection;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
+import xyz.dashnetwork.celest.utils.GrammarUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
@@ -48,7 +49,7 @@ public final class CommandGlobalList extends CelestCommand {
                 if (optional.isEmpty())
                     continue;
 
-                String name = optional.get().getServerInfo().getName();
+                String name = GrammarUtils.capitalization(optional.get().getServerInfo().getName());
                 List<NamedSource> list = map.getOrDefault(name, new ArrayList<>());
 
                 list.add(each);

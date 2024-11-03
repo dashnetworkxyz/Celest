@@ -34,7 +34,7 @@ public final class ServerConnectedListener {
     public void onServerConnected(ServerConnectedEvent event) {
         Player player = event.getPlayer();
         RegisteredServer server = event.getServer();
-        String name = server.getServerInfo().getName();
+        String name = GrammarUtils.capitalization(server.getServerInfo().getName());
 
         player.sendPlayerListHeaderAndFooter(
                 ComponentUtils.fromString("&6&lDashNetwork&7\nYou are connected to &6" + GrammarUtils.capitalization(name) + "\n"),

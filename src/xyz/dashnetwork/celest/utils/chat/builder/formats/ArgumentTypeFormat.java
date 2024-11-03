@@ -21,6 +21,7 @@ package xyz.dashnetwork.celest.utils.chat.builder.formats;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
+import xyz.dashnetwork.celest.utils.GrammarUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.utils.connection.User;
@@ -121,7 +122,7 @@ public final class ArgumentTypeFormat implements Format {
                 boolean comma = false;
 
                 for (RegisteredServer server : Celest.getServer().getAllServers()) {
-                    String serverName = server.getServerInfo().getName();
+                    String serverName = GrammarUtils.capitalization(server.getServerInfo().getName());
                     String node = "dashnetwork.server." + serverName.toLowerCase();
                     Predicate<User> predicate = each -> each.isOwner() || each.getPlayer().hasPermission(node);
 
