@@ -98,7 +98,7 @@ public final class CommandVanish extends CelestCommand {
             Celest.getServer().getEventManager().fireAndForget(new CelestVanishEvent(user, vanish));
         }
 
-        if (on.size() > 0) {
+        if (!on.isEmpty()) {
             builder = new MessageBuilder();
             builder.append("&3&l»&6 ");
             builder.append(new PlayerFormat(players, "&7, &6"));
@@ -106,7 +106,7 @@ public final class CommandVanish extends CelestCommand {
             builder.broadcast(predicate);
         }
 
-        if (off.size() > 0) {
+        if (!off.isEmpty()) {
             builder = new MessageBuilder();
             builder.append("&3&l»&6 ");
             builder.append(new PlayerFormat(players, "&7, &6"));

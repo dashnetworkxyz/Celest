@@ -109,7 +109,7 @@ public final class CommandNickName extends CelestCommand {
         if (source instanceof Player)
             players.remove(source);
 
-        if (players.size() > 0) {
+        if (!players.isEmpty()) {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 Nicknames for &6");
             builder.append(new PlayerFormat(players, "&7, &6"));

@@ -76,7 +76,7 @@ public final class CommandOwnerChat extends CelestCommand {
         if (named instanceof User)
             users.remove(named);
 
-        if (users.size() > 0) {
+        if (!users.isEmpty()) {
             builder = new MessageBuilder();
             builder.append("&6&l»&7 You have moved ");
             builder.append(new OfflineUserFormat(users, "&7, ")).color(NamedTextColor.GOLD);
