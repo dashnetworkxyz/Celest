@@ -18,7 +18,9 @@
 
 package xyz.dashnetwork.celest.listeners;
 
+import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.InboundConnection;
@@ -37,7 +39,9 @@ import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.data.AddressData;
 import xyz.dashnetwork.celest.utils.storage.data.CacheData;
 
+import java.net.InetSocketAddress;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.UUID;
 
 public final class ProxyPingListener {
@@ -47,6 +51,13 @@ public final class ProxyPingListener {
     @Subscribe
     public void onProxyPing(ProxyPingEvent event) {
         final InboundConnection connection = event.getConnection();
+        Optional<InetSocketAddress> virtual = connection.getVirtualHost();
+
+        if (virtual.isEmpty() || !virtual.get().getHostName().toLowerCase().contains("dashnetwork")) {
+            event.setResult(ResultedEvent.GenericResult.denied());
+            return;
+        }
+
         final ProtocolVersion version = connection.getProtocolVersion();
         ServerPing.Builder builder = event.getPing().asBuilder();
         int online = 0;
