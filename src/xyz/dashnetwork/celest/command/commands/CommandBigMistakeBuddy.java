@@ -22,6 +22,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.TitlePart;
+import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
@@ -30,18 +31,22 @@ import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
+import java.util.Optional;
+
 public final class CommandBigMistakeBuddy extends CelestCommand {
 
     public CommandBigMistakeBuddy() {
         super("bigmistakebuddynowwehaveyourgamefiles", "bigmistakebuddy", "bmb");
 
         setPermission(User::isOwner, true);
-        addArguments(true, ArgumentType.PLAYER_LIST);
+        addArguments(false, ArgumentType.PLAYER_LIST);
     }
 
     @Override
     public void execute(CommandSource source, String label, Arguments arguments) {
-        Player[] players = arguments.required(Player[].class);
+        Optional<Player[]> optional = arguments.optional(Player[].class);
+        Player[] players = optional.orElse(Celest.getServer().getAllPlayers().toArray(Player[]::new));
+
         Component title = ComponentUtils.fromString("&6Big mistake, buddy");
         Component subtitle = ComponentUtils.fromString("&cNow we have your game files");
 
