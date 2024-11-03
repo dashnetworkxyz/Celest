@@ -63,6 +63,10 @@ public final class User extends OfflineUser implements NamedSource, Audience {
             userData.setAuthenticated(false);
         }
 
+        // update username in address
+        address.removeUserIfPresent(uuid);
+        address.addUserIfNotPresent(uuid, username);
+
         load();
         updateDisplayname();
     }
