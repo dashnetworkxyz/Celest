@@ -25,12 +25,14 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
+import xyz.dashnetwork.celest.utils.ArrayUtils;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
 import xyz.dashnetwork.celest.utils.GithubUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
 import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.PageBuilder;
+import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
 import xyz.dashnetwork.celest.utils.log.Logger;
@@ -38,6 +40,7 @@ import xyz.dashnetwork.celest.utils.profile.OfflineUser;
 import xyz.dashnetwork.celest.utils.storage.Configuration;
 import xyz.dashnetwork.celest.utils.storage.LegacyParser;
 import xyz.dashnetwork.celest.utils.storage.Storage;
+import xyz.dashnetwork.celest.utils.storage.data.AddressData;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.io.IOException;
@@ -63,7 +66,8 @@ public final class CommandCelest extends CelestCommand {
         builder.append("\n&6&l»&b /celest legacy-import &c&o(unsafe)").hover("&6Import legacy data &c(unsafe).");
         builder.append("\n&6&l»&b /celest flush").hover("&6Clear & save all objects in Limbo.");
         builder.append("\n&6&l»&b /celest cache").hover("&6Refresh and clear old cache.");
-        builder.append("\n&6&l»&b /celest users").hover("&6Get and view all users from userdata.");
+        builder.append("\n&6&l»&b /celest user").hover("&6Get and view all users from userdata.");
+        builder.append("\n&6&l»&b /celest address").hover("&6Get and view all users from userdata.");
         builder.append("\n&6&l»&b /celest debug").hover("&6View debug information.");
         builder.append("\n&6&l»&b /celest version").hover("&6View build properties.");
         builder.append("\n&6&l»&b /celest save").hover("&6Force an auto-save.");
@@ -81,6 +85,37 @@ public final class CommandCelest extends CelestCommand {
         }
 
         switch (optionalCommand.get().toLowerCase()) {
+            case "address", "a" -> {
+                MessageUtils.message(source, "&6&l»&7 Reading addressdata...");
+
+                List<Limbo<Address>> limbos = Limbo.getAll(Address.class, each -> true);
+                Map<String, AddressData> map = Storage.readAll(Storage.Directory.ADDRESS, AddressData.class);
+                PageBuilder builder = new PageBuilder();
+
+                for (Limbo<Address> limbo : limbos) {
+                    Address address = limbo.getObject();
+
+                    map.put(address.getString(), address.getData());
+                }
+
+                for (Map.Entry<String, AddressData> entry : map.entrySet()) {
+                    String address = entry.getKey();
+                    AddressData data = entry.getValue();
+
+                    builder.append("&6" + address)
+                            .hover("&6" + address
+                                    + "\n&7ban: &6" + data.getBan()
+                                    + "\n&7mute: &6" + data.getMute()
+                                    + "\n&7Profiles: &6" + ArrayUtils.convertToString(
+                                            data.getProfiles(),
+                                            profile -> profile.username() + " " + profile.uuid(),
+                                            "&7, &6"
+                                    )
+                            ).insertion(address);
+                }
+
+                MessageUtils.message(source, builder::build);
+            }
             case "reload", "r" -> {
                 Configuration.load();
                 ConfigurationList.load();
@@ -154,10 +189,10 @@ public final class CommandCelest extends CelestCommand {
                 else
                     MessageUtils.message(source, "&6&l»&7 You are no longer in &6Debug&7.");
             }
-            case "users" -> {
+            case "user", "u" -> {
                 MessageUtils.message(source, "&6&l»&7 Reading userdata...");
 
-                List<Limbo<OfflineUser>> limbos = Limbo.getAll(OfflineUser.class, each -> each.getData().getBan() != null);
+                List<Limbo<OfflineUser>> limbos = Limbo.getAll(OfflineUser.class, each -> true);
                 Map<String, UserData> map = Storage.readAll(Storage.Directory.USER, UserData.class);
                 PageBuilder builder = new PageBuilder();
 
@@ -189,8 +224,8 @@ public final class CommandCelest extends CelestCommand {
                                     + "\n&7serverSpy: &6" + data.getServerSpy()
                                     + "\n&7vanish: &6" + data.getVanish()
                                     + "\n&7hideAddress: &6" + data.getHideAddress()
-                                    + "\n&7debug: &6" + data.getDebug())
-                            .insertion(uuid);
+                                    + "\n&7debug: &6" + data.getDebug()
+                            ).insertion(uuid);
                 }
 
                 MessageUtils.message(source, builder::build);
