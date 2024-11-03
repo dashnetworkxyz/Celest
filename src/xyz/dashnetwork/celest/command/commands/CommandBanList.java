@@ -35,7 +35,7 @@ import xyz.dashnetwork.celest.utils.storage.data.UserData;
 import java.util.List;
 import java.util.Map;
 
-public class CommandBanList extends CelestCommand {
+public final class CommandBanList extends CelestCommand {
 
     public CommandBanList() {
         super("banlist");
