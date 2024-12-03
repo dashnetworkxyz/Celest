@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 
 public final class PostLoginListener {
 
-    @Subscribe
+    @Subscribe(priority = 0)
     public void onPostLogin(PostLoginEvent event) {
         Player player = event.getPlayer();
         User user = User.getUser(player);
