@@ -35,12 +35,10 @@ public final class Limbo<T> implements Runnable {
     private static final Celest celest = Celest.getInstance();
     private static final Scheduler scheduler = Celest.getServer().getScheduler();
     private final T object;
-    private boolean shouldSave;
     private ScheduledTask scheduledTask;
 
     public Limbo(T object) {
         this.object = object;
-        this.shouldSave = isSavable();
 
         schedule();
 
@@ -76,15 +74,13 @@ public final class Limbo<T> implements Runnable {
     public T getObject() { return object; }
 
     public void save() {
-        if (shouldSave) {
+        if (isSavable()) {
             ((Savable) object).save();
-            shouldSave = false;
         }
     }
 
     public void reset() {
         scheduledTask.cancel();
-        shouldSave = isSavable();
         
         schedule();
     }

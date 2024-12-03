@@ -18,6 +18,7 @@
 
 package xyz.dashnetwork.celest.listeners;
 
+import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.Player;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
 
 public final class PostLoginListener {
 
-    @Subscribe(priority = 0)
+    @Subscribe(order = PostOrder.LATE)
     public void onPostLogin(PostLoginEvent event) {
         Player player = event.getPlayer();
         User user = User.getUser(player);
