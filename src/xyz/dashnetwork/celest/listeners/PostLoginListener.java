@@ -68,7 +68,7 @@ public final class PostLoginListener {
             builder.append("&6&l»&f ");
             builder.append("&7Hover for &6" + list.size() + "&7 alts of")
                     .hover("&7Alts for " + player.getUsername() + ":\n&6"
-                            + list.stream().map(PlayerProfile::username).collect(Collectors.joining("\n")));
+                            + list.stream().map(PlayerProfile::username).collect(Collectors.joining("\n&6")));
             builder.append("&f ");
             builder.append(new NamedSourceFormat(user));
             builder.broadcast(each -> each.getData().getAltSpy());
