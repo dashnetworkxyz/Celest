@@ -18,6 +18,8 @@
 
 package xyz.dashnetwork.celest.utils.profile;
 
+import com.google.common.collect.ImmutableList;
+import com.velocitypowered.api.util.GameProfile;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.StringUtils;
 import xyz.dashnetwork.celest.utils.storage.Cache;
@@ -29,21 +31,21 @@ import java.util.UUID;
 
 public final class ProfileUtils {
 
-    public static PlayerProfile fromUsernameOrUuid(@NotNull String string) {
+    public static GameProfile fromUsernameOrUuid(@NotNull String string) {
         if (StringUtils.matchesUuid(string))
             return ProfileUtils.fromUuid(UUID.fromString(string));
         else
             return ProfileUtils.fromUsername(string);
     }
 
-    public static PlayerProfile fromUsername(@NotNull String username) {
+    public static GameProfile fromUsername(@NotNull String username) {
         CacheData data = Cache.fromUsername(username, true);
 
         if (data != null)
-            return new PlayerProfile(data.getUUID(), data.getUsername());
+            return new GameProfile(data.getUUID(), data.getUsername(), ImmutableList.of());
 
         String stringUuid = Storage.read(username.toLowerCase(), Storage.Directory.LOOKUP, String.class);
-        PlayerProfile profile = null;
+        GameProfile profile = null;
 
         if (stringUuid != null && StringUtils.matchesUuid(stringUuid))
             profile = MojangUtils.fromUuid(UUID.fromString(stringUuid));
@@ -54,27 +56,27 @@ public final class ProfileUtils {
         if (profile == null)
             return null;
 
-        UUID uuid = profile.uuid();
+        UUID uuid = profile.getId();
         UserData userData = Storage.read(uuid.toString(), Storage.Directory.USER, UserData.class);
 
         if (userData != null)
-            Cache.generate(uuid, profile.username(), userData.getAddress());
+            Cache.generate(uuid, profile.getName(), userData.getAddress());
 
         return profile;
     }
 
-    public static PlayerProfile fromUuid(@NotNull UUID uuid) {
+    public static GameProfile fromUuid(@NotNull UUID uuid) {
         CacheData cacheData = Cache.fromUuid(uuid, true);
 
         if (cacheData != null)
-            return new PlayerProfile(cacheData.getUUID(), cacheData.getUsername());
+            return new GameProfile(cacheData.getUUID(), cacheData.getUsername(), ImmutableList.of());
 
         UserData userData = Storage.read(uuid.toString(), Storage.Directory.USER, UserData.class);
 
         if (userData != null) {
             Cache.generate(uuid, userData.getUsername(), userData.getAddress());
 
-            return new PlayerProfile(uuid, userData.getUsername());
+            return new GameProfile(uuid, userData.getUsername(), ImmutableList.of());
         }
 
         return MojangUtils.fromUuid(uuid);

@@ -18,14 +18,12 @@
 
 package xyz.dashnetwork.celest.utils.storage.data;
 
-import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
-
 public final class AddressData {
 
-    private PlayerProfile[] profiles;
+    private PlayerData[] profiles;
     private PunishData ban, mute;
 
-    public AddressData(PlayerProfile... profiles) {
+    public AddressData(PlayerData... profiles) {
         this.profiles = profiles;
         ban = null;
         mute = null;
@@ -33,9 +31,9 @@ public final class AddressData {
 
     // User data
 
-    public PlayerProfile[] getProfiles() { return profiles; }
+    public PlayerData[] getProfiles() { return profiles; }
 
-    public void setProfiles(PlayerProfile... profiles) { this.profiles = profiles; }
+    public void setProfiles(PlayerData... profiles) { this.profiles = profiles; }
 
     // Celest data
 

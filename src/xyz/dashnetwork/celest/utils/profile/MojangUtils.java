@@ -18,7 +18,9 @@
 
 package xyz.dashnetwork.celest.utils.profile;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
+import com.velocitypowered.api.util.GameProfile;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
@@ -35,23 +37,24 @@ public final class MojangUtils {
 
     private record Response(String name, String id) {
 
-        public PlayerProfile toPlayerProfile() {
-            return new PlayerProfile(
+        public GameProfile toGameProfile() {
+            return new GameProfile(
                     UUID.fromString(id.replaceFirst(
                             "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
                             "$1-$2-$3-$4-$5")),
-                    name);
+                    name,
+                    ImmutableList.of());
         }
 
     }
 
     private static final Gson gson = Celest.getGson();
 
-    public static PlayerProfile fromUsername(@NotNull String username) {
+    public static GameProfile fromUsername(@NotNull String username) {
         if (username.length() > 16)
             return null;
 
-        Limbo<PlayerProfile> limbo = Limbo.get(PlayerProfile.class, each -> each.username().equalsIgnoreCase(username));
+        Limbo<GameProfile> limbo = Limbo.get(GameProfile.class, each -> each.getName().equalsIgnoreCase(username));
 
         if (limbo != null) {
             limbo.reset();
@@ -70,15 +73,15 @@ public final class MojangUtils {
             InputStreamReader reader = new InputStreamReader(connection.getInputStream());
             Response response = gson.fromJson(reader, Response.class);
 
-            return response.toPlayerProfile();
+            return response.toGameProfile();
         } catch (IOException exception) {
             Logger.log(LogType.WARN, true, "Failed to pull response from Mojang API.");
             return null;
         }
     }
 
-    public static PlayerProfile fromUuid(@NotNull UUID uuid) {
-        Limbo<PlayerProfile> limbo = Limbo.get(PlayerProfile.class, each -> each.uuid().equals(uuid));
+    public static GameProfile fromUuid(@NotNull UUID uuid) {
+        Limbo<GameProfile> limbo = Limbo.get(GameProfile.class, each -> each.getId().equals(uuid));
 
         if (limbo != null) {
             limbo.reset();
@@ -97,7 +100,7 @@ public final class MojangUtils {
             InputStreamReader reader = new InputStreamReader(connection.getInputStream());
             Response response = gson.fromJson(reader, Response.class);
 
-            return response.toPlayerProfile();
+            return response.toGameProfile();
         } catch (IOException exception) {
             Logger.log(LogType.WARN, true, "Failed to pull response from Mojang API.");
             return null;

@@ -25,7 +25,7 @@ import xyz.dashnetwork.celest.utils.chat.MessageUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
+import xyz.dashnetwork.celest.utils.storage.data.PlayerData;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public final class PostLoginListener {
             builder.broadcast();
         }
 
-        List<PlayerProfile> list = new ArrayList<>(List.of(user.getAddress().getData().getProfiles()));
+        List<PlayerData> list = new ArrayList<>(List.of(user.getAddress().getData().getProfiles()));
         list.removeIf(each -> each.uuid().equals(player.getUniqueId()));
 
         if (!list.isEmpty()) {
@@ -68,7 +68,7 @@ public final class PostLoginListener {
             builder.append("&6&l»&f ");
             builder.append("&7Hover for &6" + list.size() + "&7 alts of")
                     .hover("&7Alts for " + player.getUsername() + ":\n&6"
-                            + list.stream().map(PlayerProfile::username).collect(Collectors.joining("\n&6")));
+                            + list.stream().map(PlayerData::username).collect(Collectors.joining("\n&6")));
             builder.append("&f ");
             builder.append(new NamedSourceFormat(user));
             builder.broadcast(each -> each.getData().getAltSpy());

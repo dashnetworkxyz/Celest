@@ -18,21 +18,21 @@
 
 package xyz.dashnetwork.celest.utils.chat.builder.formats;
 
+import com.velocitypowered.api.util.GameProfile;
 import xyz.dashnetwork.celest.utils.chat.builder.Format;
 import xyz.dashnetwork.celest.utils.chat.builder.sections.ComponentSection;
-import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public final class PlayerProfileFormat implements Format {
+public final class GameProfileFormat implements Format {
 
     private final List<ComponentSection> sections = new ArrayList<>();
 
-    public PlayerProfileFormat(PlayerProfile profile) {
-        String username = profile.username();
-        String uuid = profile.uuid().toString();
+    public GameProfileFormat(GameProfile profile) {
+        String username = profile.getName();
+        String uuid = profile.getId().toString();
 
         ComponentSection section = new ComponentSection(username);
         section.hover("&6" + uuid);
@@ -41,12 +41,12 @@ public final class PlayerProfileFormat implements Format {
         sections.add(section);
     }
 
-    public PlayerProfileFormat(Collection<PlayerProfile> collection, String separator) {
-        for (PlayerProfile profile : collection) {
+    public GameProfileFormat(Collection<GameProfile> collection, String separator) {
+        for (GameProfile profile : collection) {
             if (!sections.isEmpty())
                 sections.add(new ComponentSection(separator));
 
-            sections.addAll(new PlayerProfileFormat(profile).sections());
+            sections.addAll(new GameProfileFormat(profile).sections());
         }
     }
 

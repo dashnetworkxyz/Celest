@@ -25,11 +25,11 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.OfflineUserFormat;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerDataFormat;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.profile.OfflineUser;
-import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
+import xyz.dashnetwork.celest.utils.storage.data.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public final class CommandAccounts extends CelestCommand {
     protected void execute(CommandSource source, String label, Arguments arguments) {
         OfflineUser offline = arguments.required(OfflineUser.class);
         Address address = Address.getAddress(offline.getData().getAddress(), true);
-        List<PlayerProfile> profiles = new ArrayList<>(List.of(address.getData().getProfiles()));
+        List<PlayerData> profiles = new ArrayList<>(List.of(address.getData().getProfiles()));
 
         profiles.removeIf(profile -> profile.uuid().equals(offline.getUuid()));
 
@@ -61,7 +61,7 @@ public final class CommandAccounts extends CelestCommand {
             builder.append("&6&l»&7 Known alts for &6");
             builder.append(new OfflineUserFormat(offline)).color(NamedTextColor.GOLD);
             builder.append("&7: &6");
-            builder.append(new PlayerProfileFormat(profiles, "&7, ")).color(NamedTextColor.GOLD);
+            builder.append(new PlayerDataFormat(profiles, "&7, ")).color(NamedTextColor.GOLD);
         }
 
         builder.message(source);

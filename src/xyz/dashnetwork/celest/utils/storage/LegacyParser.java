@@ -25,9 +25,9 @@ import xyz.dashnetwork.celest.utils.chat.ChatChannel;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.log.Logger;
-import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
 import xyz.dashnetwork.celest.utils.storage.data.AddressData;
+import xyz.dashnetwork.celest.utils.storage.data.PlayerData;
 import xyz.dashnetwork.celest.utils.storage.data.UserData;
 
 import java.io.File;
@@ -73,7 +73,7 @@ public final class LegacyParser {
         if (ips != null) {
             for (Map.Entry<String, List<String>> each : ips.entrySet()) {
                 String address = each.getKey();
-                List<PlayerProfile> profiles = new ArrayList<>();
+                List<PlayerData> profiles = new ArrayList<>();
 
                 for (String stringUuid : each.getValue()) {
                     UUID uuid = UUID.fromString(stringUuid);
@@ -85,7 +85,7 @@ public final class LegacyParser {
 
                         username = data.getUsername();
                     } else if (uuid.getMostSignificantBits() != 0) {
-                        username = ProfileUtils.fromUuid(uuid).username();
+                        username = ProfileUtils.fromUuid(uuid).getName();
 
                         if (username == null)
                             continue;
@@ -94,10 +94,10 @@ public final class LegacyParser {
                     } else // This shouldn't happen, but in theory it can.
                         continue;
 
-                    profiles.add(new PlayerProfile(uuid, username));
+                    profiles.add(new PlayerData(uuid, username));
                 }
 
-                addressDataMap.put(address, new AddressData(profiles.toArray(PlayerProfile[]::new)));
+                addressDataMap.put(address, new AddressData(profiles.toArray(PlayerData[]::new)));
             }
         }
 

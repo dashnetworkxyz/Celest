@@ -33,10 +33,10 @@ import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.utils.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.connection.Address;
 import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.storage.Cache;
 import xyz.dashnetwork.celest.utils.storage.data.AddressData;
 import xyz.dashnetwork.celest.utils.storage.data.CacheData;
+import xyz.dashnetwork.celest.utils.storage.data.PlayerData;
 
 import java.net.InetSocketAddress;
 import java.util.Calendar;
@@ -83,7 +83,7 @@ public final class ProxyPingListener {
         scheduler.buildTask(Celest.getInstance(), () -> {
             Address address = Address.getAddress(connection.getRemoteAddress().getHostString(), true);
             AddressData data = address.getData();
-            PlayerProfile[] profiles = data.getProfiles();
+            PlayerData[] profiles = data.getProfiles();
 
             if (profiles.length == 0)
                 return; // Skip server pingers.
@@ -115,7 +115,7 @@ public final class ProxyPingListener {
 
             section.hover("&6" + address.getString(), User::showAddress);
             section.hover("&7Version: &6" + range + "&7 (" + version.getProtocol() + ")");
-            section.hover("&7Accounts: &6" + ArrayUtils.convertToString(profiles, PlayerProfile::username, "&7, &6"));
+            section.hover("&7Accounts: &6" + ArrayUtils.convertToString(profiles, PlayerData::username, "&7, &6"));
 
             message.broadcast(user -> user.getData().getPingSpy());
         }).schedule();

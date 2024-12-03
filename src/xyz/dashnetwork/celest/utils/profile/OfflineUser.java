@@ -18,7 +18,9 @@
 
 package xyz.dashnetwork.celest.utils.profile;
 
+import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.util.GameProfile;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.connection.User;
 import xyz.dashnetwork.celest.utils.limbo.Limbo;
@@ -35,14 +37,15 @@ public class OfflineUser implements Savable {
     protected final String stringUuid;
     protected String username;
     protected UserData userData;
+    protected GameProfile realJoin;
     private final boolean generated;
 
     protected OfflineUser(UUID uuid, String username, boolean shouldLimbo) {
         this.uuid = uuid;
         this.stringUuid = uuid.toString();
         this.username = username;
-
-        userData = null;
+        this.userData = null;
+        this.realJoin = null;
 
         if (!shouldLimbo) {
             Limbo<OfflineUser> limbo = Limbo.get(OfflineUser.class, each -> each.uuid.equals(uuid));
@@ -67,8 +70,8 @@ public class OfflineUser implements Savable {
             new Limbo<>(this);
     }
 
-    public static OfflineUser getOfflineUser(PlayerProfile profile) {
-        UUID uuid = profile.uuid();
+    public static OfflineUser getOfflineUser(GameProfile profile) {
+        UUID uuid = profile.getId();
         Optional<Player> optional = Celest.getServer().getPlayer(uuid);
 
         if (optional.isPresent())
@@ -79,14 +82,14 @@ public class OfflineUser implements Savable {
         if (limbo != null)
             return limbo.getObject();
 
-        return new OfflineUser(uuid, profile.username(), true);
+        return new OfflineUser(uuid, profile.getName(), true);
     }
 
     public UUID getUuid() { return uuid; }
 
     public String getUsername() { return username; }
 
-    public PlayerProfile toPlayerProfile() { return new PlayerProfile(uuid, username); }
+    public GameProfile toGameProfile() { return new GameProfile(uuid, username, ImmutableList.of()); }
 
     @Override
     public void save() {
@@ -104,5 +107,9 @@ public class OfflineUser implements Savable {
     public void setData(UserData userData) { this.userData = userData; }
 
     public UserData getData() { return userData; }
+
+    public GameProfile getRealJoin() { return realJoin; }
+
+    public void setRealJoin(GameProfile profile) { this.realJoin = profile; }
 
 }

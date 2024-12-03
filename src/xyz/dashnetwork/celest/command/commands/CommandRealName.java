@@ -25,8 +25,8 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.chat.ColorUtils;
 import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.utils.chat.builder.formats.GameProfileFormat;
 import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerProfileFormat;
 import xyz.dashnetwork.celest.utils.connection.User;
 
 public final class CommandRealName extends CelestCommand {
@@ -52,7 +52,7 @@ public final class CommandRealName extends CelestCommand {
                 builder.append("&6&l»&7 ");
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&7 real name is ");
-                builder.append(new PlayerProfileFormat(user.toPlayerProfile())).color(NamedTextColor.GOLD);
+                builder.append(new GameProfileFormat(user.toGameProfile())).color(NamedTextColor.GOLD);
                 builder.append("&7.");
             }
         }

@@ -21,8 +21,8 @@ package xyz.dashnetwork.celest.utils.storage;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.PlayerProfile;
 import xyz.dashnetwork.celest.utils.storage.data.CacheData;
+import xyz.dashnetwork.celest.utils.storage.data.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,10 +95,10 @@ public final class Cache {
         return list;
     }
 
-    public static List<CacheData> fromPlayerProfiles(PlayerProfile... profiles) {
+    public static List<CacheData> fromPlayerProfiles(PlayerData... profiles) {
         List<CacheData> list = new ArrayList<>();
 
-        for (PlayerProfile profile : profiles)
+        for (PlayerData profile : profiles)
             for (CacheData each : cache)
                 if (profile.uuid().equals(each.getUUID()))
                     list.add(each);
@@ -106,7 +106,7 @@ public final class Cache {
         return list;
     }
 
-    public static CacheData findMostRecent(@NotNull PlayerProfile... profiles) {
+    public static CacheData findMostRecent(@NotNull PlayerData... profiles) {
         long time = -1;
         CacheData selected = null;
 

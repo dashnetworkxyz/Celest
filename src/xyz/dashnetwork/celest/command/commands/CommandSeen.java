@@ -101,7 +101,7 @@ public final class CommandSeen extends CelestCommand {
                 section = builder.append("&6Until " + date);
 
             UUID judge = ban.judge();
-            String name = judge == null ? "Console" : ProfileUtils.fromUuid(judge).username();
+            String name = judge == null ? "Console" : ProfileUtils.fromUuid(judge).getName();
 
             section.hover("&7Banned by &6" + name);
 
@@ -124,7 +124,7 @@ public final class CommandSeen extends CelestCommand {
                 section = builder.append("&6Until " + date);
 
             UUID judge = mute.judge();
-            String name = judge == null ? "Console" : ProfileUtils.fromUuid(judge).username();
+            String name = judge == null ? "Console" : ProfileUtils.fromUuid(judge).getName();
 
             section.hover("&7Muted by &6" + name);
 

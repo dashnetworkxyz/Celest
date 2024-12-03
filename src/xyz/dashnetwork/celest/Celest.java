@@ -131,6 +131,7 @@ public final class Celest {
         EventManager eventManager = server.getEventManager();
         eventManager.register(this, new CommandExecuteListener());
         eventManager.register(this, new DisconnectListener());
+        eventManager.register(this, new GameProfileRequestListener());
         eventManager.register(this, new LoginListener());
         eventManager.register(this, new PluginMessageListener());
         eventManager.register(this, new PostLoginListener());
@@ -183,6 +184,7 @@ public final class Celest {
         new CommandProtocolList();
         new CommandPvp();
         new CommandRandom();
+        new CommandRealJoin();
         new CommandRealName();
         new CommandSeen();
         new CommandServer();
