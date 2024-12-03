@@ -51,6 +51,8 @@ public final class PostLoginListener {
             builder.append(new NamedSourceFormat(user));
             builder.append("&6, to &lDashNetwork");
             builder.broadcast();
+
+            data.setLastPlayed(System.currentTimeMillis());
         } else {
             builder.append("&a&l»&f ");
             builder.append(new NamedSourceFormat(user));
