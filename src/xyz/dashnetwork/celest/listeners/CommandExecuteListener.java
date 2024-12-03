@@ -31,7 +31,7 @@ import xyz.dashnetwork.celest.utils.profile.NamedSource;
 
 public final class CommandExecuteListener {
 
-    @Subscribe(order = PostOrder.FIRST)
+    @Subscribe(priority = Short.MAX_VALUE)
     public void onCommandExecute(CommandExecuteEvent event) {
         CommandSource source = event.getCommandSource();
 
