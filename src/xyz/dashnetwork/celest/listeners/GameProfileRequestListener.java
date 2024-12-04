@@ -12,6 +12,9 @@ public final class GameProfileRequestListener {
         OfflineUser user = OfflineUser.getOfflineUser(event.getOriginalProfile());
         GameProfile profile = user.getRealJoin();
 
+        if (profile == null)
+            return;
+
         OfflineUser.getOfflineUser(profile).disableSaving();
 
         event.setGameProfile(profile);
