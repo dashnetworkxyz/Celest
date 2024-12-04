@@ -63,12 +63,12 @@ public final class User extends OfflineUser implements NamedSource, Audience {
             userData.setAuthenticated(false);
         }
 
-        // update username in address
-        address.removeUserIfPresent(uuid);
-        address.addUserIfNotPresent(uuid, username);
+        if (!disableSave)
+            load();
 
-        load();
         updateDisplayname();
+
+        users.put(uuid, this);
     }
 
     public static Collection<User> getUsers() { return users.values(); }
@@ -102,6 +102,10 @@ public final class User extends OfflineUser implements NamedSource, Audience {
     }
 
     private void load() {
+        // update username in address
+        address.removeUserIfPresent(uuid);
+        address.addUserIfNotPresent(uuid, username);
+
         String stringAddress = player.getRemoteAddress().getHostString();
         address = Address.getAddress(stringAddress, false);
 
@@ -110,8 +114,6 @@ public final class User extends OfflineUser implements NamedSource, Audience {
         address.addUserIfNotPresent(uuid, username);
 
         Cache.generate(uuid, username, stringAddress);
-
-        users.put(uuid, this);
     }
 
     public void updateDisplayname() {
@@ -144,8 +146,10 @@ public final class User extends OfflineUser implements NamedSource, Audience {
     public void remove() {
         users.remove(uuid);
 
-        new Limbo<>(this);
-        new Limbo<>(address);
+        if (!disableSave) {
+            new Limbo<>(this);
+            new Limbo<>(address);
+        }
     }
 
     public boolean canSee(User user) { return isStaff() || !user.getData().getVanish() || getData().getVanish(); }

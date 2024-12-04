@@ -38,6 +38,7 @@ public class OfflineUser implements Savable {
     protected String username;
     protected UserData userData;
     protected GameProfile realJoin;
+    protected boolean disableSave;
     private final boolean generated;
 
     protected OfflineUser(UUID uuid, String username, boolean shouldLimbo) {
@@ -46,8 +47,11 @@ public class OfflineUser implements Savable {
         this.username = username;
         this.userData = null;
         this.realJoin = null;
+        this.disableSave = false;
 
-        if (!shouldLimbo) {
+        if (shouldLimbo)
+            new Limbo<>(this);
+        else {
             Limbo<OfflineUser> limbo = Limbo.get(OfflineUser.class, each -> each.uuid.equals(uuid));
 
             if (limbo != null) {
@@ -65,9 +69,6 @@ public class OfflineUser implements Savable {
             generated = true;
         } else
             generated = false;
-
-        if (shouldLimbo)
-            new Limbo<>(this);
     }
 
     public static OfflineUser getOfflineUser(GameProfile profile) {
@@ -93,6 +94,9 @@ public class OfflineUser implements Savable {
 
     @Override
     public void save() {
+        if (disableSave)
+            return;
+
         if (userData.isObsolete()) {
             if (!generated)
                 Storage.delete(stringUuid, Storage.Directory.USER);
@@ -111,5 +115,7 @@ public class OfflineUser implements Savable {
     public GameProfile getRealJoin() { return realJoin; }
 
     public void setRealJoin(GameProfile profile) { this.realJoin = profile; }
+
+    public void disableSaving() { disableSave = true; }
 
 }
