@@ -142,7 +142,7 @@ public final class CommandCelest extends CelestCommand {
                     return;
                 }
 
-                if (properties[3].equals("${describe}")) {
+                if (properties.length < 3 || properties[3].equals("${describe}")) {
                     MessageUtils.message(source, "&6&l»&7 No build information is available.");
                     return;
                 }
