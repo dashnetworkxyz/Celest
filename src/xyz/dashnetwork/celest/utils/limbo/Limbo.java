@@ -74,9 +74,8 @@ public final class Limbo<T> implements Runnable {
     public T getObject() { return object; }
 
     public void save() {
-        if (isSavable()) {
+        if (isSavable())
             ((Savable) object).save();
-        }
     }
 
     public void reset() {

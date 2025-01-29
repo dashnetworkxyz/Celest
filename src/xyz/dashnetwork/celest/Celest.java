@@ -194,6 +194,7 @@ public final class Celest {
         new CommandSkyblock();
         new CommandStaff();
         new CommandStaffChat();
+        new CommandStafflegacy();
         new CommandSudo();
         new CommandSurvival();
         new CommandTalk();
