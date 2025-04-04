@@ -54,7 +54,6 @@ public final class CommandSeen extends CelestCommand {
         UserData data = offline.getData();
         MessageBuilder builder = new MessageBuilder();
 
-        Long lastPlayed = data.getLastPlayed();
         String uuid = offline.getUuid().toString();
         String address = data.getAddress();
         PunishData ban = data.getBan();
@@ -63,7 +62,7 @@ public final class CommandSeen extends CelestCommand {
         builder.append("&6&l»&7 ");
         builder.append(new OfflineUserFormat(offline)).color(NamedTextColor.GOLD);
 
-        if (lastPlayed == null)
+        if (address == null)
             builder.append("&7 has never joined the server before.");
         else if (offline.isActive() && user.map(u -> u.canSee((User) offline)).orElse(true))
             builder.append("&7 is &aonline&7.");
@@ -80,12 +79,6 @@ public final class CommandSeen extends CelestCommand {
             builder.append("&6" + address)
                     .hover("&7Click to copy &6" + address)
                     .click(ClickEvent.suggestCommand(address));
-        }
-
-        if (lastPlayed != null) {
-            builder.append("\n&6&l»&7 Last Login: &6" + TimeUtils.longToDate(lastPlayed))
-                    .hover("&7Click to copy &6" + lastPlayed)
-                    .click(ClickEvent.suggestCommand(lastPlayed.toString()));
         }
 
         if (PunishUtils.isValid(ban)) {

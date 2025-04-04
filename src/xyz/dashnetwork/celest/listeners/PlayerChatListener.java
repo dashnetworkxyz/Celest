@@ -41,6 +41,7 @@ import java.util.UUID;
 
 public final class PlayerChatListener {
 
+    @SuppressWarnings("deprecation") // setResult is deprecated, but this is the only option.
     @Subscribe(priority = Short.MAX_VALUE)
     public void onPlayerChat(PlayerChatEvent event) {
         event.setResult(PlayerChatEvent.ChatResult.denied());

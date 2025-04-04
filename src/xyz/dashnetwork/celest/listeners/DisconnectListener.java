@@ -50,8 +50,6 @@ public final class DisconnectListener {
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&c left.");
                 builder.broadcast();
-
-                data.setLastPlayed(System.currentTimeMillis());
             }
         }
 

@@ -215,7 +215,6 @@ public final class CommandCelest extends CelestCommand {
                                     + "\n&7ban: &6" + data.getBan()
                                     + "\n&7mute: &6" + data.getMute()
                                     + "\n&7channel: &6" + data.getChannel()
-                                    + "\n&7lastPlayed: &6" + data.getLastPlayed()
                                     + "\n&7authenticated: &6" + data.getAuthenticated()
                                     + "\n&7altSpy: &6" + data.getAltSpy()
                                     + "\n&7commandSpy: &6" + data.getCommandSpy()

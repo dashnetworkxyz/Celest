@@ -30,7 +30,7 @@ public interface NamedSource {
 
     NamedSource console = new NamedSource() {
         @Override
-        public String getDisplayname() { return "&8[&4Server&8]&6 Velocity"; }
+        public String getDisplayname() { return "&8[&4Server&8]&6 DashNetwork"; }
 
         @Override
         public String getUsername() { return version.getName() + " " + version.getVersion(); }

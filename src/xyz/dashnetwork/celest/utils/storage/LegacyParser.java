@@ -102,7 +102,6 @@ public final class LegacyParser {
         }
 
         parseMap(nicknames, UserData::setNickName);
-        parseMap(lastPlayed, UserData::setLastPlayed);
         parseList(staffchat, data -> data.setChannel(ChatChannel.STAFF));
         parseList(adminchat, data -> data.setChannel(ChatChannel.ADMIN));
         parseList(ownerchat, data -> data.setChannel(ChatChannel.OWNER));

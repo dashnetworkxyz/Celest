@@ -26,7 +26,6 @@ public final class UserData {
     private String username, address, twoFactor, nickname;
     private PunishData ban, mute;
     private ChatChannel channel;
-    private Long lastPlayed;
     private boolean authenticated, altSpy, commandSpy, pingSpy, signSpy, serverSpy, vanish, hideAddress, debug;
 
     public UserData(String username) {
@@ -38,7 +37,6 @@ public final class UserData {
         address = null;
         nickname = null;
         twoFactor = null;
-        lastPlayed = null;
         authenticated = false;
         altSpy = false;
         commandSpy = false;
@@ -72,8 +70,6 @@ public final class UserData {
 
     public ChatChannel getChannel() { return channel; }
 
-    public Long getLastPlayed() { return lastPlayed; }
-
     public boolean getAuthenticated() { return authenticated; }
 
     public boolean getAltSpy() { return altSpy; }
@@ -101,9 +97,7 @@ public final class UserData {
     public void setMute(PunishData mute) { this.mute = mute; }
 
     public void setChannel(@NotNull ChatChannel channel) { this.channel = channel; }
-
-    public void setLastPlayed(long lastPlayed) { this.lastPlayed = lastPlayed; }
-
+    
     public void setAuthenticated(boolean authenticated) { this.authenticated = authenticated; }
 
     public void setAltSpy(boolean altSpy) { this.altSpy = altSpy; }
@@ -128,7 +122,6 @@ public final class UserData {
                 && channel == ChatChannel.GLOBAL
                 && address == null
                 && nickname == null
-                && lastPlayed == null
                 && !altSpy
                 && !commandSpy
                 && !pingSpy

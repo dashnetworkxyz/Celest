@@ -147,7 +147,7 @@ public final class User extends OfflineUser implements NamedSource, Audience {
         users.remove(uuid);
 
         if (!disableSave) {
-            // new Limbo<>(this); temp disable limbo
+            new Limbo<>(this);
             new Limbo<>(address);
         }
     }

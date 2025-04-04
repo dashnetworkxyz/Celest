@@ -46,13 +46,6 @@ public final class PostLoginListener {
             builder.append(new NamedSourceFormat(user));
             builder.append("&3 silently joined.");
             builder.broadcast(each -> each.isStaff() || each.getData().getVanish());
-        } else if (data.getLastPlayed() == null) {
-            builder.append("&6&l»&6 Welcome, ");
-            builder.append(new NamedSourceFormat(user));
-            builder.append("&6, to &lDashNetwork");
-            builder.broadcast();
-
-            data.setLastPlayed(System.currentTimeMillis());
         } else {
             builder.append("&a&l»&f ");
             builder.append(new NamedSourceFormat(user));

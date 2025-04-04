@@ -75,8 +75,6 @@ public final class CommandVanish extends CelestCommand {
                 builder.append(new NamedSourceFormat(user));
                 builder.append("&c left.");
 
-                data.setLastPlayed(System.currentTimeMillis());
-
                 if (data.getChannel().equals(ChatChannel.GLOBAL)) {
                     data.setChannel(ChatChannel.STAFF);
 
