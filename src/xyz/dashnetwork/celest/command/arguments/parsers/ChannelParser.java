@@ -19,8 +19,8 @@
 package xyz.dashnetwork.celest.command.arguments.parsers;
 
 import xyz.dashnetwork.celest.command.arguments.Parser;
-import xyz.dashnetwork.celest.utils.chat.ChatChannel;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.chat.ChatChannel;
+import xyz.dashnetwork.celest.connection.User;
 
 public final class ChannelParser implements Parser {
 

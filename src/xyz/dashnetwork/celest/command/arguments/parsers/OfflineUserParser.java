@@ -21,9 +21,9 @@ package xyz.dashnetwork.celest.command.arguments.parsers;
 import com.velocitypowered.api.util.GameProfile;
 import xyz.dashnetwork.celest.command.arguments.Parser;
 import xyz.dashnetwork.celest.utils.StringUtils;
-import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
-import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
+import xyz.dashnetwork.celest.connection.User;
+import xyz.dashnetwork.celest.profile.OfflineUser;
+import xyz.dashnetwork.celest.profile.ProfileUtils;
 
 import java.util.UUID;
 

@@ -19,7 +19,7 @@
 package xyz.dashnetwork.celest.utils;
 
 import com.velocitypowered.api.command.CommandSource;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.connection.User;
 
 import java.util.function.Predicate;
 

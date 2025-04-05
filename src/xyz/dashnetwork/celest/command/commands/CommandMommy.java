@@ -23,7 +23,7 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.GrammarUtils;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.MessageUtils;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;

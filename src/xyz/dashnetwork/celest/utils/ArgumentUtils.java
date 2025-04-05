@@ -20,7 +20,7 @@ package xyz.dashnetwork.celest.utils;
 
 import xyz.dashnetwork.celest.command.arguments.ArgumentSection;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -24,9 +24,9 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.utils.GrammarUtils;
-import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
+import xyz.dashnetwork.celest.chat.ComponentUtils;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
 
 public final class ServerConnectedListener {
 

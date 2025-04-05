@@ -18,6 +18,6 @@
 
 package xyz.dashnetwork.celest.events;
 
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.connection.User;
 
 public record CelestVanishEvent(User user, boolean vanish) {}

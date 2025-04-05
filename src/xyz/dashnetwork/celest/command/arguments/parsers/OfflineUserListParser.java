@@ -20,8 +20,8 @@ package xyz.dashnetwork.celest.command.arguments.parsers;
 
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Parser;
-import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
+import xyz.dashnetwork.celest.connection.User;
+import xyz.dashnetwork.celest.profile.OfflineUser;
 
 import java.util.HashSet;
 import java.util.Set;

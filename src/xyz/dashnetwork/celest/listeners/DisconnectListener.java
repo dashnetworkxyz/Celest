@@ -22,10 +22,10 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.LazyUtils;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
-import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.storage.data.UserData;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.connection.User;
+import xyz.dashnetwork.celest.storage.data.UserData;
 
 public final class DisconnectListener {
 

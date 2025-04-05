@@ -25,8 +25,8 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.connection.User;
 
 import java.util.Optional;
 

@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.command.commands;
 import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.Messages;
+import xyz.dashnetwork.celest.chat.Messages;
 
 public final class CommandServerList extends CelestCommand {
 

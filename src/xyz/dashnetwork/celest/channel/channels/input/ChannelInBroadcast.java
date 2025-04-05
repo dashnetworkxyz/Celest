@@ -21,9 +21,9 @@ package xyz.dashnetwork.celest.channel.channels.input;
 import com.google.common.io.ByteArrayDataInput;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.PermissionType;
-import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.chat.ComponentUtils;
+import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.connection.User;
 
 import java.util.function.Predicate;
 

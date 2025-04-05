@@ -25,13 +25,13 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.PermissionType;
-import xyz.dashnetwork.celest.utils.chat.ColorUtils;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
-import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.NamedSource;
+import xyz.dashnetwork.celest.chat.ColorUtils;
+import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
+import xyz.dashnetwork.celest.connection.User;
+import xyz.dashnetwork.celest.profile.NamedSource;
 
 import java.util.List;
 

@@ -22,11 +22,11 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.command.CommandExecuteEvent;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
-import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.NamedSource;
+import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.connection.User;
+import xyz.dashnetwork.celest.profile.NamedSource;
 
 public final class CommandExecuteListener {
 

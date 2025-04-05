@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.command.arguments.parsers;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Parser;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.connection.User;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -26,16 +26,16 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.SecretUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
-import xyz.dashnetwork.celest.utils.chat.ChatChannel;
-import xyz.dashnetwork.celest.utils.chat.MessageUtils;
-import xyz.dashnetwork.celest.utils.chat.Messages;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.Section;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.ArgumentTypeFormat;
-import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
-import xyz.dashnetwork.celest.utils.storage.data.PunishData;
-import xyz.dashnetwork.celest.utils.storage.data.UserData;
+import xyz.dashnetwork.celest.chat.ChatChannel;
+import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.Messages;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.chat.builder.Section;
+import xyz.dashnetwork.celest.chat.builder.formats.ArgumentTypeFormat;
+import xyz.dashnetwork.celest.connection.User;
+import xyz.dashnetwork.celest.profile.ProfileUtils;
+import xyz.dashnetwork.celest.storage.data.PunishData;
+import xyz.dashnetwork.celest.storage.data.UserData;
 
 import java.util.UUID;
 

@@ -22,7 +22,7 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Suggester;
 import xyz.dashnetwork.celest.utils.ListUtils;
 import xyz.dashnetwork.celest.utils.TimeType;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.connection.User;
 
 import java.util.ArrayList;
 import java.util.List;

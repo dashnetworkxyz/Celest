@@ -18,7 +18,7 @@
 
 package xyz.dashnetwork.celest.command.arguments;
 
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.connection.User;
 
 import java.util.function.Predicate;
 

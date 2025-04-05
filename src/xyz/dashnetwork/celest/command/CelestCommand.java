@@ -30,10 +30,10 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.ArgumentUtils;
 import xyz.dashnetwork.celest.utils.ListUtils;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.AliasesFormat;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.ArgumentSectionFormat;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.chat.builder.formats.AliasesFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.ArgumentSectionFormat;
+import xyz.dashnetwork.celest.connection.User;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;

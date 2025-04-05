@@ -23,7 +23,7 @@ import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.InboundConnection;
 import xyz.dashnetwork.celest.utils.StringUtils;
-import xyz.dashnetwork.celest.utils.chat.ComponentUtils;
+import xyz.dashnetwork.celest.chat.ComponentUtils;
 
 import java.net.InetSocketAddress;
 import java.util.Optional;

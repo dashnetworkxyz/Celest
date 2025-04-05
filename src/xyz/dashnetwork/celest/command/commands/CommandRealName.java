@@ -23,11 +23,11 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.ColorUtils;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.GameProfileFormat;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.chat.ColorUtils;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.chat.builder.formats.GameProfileFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.connection.User;
 
 public final class CommandRealName extends CelestCommand {
 

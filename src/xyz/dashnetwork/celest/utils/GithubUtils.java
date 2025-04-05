@@ -20,7 +20,7 @@ package xyz.dashnetwork.celest.utils;
 
 import com.google.gson.Gson;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.utils.log.Logger;
+import xyz.dashnetwork.celest.log.Logger;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

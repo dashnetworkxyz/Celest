@@ -19,7 +19,7 @@
 package xyz.dashnetwork.celest.channel.channels.output;
 
 import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.connection.User;
 
 public final class ChannelOutUserData extends Channel {
 

@@ -3,7 +3,7 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.GameProfileRequestEvent;
 import com.velocitypowered.api.util.GameProfile;
-import xyz.dashnetwork.celest.utils.profile.OfflineUser;
+import xyz.dashnetwork.celest.profile.OfflineUser;
 
 public final class GameProfileRequestListener {
 

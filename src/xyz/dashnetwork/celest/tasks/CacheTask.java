@@ -18,7 +18,7 @@
 
 package xyz.dashnetwork.celest.tasks;
 
-import xyz.dashnetwork.celest.utils.storage.Cache;
+import xyz.dashnetwork.celest.storage.Cache;
 
 public final class CacheTask implements Runnable {
 

@@ -22,10 +22,10 @@ import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.NamedSourceFormat;
-import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.NamedSource;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.connection.User;
+import xyz.dashnetwork.celest.profile.NamedSource;
 
 public final class CommandFakeJoin extends CelestCommand {
 

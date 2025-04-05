@@ -22,8 +22,8 @@ import com.google.common.io.ByteArrayDataInput;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.chat.builder.formats.PlayerFormat;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
 
 import java.util.Optional;
 import java.util.UUID;

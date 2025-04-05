@@ -20,7 +20,7 @@ package xyz.dashnetwork.celest.channel.channels.input;
 
 import com.google.common.io.ByteArrayDataInput;
 import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.utils.connection.User;
+import xyz.dashnetwork.celest.connection.User;
 
 public final class ChannelInOnline extends Channel {
 

@@ -20,9 +20,9 @@ package xyz.dashnetwork.celest.command.arguments.suggesters;
 
 import xyz.dashnetwork.celest.command.arguments.Suggester;
 import xyz.dashnetwork.celest.utils.ListUtils;
-import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.storage.Cache;
-import xyz.dashnetwork.celest.utils.storage.data.CacheData;
+import xyz.dashnetwork.celest.connection.User;
+import xyz.dashnetwork.celest.storage.Cache;
+import xyz.dashnetwork.celest.storage.data.CacheData;
 
 import java.util.ArrayList;
 import java.util.List;

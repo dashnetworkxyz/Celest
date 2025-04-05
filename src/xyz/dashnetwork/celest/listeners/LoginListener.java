@@ -24,10 +24,10 @@ import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.PunishUtils;
 import xyz.dashnetwork.celest.utils.TimeUtils;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.utils.connection.User;
-import xyz.dashnetwork.celest.utils.profile.ProfileUtils;
-import xyz.dashnetwork.celest.utils.storage.data.PunishData;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.connection.User;
+import xyz.dashnetwork.celest.profile.ProfileUtils;
+import xyz.dashnetwork.celest.storage.data.PunishData;
 
 import java.util.UUID;
 

@@ -22,7 +22,7 @@ import com.velocitypowered.api.command.CommandSource;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.chat.builder.MessageBuilder;
+import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 
 public final class CommandDiscord extends CelestCommand {
 
