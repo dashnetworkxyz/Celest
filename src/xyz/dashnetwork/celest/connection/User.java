@@ -57,7 +57,7 @@ public final class User extends OfflineUser implements NamedSource, Audience {
 
         String old = userData.getAddress();
 
-        if (old != null && !old.equals(address.getString())) {
+        if (!disableSave && old != null && !old.equals(address.getString())) {
             Address.getAddress(old, true).removeUserIfPresent(uuid);
 
             userData.setAuthenticated(false);
