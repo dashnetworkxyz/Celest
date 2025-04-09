@@ -23,8 +23,8 @@ import com.velocitypowered.api.proxy.ServerConnection;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.GrammarUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.GrammarUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.connection.User;
@@ -49,7 +49,7 @@ public final class CommandGlobalList extends CelestCommand {
                 if (optional.isEmpty())
                     continue;
 
-                String name = GrammarUtils.capitalization(optional.get().getServerInfo().getName());
+                String name = GrammarUtil.capitalization(optional.get().getServerInfo().getName());
                 List<NamedSource> list = map.getOrDefault(name, new ArrayList<>());
 
                 list.add(each);
@@ -59,7 +59,7 @@ public final class CommandGlobalList extends CelestCommand {
         }
 
         if (map.isEmpty()) {
-            MessageUtils.message(source, "&6&l»&7 No players online.");
+            MessageUtil.message(source, "&6&l»&7 No players online.");
             return;
         }
 

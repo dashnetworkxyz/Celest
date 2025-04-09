@@ -26,13 +26,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ComponentUtils {
+public final class ComponentUtil {
 
     private static final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacySection();
     private static final GsonComponentSerializer gson = GsonComponentSerializer.gson();
 
     public static Component fromString(@NotNull String string) {
-        return legacy.deserialize(ColorUtils.fromAmpersand(string));
+        return legacy.deserialize(ColorUtil.fromAmpersand(string));
     }
 
     public static String toString(@NotNull Component component) { return legacy.serialize(component); }

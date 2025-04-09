@@ -29,7 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public final class GithubUtils {
+public final class GithubUtil {
 
     private record Response(String status, int behind_by) {}
 

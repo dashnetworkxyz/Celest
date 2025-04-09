@@ -19,7 +19,7 @@
 package xyz.dashnetwork.celest.command.arguments.suggesters;
 
 import xyz.dashnetwork.celest.command.arguments.Suggester;
-import xyz.dashnetwork.celest.utils.ListUtils;
+import xyz.dashnetwork.celest.utils.ListUtil;
 import xyz.dashnetwork.celest.chat.ChatChannel;
 import xyz.dashnetwork.celest.connection.User;
 
@@ -34,7 +34,7 @@ public final class ChannelSuggester implements Suggester {
 
         for (ChatChannel type : ChatChannel.values())
             if (type.hasPermission(user))
-                ListUtils.addIfStarts(list, input, type.name().toLowerCase());
+                ListUtil.addIfStarts(list, input, type.name().toLowerCase());
 
         return list;
     }

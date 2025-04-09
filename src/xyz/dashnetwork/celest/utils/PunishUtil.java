@@ -18,23 +18,17 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import xyz.dashnetwork.celest.command.arguments.ArgumentSection;
-import xyz.dashnetwork.celest.command.arguments.ArgumentType;
-import xyz.dashnetwork.celest.connection.User;
+import xyz.dashnetwork.celest.storage.data.PunishData;
 
-import java.util.ArrayList;
-import java.util.List;
+public final class PunishUtil {
 
-public final class ArgumentUtils {
+    public static boolean isValid(PunishData data) {
+        if (data == null)
+            return false;
 
-    public static List<ArgumentType> typesFromSections(User user, List<ArgumentSection> sections) {
-        List<ArgumentType> list = new ArrayList<>();
+        Long expiration = data.expiration();
 
-        for (ArgumentSection section : sections)
-            if (user == null ? section.console() : section.predicate().test(user))
-                list.addAll(List.of(section.types()));
-
-        return list;
+        return expiration == null || expiration > System.currentTimeMillis();
     }
 
 }

@@ -22,7 +22,7 @@ import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.connection.User;
 
@@ -47,11 +47,11 @@ public final class CommandPage extends CelestCommand {
         PageBuilder message = user.getPageBuilder();
 
         if (message == null) {
-            MessageUtils.message(source, "&6&l»&7 You have no pages to view!");
+            MessageUtil.message(source, "&6&l»&7 You have no pages to view!");
             return;
         }
 
-        MessageUtils.message(source, message.build(user, page));
+        MessageUtil.message(source, message.build(user, page));
     }
 
 }

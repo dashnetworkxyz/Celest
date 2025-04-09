@@ -19,7 +19,7 @@
 package xyz.dashnetwork.celest.command.arguments.parsers;
 
 import xyz.dashnetwork.celest.command.arguments.Parser;
-import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.StringUtil;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
 
@@ -27,7 +27,7 @@ public final class AddressParser implements Parser {
 
     @Override
     public Object parse(User user, String input) {
-        if (StringUtils.matchesIp(input))
+        if (StringUtil.matchesIp(input))
             return Address.getAddress(input, true);
 
         return null;

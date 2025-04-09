@@ -27,9 +27,9 @@ import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.GrammarUtils;
-import xyz.dashnetwork.celest.utils.LazyUtils;
-import xyz.dashnetwork.celest.chat.ComponentUtils;
+import xyz.dashnetwork.celest.utils.GrammarUtil;
+import xyz.dashnetwork.celest.utils.LazyUtil;
+import xyz.dashnetwork.celest.chat.ComponentUtil;
 import xyz.dashnetwork.celest.chat.Messages;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.Section;
@@ -66,7 +66,7 @@ public final class CommandServer extends CelestCommand {
             return;
         }
 
-        String name = GrammarUtils.capitalization(server.getServerInfo().getName());
+        String name = GrammarUtil.capitalization(server.getServerInfo().getName());
         NamedSource named = NamedSource.of(source);
         MessageBuilder builder;
 
@@ -83,7 +83,7 @@ public final class CommandServer extends CelestCommand {
             builder.message(player);
 
             player.createConnectionRequest(server).connect().thenAccept(u -> {
-                if (LazyUtils.anyEquals(u.getStatus(),
+                if (LazyUtil.anyEquals(u.getStatus(),
                         ConnectionRequestBuilder.Status.CONNECTION_CANCELLED,
                         ConnectionRequestBuilder.Status.SERVER_DISCONNECTED)) {
                     Optional<Component> component = u.getReasonComponent();
@@ -93,7 +93,7 @@ public final class CommandServer extends CelestCommand {
                             "&6&l»&7 Failed to connect to &6" + name + "&7. Hover for more info.");
 
                     component.ifPresentOrElse(
-                            c -> section.hover("&6" + ComponentUtils.toString(c)),
+                            c -> section.hover("&6" + ComponentUtil.toString(c)),
                             () -> section.hover("&7No kick message provided."));
 
                     kick.message(player);

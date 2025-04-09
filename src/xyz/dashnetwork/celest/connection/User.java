@@ -25,8 +25,8 @@ import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.TimeType;
-import xyz.dashnetwork.celest.utils.TimeUtils;
-import xyz.dashnetwork.celest.chat.ColorUtils;
+import xyz.dashnetwork.celest.utils.TimeUtil;
+import xyz.dashnetwork.celest.chat.ColorUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.limbo.Limbo;
 import xyz.dashnetwork.celest.profile.NamedSource;
@@ -126,9 +126,9 @@ public final class User extends OfflineUser implements NamedSource, Audience {
         if (nickname == null)
             nickname = getUsername();
 
-        if (!TimeUtils.isRecent(vaultUpdateTime, TimeType.SECOND.toMillis(5))) {
-            prefix = ColorUtils.fromAmpersand(vault.getPrefix(player));
-            suffix = ColorUtils.fromAmpersand(vault.getSuffix(player));
+        if (!TimeUtil.isRecent(vaultUpdateTime, TimeType.SECOND.toMillis(5))) {
+            prefix = ColorUtil.fromAmpersand(vault.getPrefix(player));
+            suffix = ColorUtil.fromAmpersand(vault.getSuffix(player));
 
             if (!prefix.isBlank())
                 prefix += " ";

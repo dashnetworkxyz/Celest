@@ -1,7 +1,7 @@
 package xyz.dashnetwork.celest.channel.channels.output;
 
 import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.utils.VersionUtils;
+import xyz.dashnetwork.celest.utils.VersionUtil;
 import xyz.dashnetwork.celest.connection.User;
 
 public final class ChannelOutVersion extends Channel {
@@ -9,7 +9,7 @@ public final class ChannelOutVersion extends Channel {
     @Override
     protected void handle(User user) {
         output.writeUTF(user.getUuid().toString());
-        output.writeUTF(VersionUtils.getVersionString(user.getPlayer().getProtocolVersion()));
+        output.writeUTF(VersionUtil.getVersionString(user.getPlayer().getProtocolVersion()));
     }
 
 }

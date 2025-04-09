@@ -20,24 +20,30 @@ package xyz.dashnetwork.celest.utils;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
-public final class LazyUtils {
+public final class ArrayUtil {
 
-    @SafeVarargs
-    public static <T> boolean anyTrue(@NotNull Predicate<T> predicate, @NotNull T... objects) {
-        for (T each : objects)
-            if (predicate.test(each))
-                return true;
-        return false;
+    public static <T> String convertToString(@NotNull T[] array, @NotNull Function<T, String> function, @NotNull String separator) {
+        StringBuilder builder = new StringBuilder();
+
+        for (T each : array) {
+            if (!builder.isEmpty())
+                builder.append(separator);
+
+            builder.append(function.apply(each));
+        }
+
+        return builder.toString();
     }
 
-    public static boolean anyEquals(@NotNull Object object, @NotNull Object... compare) {
-        return anyTrue(check -> check.equals(object), compare);
-    }
+    public static <T> T[] add(@NotNull T[] array, T object) {
+        List<T> list = new ArrayList<>(List.of(array));
+        list.add(object);
 
-    public static boolean anyEqualsIgnoreCase(@NotNull String string, @NotNull String... compare) {
-        return anyTrue(check -> check.equalsIgnoreCase(string), compare);
+        return list.toArray(array);
     }
 
 }

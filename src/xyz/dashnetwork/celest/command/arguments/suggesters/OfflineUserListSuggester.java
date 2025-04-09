@@ -20,8 +20,8 @@ package xyz.dashnetwork.celest.command.arguments.suggesters;
 
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Suggester;
-import xyz.dashnetwork.celest.utils.ListUtils;
-import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.ListUtil;
+import xyz.dashnetwork.celest.utils.StringUtil;
 import xyz.dashnetwork.celest.connection.User;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public final class OfflineUserListSuggester implements Suggester {
 
         boolean ends = input.endsWith(",");
         String last = split[length];
-        String remaining = StringUtils.unsplit(ends ? 0 : -1, ",", split);
+        String remaining = StringUtil.unsplit(ends ? 0 : -1, ",", split);
 
         if (!remaining.isBlank())
             remaining += ",";
@@ -48,11 +48,11 @@ public final class OfflineUserListSuggester implements Suggester {
         if (ends)
             last = "";
 
-        ListUtils.addIfStarts(list, input, "@a");
+        ListUtil.addIfStarts(list, input, "@a");
         List<String> playerSuggest = ArgumentType.OFFLINE_USER.suggest(user, last);
 
         for (String entry : playerSuggest)
-            ListUtils.addIfStarts(list, input, remaining + entry);
+            ListUtil.addIfStarts(list, input, remaining + entry);
 
         return list;
     }

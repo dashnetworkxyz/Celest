@@ -30,13 +30,13 @@ import xyz.dashnetwork.celest.connection.User;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public final class MessageUtils {
+public final class MessageUtil {
 
     private static final ProxyServer server = Celest.getServer();
     private static final ConsoleCommandSource consoleCommandSource = server.getConsoleCommandSource();
 
     public static void message(@NotNull Audience audience, @NotNull String message) {
-        message(audience, ComponentUtils.fromString(message));
+        message(audience, ComponentUtil.fromString(message));
     }
 
     public static void message(@NotNull Audience audience, @NotNull Component component) {
@@ -47,7 +47,7 @@ public final class MessageUtils {
         message(audience, function.apply(User.getUser(audience).orElse(null)));
     }
 
-    public static void broadcast(@NotNull String message) { broadcast(ComponentUtils.fromString(message)); }
+    public static void broadcast(@NotNull String message) { broadcast(ComponentUtil.fromString(message)); }
 
     public static void broadcast(@NotNull Component component) { server.sendMessage(component); }
 
@@ -80,7 +80,7 @@ public final class MessageUtils {
     }
 
     public static void broadcast(boolean console, @NotNull Predicate<User> predicate, @NotNull String message) {
-        broadcast(console, predicate, ComponentUtils.fromString(message));
+        broadcast(console, predicate, ComponentUtil.fromString(message));
     }
 
     public static void broadcast(boolean console, @NotNull Predicate<User> predicate, @NotNull Component component) {

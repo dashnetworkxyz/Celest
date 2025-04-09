@@ -22,8 +22,8 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.network.ProtocolVersion;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.VersionUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.VersionUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.connection.User;
@@ -51,7 +51,7 @@ public final class CommandVersionList extends CelestCommand {
         }
 
         if (map.isEmpty()) {
-            MessageUtils.message(source, "&6&l»&7 No players online.");
+            MessageUtil.message(source, "&6&l»&7 No players online.");
             return;
         }
 
@@ -61,7 +61,7 @@ public final class CommandVersionList extends CelestCommand {
             if (builder.size() > 0)
                 builder.append("\n");
 
-            builder.append("&6&l»&7 [&6" + VersionUtils.getVersionString(entry.getKey()) + "&7] &6");
+            builder.append("&6&l»&7 [&6" + VersionUtil.getVersionString(entry.getKey()) + "&7] &6");
             builder.append(new NamedSourceFormat(entry.getValue(), "&7, &6"));
         }
 

@@ -20,7 +20,7 @@ package xyz.dashnetwork.celest.utils;
 
 import org.jetbrains.annotations.NotNull;
 
-public final class StringUtils {
+public final class StringUtil {
 
     // negative index can be used as a reverse index.
     public static String unsplit(int index, @NotNull String spliterator, @NotNull String[] array) {

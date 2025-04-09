@@ -16,31 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+package xyz.dashnetwork.celest.utils;
 
-package xyz.dashnetwork.celest.chat;
+import com.velocitypowered.api.network.ProtocolVersion;
 
-import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextDecoration;
+public final class VersionUtil {
 
-public final class StyleUtils {
+    public static String getVersionString(ProtocolVersion version) {
+        String earliest = version.getVersionIntroducedIn();
+        String latest = version.getMostRecentSupportedVersion();
 
-    public static boolean hasColor(Style style) {
-        if (style.color() != null)
-            return true;
+        if (earliest.equals(latest))
+            return earliest;
 
-        if (style.hasDecoration(TextDecoration.OBFUSCATED))
-            return true;
-
-        if (style.hasDecoration(TextDecoration.BOLD))
-            return true;
-
-        if (style.hasDecoration(TextDecoration.STRIKETHROUGH))
-            return true;
-
-        if (style.hasDecoration(TextDecoration.UNDERLINED))
-            return true;
-
-        return style.hasDecoration(TextDecoration.ITALIC);
+        return earliest + "-" + latest;
     }
 
 }

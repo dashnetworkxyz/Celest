@@ -25,9 +25,9 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.events.CelestChatEvent;
-import xyz.dashnetwork.celest.utils.GrammarUtils;
-import xyz.dashnetwork.celest.utils.LazyUtils;
-import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.GrammarUtil;
+import xyz.dashnetwork.celest.utils.LazyUtil;
+import xyz.dashnetwork.celest.utils.StringUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
@@ -68,9 +68,9 @@ public final class Messages {
                     Player player = user.getPlayer();
 
                     if (message.startsWith("/")) {
-                        if (LazyUtils.anyEquals(player.getProtocolVersion(),
+                        if (LazyUtil.anyEquals(player.getProtocolVersion(),
                                 ProtocolVersion.MINECRAFT_1_19, ProtocolVersion.MINECRAFT_1_19_1)) {
-                            MessageUtils.message(player,
+                            MessageUtil.message(player,
                                     "&6&l»&7 Using commands in &6@lc&7 is disabled in &61.19-1.19.2&7.");
                             return;
                         }
@@ -98,7 +98,7 @@ public final class Messages {
             if (!split.isEmpty()) {
                 Section section = builder.append(" " + split);
 
-                if (StringUtils.matchesUrl(split)) {
+                if (StringUtil.matchesUrl(split)) {
                     String url = split.toLowerCase().startsWith("http") ? split : "https://" + split;
 
                     section.hover("&7Click to open &6" + url).click(ClickEvent.openUrl(url));
@@ -117,7 +117,7 @@ public final class Messages {
         builder.append("&6&l»&7 Available servers: ");
 
         for (RegisteredServer server : Celest.getServer().getAllServers()) {
-            String name = GrammarUtils.capitalization(server.getServerInfo().getName());
+            String name = GrammarUtil.capitalization(server.getServerInfo().getName());
             Function<User, Boolean> permission =
                     user -> user.isOwner() || user.getPlayer().hasPermission("dashnetwork.server." + name.toLowerCase());
 

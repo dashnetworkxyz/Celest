@@ -22,7 +22,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.network.ProtocolVersion;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
 
 public final class CommandProtocolList extends CelestCommand {
@@ -39,7 +39,7 @@ public final class CommandProtocolList extends CelestCommand {
                         + String.join(", ", version.getVersionsSupportedBy())
                 );
 
-        MessageUtils.message(source, page::build);
+        MessageUtil.message(source, page::build);
     }
 
 }

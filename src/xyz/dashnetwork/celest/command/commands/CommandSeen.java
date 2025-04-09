@@ -24,8 +24,8 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.PunishUtils;
-import xyz.dashnetwork.celest.utils.TimeUtils;
+import xyz.dashnetwork.celest.utils.PunishUtil;
+import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.chat.builder.formats.OfflineUserFormat;
@@ -81,12 +81,12 @@ public final class CommandSeen extends CelestCommand {
                     .click(ClickEvent.suggestCommand(address));
         }
 
-        if (PunishUtils.isValid(ban)) {
+        if (PunishUtil.isValid(ban)) {
             builder.append("\n&6&l»&7 Ban: ");
 
             Long duration = ban.expiration();
             Section section;
-            String date = duration == null ? null : TimeUtils.longToDate(duration);
+            String date = duration == null ? null : TimeUtil.longToDate(duration);
 
             if (duration == null)
                 section = builder.append("&6Permanent");
@@ -104,12 +104,12 @@ public final class CommandSeen extends CelestCommand {
             section.hover("&7For: &6" + ban.reason());
         }
 
-        if (PunishUtils.isValid(mute)) {
+        if (PunishUtil.isValid(mute)) {
             builder.append("\n&6&l»&7 Mute: ");
 
             Long duration = mute.expiration();
             Section section;
-            String date = duration == null ? null : TimeUtils.longToDate(duration);
+            String date = duration == null ? null : TimeUtil.longToDate(duration);
 
             if (duration == null)
                 section = builder.append("&6Permanent");

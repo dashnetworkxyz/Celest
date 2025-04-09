@@ -20,7 +20,7 @@ package xyz.dashnetwork.celest.command.arguments.suggesters;
 
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Suggester;
-import xyz.dashnetwork.celest.utils.ListUtils;
+import xyz.dashnetwork.celest.utils.ListUtil;
 import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.connection.User;
 
@@ -36,7 +36,7 @@ public final class LongSuggester implements Suggester {
         if (input.length() > 0)
             for (TimeType type : TimeType.values())
                 for (String selector : type.getSelectors())
-                    ListUtils.addIfStarts(list, input.replaceAll("[0-9]", ""), selector);
+                    ListUtil.addIfStarts(list, input.replaceAll("[0-9]", ""), selector);
 
         list.addAll(ArgumentType.INTEGER.suggest(user, input));
 

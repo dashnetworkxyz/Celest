@@ -25,8 +25,8 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.PermissionType;
-import xyz.dashnetwork.celest.chat.ColorUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.ColorUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
@@ -48,7 +48,7 @@ public final class CommandNickName extends CelestCommand {
     @Override
     protected void sendUsage(@NotNull CommandSource source, @NotNull String label) {
         super.sendUsage(source, label);
-        MessageUtils.message(source, "&6&l»&7 \"&6/" + label + " off&7\" will clear your nickname.");
+        MessageUtil.message(source, "&6&l»&7 \"&6/" + label + " off&7\" will clear your nickname.");
     }
 
     @Override
@@ -65,23 +65,23 @@ public final class CommandNickName extends CelestCommand {
         boolean admin = PermissionType.ADMIN.hasPermission(source);
 
         if (!off && !admin) {
-            int length = ColorUtils.strip(string).length();
+            int length = ColorUtil.strip(string).length();
 
             if (length < 4 || length > 16) {
-                MessageUtils.message(source, "&6&l»&c Your nickname must be within 4-16 characters.");
+                MessageUtil.message(source, "&6&l»&c Your nickname must be within 4-16 characters.");
                 return;
             }
         }
 
-        if (!ColorUtils.strip(string).matches("[A-z0-9]+") && !admin) {
-            MessageUtils.message(source, "&6&l»&c Your nickname must be alphanumeric.");
+        if (!ColorUtil.strip(string).matches("[A-z0-9]+") && !admin) {
+            MessageUtil.message(source, "&6&l»&c Your nickname must be alphanumeric.");
             return;
         }
 
         if (off)
             string = null;
         else
-            string = ColorUtils.fromAmpersand(string);
+            string = ColorUtil.fromAmpersand(string);
 
         NamedSource named = NamedSource.of(source);
         MessageBuilder builder;

@@ -22,7 +22,7 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.Parser;
-import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.StringUtil;
 import xyz.dashnetwork.celest.connection.User;
 
 import java.util.Optional;
@@ -39,7 +39,7 @@ public final class PlayerParser implements Parser {
 
         Optional<Player> optional;
 
-        if (StringUtils.matchesUuid(input))
+        if (StringUtil.matchesUuid(input))
             optional = server.getPlayer(UUID.fromString(input));
         else
             optional = server.getPlayer(input);

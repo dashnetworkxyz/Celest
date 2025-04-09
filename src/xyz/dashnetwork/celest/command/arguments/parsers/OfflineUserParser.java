@@ -20,7 +20,7 @@ package xyz.dashnetwork.celest.command.arguments.parsers;
 
 import com.velocitypowered.api.util.GameProfile;
 import xyz.dashnetwork.celest.command.arguments.Parser;
-import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.StringUtil;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.profile.OfflineUser;
 import xyz.dashnetwork.celest.profile.ProfileUtils;
@@ -36,7 +36,7 @@ public final class OfflineUserParser implements Parser {
 
         GameProfile profile;
 
-        if (StringUtils.matchesUuid(input))
+        if (StringUtil.matchesUuid(input))
             profile = ProfileUtils.fromUuid(UUID.fromString(input));
         else
             profile = ProfileUtils.fromUsername(input);

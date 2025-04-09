@@ -18,9 +18,9 @@
 
 package xyz.dashnetwork.celest.connection;
 
-import xyz.dashnetwork.celest.utils.ArrayUtils;
-import xyz.dashnetwork.celest.utils.LazyUtils;
-import xyz.dashnetwork.celest.utils.PunishUtils;
+import xyz.dashnetwork.celest.utils.ArrayUtil;
+import xyz.dashnetwork.celest.utils.LazyUtil;
+import xyz.dashnetwork.celest.utils.PunishUtil;
 import xyz.dashnetwork.celest.limbo.Limbo;
 import xyz.dashnetwork.celest.limbo.Savable;
 import xyz.dashnetwork.celest.storage.Storage;
@@ -95,12 +95,12 @@ public final class Address implements Savable {
             if (profile.uuid().equals(uuid))
                 return;
 
-        addressData.setProfiles(ArrayUtils.add(profiles, new PlayerData(uuid, username)));
+        addressData.setProfiles(ArrayUtil.add(profiles, new PlayerData(uuid, username)));
     }
 
     @Override
     public void save() {
-        if (addressData.getProfiles().length > 0 || LazyUtils.anyTrue(PunishUtils::isValid, addressData.getMute(), addressData.getBan()))
+        if (addressData.getProfiles().length > 0 || LazyUtil.anyTrue(PunishUtil::isValid, addressData.getMute(), addressData.getBan()))
             Storage.write(address, Storage.Directory.ADDRESS, addressData);
         else if (!generated)
             Storage.delete(address, Storage.Directory.ADDRESS); // Remove obsolete addresses.

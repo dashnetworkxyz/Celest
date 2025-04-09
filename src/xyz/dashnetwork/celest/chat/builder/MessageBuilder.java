@@ -29,8 +29,8 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import xyz.dashnetwork.celest.chat.ColorUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.ColorUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.chat.builder.sections.FormatSection;
 import xyz.dashnetwork.celest.connection.User;
@@ -87,11 +87,11 @@ public final class MessageBuilder {
         return builder.build();
     }
 
-    public void message(@NotNull Audience audience) { MessageUtils.message(audience, this::build); }
+    public void message(@NotNull Audience audience) { MessageUtil.message(audience, this::build); }
 
-    public void broadcast(@NotNull Predicate<User> filter) { MessageUtils.broadcast(filter, this::build); }
+    public void broadcast(@NotNull Predicate<User> filter) { MessageUtil.broadcast(filter, this::build); }
 
-    public void broadcast() { MessageUtils.broadcast(this::build); }
+    public void broadcast() { MessageUtil.broadcast(this::build); }
 
     private String getStyleFromPrevious() {
         if (sections.isEmpty())
@@ -106,7 +106,7 @@ public final class MessageBuilder {
             NamedTextColor named = NamedTextColor.namedColor(color.value());
 
             if (named != null)
-                builder.append(ColorUtils.fromNamedTextColor(named));
+                builder.append(ColorUtil.fromNamedTextColor(named));
             else {
                 String hex = color.asHexString().replace("#", "");
                 StringBuilder serialized = new StringBuilder();
@@ -122,7 +122,7 @@ public final class MessageBuilder {
 
         for (Map.Entry<TextDecoration, TextDecoration.State> entry : style.decorations().entrySet())
             if (entry.getValue().equals(TextDecoration.State.TRUE))
-                builder.append(ColorUtils.fromTextDecoration(entry.getKey()));
+                builder.append(ColorUtil.fromTextDecoration(entry.getKey()));
 
         return builder.toString();
     }

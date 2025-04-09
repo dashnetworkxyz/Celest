@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.command.commands;
 import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 
 public final class CommandTheFurpySong extends CelestCommand {
 
@@ -63,7 +63,7 @@ public final class CommandTheFurpySong extends CelestCommand {
 
                 &7(Applause)""";
 
-        MessageUtils.message(source, message);
+        MessageUtil.message(source, message);
     }
 
 }

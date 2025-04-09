@@ -18,7 +18,7 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import xyz.dashnetwork.celest.chat.ColorUtils;
+import xyz.dashnetwork.celest.chat.ColorUtil;
 import xyz.dashnetwork.celest.storage.Configuration;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public final class ConfigurationList {
         MOTD_HOVER = parse(Configuration.get(String[]::new, "motd.hover"));
     }
 
-    private static String parse(String string) { return ColorUtils.fromAmpersand(Variables.parse(string)); }
+    private static String parse(String string) { return ColorUtil.fromAmpersand(Variables.parse(string)); }
 
     private static String[] parse(String[] array) {
         List<String> list = new ArrayList<>();

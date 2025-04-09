@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.profile;
 import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.util.GameProfile;
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.StringUtil;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.storage.data.CacheData;
@@ -32,7 +32,7 @@ import java.util.UUID;
 public final class ProfileUtils {
 
     public static GameProfile fromUsernameOrUuid(@NotNull String string) {
-        if (StringUtils.matchesUuid(string))
+        if (StringUtil.matchesUuid(string))
             return ProfileUtils.fromUuid(UUID.fromString(string));
         else
             return ProfileUtils.fromUsername(string);
@@ -47,7 +47,7 @@ public final class ProfileUtils {
         String stringUuid = Storage.read(username.toLowerCase(), Storage.Directory.LOOKUP, String.class);
         GameProfile profile = null;
 
-        if (stringUuid != null && StringUtils.matchesUuid(stringUuid))
+        if (stringUuid != null && StringUtil.matchesUuid(stringUuid))
             profile = MojangUtils.fromUuid(UUID.fromString(stringUuid));
 
         if (profile == null)

@@ -23,7 +23,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.chat.ColorUtils;
+import xyz.dashnetwork.celest.chat.ColorUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.GameProfileFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
@@ -45,7 +45,7 @@ public final class CommandRealName extends CelestCommand {
         for (User user : User.getUsers()) {
             String nickname = user.getData().getNickName();
 
-            if (nickname != null && ColorUtils.strip(nickname).toLowerCase().contains(search.toLowerCase())) {
+            if (nickname != null && ColorUtil.strip(nickname).toLowerCase().contains(search.toLowerCase())) {
                 if (builder.size() > 0)
                     builder.append("\n");
 

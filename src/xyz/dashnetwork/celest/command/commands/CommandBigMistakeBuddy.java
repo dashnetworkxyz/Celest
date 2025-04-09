@@ -26,7 +26,7 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.chat.ComponentUtils;
+import xyz.dashnetwork.celest.chat.ComponentUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.connection.User;
@@ -47,8 +47,8 @@ public final class CommandBigMistakeBuddy extends CelestCommand {
         Optional<Player[]> optional = arguments.optional(Player[].class);
         Player[] players = optional.orElse(Celest.getServer().getAllPlayers().toArray(Player[]::new));
 
-        Component title = ComponentUtils.fromString("&6Big mistake, buddy");
-        Component subtitle = ComponentUtils.fromString("&cNow we have your game files");
+        Component title = ComponentUtil.fromString("&6Big mistake, buddy");
+        Component subtitle = ComponentUtil.fromString("&cNow we have your game files");
 
         for (Player player : players) {
             player.sendTitlePart(TitlePart.SUBTITLE, subtitle);

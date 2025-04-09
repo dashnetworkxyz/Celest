@@ -22,8 +22,8 @@ import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.PunishUtils;
-import xyz.dashnetwork.celest.utils.TimeUtils;
+import xyz.dashnetwork.celest.utils.PunishUtil;
+import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.profile.ProfileUtils;
@@ -39,10 +39,10 @@ public final class LoginListener {
         User user = User.getUser(player);
         PunishData ban = user.getBan();
 
-        if (!PunishUtils.isValid(ban))
+        if (!PunishUtil.isValid(ban))
             ban = user.getAddress().getData().getBan();
 
-        if (PunishUtils.isValid(ban)) {
+        if (PunishUtil.isValid(ban)) {
             Long expiration = ban.expiration();
             UUID uuid = ban.judge();
 
@@ -55,7 +55,7 @@ public final class LoginListener {
             builder.append("\n&7You were banned by &6" + judge);
 
             if (expiration != null)
-                builder.append("\n&7Your ban will expire on &6" + TimeUtils.longToDate(expiration));
+                builder.append("\n&7Your ban will expire on &6" + TimeUtil.longToDate(expiration));
 
             builder.append("\n\n" + ban.reason());
 

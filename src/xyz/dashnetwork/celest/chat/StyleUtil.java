@@ -16,21 +16,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.utils;
 
-import org.jetbrains.annotations.NotNull;
+package xyz.dashnetwork.celest.chat;
 
-import java.util.List;
+import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextDecoration;
 
-public final class ListUtils {
+public final class StyleUtil {
 
-    public static boolean containsOtherThan(@NotNull List<?> list, Object object) {
-        return list.size() > (list.contains(object) ? 1 : 0);
-    }
+    public static boolean hasColor(Style style) {
+        if (style.color() != null)
+            return true;
 
-    public static void addIfStarts(@NotNull List<String> list, @NotNull String start, @NotNull String entry) {
-        if (entry.toLowerCase().startsWith(start.toLowerCase()))
-            list.add(entry);
+        if (style.hasDecoration(TextDecoration.OBFUSCATED))
+            return true;
+
+        if (style.hasDecoration(TextDecoration.BOLD))
+            return true;
+
+        if (style.hasDecoration(TextDecoration.STRIKETHROUGH))
+            return true;
+
+        if (style.hasDecoration(TextDecoration.UNDERLINED))
+            return true;
+
+        return style.hasDecoration(TextDecoration.ITALIC);
     }
 
 }

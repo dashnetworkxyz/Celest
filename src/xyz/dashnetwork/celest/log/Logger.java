@@ -20,7 +20,7 @@ package xyz.dashnetwork.celest.log;
 
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.Section;
 
@@ -45,7 +45,7 @@ public final class Logger {
         for (String hover : hovers)
             section.hover(hover);
 
-        MessageUtils.broadcast(false, user -> user.getData().getDebug(), builder::build);
+        MessageUtil.broadcast(false, user -> user.getData().getDebug(), builder::build);
     }
 
     public static void throwable(Throwable throwable) {
@@ -70,7 +70,7 @@ public final class Logger {
         MessageBuilder message = new MessageBuilder();
         message.append("&f&l»&f [&cTHROWABLE&f]:&c " + name).hover(hover.toString());
 
-        MessageUtils.broadcast(false, user -> user.getData().getDebug(), message::build);
+        MessageUtil.broadcast(false, user -> user.getData().getDebug(), message::build);
     }
 
 }

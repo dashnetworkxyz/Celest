@@ -25,11 +25,11 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.ArrayUtils;
+import xyz.dashnetwork.celest.utils.ArrayUtil;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
-import xyz.dashnetwork.celest.utils.GithubUtils;
-import xyz.dashnetwork.celest.utils.TimeUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.GithubUtil;
+import xyz.dashnetwork.celest.utils.TimeUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.connection.Address;
@@ -86,7 +86,7 @@ public final class CommandCelest extends CelestCommand {
 
         switch (optionalCommand.get().toLowerCase()) {
             case "address", "a" -> {
-                MessageUtils.message(source, "&6&l»&7 Reading addressdata...");
+                MessageUtil.message(source, "&6&l»&7 Reading addressdata...");
 
                 List<Limbo<Address>> limbos = Limbo.getAll(Address.class, each -> true);
                 Map<String, AddressData> map = Storage.readAll(Storage.Directory.ADDRESS, AddressData.class);
@@ -106,7 +106,7 @@ public final class CommandCelest extends CelestCommand {
                             .hover("&6" + address
                                     + "\n&7ban: &6" + data.getBan()
                                     + "\n&7mute: &6" + data.getMute()
-                                    + "\n&7Profiles: &6" + ArrayUtils.convertToString(
+                                    + "\n&7Profiles: &6" + ArrayUtil.convertToString(
                                             data.getProfiles(),
                                             profile -> profile.username() + " " + profile.uuid(),
                                             "&7, &6"
@@ -114,16 +114,16 @@ public final class CommandCelest extends CelestCommand {
                             ).insertion(address);
                 }
 
-                MessageUtils.message(source, builder::build);
+                MessageUtil.message(source, builder::build);
             }
             case "reload", "r" -> {
                 Configuration.load();
                 ConfigurationList.load();
-                MessageUtils.message(source, "&6&l»&7 config.yml reloaded.");
+                MessageUtil.message(source, "&6&l»&7 config.yml reloaded.");
             }
             case "save", "s" -> {
                 Celest.getSaveTask().run();
-                MessageUtils.message(source, "&6&l»&7 Save complete.");
+                MessageUtil.message(source, "&6&l»&7 Save complete.");
             }
             case "version", "ver", "v" -> {
                 URL resource = CommandCelest.class.getClassLoader().getResource("build.properties");
@@ -137,17 +137,17 @@ public final class CommandCelest extends CelestCommand {
 
                     stream.close();
                 } catch (IOException exception) {
-                    MessageUtils.message(source, "&6&l»&7 Failed to get build properties.");
+                    MessageUtil.message(source, "&6&l»&7 Failed to get build properties.");
                     Logger.throwable(exception);
                     return;
                 }
 
                 if (properties.length < 3 || properties[3].equals("${describe}")) {
-                    MessageUtils.message(source, "&6&l»&7 No build information is available.");
+                    MessageUtil.message(source, "&6&l»&7 No build information is available.");
                     return;
                 }
 
-                String date = TimeUtils.longToDate(Long.parseLong(properties[4]) * 1000);
+                String date = TimeUtil.longToDate(Long.parseLong(properties[4]) * 1000);
 
                 MessageBuilder builder = new MessageBuilder();
                 builder.append("&6&l»&7 " + properties[0] + " &6" + properties[1] + " " + properties[2]);
@@ -163,12 +163,12 @@ public final class CommandCelest extends CelestCommand {
                 builder.message(source);
 
                 String hash = properties[3].split("-")[2];
-                int distance = GithubUtils.getGitDistance("dashnetworkxyz/Celest", "master", hash);
+                int distance = GithubUtil.getGitDistance("dashnetworkxyz/Celest", "master", hash);
 
                 switch (distance) {
-                    case -1 -> MessageUtils.message(source, "&6&l»&7 Unable to fetch version from Github.");
-                    case 0 -> MessageUtils.message(source, "&6&l»&7 You are using the &6latest version&7.");
-                    default -> MessageUtils.message(source, "&6&l»&7 You are &6" + distance + " versions&7 behind.");
+                    case -1 -> MessageUtil.message(source, "&6&l»&7 Unable to fetch version from Github.");
+                    case 0 -> MessageUtil.message(source, "&6&l»&7 You are using the &6latest version&7.");
+                    default -> MessageUtil.message(source, "&6&l»&7 You are &6" + distance + " versions&7 behind.");
                 }
             }
             case "debug" -> {
@@ -185,12 +185,12 @@ public final class CommandCelest extends CelestCommand {
                 }
 
                 if (state)
-                    MessageUtils.message(source, "&6&l»&7 You are now in &6Debug&7.");
+                    MessageUtil.message(source, "&6&l»&7 You are now in &6Debug&7.");
                 else
-                    MessageUtils.message(source, "&6&l»&7 You are no longer in &6Debug&7.");
+                    MessageUtil.message(source, "&6&l»&7 You are no longer in &6Debug&7.");
             }
             case "user", "u" -> {
-                MessageUtils.message(source, "&6&l»&7 Reading userdata...");
+                MessageUtil.message(source, "&6&l»&7 Reading userdata...");
 
                 List<Limbo<OfflineUser>> limbos = Limbo.getAll(OfflineUser.class, each -> true);
                 Map<String, UserData> map = Storage.readAll(Storage.Directory.USER, UserData.class);
@@ -227,11 +227,11 @@ public final class CommandCelest extends CelestCommand {
                             ).insertion(uuid);
                 }
 
-                MessageUtils.message(source, builder::build);
+                MessageUtil.message(source, builder::build);
             }
             case "cache", "c" -> {
                 Celest.getCacheTask().run();
-                MessageUtils.message(source, "&6&l»&7 Cache refreshed and old entries removed.");
+                MessageUtil.message(source, "&6&l»&7 Cache refreshed and old entries removed.");
             }
             case "flush", "f" -> {
                 for (Limbo<?> limbo : Limbo.getLimbos()) {
@@ -239,18 +239,18 @@ public final class CommandCelest extends CelestCommand {
                     limbo.save();
                 }
 
-                MessageUtils.message(source, "&6&l»&7 All objects in limbo cleared & saved.");
+                MessageUtil.message(source, "&6&l»&7 All objects in limbo cleared & saved.");
             }
             case "legacy-import" -> {
-                MessageUtils.message(source, "&6&l»&7 Reading legacy data...");
+                MessageUtil.message(source, "&6&l»&7 Reading legacy data...");
 
                 LegacyParser parser = new LegacyParser();
                 parser.read();
 
-                MessageUtils.message(source, "&6&l»&7 Writing legacy data...");
+                MessageUtil.message(source, "&6&l»&7 Writing legacy data...");
                 parser.write();
 
-                MessageUtils.message(source, "&6&l»&7 Completed legacy import.");
+                MessageUtil.message(source, "&6&l»&7 Completed legacy import.");
             }
             default -> sendHelpMessage(source);
         }

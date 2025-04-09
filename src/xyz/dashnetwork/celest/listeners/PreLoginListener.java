@@ -22,8 +22,8 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.proxy.InboundConnection;
-import xyz.dashnetwork.celest.utils.StringUtils;
-import xyz.dashnetwork.celest.chat.ComponentUtils;
+import xyz.dashnetwork.celest.utils.StringUtil;
+import xyz.dashnetwork.celest.chat.ComponentUtil;
 
 import java.net.InetSocketAddress;
 import java.util.Optional;
@@ -37,13 +37,13 @@ public final class PreLoginListener {
         Optional<InetSocketAddress> virtual = connection.getVirtualHost();
 
         if (virtual.isEmpty() || !virtual.get().getHostName().toLowerCase().contains("dashnetwork")) {
-            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
+            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtil.fromString(
                     "Connection Refused"
             )));
         }
 
         if (version.compareTo(ProtocolVersion.MINECRAFT_1_7_6) <= 0) {
-            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
+            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtil.fromString(
                     """
                             &6&lDashNetwork
                             &61.7&7 is no longer supported.
@@ -52,7 +52,7 @@ public final class PreLoginListener {
         }
 
         if (version.compareTo(ProtocolVersion.MINECRAFT_1_9) >= 0 && version.compareTo(ProtocolVersion.MINECRAFT_1_10) <= 0) {
-            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
+            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtil.fromString(
                     """
                             &6&lDashNetwork
                             &61.9-1.10&7 is no longer supported.
@@ -61,8 +61,8 @@ public final class PreLoginListener {
         }
 
         // Some usernames break the rules. I'm not accounting for any of these.
-        if (!StringUtils.matchesUsername(event.getUsername())) {
-            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtils.fromString(
+        if (!StringUtil.matchesUsername(event.getUsername())) {
+            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(ComponentUtil.fromString(
                     """
                             &6&lDashNetwork
                             &7Illegal usernames are not supported."""

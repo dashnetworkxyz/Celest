@@ -28,10 +28,10 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.GrammarUtils;
-import xyz.dashnetwork.celest.utils.LazyUtils;
-import xyz.dashnetwork.celest.chat.ComponentUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.GrammarUtil;
+import xyz.dashnetwork.celest.utils.LazyUtil;
+import xyz.dashnetwork.celest.chat.ComponentUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
@@ -59,7 +59,7 @@ public final class CommandNostalgia extends CelestCommand {
         List<Player> players = arguments.playerListOrSelf(source);
 
         if (optional.isEmpty()) {
-            MessageUtils.message(source, "&6&l»&7 No server for &6Nostalgia&7 was found.");
+            MessageUtil.message(source, "&6&l»&7 No server for &6Nostalgia&7 was found.");
             return;
         }
 
@@ -69,7 +69,7 @@ public final class CommandNostalgia extends CelestCommand {
         }
 
         RegisteredServer server = optional.get();
-        String name = GrammarUtils.capitalization(server.getServerInfo().getName());
+        String name = GrammarUtil.capitalization(server.getServerInfo().getName());
         NamedSource named = NamedSource.of(source);
         MessageBuilder builder;
 
@@ -86,7 +86,7 @@ public final class CommandNostalgia extends CelestCommand {
             builder.message(player);
 
             player.createConnectionRequest(server).connect().thenAccept(u -> {
-                if (LazyUtils.anyEquals(u.getStatus(),
+                if (LazyUtil.anyEquals(u.getStatus(),
                         ConnectionRequestBuilder.Status.CONNECTION_CANCELLED,
                         ConnectionRequestBuilder.Status.SERVER_DISCONNECTED)) {
                     Optional<Component> component = u.getReasonComponent();
@@ -96,7 +96,7 @@ public final class CommandNostalgia extends CelestCommand {
                             "&6&l»&7 Failed to connect to &6" + name + "&7. Hover for more info.");
 
                     component.ifPresentOrElse(
-                            c -> section.hover("&6" + ComponentUtils.toString(c)),
+                            c -> section.hover("&6" + ComponentUtil.toString(c)),
                             () -> section.hover("&7No kick message provided."));
 
                     kick.message(player);

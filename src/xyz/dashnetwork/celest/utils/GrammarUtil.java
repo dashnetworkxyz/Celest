@@ -18,18 +18,12 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import com.velocitypowered.api.network.ProtocolVersion;
+public final class GrammarUtil {
 
-public final class VersionUtils {
-
-    public static String getVersionString(ProtocolVersion version) {
-        String earliest = version.getVersionIntroducedIn();
-        String latest = version.getMostRecentSupportedVersion();
-
-        if (earliest.equals(latest))
-            return earliest;
-
-        return earliest + "-" + latest;
+    public static String capitalization(String string) {
+        if (string.length() > 1)
+            return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+        return string.toUpperCase();
     }
 
 }

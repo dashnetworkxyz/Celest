@@ -21,8 +21,8 @@ package xyz.dashnetwork.celest.channel.channels.input;
 import com.google.common.io.ByteArrayDataInput;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.utils.PermissionType;
-import xyz.dashnetwork.celest.chat.ComponentUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.ComponentUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.connection.User;
 
 import java.util.function.Predicate;
@@ -37,9 +37,9 @@ public final class ChannelInBroadcast extends Channel {
         String string = input.readUTF();
 
         if (json)
-            MessageUtils.broadcast(console, permission, ComponentUtils.fromJson(string));
+            MessageUtil.broadcast(console, permission, ComponentUtil.fromJson(string));
         else
-            MessageUtils.broadcast(console, permission, string);
+            MessageUtil.broadcast(console, permission, string);
     }
 
 }

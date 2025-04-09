@@ -24,8 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.SecretUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.SecretUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.storage.data.UserData;
@@ -73,11 +73,11 @@ public final class CommandTwoFactor extends CelestCommand {
         switch (subcommand) {
             case "setup" -> {
                 if (twoFactor != null) {
-                    MessageUtils.message(source, "&6&l»&7 You have already setup 2fa.");
+                    MessageUtil.message(source, "&6&l»&7 You have already setup 2fa.");
                     return;
                 }
 
-                String generated = SecretUtils.generateSecret();
+                String generated = SecretUtil.generateSecret();
                 tempKeyMap.put(uuid, generated);
 
                 MessageBuilder builder = new MessageBuilder();
@@ -90,49 +90,49 @@ public final class CommandTwoFactor extends CelestCommand {
             }
             case "disable" -> {
                 if (twoFactor == null) {
-                    MessageUtils.message(source, "&6&l»&7 You haven't setup 2fa.");
+                    MessageUtil.message(source, "&6&l»&7 You haven't setup 2fa.");
                     return;
                 }
 
                 if (optionalCode.isEmpty()) {
-                    MessageUtils.message(source, "&6&l»&7 You need to provide a TOTP to disable 2fa.");
+                    MessageUtil.message(source, "&6&l»&7 You need to provide a TOTP to disable 2fa.");
                     return;
                 }
 
-                if (optionalCode.get().equals(SecretUtils.getTOTP(twoFactor))) {
+                if (optionalCode.get().equals(SecretUtil.getTOTP(twoFactor))) {
                     data.setTwoFactor(null);
                     data.setAuthenticated(false);
 
-                    MessageUtils.message(source, "&6&l»&7 You have disabled 2fa.");
+                    MessageUtil.message(source, "&6&l»&7 You have disabled 2fa.");
                     return;
                 }
 
-                MessageUtils.message(source, "&6&l»&7 Incorrect TOTP code.");
+                MessageUtil.message(source, "&6&l»&7 Incorrect TOTP code.");
             }
             case "verify", "totp" -> {
                 if (!tempKeyMap.containsKey(uuid)) {
-                    MessageUtils.message(source, "&6&l»&7 Use &6/" + label + " setup&7 to setup 2fa.");
+                    MessageUtil.message(source, "&6&l»&7 Use &6/" + label + " setup&7 to setup 2fa.");
                     return;
                 }
 
                 if (optionalCode.isEmpty()) {
-                    MessageUtils.message(source, "&6&l»&7 You need to provide a TOTP.");
+                    MessageUtil.message(source, "&6&l»&7 You need to provide a TOTP.");
                     return;
                 }
 
                 String secret = tempKeyMap.get(uuid);
 
-                if (optionalCode.get().equals(SecretUtils.getTOTP(secret))) {
+                if (optionalCode.get().equals(SecretUtil.getTOTP(secret))) {
                     tempKeyMap.remove(uuid);
 
                     data.setTwoFactor(secret);
                     data.setAuthenticated(true);
 
-                    MessageUtils.message(source, "&6&l»&7 2fa has been successfully setup.");
+                    MessageUtil.message(source, "&6&l»&7 2fa has been successfully setup.");
                     return;
                 }
 
-                MessageUtils.message(source, "&6&l»&7 Incorrect TOTP code.");
+                MessageUtil.message(source, "&6&l»&7 Incorrect TOTP code.");
             }
             default -> sendUsage(source, label);
         }

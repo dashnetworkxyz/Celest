@@ -21,8 +21,8 @@ package xyz.dashnetwork.celest.command.arguments;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.utils.StringUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.StringUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.profile.OfflineUser;
 
@@ -53,14 +53,14 @@ public final class Arguments {
                 }
 
                 String string = type == ArgumentType.MULTI_STRING ?
-                        StringUtils.unsplit(index, " ", array) :
+                        StringUtil.unsplit(index, " ", array) :
                         array[index];
 
                 index++;
                 Object object = type.parse(user, string);
 
                 if (object == null) {
-                    MessageUtils.message(source, "&6&l»&7 Couldn't find " + type.getName() + " for &6" + string);
+                    MessageUtil.message(source, "&6&l»&7 Couldn't find " + type.getName() + " for &6" + string);
                     invalid = true;
                     return;
                 }

@@ -23,7 +23,7 @@ import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.event.ClickEvent;
-import xyz.dashnetwork.celest.utils.GrammarUtils;
+import xyz.dashnetwork.celest.utils.GrammarUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.connection.User;
@@ -39,7 +39,7 @@ public final class ServerPreConnectListener {
         Optional<RegisteredServer> server = event.getResult().getServer();
         assert server.isPresent();
 
-        String name = GrammarUtils.capitalization(server.get().getServerInfo().getName());
+        String name = GrammarUtil.capitalization(server.get().getServerInfo().getName());
         String permission = "dashnetwork.server." + name.toLowerCase();
 
         if (!user.isOwner() && !player.hasPermission(permission)) {

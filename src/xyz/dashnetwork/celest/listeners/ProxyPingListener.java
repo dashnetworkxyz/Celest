@@ -28,7 +28,7 @@ import com.velocitypowered.api.scheduler.Scheduler;
 import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.utils.*;
-import xyz.dashnetwork.celest.chat.ComponentUtils;
+import xyz.dashnetwork.celest.chat.ComponentUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.connection.Address;
@@ -65,7 +65,7 @@ public final class ProxyPingListener {
             if (!user.getData().getVanish())
                 online++;
 
-        Component description = ComponentUtils.fromString(ConfigurationList.MOTD_DESCRIPTION);
+        Component description = ComponentUtil.fromString(ConfigurationList.MOTD_DESCRIPTION);
         String software = ConfigurationList.MOTD_SOFTWARE;
 
         builder.clearMods().clearSamplePlayers();
@@ -88,10 +88,10 @@ public final class ProxyPingListener {
             if (profiles.length == 0)
                 return; // Skip server pingers.
 
-            if (PunishUtils.isValid(data.getBan()))
+            if (PunishUtil.isValid(data.getBan()))
                 return; // Skip banned ips.
 
-            if (TimeUtils.isRecent(address.getServerPingTime(), TimeType.MINUTE))
+            if (TimeUtil.isRecent(address.getServerPingTime(), TimeType.MINUTE))
                 return; // Skip ping spammers.
 
             for (User user : User.getUsers())
@@ -100,7 +100,7 @@ public final class ProxyPingListener {
 
             address.setServerPingTime(System.currentTimeMillis());
 
-            String range = VersionUtils.getVersionString(version);
+            String range = VersionUtil.getVersionString(version);
             String name = profiles[0].username();
 
             if (profiles.length > 1) {
@@ -115,7 +115,7 @@ public final class ProxyPingListener {
 
             section.hover("&6" + address.getString(), User::showAddress);
             section.hover("&7Version: &6" + range + "&7 (" + version.getProtocol() + ")");
-            section.hover("&7Accounts: &6" + ArrayUtils.convertToString(profiles, PlayerData::username, "&7, &6"));
+            section.hover("&7Accounts: &6" + ArrayUtil.convertToString(profiles, PlayerData::username, "&7, &6"));
 
             message.broadcast(user -> user.getData().getPingSpy());
         }).schedule();

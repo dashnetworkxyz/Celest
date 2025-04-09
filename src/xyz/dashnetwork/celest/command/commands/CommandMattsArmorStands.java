@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.command.commands;
 import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 
 public final class CommandMattsArmorStands extends CelestCommand {
 
@@ -29,7 +29,7 @@ public final class CommandMattsArmorStands extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        MessageUtils.message(source, "&c&lMattsArmorStands &6&l>>&6 Developed by MM5. Version &cv1.0");
+        MessageUtil.message(source, "&c&lMattsArmorStands &6&l>>&6 Developed by MM5. Version &cv1.0");
     }
 
 }

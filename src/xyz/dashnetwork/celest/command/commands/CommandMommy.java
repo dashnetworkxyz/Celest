@@ -22,8 +22,8 @@ import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.GrammarUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.GrammarUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -36,14 +36,14 @@ public final class CommandMommy extends CelestCommand {
 
     @Override
     public void execute(CommandSource source, String label, Arguments arguments) {
-        String member = GrammarUtils.capitalization(label);
+        String member = GrammarUtil.capitalization(label);
 
-        MessageUtils.message(source, "&6&l»&7 Scanning face for " + member + "...");
+        MessageUtil.message(source, "&6&l»&7 Scanning face for " + member + "...");
 
         Celest.getServer().getScheduler().buildTask(Celest.getInstance(), () -> {
             String random = mommies[ThreadLocalRandom.current().nextInt(mommies.length)];
 
-            MessageUtils.message(source, "&6&l»&7 Face identified. Your " + member + " is &6" + random + "&7.");
+            MessageUtil.message(source, "&6&l»&7 Face identified. Your " + member + " is &6" + random + "&7.");
         }).delay(1, TimeUnit.SECONDS).schedule();
     }
 

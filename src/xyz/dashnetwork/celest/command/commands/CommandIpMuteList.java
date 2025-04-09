@@ -21,8 +21,8 @@ package xyz.dashnetwork.celest.command.commands;
 import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.TimeUtils;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.utils.TimeUtil;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.connection.Address;
@@ -45,7 +45,7 @@ public final class CommandIpMuteList extends CelestCommand {
 
     @Override
     protected void execute(CommandSource source, String label, Arguments arguments) {
-        MessageUtils.message(source, "&6&l»&7 Reading addressdata...");
+        MessageUtil.message(source, "&6&l»&7 Reading addressdata...");
 
         List<Limbo<Address>> limbos = Limbo.getAll(Address.class, each -> each.getData().getMute() != null);
         Map<String, AddressData> map = Storage.readAll(Storage.Directory.ADDRESS, AddressData.class);
@@ -73,12 +73,12 @@ public final class CommandIpMuteList extends CelestCommand {
             if (expiration == null)
                 section.hover("&7Expiration: &6Permanent");
             else
-                section.hover("&7Expiration: &6" + TimeUtils.longToDate(expiration));
+                section.hover("&7Expiration: &6" + TimeUtil.longToDate(expiration));
 
             section.hover("&7Reason: &6" + mute.reason());
         }
 
-        MessageUtils.message(source, builder::build);
+        MessageUtil.message(source, builder::build);
     }
 
 }

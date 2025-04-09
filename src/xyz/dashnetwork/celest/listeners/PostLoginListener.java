@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.connection.User;
@@ -68,7 +68,7 @@ public final class PostLoginListener {
         }
 
         if (!user.isAuthenticated())
-            MessageUtils.message(player, "&6&l»&7 Please enter your 2fa code into chat.");
+            MessageUtil.message(player, "&6&l»&7 Please enter your 2fa code into chat.");
 
         user.getAddress().setServerPingTime(-1); // Reset for PingSpy
     }

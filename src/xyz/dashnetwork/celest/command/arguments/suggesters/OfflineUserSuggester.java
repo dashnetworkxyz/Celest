@@ -19,7 +19,7 @@
 package xyz.dashnetwork.celest.command.arguments.suggesters;
 
 import xyz.dashnetwork.celest.command.arguments.Suggester;
-import xyz.dashnetwork.celest.utils.ListUtils;
+import xyz.dashnetwork.celest.utils.ListUtil;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.data.CacheData;
@@ -33,10 +33,10 @@ public final class OfflineUserSuggester implements Suggester {
     public List<String> suggest(User user, String input) {
         List<String> list = new ArrayList<>();
 
-        ListUtils.addIfStarts(list, input, "@s");
+        ListUtil.addIfStarts(list, input, "@s");
 
         for (CacheData cache : Cache.getCache())
-            ListUtils.addIfStarts(list, input, cache.getUsername());
+            ListUtil.addIfStarts(list, input, cache.getUsername());
 
         return list;
     }

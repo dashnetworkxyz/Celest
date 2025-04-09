@@ -20,7 +20,7 @@ package xyz.dashnetwork.celest.chat.builder;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
-import xyz.dashnetwork.celest.chat.ComponentUtils;
+import xyz.dashnetwork.celest.chat.ComponentUtil;
 import xyz.dashnetwork.celest.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.connection.User;
 
@@ -54,7 +54,7 @@ public final class PageBuilder {
             end = size;
 
         if (start >= end)
-            return ComponentUtils.fromString("&6&l»&7 No entries found.");
+            return ComponentUtil.fromString("&6&l»&7 No entries found.");
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&7 ---------- ");

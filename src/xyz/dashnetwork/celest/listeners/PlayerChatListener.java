@@ -23,11 +23,11 @@ import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.format.NamedTextColor;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
-import xyz.dashnetwork.celest.utils.PunishUtils;
-import xyz.dashnetwork.celest.utils.SecretUtils;
-import xyz.dashnetwork.celest.utils.TimeUtils;
+import xyz.dashnetwork.celest.utils.PunishUtil;
+import xyz.dashnetwork.celest.utils.SecretUtil;
+import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.ChatChannel;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.Messages;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.Section;
@@ -52,25 +52,25 @@ public final class PlayerChatListener {
         String message = event.getMessage();
 
         if (!user.isAuthenticated()) {
-            if (message.equals(SecretUtils.getTOTP(userData.getTwoFactor()))) {
+            if (message.equals(SecretUtil.getTOTP(userData.getTwoFactor()))) {
                 user.getData().setAuthenticated(true);
 
                 xyz.dashnetwork.celest.channel.Channel.callOut("userdata", user);
 
-                MessageUtils.message(player, "&6&l»&7 You have been successfully authenticated.");
+                MessageUtil.message(player, "&6&l»&7 You have been successfully authenticated.");
                 return;
             }
 
-            MessageUtils.message(player, "&6&l»&7 Invalid TOTP code.");
+            MessageUtil.message(player, "&6&l»&7 Invalid TOTP code.");
             return;
         }
 
         PunishData mute = user.getMute();
 
-        if (!PunishUtils.isValid(mute))
+        if (!PunishUtil.isValid(mute))
             mute = user.getAddress().getData().getMute();
 
-        if (PunishUtils.isValid(mute)) {
+        if (PunishUtil.isValid(mute)) {
             Long expiration = mute.expiration();
             UUID uuid = mute.judge();
 
@@ -83,7 +83,7 @@ public final class PlayerChatListener {
             section.hover("&7You were muted by &6" + judge);
 
             if (expiration != null)
-                section.hover("&7Your mute will expire on &6" + TimeUtils.longToDate(expiration));
+                section.hover("&7Your mute will expire on &6" + TimeUtil.longToDate(expiration));
 
             section.hover(mute.reason());
 

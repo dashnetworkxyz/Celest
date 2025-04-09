@@ -20,8 +20,8 @@ package xyz.dashnetwork.celest.chat.builder.formats;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
-import xyz.dashnetwork.celest.utils.GrammarUtils;
-import xyz.dashnetwork.celest.utils.VersionUtils;
+import xyz.dashnetwork.celest.utils.GrammarUtil;
+import xyz.dashnetwork.celest.utils.VersionUtil;
 import xyz.dashnetwork.celest.chat.builder.Format;
 import xyz.dashnetwork.celest.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.connection.User;
@@ -48,7 +48,7 @@ public final class NamedSourceFormat implements Format {
             Player player = user.getPlayer();
             String uuid = user.getUuid().toString();
             String address = user.getAddress().getString();
-            String version = VersionUtils.getVersionString(player.getProtocolVersion());
+            String version = VersionUtil.getVersionString(player.getProtocolVersion());
             Optional<ServerConnection> optional = player.getCurrentServer();
             Predicate<User> predicate = each -> each.isAdmin() && !each.getData().getHideAddress();
 
@@ -56,7 +56,7 @@ public final class NamedSourceFormat implements Format {
             section.hover("&7Version: &6" + version);
             section.insertion(uuid);
 
-            optional.ifPresent(server -> section.hover("&7Server: &6" + GrammarUtils.capitalization(server.getServerInfo().getName())));
+            optional.ifPresent(server -> section.hover("&7Server: &6" + GrammarUtil.capitalization(server.getServerInfo().getName())));
         }
 
         sections.add(section);

@@ -27,7 +27,7 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.events.CelestVanishEvent;
 import xyz.dashnetwork.celest.chat.ChatChannel;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
@@ -78,7 +78,7 @@ public final class CommandVanish extends CelestCommand {
                 if (data.getChannel().equals(ChatChannel.GLOBAL)) {
                     data.setChannel(ChatChannel.STAFF);
 
-                    MessageUtils.message(player, "&6&l»&7 You have been moved to &6StaffChat&7 because you vanished.");
+                    MessageUtil.message(player, "&6&l»&7 You have been moved to &6StaffChat&7 because you vanished.");
                 }
 
                 on.add(player);
@@ -90,7 +90,7 @@ public final class CommandVanish extends CelestCommand {
                 off.add(player);
             }
 
-            MessageUtils.broadcast(false, predicate.negate(), builder::build);
+            MessageUtil.broadcast(false, predicate.negate(), builder::build);
 
             Channel.callOut("vanish", user);
             Celest.getServer().getEventManager().fireAndForget(new CelestVanishEvent(user, vanish));

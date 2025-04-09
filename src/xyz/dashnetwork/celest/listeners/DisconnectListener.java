@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.proxy.Player;
-import xyz.dashnetwork.celest.utils.LazyUtils;
+import xyz.dashnetwork.celest.utils.LazyUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.connection.User;
@@ -34,7 +34,7 @@ public final class DisconnectListener {
         Player player = event.getPlayer();
         User user = User.getUser(player);
 
-        if (LazyUtils.anyEquals(event.getLoginStatus(),
+        if (LazyUtil.anyEquals(event.getLoginStatus(),
                 DisconnectEvent.LoginStatus.PRE_SERVER_JOIN,
                 DisconnectEvent.LoginStatus.SUCCESSFUL_LOGIN)) {
             UserData data = user.getData();

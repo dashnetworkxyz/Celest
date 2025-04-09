@@ -22,7 +22,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.jetbrains.annotations.NotNull;
 
-public final class ColorUtils {
+public final class ColorUtil {
 
     public static String fromAmpersand(@NotNull String string) {
         return string.replaceAll("&([0-f]|[k-o]|r|x)", "§$1");

@@ -19,7 +19,7 @@
 package xyz.dashnetwork.celest.command.arguments.suggesters;
 
 import xyz.dashnetwork.celest.command.arguments.Suggester;
-import xyz.dashnetwork.celest.utils.StringUtils;
+import xyz.dashnetwork.celest.utils.StringUtil;
 import xyz.dashnetwork.celest.connection.User;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public final class IntegerSuggester implements Suggester {
     public List<String> suggest(User user, String input) {
         List<String> list = new ArrayList<>();
 
-        if (!input.isBlank() && !StringUtils.matchesInteger(input))
+        if (!input.isBlank() && !StringUtil.matchesInteger(input))
             return list;
 
         for (int i = 0; i < 10; i++)

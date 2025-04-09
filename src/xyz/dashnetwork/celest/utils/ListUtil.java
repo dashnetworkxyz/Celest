@@ -18,17 +18,19 @@
 
 package xyz.dashnetwork.celest.utils;
 
-import xyz.dashnetwork.celest.storage.data.PunishData;
+import org.jetbrains.annotations.NotNull;
 
-public final class PunishUtils {
+import java.util.List;
 
-    public static boolean isValid(PunishData data) {
-        if (data == null)
-            return false;
+public final class ListUtil {
 
-        Long expiration = data.expiration();
+    public static boolean containsOtherThan(@NotNull List<?> list, Object object) {
+        return list.size() > (list.contains(object) ? 1 : 0);
+    }
 
-        return expiration == null || expiration > System.currentTimeMillis();
+    public static void addIfStarts(@NotNull List<String> list, @NotNull String start, @NotNull String entry) {
+        if (entry.toLowerCase().startsWith(start.toLowerCase()))
+            list.add(entry);
     }
 
 }

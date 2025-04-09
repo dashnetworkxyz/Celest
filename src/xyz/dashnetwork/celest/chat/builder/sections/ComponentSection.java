@@ -24,9 +24,9 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import xyz.dashnetwork.celest.chat.ColorUtils;
-import xyz.dashnetwork.celest.chat.ComponentUtils;
-import xyz.dashnetwork.celest.chat.StyleUtils;
+import xyz.dashnetwork.celest.chat.ColorUtil;
+import xyz.dashnetwork.celest.chat.ComponentUtil;
+import xyz.dashnetwork.celest.chat.StyleUtil;
 import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.connection.User;
 
@@ -42,7 +42,7 @@ public final class ComponentSection implements Section {
     private Predicate<User> filter = user -> true;
 
     public ComponentSection(String text) {
-        String colored = ColorUtils.fromAmpersand(text).replace("§r", "§f");
+        String colored = ColorUtil.fromAmpersand(text).replace("§r", "§f");
         builder.append(serializer.deserialize(colored));
     }
 
@@ -54,13 +54,13 @@ public final class ComponentSection implements Section {
 
     public Style getLastStyle() {
         Component component = builder.build();
-        List<Component> children = ComponentUtils.getAllChildren(component);
+        List<Component> children = ComponentUtil.getAllChildren(component);
         Style style = null;
 
         for (int i = children.size() - 1; i >= 0; i--) {
             Style child = children.get(i).style();
 
-            if (StyleUtils.hasColor(child)) {
+            if (StyleUtil.hasColor(child)) {
                 style = child;
                 break;
             }

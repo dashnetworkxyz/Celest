@@ -28,8 +28,8 @@ import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.ArgumentSection;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.ArgumentUtils;
-import xyz.dashnetwork.celest.utils.ListUtils;
+import xyz.dashnetwork.celest.utils.ArgumentUtil;
+import xyz.dashnetwork.celest.utils.ListUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.AliasesFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.ArgumentSectionFormat;
@@ -124,7 +124,7 @@ public abstract class CelestCommand implements SimpleCommand {
 
         User user = optional.get();
         String[] args = invocation.arguments();
-        List<ArgumentType> list = ArgumentUtils.typesFromSections(user, sections);
+        List<ArgumentType> list = ArgumentUtil.typesFromSections(user, sections);
         int length = args.length;
         int size = list.size();
 
@@ -138,7 +138,7 @@ public abstract class CelestCommand implements SimpleCommand {
                 List<String> custom = new ArrayList<>();
 
                 for (String each : suggestions.get(length))
-                    ListUtils.addIfStarts(custom, selected, each);
+                    ListUtil.addIfStarts(custom, selected, each);
 
                 return CompletableFuture.completedFuture(custom);
             }

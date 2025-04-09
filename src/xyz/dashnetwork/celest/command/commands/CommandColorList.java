@@ -25,7 +25,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.chat.MessageUtils;
+import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.connection.User;
 
 import java.util.Optional;
@@ -48,10 +48,10 @@ public final class CommandColorList extends CelestCommand {
         Optional<Player[]> optional = arguments.optional(Player[].class);
 
         if (optional.isEmpty())
-            MessageUtils.message(source, message);
+            MessageUtil.message(source, message);
         else
             for (Player player : optional.get())
-                MessageUtils.message(player, message);
+                MessageUtil.message(player, message);
     }
 
 }

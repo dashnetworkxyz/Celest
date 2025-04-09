@@ -19,7 +19,7 @@
 package xyz.dashnetwork.celest.command.arguments.suggesters;
 
 import xyz.dashnetwork.celest.command.arguments.Suggester;
-import xyz.dashnetwork.celest.utils.ListUtils;
+import xyz.dashnetwork.celest.utils.ListUtil;
 import xyz.dashnetwork.celest.connection.User;
 
 import java.util.ArrayList;
@@ -31,11 +31,11 @@ public final class PlayerSuggester implements Suggester {
     public List<String> suggest(User user, String input) {
         List<String> list = new ArrayList<>();
 
-        ListUtils.addIfStarts(list, input, "@s");
+        ListUtil.addIfStarts(list, input, "@s");
 
         for (User each : User.getUsers())
             if (user.canSee(each))
-                ListUtils.addIfStarts(list, input, each.getUsername());
+                ListUtil.addIfStarts(list, input, each.getUsername());
 
         return list;
     }

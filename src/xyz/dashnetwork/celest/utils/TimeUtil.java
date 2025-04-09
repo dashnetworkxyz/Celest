@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-public final class TimeUtils {
+public final class TimeUtil {
 
     private static final SimpleDateFormat formatter;
 

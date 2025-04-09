@@ -23,7 +23,7 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.TimeUtils;
+import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
 import xyz.dashnetwork.celest.connection.Address;
@@ -48,7 +48,7 @@ public final class CommandTempIpMute extends CelestCommand {
         Address address = arguments.required(Address.class);
         long duration = arguments.required(Long.class);
         String reason = arguments.optional(String.class).orElse("No reason provided.");
-        String date = TimeUtils.longToDate(System.currentTimeMillis() + duration);
+        String date = TimeUtil.longToDate(System.currentTimeMillis() + duration);
         UUID uuid = null;
 
         if (source instanceof Player player)
