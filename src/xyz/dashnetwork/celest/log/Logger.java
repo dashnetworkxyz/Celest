@@ -19,10 +19,10 @@
 package xyz.dashnetwork.celest.log;
 
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.ConfigurationList;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.Section;
 
 public final class Logger {
 

@@ -26,7 +26,6 @@ import xyz.dashnetwork.celest.connection.User;
 
 public final class ServerPostConnectListener {
 
-    @SuppressWarnings("UnstableApiUsage")
     @Subscribe
     public void onServerPostConnect(ServerPostConnectEvent event) {
         Player player = event.getPlayer();

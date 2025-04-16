@@ -24,23 +24,12 @@ import net.kyori.adventure.text.format.TextDecoration;
 
 public final class StyleUtil {
 
-    public static boolean hasColor(Style style) {
-        if (style.color() != null)
-            return true;
+    public static boolean hasColorOrDecoration(Style style) {
+        for (TextDecoration decoration : TextDecoration.values())
+            if (style.hasDecoration(decoration))
+                return true;
 
-        if (style.hasDecoration(TextDecoration.OBFUSCATED))
-            return true;
-
-        if (style.hasDecoration(TextDecoration.BOLD))
-            return true;
-
-        if (style.hasDecoration(TextDecoration.STRIKETHROUGH))
-            return true;
-
-        if (style.hasDecoration(TextDecoration.UNDERLINED))
-            return true;
-
-        return style.hasDecoration(TextDecoration.ITALIC);
+        return style.color() != null;
     }
 
 }

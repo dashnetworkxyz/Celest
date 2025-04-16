@@ -52,7 +52,7 @@ public final class NamedSourceFormat implements Format {
             Optional<ServerConnection> optional = player.getCurrentServer();
             Predicate<User> predicate = each -> each.isAdmin() && !each.getData().getHideAddress();
 
-            section.hover("&7Address: &6" + address, predicate);
+            section.hover("&7Address: &6" + address, sub -> sub.ifUser(predicate));
             section.hover("&7Version: &6" + version);
             section.insertion(uuid);
 

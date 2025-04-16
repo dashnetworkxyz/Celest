@@ -21,90 +21,153 @@ package xyz.dashnetwork.celest.chat.builder.sections;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import xyz.dashnetwork.celest.chat.ColorUtil;
-import xyz.dashnetwork.celest.chat.ComponentUtil;
-import xyz.dashnetwork.celest.chat.StyleUtil;
 import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.connection.User;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public final class ComponentSection implements Section {
 
-    private static final LegacyComponentSerializer serializer = LegacyComponentSerializer.legacySection();
+    private final List<Section> hovers = new LinkedList<>();
     private final TextComponent.Builder builder = Component.text();
-    private final List<ComponentSection> hovers = new ArrayList<>();
-    private Predicate<User> filter = user -> true;
+    private Predicate<User> userPredicate = user -> true;
 
     public ComponentSection(String text) {
-        String colored = ColorUtil.fromAmpersand(text).replace("§r", "§f");
-        builder.append(serializer.deserialize(colored));
+        builder.append(Component.text(text));
+    }
+
+    public ComponentSection(char translate, String text) {
+        builder.append(LegacyComponentSerializer.legacy(translate).deserialize(text));
     }
 
     public TextComponent.Builder getBuilder() { return builder; }
 
-    public List<ComponentSection> getHovers() { return hovers; }
+    public List<Section> getHovers() { return hovers; }
 
-    public Predicate<User> getFilter() { return filter; }
-
-    public Style getLastStyle() {
-        Component component = builder.build();
-        List<Component> children = ComponentUtil.getAllChildren(component);
-        Style style = null;
-
-        for (int i = children.size() - 1; i >= 0; i--) {
-            Style child = children.get(i).style();
-
-            if (StyleUtil.hasColor(child)) {
-                style = child;
-                break;
-            }
-        }
-
-        if (style == null)
-            style = component.style();
-
-        return style;
-    }
+    public Predicate<User> getUserPredicate() { return userPredicate; }
 
     @Override
-    public Section hover(String text) {
+    public ComponentSection hover(String text) {
         hovers.add(new ComponentSection(text));
         return this;
     }
 
     @Override
-    public Section hover(String text, Predicate<User> filter) {
-        hovers.add((ComponentSection) new ComponentSection(text).filter(filter));
+    public ComponentSection hover(String text, Consumer<Section> subsection) {
+        Section section = new ComponentSection(text);
+        hovers.add(section);
+        subsection.accept(section);
         return this;
     }
 
     @Override
-    public Section click(ClickEvent event) {
+    public ComponentSection hover(char translate, String text) {
+        hovers.add(new ComponentSection(translate, text));
+        return this;
+    }
+
+    @Override
+    public ComponentSection hover(char translate, String text, Consumer<Section> subsection) {
+        Section section = new ComponentSection(translate, text);
+        hovers.add(section);
+        subsection.accept(section);
+        return this;
+    }
+
+    @Override
+    public ComponentSection hover(Section section) {
+        hovers.add(section);
+        return this;
+    }
+
+    @Override
+    public ComponentSection click(ClickEvent event) {
         builder.clickEvent(event);
         return this;
     }
 
     @Override
-    public Section insertion(String insertion) {
+    public ComponentSection insertion(String insertion) {
         builder.insertion(insertion);
         return this;
     }
 
     @Override
-    public Section color(TextColor color) {
+    public ComponentSection color(TextColor color) {
+        builder.color(color);
+        return this;
+    }
+
+    @Override
+    public ComponentSection colorIfAbsent(TextColor color) {
         builder.colorIfAbsent(color);
         return this;
     }
 
     @Override
-    public Section filter(Predicate<User> filter) {
-        this.filter = filter;
+    public ComponentSection obfuscate() {
+        return obfuscate(true);
+    }
+
+    @Override
+    public ComponentSection obfuscate(boolean obfuscate) {
+        builder.decoration(TextDecoration.OBFUSCATED, obfuscate);
+        return this;
+    }
+
+    @Override
+    public ComponentSection bold() {
+        return bold(true);
+    }
+
+    @Override
+    public ComponentSection bold(boolean bold) {
+        builder.decoration(TextDecoration.BOLD, bold);
+        return this;
+    }
+
+    @Override
+    public ComponentSection strikethrough() {
+        return strikethrough(true);
+    }
+
+    @Override
+    public ComponentSection strikethrough(boolean strikethrough) {
+        builder.decoration(TextDecoration.STRIKETHROUGH, strikethrough);
+        return this;
+    }
+
+    @Override
+    public ComponentSection underline() {
+        return underline(true);
+    }
+
+    @Override
+    public ComponentSection underline(boolean underline) {
+        builder.decoration(TextDecoration.UNDERLINED, underline);
+        return this;
+    }
+
+    @Override
+    public ComponentSection italic() {
+        return italic(true);
+    }
+
+    @Override
+    public ComponentSection italic(boolean italic) {
+        builder.decoration(TextDecoration.ITALIC, italic);
+        return this;
+    }
+
+    @Override
+    public ComponentSection ifUser(Predicate<User> predicate) {
+        this.userPredicate = predicate;
         return this;
     }
 

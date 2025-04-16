@@ -27,10 +27,10 @@ import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.api.scheduler.Scheduler;
 import net.kyori.adventure.text.Component;
 import xyz.dashnetwork.celest.Celest;
+import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.utils.*;
 import xyz.dashnetwork.celest.chat.ComponentUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.storage.Cache;
@@ -113,7 +113,7 @@ public final class ProxyPingListener {
             MessageBuilder message = new MessageBuilder();
             Section section = message.append("&6&l»&6 " + name + "&7 pinged the server.");
 
-            section.hover("&6" + address.getString(), User::showAddress);
+            section.hover("&6" + address.getString(), sub -> sub.ifUser(User::showAddress));
             section.hover("&7Version: &6" + range + "&7 (" + version.getProtocol() + ")");
             section.hover("&7Accounts: &6" + ArrayUtil.convertToString(profiles, PlayerData::username, "&7, &6"));
 

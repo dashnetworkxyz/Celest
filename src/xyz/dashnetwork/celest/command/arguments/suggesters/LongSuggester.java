@@ -33,7 +33,7 @@ public final class LongSuggester implements Suggester {
     public List<String> suggest(User user, String input) {
         List<String> list = new ArrayList<>();
 
-        if (input.length() > 0)
+        if (!input.isEmpty())
             for (TimeType type : TimeType.values())
                 for (String selector : type.getSelectors())
                     ListUtil.addIfStarts(list, input.replaceAll("[0-9]", ""), selector);

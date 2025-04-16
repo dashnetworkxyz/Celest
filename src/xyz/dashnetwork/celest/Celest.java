@@ -20,6 +20,7 @@ package xyz.dashnetwork.celest;
 
 import com.google.gson.Gson;
 import com.google.inject.Inject;
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -30,6 +31,11 @@ import com.velocitypowered.api.plugin.PluginManager;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.Scheduler;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.identity.Identity;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.slf4j.Logger;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.channel.channels.input.ChannelInBroadcast;
@@ -52,6 +58,8 @@ import xyz.dashnetwork.celest.vault.api.DummyAPI;
 import xyz.dashnetwork.celest.vault.api.LuckPermsAPI;
 
 import java.nio.file.Path;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Plugin(
@@ -117,6 +125,13 @@ public final class Celest {
             logger.warn("Couldn't find LuckPerms plugin for Vault, using fallback.");
             vault = new DummyAPI();
         }
+
+        TagResolver.resolver("permission", (args, context) -> {
+            String value = args.popOr("").value();
+            Optional<UUID> uuid = context.target().get(Identity.UUID);
+
+            return Tag.styling();
+        });
 
         logger.info("Registering channels...");
         Channel.registerIn("broadcast", ChannelInBroadcast::new);

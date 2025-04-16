@@ -56,10 +56,10 @@ public final class ArgumentTypeFormat implements Format {
                 section.hover("""
                         &7Specify one &6chat channel&7.
                         Channels: &bGlobal""");
-                section.hover("&7, &bLocal", User::isOwner);
-                section.hover("&7, &bStaff", User::isStaff);
-                section.hover("&7, &bAdmin", User::isAdmin);
-                section.hover("&7, &bOwner", User::isOwner);
+                section.hover("&7, &bLocal", sub -> sub.ifUser(User::isOwner));
+                section.hover("&7, &bStaff", sub -> sub.ifUser(User::isStaff));
+                section.hover("&7, &bAdmin", sub -> sub.ifUser(User::isAdmin));
+                section.hover("&7, &bOwner", sub -> sub.ifUser(User::isOwner));
             }
             case INTEGER -> section.hover("""
                     &7Specify an &6integer&7.
@@ -127,11 +127,11 @@ public final class ArgumentTypeFormat implements Format {
                     Predicate<User> predicate = each -> each.isOwner() || each.getPlayer().hasPermission(node);
 
                     if (comma)
-                        section.hover("&7, ", predicate);
+                        section.hover("&7, ", sub -> sub.ifUser(predicate));
                     else
                         comma = true;
 
-                    section.hover("&b" + serverName, predicate);
+                    section.hover("&b" + serverName, sub -> sub.ifUser(predicate));
                 }
             }
             case UNIQUE_ID -> section.hover("""

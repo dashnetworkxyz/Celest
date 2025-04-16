@@ -43,7 +43,7 @@ public final class ArgumentSectionFormat implements Format {
             list.addAll(new ArgumentTypeFormat(type, argument.required()).sections());
 
             for (ComponentSection each : list)
-                each.filter(predicate);
+                each.ifUser(predicate);
 
             sections.addAll(list);
         }

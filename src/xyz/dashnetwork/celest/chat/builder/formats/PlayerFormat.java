@@ -48,7 +48,7 @@ public final class PlayerFormat implements Format {
 
         ComponentSection section = new ComponentSection(displayname);
         section.hover("&6" + username);
-        section.hover("&7Address: &6" + address, predicate);
+        section.hover("&7Address: &6" + address, sub -> sub.ifUser(predicate));
         section.hover("&7Version: &6" + version);
         section.insertion(uuid);
 

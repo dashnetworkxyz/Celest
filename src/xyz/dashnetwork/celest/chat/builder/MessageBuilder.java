@@ -27,15 +27,19 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.dashnetwork.celest.chat.ColorUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
+import xyz.dashnetwork.celest.chat.StyleUtil;
 import xyz.dashnetwork.celest.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.chat.builder.sections.FormatSection;
 import xyz.dashnetwork.celest.connection.User;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -47,8 +51,11 @@ public final class MessageBuilder {
     public int size() { return sections.size(); }
 
     public Section append(@NotNull String text) {
-        ComponentSection section = new ComponentSection(getStyleFromPrevious() + text);
+        ComponentSection section = new ComponentSection(text);
         sections.add(section);
+
+        if (!StyleUtil.hasColorOrDecoration(section.getBuilder().build().style()))
+            section.getBuilder().style(getLastStyle());
 
         return section;
     }
@@ -67,20 +74,16 @@ public final class MessageBuilder {
         TextComponent.Builder builder = Component.text();
 
         for (ComponentSection section : sections) {
-            if (user == null || section.getFilter().test(user)) {
-                List<Component> hovers = new ArrayList<>();
-                TextComponent.Builder sectionBuilder = section.getBuilder();
-
-                for (ComponentSection hover : section.getHovers())
-                    if (user != null && hover.getFilter().test(user))
-                        hovers.add(hover.getBuilder().build());
+            if (user == null || section.getUserPredicate().test(user)) {
+                TextComponent.Builder subbuilder = section.getBuilder();
+                List<Component> hovers = buildHoverForSection(user, section);
 
                 if (!hovers.isEmpty()) {
                     Component hover = Component.join(JoinConfiguration.newlines(), hovers);
-                    sectionBuilder.hoverEvent(HoverEvent.showText(hover));
+                    subbuilder.hoverEvent(HoverEvent.showText(hover));
                 }
 
-                builder.append(sectionBuilder);
+                builder.append(subbuilder);
             }
         }
 
@@ -93,38 +96,35 @@ public final class MessageBuilder {
 
     public void broadcast() { MessageUtil.broadcast(this::build); }
 
-    private String getStyleFromPrevious() {
+    private Style getLastStyle() {
         if (sections.isEmpty())
-            return "";
+            return Style.empty();
 
-        ComponentSection section = sections.get(sections.size() - 1);
-        StringBuilder builder = new StringBuilder();
-        Style style = section.getLastStyle();
-        TextColor color = style.color();
+        return sections.get(sections.size() - 1).getBuilder().build().style();
+    }
 
-        if (color != null) {
-            NamedTextColor named = NamedTextColor.namedColor(color.value());
+    private void addHoverComponent(User user, Section section, List<Component> hovers) {
+        if (section instanceof FormatSection hoverFormat) {
+            for (ComponentSection each : hoverFormat.getComponentSections())
+                if (each.getUserPredicate().test(user))
+                    hovers.add(each.getBuilder().build());
 
-            if (named != null)
-                builder.append(ColorUtil.fromNamedTextColor(named));
-            else {
-                String hex = color.asHexString().replace("#", "");
-                StringBuilder serialized = new StringBuilder();
-
-                serialized.append("&x");
-
-                for (char c : hex.toCharArray())
-                    serialized.append("&").append(c);
-
-                builder.append(serialized);
-            }
+            return;
         }
 
-        for (Map.Entry<TextDecoration, TextDecoration.State> entry : style.decorations().entrySet())
-            if (entry.getValue().equals(TextDecoration.State.TRUE))
-                builder.append(ColorUtil.fromTextDecoration(entry.getKey()));
+        if (section instanceof ComponentSection hoverSection)
+            if (hoverSection.getUserPredicate().test(user))
+                hovers.add(hoverSection.getBuilder().build());
+    }
 
-        return builder.toString();
+    private List<Component> buildHoverForSection(User user, ComponentSection section) {
+        List<Component> hovers = new ArrayList<>();
+
+        for (Section hover : section.getHovers())
+            if (user != null)
+                addHoverComponent(user, hover, hovers);
+
+        return hovers;
     }
 
 }

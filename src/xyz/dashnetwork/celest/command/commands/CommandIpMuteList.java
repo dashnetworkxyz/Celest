@@ -19,12 +19,12 @@
 package xyz.dashnetwork.celest.command.commands;
 
 import com.velocitypowered.api.command.CommandSource;
+import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
-import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.limbo.Limbo;

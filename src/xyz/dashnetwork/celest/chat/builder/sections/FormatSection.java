@@ -34,44 +34,130 @@ public final class FormatSection implements Section {
 
     public FormatSection(Format format) { this.sections = format.sections(); }
 
+    public List<ComponentSection> getComponentSections() { return sections; }
+
     private void forEach(Consumer<Section> consumer) {
         for (Section section : sections)
             consumer.accept(section);
     }
 
     @Override
-    public Section hover(String text) {
-        forEach(section -> section.hover(text));
+    public FormatSection hover(String text) {
+        forEach(each -> each.hover(text));
         return this;
     }
 
     @Override
-    public Section hover(String text, Predicate<User> filter) {
-        forEach(section -> section.hover(text, filter));
+    public FormatSection hover(String text, Consumer<Section> subsection) {
+        forEach(each -> each.hover(text, subsection));
         return this;
     }
 
     @Override
-    public Section click(ClickEvent event) {
-        forEach(section -> section.click(event));
+    public FormatSection hover(char translate, String text) {
+        forEach(each -> each.hover(translate, text));
         return this;
     }
 
     @Override
-    public Section insertion(String insertion) {
-        forEach(section -> section.insertion(insertion));
+    public FormatSection hover(char translate, String text, Consumer<Section> subsection) {
+        forEach(each -> each.hover(translate, text, subsection));
         return this;
     }
 
     @Override
-    public Section color(TextColor color) {
-        forEach(section -> section.color(color));
+    public FormatSection hover(Section section) {
+        forEach(each -> each.hover(section));
         return this;
     }
 
     @Override
-    public Section filter(Predicate<User> filter) {
-        forEach(section -> section.filter(filter));
+    public FormatSection click(ClickEvent event) {
+        forEach(each -> each.click(event));
+        return this;
+    }
+
+    @Override
+    public FormatSection insertion(String insertion) {
+        forEach(each -> each.insertion(insertion));
+        return this;
+    }
+
+    @Override
+    public FormatSection color(TextColor color) {
+        forEach(each -> each.color(color));
+        return this;
+    }
+
+    @Override
+    public FormatSection colorIfAbsent(TextColor color) {
+        forEach(each -> each.colorIfAbsent(color));
+        return this;
+    }
+
+    @Override
+    public FormatSection obfuscate() {
+        forEach(Section::obfuscate);
+        return this;
+    }
+
+    @Override
+    public FormatSection obfuscate(boolean obfuscate) {
+        forEach(each -> each.obfuscate(obfuscate));
+        return this;
+    }
+
+    @Override
+    public FormatSection bold() {
+        forEach(Section::bold);
+        return this;
+    }
+
+    @Override
+    public FormatSection bold(boolean bold) {
+        forEach(each -> each.bold(true));
+        return this;
+    }
+
+    @Override
+    public FormatSection strikethrough() {
+        forEach(Section::strikethrough);
+        return this;
+    }
+
+    @Override
+    public FormatSection strikethrough(boolean strikethrough) {
+        forEach(each -> each.strikethrough(strikethrough));
+        return this;
+    }
+
+    @Override
+    public FormatSection underline() {
+        forEach(Section::underline);
+        return this;
+    }
+
+    @Override
+    public FormatSection underline(boolean underline) {
+        forEach(each -> each.underline(underline));
+        return this;
+    }
+
+    @Override
+    public FormatSection italic() {
+        forEach(Section::italic);
+        return this;
+    }
+
+    @Override
+    public FormatSection italic(boolean italic) {
+        forEach(each -> each.italic(italic));
+        return this;
+    }
+
+    @Override
+    public FormatSection ifUser(Predicate<User> predicate) {
+        forEach(each -> each.ifUser(predicate));
         return this;
     }
 
