@@ -23,7 +23,7 @@ import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.storage.data.PlayerData;
 import xyz.dashnetwork.celest.storage.data.UserData;
@@ -43,12 +43,12 @@ public final class PostLoginListener {
 
         if (data.getVanish()) {
             builder.append("&3&l»&f ");
-            builder.append(new NamedSourceFormat(user));
+            builder.append(new CommandSourceFormat(user));
             builder.append("&3 silently joined.");
             builder.broadcast(each -> each.isStaff() || each.getData().getVanish());
         } else {
             builder.append("&a&l»&f ");
-            builder.append(new NamedSourceFormat(user));
+            builder.append(new CommandSourceFormat(user));
             builder.append("&a joined.");
             builder.broadcast();
         }
@@ -63,7 +63,7 @@ public final class PostLoginListener {
                     .hover("&7Alts for " + player.getUsername() + ":\n&6"
                             + list.stream().map(PlayerData::username).collect(Collectors.joining("\n&6")));
             builder.append("&f ");
-            builder.append(new NamedSourceFormat(user));
+            builder.append(new CommandSourceFormat(user));
             builder.broadcast(each -> each.getData().getAltSpy());
         }
 

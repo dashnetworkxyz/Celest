@@ -25,11 +25,10 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.chat.ChatChannel;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
-import xyz.dashnetwork.celest.profile.OfflineUser;
+import xyz.dashnetwork.celest.connection.OfflineUser;
 
 import java.util.List;
 
@@ -65,7 +64,7 @@ public final class CommandOwnerChat extends CelestCommand {
 
                 if (!named.equals(user)) {
                     builder.append("&7 by ");
-                    builder.append(new NamedSourceFormat(named));
+                    builder.append(new CommandSourceFormat(named));
                 }
 
                 builder.append("&7.");

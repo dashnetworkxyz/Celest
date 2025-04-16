@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.profile;
+package xyz.dashnetwork.celest.utils;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
@@ -33,7 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.UUID;
 
-public final class MojangUtils {
+public final class MojangUtil {
 
     private record Response(String name, String id) {
 

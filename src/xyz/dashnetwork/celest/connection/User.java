@@ -18,26 +18,26 @@
 
 package xyz.dashnetwork.celest.connection;
 
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
+import xyz.dashnetwork.celest.utils.PermissionType;
 import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.ColorUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.limbo.Limbo;
-import xyz.dashnetwork.celest.profile.NamedSource;
-import xyz.dashnetwork.celest.profile.OfflineUser;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 import xyz.dashnetwork.celest.vault.Vault;
 
 import java.util.*;
 
-public final class User extends OfflineUser implements NamedSource, Audience {
+public final class User extends OfflineUser implements CommandSource {
 
     private static final Map<UUID, User> users = new HashMap<>();
     private static final Vault vault = Celest.getVault();
@@ -152,7 +152,7 @@ public final class User extends OfflineUser implements NamedSource, Audience {
         }
     }
 
-    public boolean canSee(User user) { return isStaff() || !user.getData().getVanish() || getData().getVanish(); }
+    public boolean canSee(User user) { return PermissionType.STAFF.hasPermission(this) || !user.getData().getVanish() || getData().getVanish(); }
 
     public boolean showAddress() { return isAdmin() && !getData().getHideAddress(); }
 
@@ -163,18 +163,6 @@ public final class User extends OfflineUser implements NamedSource, Audience {
     public PageBuilder getPageBuilder() { return pageBuilder; }
 
     public void setPageBuilder(PageBuilder pageBuilder) { this.pageBuilder = pageBuilder; }
-
-    public boolean isStaff() { return player.hasPermission("dashnetwork.staff") || isAdmin(); }
-
-    public boolean isAdmin() { return player.hasPermission("dashnetwork.admin") || isOwner(); }
-
-    public boolean isOwner() { return player.hasPermission("dashnetwork.owner") || isDash() || isCryptic() || isGolden(); }
-
-    public boolean isDash() { return stringUuid.equals("4f771152-ce61-4d6f-9541-1d2d9e725d0e"); }
-
-    public boolean isCryptic() { return stringUuid.equals("a948c50c-ede2-4dfa-9b6c-688daf22197c"); }
-
-    public boolean isGolden() { return stringUuid.equals("bbeb983a-3111-4722-bcf0-e6aafbd5f7d2"); }
 
     public boolean isAuthenticated() { return userData.getTwoFactor() == null || userData.getAuthenticated(); }
 

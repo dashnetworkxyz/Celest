@@ -16,12 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.profile;
+package xyz.dashnetwork.celest.utils;
 
 import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.util.GameProfile;
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.utils.StringUtil;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.storage.data.CacheData;
@@ -29,13 +28,13 @@ import xyz.dashnetwork.celest.storage.data.UserData;
 
 import java.util.UUID;
 
-public final class ProfileUtils {
+public final class ProfileUtil {
 
     public static GameProfile fromUsernameOrUuid(@NotNull String string) {
         if (StringUtil.matchesUuid(string))
-            return ProfileUtils.fromUuid(UUID.fromString(string));
+            return ProfileUtil.fromUuid(UUID.fromString(string));
         else
-            return ProfileUtils.fromUsername(string);
+            return ProfileUtil.fromUsername(string);
     }
 
     public static GameProfile fromUsername(@NotNull String username) {
@@ -48,10 +47,10 @@ public final class ProfileUtils {
         GameProfile profile = null;
 
         if (stringUuid != null && StringUtil.matchesUuid(stringUuid))
-            profile = MojangUtils.fromUuid(UUID.fromString(stringUuid));
+            profile = MojangUtil.fromUuid(UUID.fromString(stringUuid));
 
         if (profile == null)
-            profile = MojangUtils.fromUsername(username);
+            profile = MojangUtil.fromUsername(username);
 
         if (profile == null)
             return null;
@@ -79,7 +78,7 @@ public final class ProfileUtils {
             return new GameProfile(uuid, userData.getUsername(), ImmutableList.of());
         }
 
-        return MojangUtils.fromUuid(uuid);
+        return MojangUtil.fromUuid(uuid);
     }
 
 }

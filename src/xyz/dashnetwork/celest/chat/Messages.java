@@ -30,9 +30,8 @@ import xyz.dashnetwork.celest.utils.GrammarUtil;
 import xyz.dashnetwork.celest.utils.LazyUtil;
 import xyz.dashnetwork.celest.utils.StringUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -47,19 +46,19 @@ public final class Messages {
         switch (channel) {
             case OWNER -> {
                 builder.append("&9&lOwner&f ");
-                builder.append(new NamedSourceFormat(named));
+                builder.append(new CommandSourceFormat(named));
                 builder.append("&f &c&l»&c");
                 predicate = each -> each.isOwner() || each.getData().getChannel().equals(ChatChannel.OWNER);
             }
             case ADMIN -> {
                 builder.append("&9&lAdmin&f ");
-                builder.append(new NamedSourceFormat(named));
+                builder.append(new CommandSourceFormat(named));
                 builder.append("&f &3&l»&3");
                 predicate = each -> each.isAdmin() || each.getData().getChannel().equals(ChatChannel.ADMIN);
             }
             case STAFF -> {
                 builder.append("&9&lStaff&f ");
-                builder.append(new NamedSourceFormat(named));
+                builder.append(new CommandSourceFormat(named));
                 builder.append("&f &6&l»&6");
                 predicate = each -> each.isStaff() || each.getData().getChannel().equals(ChatChannel.STAFF);
             }
@@ -77,7 +76,7 @@ public final class Messages {
 
                         builder = new MessageBuilder();
                         builder.append("&b&l»&f ");
-                        builder.append(new NamedSourceFormat(named));
+                        builder.append(new CommandSourceFormat(named));
                         builder.append("&b @lc" + message);
                         builder.broadcast(each -> each.getData().getCommandSpy());
                     }
@@ -88,7 +87,7 @@ public final class Messages {
                 return;
             }
             default -> {
-                builder.append(new NamedSourceFormat(named));
+                builder.append(new CommandSourceFormat(named));
                 builder.append("&f &l»&f");
                 predicate = each -> true;
             }

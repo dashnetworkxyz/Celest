@@ -26,11 +26,10 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
-import xyz.dashnetwork.celest.profile.OfflineUser;
+import xyz.dashnetwork.celest.connection.OfflineUser;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 
 import java.util.UUID;
@@ -78,7 +77,7 @@ public final class CommandTempBan extends CelestCommand {
         builder.append("&6&l»&6 ");
         builder.append(new OfflineUserFormat(offline)).color(NamedTextColor.GOLD);
         builder.append("&7 temporarily banned by ");
-        builder.append(new NamedSourceFormat(named));
+        builder.append(new CommandSourceFormat(named));
         builder.append("&7.");
         builder.append("\n&6&l»&7 Hover here for details.")
                 .hover("&7Judge: &6" + username

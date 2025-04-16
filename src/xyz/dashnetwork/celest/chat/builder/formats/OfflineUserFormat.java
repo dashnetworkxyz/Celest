@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.chat.builder.formats;
 import xyz.dashnetwork.celest.chat.builder.Format;
 import xyz.dashnetwork.celest.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.OfflineUser;
+import xyz.dashnetwork.celest.connection.OfflineUser;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +33,7 @@ public final class OfflineUserFormat implements Format {
 
     public OfflineUserFormat(OfflineUser offline) {
         if (offline.isActive())
-            sections = new NamedSourceFormat((User) offline).sections();
+            sections = new CommandSourceFormat((User) offline).sections();
         else
             sections = new GameProfileFormat(offline.toGameProfile()).sections();
     }

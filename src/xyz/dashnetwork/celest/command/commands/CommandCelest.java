@@ -36,7 +36,7 @@ import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.limbo.Limbo;
 import xyz.dashnetwork.celest.log.Logger;
-import xyz.dashnetwork.celest.profile.OfflineUser;
+import xyz.dashnetwork.celest.connection.OfflineUser;
 import xyz.dashnetwork.celest.storage.Configuration;
 import xyz.dashnetwork.celest.storage.LegacyParser;
 import xyz.dashnetwork.celest.storage.Storage;

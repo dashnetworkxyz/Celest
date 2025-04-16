@@ -25,10 +25,9 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 
 public final class CommandKick extends CelestCommand {
 
@@ -61,7 +60,7 @@ public final class CommandKick extends CelestCommand {
         builder.append("&6&l»&6");
         builder.append(new PlayerFormat(players, "&7, &6"));
         builder.append("&7 kicked by &6");
-        builder.append(new NamedSourceFormat(named));
+        builder.append(new CommandSourceFormat(named));
         builder.append("&7.");
         builder.broadcast();
     }

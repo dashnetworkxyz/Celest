@@ -24,11 +24,10 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
-import xyz.dashnetwork.celest.profile.OfflineUser;
+import xyz.dashnetwork.celest.connection.OfflineUser;
 import xyz.dashnetwork.celest.storage.data.UserData;
 
 public final class CommandUnban extends CelestCommand {
@@ -52,7 +51,7 @@ public final class CommandUnban extends CelestCommand {
         builder.append("&6&l»&6 ");
         builder.append(new OfflineUserFormat(offline)).color(NamedTextColor.GOLD);
         builder.append("&7 unbanned by ");
-        builder.append(new NamedSourceFormat(NamedSource.of(source)));
+        builder.append(new CommandSourceFormat(NamedSource.of(source)));
         builder.append("&7.");
         builder.broadcast(User::isStaff);
     }

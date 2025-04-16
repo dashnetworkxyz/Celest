@@ -25,7 +25,6 @@ import xyz.dashnetwork.celest.utils.VersionUtil;
 import xyz.dashnetwork.celest.chat.builder.Format;
 import xyz.dashnetwork.celest.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,11 +32,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public final class NamedSourceFormat implements Format {
+public final class CommandSourceFormat implements Format {
 
     private final List<ComponentSection> sections = new ArrayList<>();
 
-    public NamedSourceFormat(NamedSource named) {
+    public CommandSourceFormat(NamedSource named) {
         String username = named.getUsername();
         String displayname = named.getDisplayname();
 
@@ -62,12 +61,12 @@ public final class NamedSourceFormat implements Format {
         sections.add(section);
     }
 
-    public NamedSourceFormat(Collection<NamedSource> collection, String separator) {
+    public CommandSourceFormat(Collection<NamedSource> collection, String separator) {
         for (NamedSource named : collection) {
             if (!sections.isEmpty())
                 sections.add(new ComponentSection(separator));
 
-            sections.addAll(new NamedSourceFormat(named).sections());
+            sections.addAll(new CommandSourceFormat(named).sections());
         }
     }
 

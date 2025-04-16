@@ -25,10 +25,9 @@ import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 
 import java.util.UUID;
@@ -75,7 +74,7 @@ public final class CommandTempIpBan extends CelestCommand {
 
         builder = new MessageBuilder();
         builder.append("&6&l»&6 " + address.getString() + "&7 temporarily banned by ");
-        builder.append(new NamedSourceFormat(named));
+        builder.append(new CommandSourceFormat(named));
         builder.append("&7.");
         builder.append("\n&6&l»&7 Hover here for details.")
                 .hover("&7Judge: &6" + username

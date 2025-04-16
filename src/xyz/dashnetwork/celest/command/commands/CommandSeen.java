@@ -30,8 +30,8 @@ import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.OfflineUser;
-import xyz.dashnetwork.celest.profile.ProfileUtils;
+import xyz.dashnetwork.celest.connection.OfflineUser;
+import xyz.dashnetwork.celest.utils.ProfileUtil;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 import xyz.dashnetwork.celest.storage.data.UserData;
 
@@ -94,7 +94,7 @@ public final class CommandSeen extends CelestCommand {
                 section = builder.append("&6Until " + date);
 
             UUID judge = ban.judge();
-            String name = judge == null ? "Console" : ProfileUtils.fromUuid(judge).getName();
+            String name = judge == null ? "Console" : ProfileUtil.fromUuid(judge).getName();
 
             section.hover("&7Banned by &6" + name);
 
@@ -117,7 +117,7 @@ public final class CommandSeen extends CelestCommand {
                 section = builder.append("&6Until " + date);
 
             UUID judge = mute.judge();
-            String name = judge == null ? "Console" : ProfileUtils.fromUuid(judge).getName();
+            String name = judge == null ? "Console" : ProfileUtil.fromUuid(judge).getName();
 
             section.hover("&7Muted by &6" + name);
 

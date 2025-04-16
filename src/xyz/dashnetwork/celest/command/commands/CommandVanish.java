@@ -29,7 +29,7 @@ import xyz.dashnetwork.celest.events.CelestVanishEvent;
 import xyz.dashnetwork.celest.chat.ChatChannel;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.storage.data.UserData;
@@ -72,7 +72,7 @@ public final class CommandVanish extends CelestCommand {
 
             if (vanish) {
                 builder.append("&c&l»&6 ");
-                builder.append(new NamedSourceFormat(user));
+                builder.append(new CommandSourceFormat(user));
                 builder.append("&c left.");
 
                 if (data.getChannel().equals(ChatChannel.GLOBAL)) {
@@ -84,7 +84,7 @@ public final class CommandVanish extends CelestCommand {
                 on.add(player);
             } else {
                 builder.append("&a&l»&6 ");
-                builder.append(new NamedSourceFormat(user));
+                builder.append(new CommandSourceFormat(user));
                 builder.append("&a joined.");
 
                 off.add(player);

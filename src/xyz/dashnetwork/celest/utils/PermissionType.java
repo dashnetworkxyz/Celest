@@ -25,19 +25,19 @@ import java.util.function.Predicate;
 
 public enum PermissionType {
 
-    NONE(user -> true),
-    STAFF(User::isStaff),
-    ADMIN(User::isAdmin),
-    OWNER(User::isOwner);
+    NONE(null),
+    STAFF("dashnetwork.staff"),
+    ADMIN("dashnetwork.admin"),
+    OWNER("dashnetwork.owner");
 
-    private final Predicate<User> predicate;
+    private final String permission;
 
-    PermissionType(Predicate<User> predicate) { this.predicate = predicate; }
+    PermissionType(String permission) { this.permission = permission; }
 
-    public Predicate<User> getPredicate() { return predicate; }
+    public String getPermission() { return permission; }
 
     public boolean hasPermission(CommandSource source) {
-        return User.getUser(source).map(predicate::test).orElse(true);
+        return source.hasPermission(permission);
     }
 
 }

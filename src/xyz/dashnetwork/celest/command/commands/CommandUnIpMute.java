@@ -23,10 +23,9 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 import xyz.dashnetwork.celest.storage.data.AddressData;
 
 public final class CommandUnIpMute extends CelestCommand {
@@ -48,7 +47,7 @@ public final class CommandUnIpMute extends CelestCommand {
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&6 " + address.getString() + "&7 unmuted by ");
-        builder.append(new NamedSourceFormat(NamedSource.of(source)));
+        builder.append(new CommandSourceFormat(NamedSource.of(source)));
         builder.append("&7.");
         builder.broadcast(User::isStaff);
     }

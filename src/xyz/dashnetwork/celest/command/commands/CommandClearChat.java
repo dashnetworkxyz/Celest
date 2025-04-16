@@ -24,10 +24,9 @@ import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 
 public final class CommandClearChat extends CelestCommand {
 
@@ -49,7 +48,7 @@ public final class CommandClearChat extends CelestCommand {
 
         if (players.length > 1) {
             builder.append("&6&l»&7 Chat was cleared by &6");
-            builder.append(new NamedSourceFormat(named));
+            builder.append(new CommandSourceFormat(named));
             builder.append("&7.");
         }
 

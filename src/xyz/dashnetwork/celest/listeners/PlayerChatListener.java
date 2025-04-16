@@ -33,7 +33,7 @@ import xyz.dashnetwork.celest.chat.Messages;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.ArgumentTypeFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.ProfileUtils;
+import xyz.dashnetwork.celest.utils.ProfileUtil;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 import xyz.dashnetwork.celest.storage.data.UserData;
 
@@ -75,7 +75,7 @@ public final class PlayerChatListener {
             UUID uuid = mute.judge();
 
             String type = expiration == null ? "permanently" : "temporarily";
-            String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).getName();
+            String judge = uuid == null ? "Console" : ProfileUtil.fromUuid(uuid).getName();
 
             MessageBuilder builder = new MessageBuilder();
             Section section = builder.append("&6&l»&7 You have been " + type + " muted. Hover for more info.");

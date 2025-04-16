@@ -26,7 +26,7 @@ import xyz.dashnetwork.celest.utils.PunishUtil;
 import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.ProfileUtils;
+import xyz.dashnetwork.celest.utils.ProfileUtil;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 
 import java.util.UUID;
@@ -47,7 +47,7 @@ public final class LoginListener {
             UUID uuid = ban.judge();
 
             String type = expiration == null ? "permanently" : "temporarily";
-            String judge = uuid == null ? "Console" : ProfileUtils.fromUuid(uuid).getName();
+            String judge = uuid == null ? "Console" : ProfileUtil.fromUuid(uuid).getName();
 
             MessageBuilder builder = new MessageBuilder();
             builder.append("&6&lDashNetwork");

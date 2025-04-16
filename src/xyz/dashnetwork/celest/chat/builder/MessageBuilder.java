@@ -44,9 +44,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public final class MessageBuilder {
+public class MessageBuilder {
 
-    private final List<ComponentSection> sections = new ArrayList<>();
+    protected final List<ComponentSection> sections = new ArrayList<>();
 
     public int size() { return sections.size(); }
 
@@ -92,7 +92,7 @@ public final class MessageBuilder {
 
     public void message(@NotNull Audience audience) { MessageUtil.message(audience, this::build); }
 
-    public void broadcast(@NotNull Predicate<User> filter) { MessageUtil.broadcast(filter, this::build); }
+    public void broadcast(@NotNull Predicate<User> predicate) { MessageUtil.broadcast(predicate, this::build); }
 
     public void broadcast() { MessageUtil.broadcast(this::build); }
 

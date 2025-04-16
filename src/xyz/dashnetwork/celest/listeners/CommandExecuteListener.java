@@ -24,9 +24,8 @@ import com.velocitypowered.api.event.command.CommandExecuteEvent;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 
 public final class CommandExecuteListener {
 
@@ -50,7 +49,7 @@ public final class CommandExecuteListener {
 
         MessageBuilder builder = new MessageBuilder();
         builder.append("&b&l»&f ");
-        builder.append(new NamedSourceFormat(named));
+        builder.append(new CommandSourceFormat(named));
         builder.append(" ");
         builder.append("&b" + command).insertion(command);
         builder.broadcast(user -> user.getData().getCommandSpy());

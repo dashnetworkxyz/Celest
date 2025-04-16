@@ -23,7 +23,7 @@ import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.utils.LazyUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.storage.data.UserData;
 
@@ -42,12 +42,12 @@ public final class DisconnectListener {
 
             if (data.getVanish()) {
                 builder.append("&3&l»&6 ");
-                builder.append(new NamedSourceFormat(user));
+                builder.append(new CommandSourceFormat(user));
                 builder.append("&3 silently left.");
                 builder.broadcast(each -> each.isStaff() || each.getData().getVanish());
             } else {
                 builder.append("&c&l»&6 ");
-                builder.append(new NamedSourceFormat(user));
+                builder.append(new CommandSourceFormat(user));
                 builder.append("&c left.");
                 builder.broadcast();
             }

@@ -25,7 +25,6 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.chat.ChatChannel;
 import xyz.dashnetwork.celest.chat.Messages;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 
 public final class CommandTalk extends CelestCommand {
 

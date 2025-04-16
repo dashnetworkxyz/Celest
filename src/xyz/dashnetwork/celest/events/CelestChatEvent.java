@@ -19,6 +19,5 @@
 package xyz.dashnetwork.celest.events;
 
 import xyz.dashnetwork.celest.chat.ChatChannel;
-import xyz.dashnetwork.celest.profile.NamedSource;
 
 public record CelestChatEvent(NamedSource named, ChatChannel channel, String message) {}

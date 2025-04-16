@@ -25,9 +25,8 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.VersionUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 
 import java.util.*;
 
@@ -62,7 +61,7 @@ public final class CommandVersionList extends CelestCommand {
                 builder.append("\n");
 
             builder.append("&6&l»&7 [&6" + VersionUtil.getVersionString(entry.getKey()) + "&7] &6");
-            builder.append(new NamedSourceFormat(entry.getValue(), "&7, &6"));
+            builder.append(new CommandSourceFormat(entry.getValue(), "&7, &6"));
         }
 
         builder.message(source);

@@ -16,13 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.profile;
+package xyz.dashnetwork.celest.connection;
 
 import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.util.GameProfile;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.limbo.Limbo;
 import xyz.dashnetwork.celest.limbo.Savable;
 import xyz.dashnetwork.celest.storage.Storage;

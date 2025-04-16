@@ -25,7 +25,7 @@ import xyz.dashnetwork.celest.chat.ChatChannel;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.log.Logger;
-import xyz.dashnetwork.celest.profile.ProfileUtils;
+import xyz.dashnetwork.celest.utils.ProfileUtil;
 import xyz.dashnetwork.celest.storage.data.AddressData;
 import xyz.dashnetwork.celest.storage.data.PlayerData;
 import xyz.dashnetwork.celest.storage.data.UserData;
@@ -85,7 +85,7 @@ public final class LegacyParser {
 
                         username = data.getUsername();
                     } else if (uuid.getMostSignificantBits() != 0) {
-                        username = ProfileUtils.fromUuid(uuid).getName();
+                        username = ProfileUtil.fromUuid(uuid).getName();
 
                         if (username == null)
                             continue;

@@ -26,9 +26,8 @@ import xyz.dashnetwork.celest.command.arguments.Arguments;
 import xyz.dashnetwork.celest.utils.GrammarUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 
 import java.util.*;
 
@@ -76,7 +75,7 @@ public final class CommandGlobalList extends CelestCommand {
                     .hover("&7Click to copy &6/server " + name)
                     .click(ClickEvent.suggestCommand("/server " + name));
             builder.append("&7] &6");
-            builder.append(new NamedSourceFormat(entry.getValue(), "&7, &6"));
+            builder.append(new CommandSourceFormat(entry.getValue(), "&7, &6"));
         }
 
         builder.message(source);

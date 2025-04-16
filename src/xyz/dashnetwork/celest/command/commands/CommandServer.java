@@ -33,10 +33,9 @@ import xyz.dashnetwork.celest.utils.LazyUtil;
 import xyz.dashnetwork.celest.chat.ComponentUtil;
 import xyz.dashnetwork.celest.chat.Messages;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
-import xyz.dashnetwork.celest.chat.builder.formats.NamedSourceFormat;
+import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.profile.NamedSource;
 
 import java.util.List;
 import java.util.Optional;
@@ -76,7 +75,7 @@ public final class CommandServer extends CelestCommand {
 
             if (!source.equals(player)) {
                 builder.append("&7 by ");
-                builder.append(new NamedSourceFormat(named));
+                builder.append(new CommandSourceFormat(named));
             }
 
             builder.append("&7.");
