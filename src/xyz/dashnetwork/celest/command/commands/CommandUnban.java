@@ -27,7 +27,6 @@ import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.connection.OfflineUser;
 import xyz.dashnetwork.celest.storage.data.UserData;
 
 public final class CommandUnban extends CelestCommand {

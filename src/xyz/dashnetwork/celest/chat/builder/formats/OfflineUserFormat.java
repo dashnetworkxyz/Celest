@@ -21,7 +21,6 @@ package xyz.dashnetwork.celest.chat.builder.formats;
 import xyz.dashnetwork.celest.chat.builder.Format;
 import xyz.dashnetwork.celest.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.connection.OfflineUser;
 
 import java.util.ArrayList;
 import java.util.Collection;

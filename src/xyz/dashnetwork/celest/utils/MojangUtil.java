@@ -23,7 +23,6 @@ import com.google.gson.Gson;
 import com.velocitypowered.api.util.GameProfile;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
-import xyz.dashnetwork.celest.limbo.Limbo;
 import xyz.dashnetwork.celest.log.LogType;
 import xyz.dashnetwork.celest.log.Logger;
 

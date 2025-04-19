@@ -27,7 +27,6 @@ import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.limbo.Limbo;
 import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.storage.data.AddressData;
 import xyz.dashnetwork.celest.storage.data.PunishData;

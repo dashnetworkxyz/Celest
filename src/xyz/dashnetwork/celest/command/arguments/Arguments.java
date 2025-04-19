@@ -24,7 +24,6 @@ import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.utils.StringUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.connection.OfflineUser;
 
 import java.util.ArrayList;
 import java.util.List;

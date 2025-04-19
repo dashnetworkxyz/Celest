@@ -46,6 +46,8 @@ import xyz.dashnetwork.celest.channel.channels.output.ChannelOutUserData;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelOutVanish;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelOutVersion;
 import xyz.dashnetwork.celest.command.commands.*;
+import xyz.dashnetwork.celest.connection.AddressFactory;
+import xyz.dashnetwork.celest.connection.UserFactory;
 import xyz.dashnetwork.celest.listeners.*;
 import xyz.dashnetwork.celest.tasks.CacheTask;
 import xyz.dashnetwork.celest.tasks.SaveTask;
@@ -77,6 +79,8 @@ public final class Celest {
     private static final Gson gson = new Gson();
     private static CacheTask cacheTask;
     private static SaveTask saveTask;
+    private static AddressFactory addressFactory;
+    private static UserFactory userFactory;
     private static Celest instance;
     private static ProxyServer server;
     private static Logger logger;
@@ -88,6 +92,10 @@ public final class Celest {
     public static CacheTask getCacheTask() { return cacheTask; }
 
     public static SaveTask getSaveTask() { return saveTask; }
+
+    public static AddressFactory getAddressFactory() { return addressFactory; }
+
+    public static UserFactory getUserFactory() { return userFactory; }
 
     public static Celest getInstance() { return instance; }
 
@@ -111,6 +119,10 @@ public final class Celest {
     public void onProxyInitialize(ProxyInitializeEvent event) {
         logger.info("Starting...");
         long start = System.currentTimeMillis();
+
+        // Init factories
+        addressFactory = new AddressFactory();
+        userFactory = new UserFactory();
 
         Storage.mkdir();
         Configuration.load();

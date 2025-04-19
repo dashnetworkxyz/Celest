@@ -30,7 +30,6 @@ import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.connection.OfflineUser;
 import xyz.dashnetwork.celest.utils.ProfileUtil;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 import xyz.dashnetwork.celest.storage.data.UserData;

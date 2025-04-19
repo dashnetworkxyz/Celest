@@ -26,8 +26,6 @@ import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.limbo.Limbo;
-import xyz.dashnetwork.celest.connection.OfflineUser;
 import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 import xyz.dashnetwork.celest.storage.data.UserData;

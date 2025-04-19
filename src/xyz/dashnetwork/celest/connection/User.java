@@ -19,27 +19,27 @@
 package xyz.dashnetwork.celest.connection;
 
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.permission.Tristate;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
+import xyz.dashnetwork.celest.storage.data.UserData;
 import xyz.dashnetwork.celest.utils.PermissionType;
 import xyz.dashnetwork.celest.utils.TimeType;
 import xyz.dashnetwork.celest.utils.TimeUtil;
 import xyz.dashnetwork.celest.chat.ColorUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
-import xyz.dashnetwork.celest.limbo.Limbo;
 import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 import xyz.dashnetwork.celest.vault.Vault;
 
 import java.util.*;
 
-public final class User extends OfflineUser implements CommandSource {
+public final class User implements CommandSource {
 
-    private static final Map<UUID, User> users = new HashMap<>();
     private static final Vault vault = Celest.getVault();
     private Player player;
     private Address address;
@@ -47,11 +47,9 @@ public final class User extends OfflineUser implements CommandSource {
     private String prefix, suffix, nickname;
     private long vaultUpdateTime;
 
-    private User(Player player) {
-        super(player.getUniqueId(), player.getUsername(), false);
-
+    public User(Player player) {
         this.player = player;
-        this.address = Address.getAddress(player.getRemoteAddress().getHostString(), false);
+        this.address = Address.getAddress(player.getRemoteAddress().getHostString());
         this.pageBuilder = null;
         this.vaultUpdateTime = -1;
 
@@ -71,36 +69,6 @@ public final class User extends OfflineUser implements CommandSource {
         users.put(uuid, this);
     }
 
-    public static Collection<User> getUsers() { return users.values(); }
-
-    public static Optional<User> getUser(Audience audience) {
-        if (audience instanceof Player player)
-            return Optional.of(getUser(player));
-
-        return Optional.empty();
-    }
-
-    public static User getUser(Player player) {
-        UUID uuid = player.getUniqueId();
-
-        if (users.containsKey(uuid))
-            return users.get(uuid);
-
-        Limbo<User> limbo = Limbo.get(User.class, each -> each.uuid.equals(uuid));
-
-        if (limbo != null) {
-            limbo.cancel();
-
-            User user = limbo.getObject();
-            user.player = player;
-            user.load();
-
-            return user;
-        }
-
-        return new User(player);
-    }
-
     private void load() {
         // update username in address
         address.removeUserIfPresent(uuid);
@@ -116,7 +84,7 @@ public final class User extends OfflineUser implements CommandSource {
         Cache.generate(uuid, username, stringAddress);
     }
 
-    public void updateDisplayname() {
+    public void updateDisplayName() {
         String oldPrefix = prefix == null ? "" : prefix;
         String oldSuffix = suffix == null ? "" : suffix;
         String oldNickname = nickname == null ? "" : nickname;
@@ -184,17 +152,16 @@ public final class User extends OfflineUser implements CommandSource {
         return address.getData().getMute();
     }
 
-    @Override
-    public boolean isActive() { return getPlayer().isActive(); }
-
-    @Override
-    public String getDisplayname() {
-        updateDisplayname();
+    public String getDisplayName() {
+        updateDisplayName();
 
         return prefix + nickname + suffix;
     }
 
     @Override
     public void sendMessage(@NotNull Component component) { player.sendMessage(component); }
+
+    @Override
+    public Tristate getPermissionValue(String value) { return player.getPermissionValue(value); }
 
 }
