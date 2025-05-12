@@ -20,6 +20,7 @@ package xyz.dashnetwork.celest.storage;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.Getter;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.log.LogType;
 import xyz.dashnetwork.celest.log.Logger;
@@ -31,6 +32,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public final class Storage {
 
@@ -39,6 +41,7 @@ public final class Storage {
             .create();
     private static final File folder = new File(Celest.getDirectory().toFile(), "data");
 
+    @Getter
     public enum Directory {
 
         PARENT(folder),
@@ -49,8 +52,6 @@ public final class Storage {
         private final File file;
 
         Directory(File file) { this.file = file; }
-
-        public File getFile() { return file; }
 
     }
 
@@ -94,13 +95,13 @@ public final class Storage {
         }
     }
 
-    public static <T> T read(String fileName, Directory directory, Class<T> clazz) {
+    public static <T> Optional<T> read(String fileName, Directory directory, Class<T> clazz) {
         File file = new File(directory.getFile(), fileName + ".json");
 
         if (!file.exists())
-            return null;
+            return Optional.empty();
 
-        return readFile(file, clazz);
+        return Optional.ofNullable(readFile(file, clazz));
     }
 
     public static <T> Map<String, T> readAll(Directory directory, Class<T> clazz) {

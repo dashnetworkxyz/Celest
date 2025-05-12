@@ -41,15 +41,14 @@ import java.util.*;
 public final class User implements CommandSource {
 
     private static final Vault vault = Celest.getVault();
-    private Player player;
-    private Address address;
+    private final Player player;
+    private UserData userData;
     private PageBuilder pageBuilder;
     private String prefix, suffix, nickname;
     private long vaultUpdateTime;
 
     public User(Player player) {
         this.player = player;
-        this.address = Address.getAddress(player.getRemoteAddress().getHostString());
         this.pageBuilder = null;
         this.vaultUpdateTime = -1;
 
@@ -112,12 +111,8 @@ public final class User implements CommandSource {
     }
 
     public void remove() {
-        users.remove(uuid);
-
-        if (!disableSave) {
-            new Limbo<>(this);
-            new Limbo<>(address);
-        }
+        // TODO: save userdata
+        users.remove(player.getUniqueId());
     }
 
     public boolean canSee(User user) { return PermissionType.STAFF.hasPermission(this) || !user.getData().getVanish() || getData().getVanish(); }

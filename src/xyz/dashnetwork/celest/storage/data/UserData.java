@@ -18,15 +18,26 @@
 
 package xyz.dashnetwork.celest.storage.data;
 
+import com.github.benmanes.caffeine.cache.CacheLoader;
+import com.github.benmanes.caffeine.cache.RemovalCause;
+import com.github.benmanes.caffeine.cache.RemovalListener;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 import xyz.dashnetwork.celest.chat.ChatChannel;
+import xyz.dashnetwork.celest.storage.Storage;
 
-public final class UserData {
+import java.util.UUID;
+import java.util.function.Function;
 
-    private String username, address, twoFactor, nickname;
+@Getter @Setter
+public final class UserData implements CacheLoader<UUID, UserData>, RemovalListener<UUID, UserData> {
+
+    private String username, address, nickname;
     private PunishData ban, mute;
     private ChatChannel channel;
-    private boolean authenticated, altSpy, commandSpy, pingSpy, signSpy, serverSpy, vanish, hideAddress, debug;
+    private boolean altSpy, commandSpy, pingSpy, signSpy, serverSpy, vanish, streamerMode;
 
     public UserData(String username) {
         this.username = username;
@@ -36,100 +47,23 @@ public final class UserData {
         channel = ChatChannel.GLOBAL;
         address = null;
         nickname = null;
-        twoFactor = null;
-        authenticated = false;
         altSpy = false;
         commandSpy = false;
         pingSpy = false;
         signSpy = false;
         serverSpy = false;
         vanish = false;
-        hideAddress = false;
-        debug = false;
+        streamerMode = false;
     }
 
-    // User data
+    @Override
+    public UserData load(@NotNull UUID uuid) throws Exception {
+        return Storage.read(uuid.toString(), Storage.Directory.USER, UserData.class).orElse(new UserData());
+    }
 
-    public String getAddress() { return address; }
+    @Override
+    public void onRemoval(@Nullable UUID key, @Nullable UserData value, @NotNull RemovalCause cause) {
 
-    public String getUsername() { return username; }
-
-    public void setAddress(String address) { this.address = address; }
-
-    public void setUsername(String username) { this.username = username; }
-
-    // Celest data
-
-    public String getTwoFactor() { return twoFactor; }
-
-    public String getNickName() { return nickname; }
-
-    public PunishData getBan() { return ban; }
-
-    public PunishData getMute() { return mute; }
-
-    public ChatChannel getChannel() { return channel; }
-
-    public boolean getAuthenticated() { return authenticated; }
-
-    public boolean getAltSpy() { return altSpy; }
-
-    public boolean getCommandSpy() { return commandSpy; }
-
-    public boolean getPingSpy() { return pingSpy; }
-
-    public boolean getSignSpy() { return signSpy; }
-
-    public boolean getServerSpy() { return serverSpy; }
-
-    public boolean getVanish() { return vanish; }
-
-    public boolean getHideAddress() { return hideAddress; }
-
-    public boolean getDebug() { return debug; }
-
-    public void setTwoFactor(String twoFactor) { this.twoFactor = twoFactor; }
-
-    public void setNickName(String nickname) { this.nickname = nickname; }
-
-    public void setBan(PunishData ban) { this.ban = ban; }
-
-    public void setMute(PunishData mute) { this.mute = mute; }
-
-    public void setChannel(@NotNull ChatChannel channel) { this.channel = channel; }
-
-    public void setAuthenticated(boolean authenticated) { this.authenticated = authenticated; }
-
-    public void setAltSpy(boolean altSpy) { this.altSpy = altSpy; }
-
-    public void setCommandSpy(boolean commandSpy) { this.commandSpy = commandSpy; }
-
-    public void setPingSpy(boolean pingSpy) { this.pingSpy = pingSpy; }
-
-    public void setSignSpy(boolean signSpy) { this.signSpy = signSpy; }
-
-    public void setServerSpy(boolean serverSpy) { this.serverSpy = serverSpy; }
-
-    public void setVanish(boolean vanish) { this.vanish = vanish; }
-
-    public void setHideAddress(boolean hideAddress) { this.hideAddress = hideAddress; }
-
-    public void setDebug(boolean debug) { this.debug = debug; }
-
-    public boolean isObsolete() {
-        return ban == null
-                && mute == null
-                && channel == ChatChannel.GLOBAL
-                && address == null
-                && nickname == null
-                && !altSpy
-                && !commandSpy
-                && !pingSpy
-                && !signSpy
-                && !serverSpy
-                && !vanish
-                && !hideAddress
-                && !debug;
     }
 
 }
