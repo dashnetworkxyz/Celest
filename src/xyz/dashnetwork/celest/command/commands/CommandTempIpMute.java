@@ -23,7 +23,7 @@ import com.velocitypowered.api.proxy.Player;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.TimeUtil;
+import xyz.dashnetwork.celest.util.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.connection.Address;

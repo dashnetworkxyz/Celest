@@ -22,7 +22,7 @@ import com.velocitypowered.api.command.CommandSource;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.GrammarUtil;
+import xyz.dashnetwork.celest.util.GrammarUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 
 import java.util.concurrent.ThreadLocalRandom;

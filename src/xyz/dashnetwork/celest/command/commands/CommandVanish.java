@@ -25,7 +25,7 @@ import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.events.CelestVanishEvent;
+import xyz.dashnetwork.celest.event.CelestVanishEvent;
 import xyz.dashnetwork.celest.chat.ChatChannel;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;

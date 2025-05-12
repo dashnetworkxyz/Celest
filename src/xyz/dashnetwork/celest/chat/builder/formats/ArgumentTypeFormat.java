@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.chat.builder.formats;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
-import xyz.dashnetwork.celest.utils.GrammarUtil;
+import xyz.dashnetwork.celest.util.GrammarUtil;
 import xyz.dashnetwork.celest.chat.builder.Format;
 import xyz.dashnetwork.celest.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.connection.User;

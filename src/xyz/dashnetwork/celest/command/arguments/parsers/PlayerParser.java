@@ -22,7 +22,7 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.command.arguments.Parser;
-import xyz.dashnetwork.celest.utils.StringUtil;
+import xyz.dashnetwork.celest.util.StringUtil;
 import xyz.dashnetwork.celest.connection.User;
 
 import java.util.Optional;

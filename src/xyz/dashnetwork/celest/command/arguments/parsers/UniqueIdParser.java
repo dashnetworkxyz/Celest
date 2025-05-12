@@ -19,7 +19,7 @@
 package xyz.dashnetwork.celest.command.arguments.parsers;
 
 import xyz.dashnetwork.celest.command.arguments.Parser;
-import xyz.dashnetwork.celest.utils.StringUtil;
+import xyz.dashnetwork.celest.util.StringUtil;
 import xyz.dashnetwork.celest.connection.User;
 
 import java.util.UUID;
