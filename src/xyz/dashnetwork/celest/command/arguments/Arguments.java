@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.command.arguments;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.utils.StringUtil;
+import xyz.dashnetwork.celest.util.StringUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.connection.User;
 

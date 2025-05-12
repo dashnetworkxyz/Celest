@@ -21,22 +21,18 @@ package xyz.dashnetwork.celest.connection;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.permission.Tristate;
 import com.velocitypowered.api.proxy.Player;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.storage.data.UserData;
-import xyz.dashnetwork.celest.utils.PermissionType;
-import xyz.dashnetwork.celest.utils.TimeType;
-import xyz.dashnetwork.celest.utils.TimeUtil;
+import xyz.dashnetwork.celest.util.PermissionType;
+import xyz.dashnetwork.celest.util.TimeType;
+import xyz.dashnetwork.celest.util.TimeUtil;
 import xyz.dashnetwork.celest.chat.ColorUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
-import xyz.dashnetwork.celest.storage.Cache;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 import xyz.dashnetwork.celest.vault.Vault;
-
-import java.util.*;
 
 public final class User implements CommandSource {
 

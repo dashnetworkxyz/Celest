@@ -19,9 +19,9 @@
 package xyz.dashnetwork.celest.chat;
 
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.utils.GrammarUtil;
-import xyz.dashnetwork.celest.utils.LazyUtil;
-import xyz.dashnetwork.celest.utils.PermissionType;
+import xyz.dashnetwork.celest.util.GrammarUtil;
+import xyz.dashnetwork.celest.util.LazyUtil;
+import xyz.dashnetwork.celest.util.PermissionType;
 import xyz.dashnetwork.celest.connection.User;
 
 import java.util.function.Predicate;

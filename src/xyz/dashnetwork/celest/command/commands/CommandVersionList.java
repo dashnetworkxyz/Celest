@@ -22,7 +22,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.network.ProtocolVersion;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.VersionUtil;
+import xyz.dashnetwork.celest.util.VersionUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;

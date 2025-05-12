@@ -18,9 +18,9 @@
 
 package xyz.dashnetwork.celest.connection;
 
-import xyz.dashnetwork.celest.utils.ArrayUtil;
-import xyz.dashnetwork.celest.utils.LazyUtil;
-import xyz.dashnetwork.celest.utils.PunishUtil;
+import xyz.dashnetwork.celest.util.ArrayUtil;
+import xyz.dashnetwork.celest.util.LazyUtil;
+import xyz.dashnetwork.celest.util.PunishUtil;
 import xyz.dashnetwork.celest.limbo.Savable;
 import xyz.dashnetwork.celest.storage.Storage;
 import xyz.dashnetwork.celest.storage.data.AddressData;

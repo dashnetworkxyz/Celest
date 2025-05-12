@@ -20,7 +20,7 @@ package xyz.dashnetwork.celest.channel.channels.input;
 
 import com.google.common.io.ByteArrayDataInput;
 import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.utils.PermissionType;
+import xyz.dashnetwork.celest.util.PermissionType;
 import xyz.dashnetwork.celest.chat.ComponentUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.connection.User;

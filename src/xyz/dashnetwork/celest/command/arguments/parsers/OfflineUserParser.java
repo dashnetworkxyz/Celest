@@ -20,9 +20,9 @@ package xyz.dashnetwork.celest.command.arguments.parsers;
 
 import com.velocitypowered.api.util.GameProfile;
 import xyz.dashnetwork.celest.command.arguments.Parser;
-import xyz.dashnetwork.celest.utils.StringUtil;
+import xyz.dashnetwork.celest.util.StringUtil;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.utils.ProfileUtil;
+import xyz.dashnetwork.celest.util.ProfileUtil;
 
 import java.util.UUID;
 

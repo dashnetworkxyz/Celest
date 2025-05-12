@@ -20,8 +20,8 @@ package xyz.dashnetwork.celest.chat.builder.formats;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
-import xyz.dashnetwork.celest.utils.GrammarUtil;
-import xyz.dashnetwork.celest.utils.VersionUtil;
+import xyz.dashnetwork.celest.util.GrammarUtil;
+import xyz.dashnetwork.celest.util.VersionUtil;
 import xyz.dashnetwork.celest.chat.builder.Format;
 import xyz.dashnetwork.celest.chat.builder.sections.ComponentSection;
 import xyz.dashnetwork.celest.connection.User;

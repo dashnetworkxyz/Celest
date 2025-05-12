@@ -25,12 +25,12 @@ import xyz.dashnetwork.celest.chat.builder.Section;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.PunishUtil;
-import xyz.dashnetwork.celest.utils.TimeUtil;
+import xyz.dashnetwork.celest.util.PunishUtil;
+import xyz.dashnetwork.celest.util.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.utils.ProfileUtil;
+import xyz.dashnetwork.celest.util.ProfileUtil;
 import xyz.dashnetwork.celest.storage.data.PunishData;
 import xyz.dashnetwork.celest.storage.data.UserData;
 

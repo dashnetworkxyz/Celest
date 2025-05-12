@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.ArgumentType;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.PermissionType;
+import xyz.dashnetwork.celest.util.PermissionType;
 import xyz.dashnetwork.celest.chat.ColorUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;

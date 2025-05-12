@@ -23,7 +23,7 @@ import com.velocitypowered.api.proxy.ServerConnection;
 import net.kyori.adventure.text.event.ClickEvent;
 import xyz.dashnetwork.celest.command.CelestCommand;
 import xyz.dashnetwork.celest.command.arguments.Arguments;
-import xyz.dashnetwork.celest.utils.GrammarUtil;
+import xyz.dashnetwork.celest.util.GrammarUtil;
 import xyz.dashnetwork.celest.chat.MessageUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
