@@ -18,50 +18,34 @@
 
 package xyz.dashnetwork.celest.sql.data;
 
-import com.github.benmanes.caffeine.cache.CacheLoader;
-import com.github.benmanes.caffeine.cache.RemovalCause;
-import com.github.benmanes.caffeine.cache.RemovalListener;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.Nullable;
 import xyz.dashnetwork.celest.chat.ChatChannel;
 
 import java.util.UUID;
 
 @Getter @Setter
-public final class UserData implements CacheLoader<UUID, UserData>, RemovalListener<UUID, UserData> {
+public final class UserData {
 
+    private UUID uuid;
     private String username, address, nickname;
-    private PunishData ban, mute;
     private ChatChannel channel;
     private boolean altSpy, commandSpy, pingSpy, signSpy, serverSpy, vanish, streamerMode;
 
-    public UserData(String username) {
+    public UserData(UUID uuid, String username, String address, String nickname, ChatChannel channel,
+                    boolean altSpy, boolean commandSpy, boolean pingSpy, boolean signSpy, boolean serverSpy,
+                    boolean streamerMode) {
+        this.uuid = uuid;
         this.username = username;
-
-        ban = null;
-        mute = null;
-        channel = ChatChannel.GLOBAL;
-        address = null;
-        nickname = null;
-        altSpy = false;
-        commandSpy = false;
-        pingSpy = false;
-        signSpy = false;
-        serverSpy = false;
-        vanish = false;
-        streamerMode = false;
-    }
-
-    @Override
-    public UserData load(@NotNull UUID uuid) throws Exception {
-        return Storage.read(uuid.toString(), Storage.Directory.USER, UserData.class).orElse(new UserData());
-    }
-
-    @Override
-    public void onRemoval(@Nullable UUID key, @Nullable UserData value, @NotNull RemovalCause cause) {
-
+        this.address = address;
+        this.nickname = nickname;
+        this.channel = channel;
+        this.altSpy = altSpy;
+        this.commandSpy = commandSpy;
+        this.pingSpy = pingSpy;
+        this.signSpy = signSpy;
+        this.serverSpy = serverSpy;
+        this.streamerMode = streamerMode;
     }
 
 }
