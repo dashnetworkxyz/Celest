@@ -16,13 +16,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.storage.data;
+package xyz.dashnetwork.celest.sql.data;
 
 import java.util.UUID;
 
-public record PunishData(UUID judge, String reason, Long expiration) {
+public final class CacheData {
 
-    @Override
-    public String toString() { return "{judge:" + judge + ",reason:" + reason + ",expiration:" + expiration + "}"; }
+    private final UUID uuid;
+    private final String username, address;
+    private long accessTime;
+
+    public CacheData(UUID uuid, String username, String address) {
+        this.uuid = uuid;
+        this.username = username;
+        this.address = address;
+        this.accessTime = System.currentTimeMillis();
+    }
+
+    public UUID getUUID() { return uuid; }
+
+    public String getUsername() { return username; }
+
+    public String getAddress() { return address; }
+
+    public long getAccessTime() { return accessTime; }
+
+    public void setAccessTime(long accessTime) { this.accessTime = accessTime; }
 
 }

@@ -32,7 +32,7 @@ import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.PlayerFormat;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.storage.data.UserData;
+import xyz.dashnetwork.celest.sql.data.UserData;
 
 import java.util.ArrayList;
 import java.util.List;

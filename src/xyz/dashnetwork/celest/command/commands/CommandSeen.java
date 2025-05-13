@@ -31,8 +31,8 @@ import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.util.ProfileUtil;
-import xyz.dashnetwork.celest.storage.data.PunishData;
-import xyz.dashnetwork.celest.storage.data.UserData;
+import xyz.dashnetwork.celest.sql.data.PunishData;
+import xyz.dashnetwork.celest.sql.data.UserData;
 
 import java.util.Optional;
 import java.util.UUID;

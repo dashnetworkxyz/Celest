@@ -22,9 +22,8 @@ import xyz.dashnetwork.celest.util.ArrayUtil;
 import xyz.dashnetwork.celest.util.LazyUtil;
 import xyz.dashnetwork.celest.util.PunishUtil;
 import xyz.dashnetwork.celest.limbo.Savable;
-import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.storage.data.AddressData;
-import xyz.dashnetwork.celest.storage.data.PlayerData;
+import xyz.dashnetwork.celest.sql.data.AddressData;
+import xyz.dashnetwork.celest.sql.data.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;

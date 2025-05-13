@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.storage.data;
+package xyz.dashnetwork.celest.sql.data;
 
 import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.RemovalCause;
@@ -26,10 +26,8 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 import xyz.dashnetwork.celest.chat.ChatChannel;
-import xyz.dashnetwork.celest.storage.Storage;
 
 import java.util.UUID;
-import java.util.function.Function;
 
 @Getter @Setter
 public final class UserData implements CacheLoader<UUID, UserData>, RemovalListener<UUID, UserData> {

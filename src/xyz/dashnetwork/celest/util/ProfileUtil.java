@@ -21,9 +21,8 @@ package xyz.dashnetwork.celest.util;
 import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.util.GameProfile;
 import org.jetbrains.annotations.NotNull;
-import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.storage.data.CacheData;
-import xyz.dashnetwork.celest.storage.data.UserData;
+import xyz.dashnetwork.celest.sql.data.CacheData;
+import xyz.dashnetwork.celest.sql.data.UserData;
 
 import java.util.UUID;
 

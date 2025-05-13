@@ -16,12 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.storage.data.serializer;
+package xyz.dashnetwork.celest.sql.data.serializer;
 
 import com.google.gson.*;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.chat.ChatChannel;
-import xyz.dashnetwork.celest.storage.data.UserData;
+import xyz.dashnetwork.celest.sql.data.UserData;
 
 import java.lang.reflect.Type;
 

@@ -21,7 +21,7 @@ package xyz.dashnetwork.celest.command.arguments.suggesters;
 import xyz.dashnetwork.celest.command.arguments.Suggester;
 import xyz.dashnetwork.celest.util.ListUtil;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.storage.data.CacheData;
+import xyz.dashnetwork.celest.sql.data.CacheData;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -35,10 +35,9 @@ import xyz.dashnetwork.celest.chat.builder.PageBuilder;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.log.Logger;
-import xyz.dashnetwork.celest.storage.Configuration;
-import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.storage.data.AddressData;
-import xyz.dashnetwork.celest.storage.data.UserData;
+import xyz.dashnetwork.celest.util.Configuration;
+import xyz.dashnetwork.celest.sql.data.AddressData;
+import xyz.dashnetwork.celest.sql.data.UserData;
 
 import java.io.IOException;
 import java.io.InputStream;

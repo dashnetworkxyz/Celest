@@ -16,31 +16,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.storage.data;
+package xyz.dashnetwork.celest.sql.data;
 
-import java.util.UUID;
+public final class AddressData {
 
-public final class CacheData {
+    private PlayerData[] profiles;
+    private PunishData ban, mute;
 
-    private final UUID uuid;
-    private final String username, address;
-    private long accessTime;
-
-    public CacheData(UUID uuid, String username, String address) {
-        this.uuid = uuid;
-        this.username = username;
-        this.address = address;
-        this.accessTime = System.currentTimeMillis();
+    public AddressData(PlayerData... profiles) {
+        this.profiles = profiles;
+        ban = null;
+        mute = null;
     }
 
-    public UUID getUUID() { return uuid; }
+    // User data
 
-    public String getUsername() { return username; }
+    public PlayerData[] getProfiles() { return profiles; }
 
-    public String getAddress() { return address; }
+    public void setProfiles(PlayerData... profiles) { this.profiles = profiles; }
 
-    public long getAccessTime() { return accessTime; }
+    // Celest data
 
-    public void setAccessTime(long accessTime) { this.accessTime = accessTime; }
+    public PunishData getBan() { return ban; }
+
+    public PunishData getMute() { return mute; }
+
+    public void setBan(PunishData ban) { this.ban = ban; }
+
+    public void setMute(PunishData mute) { this.mute = mute; }
 
 }

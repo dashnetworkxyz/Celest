@@ -16,10 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.dashnetwork.celest.storage;
+package xyz.dashnetwork.celest.sql.data;
 
-public final class Storage {
+import java.util.UUID;
 
-    public
+public record PunishData(UUID judge, String reason, Long expiration) {
+
+    @Override
+    public String toString() { return "{judge:" + judge + ",reason:" + reason + ",expiration:" + expiration + "}"; }
 
 }

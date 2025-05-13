@@ -19,7 +19,6 @@
 package xyz.dashnetwork.celest.util;
 
 import xyz.dashnetwork.celest.chat.ColorUtil;
-import xyz.dashnetwork.celest.storage.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;

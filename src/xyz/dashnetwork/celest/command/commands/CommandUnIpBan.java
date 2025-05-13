@@ -26,7 +26,7 @@ import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.chat.builder.formats.CommandSourceFormat;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.storage.data.AddressData;
+import xyz.dashnetwork.celest.sql.data.AddressData;
 
 public final class CommandUnIpBan extends CelestCommand {
 

@@ -6,3 +6,8 @@ motd:
     "&6&lMinecraft &7play.dashnetwork.xyz",
     "&6&lDiscord &7discord.gg/3RDsNEE"
   ]
+sql:
+  host: "127.0.0.1"
+  database: "s1_celest"
+  username: "admin"
+  password: "password"

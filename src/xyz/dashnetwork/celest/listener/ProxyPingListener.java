@@ -33,9 +33,9 @@ import xyz.dashnetwork.celest.chat.ComponentUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.storage.data.AddressData;
-import xyz.dashnetwork.celest.storage.data.CacheData;
-import xyz.dashnetwork.celest.storage.data.PlayerData;
+import xyz.dashnetwork.celest.sql.data.AddressData;
+import xyz.dashnetwork.celest.sql.data.CacheData;
+import xyz.dashnetwork.celest.sql.data.PlayerData;
 
 import java.net.InetSocketAddress;
 import java.util.Calendar;

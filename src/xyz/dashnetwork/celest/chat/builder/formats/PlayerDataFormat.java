@@ -2,7 +2,7 @@ package xyz.dashnetwork.celest.chat.builder.formats;
 
 import xyz.dashnetwork.celest.chat.builder.Format;
 import xyz.dashnetwork.celest.chat.builder.sections.ComponentSection;
-import xyz.dashnetwork.celest.storage.data.PlayerData;
+import xyz.dashnetwork.celest.sql.data.PlayerData;
 
 import java.util.ArrayList;
 import java.util.Collection;

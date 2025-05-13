@@ -27,7 +27,7 @@ import xyz.dashnetwork.celest.util.TimeUtil;
 import xyz.dashnetwork.celest.chat.builder.MessageBuilder;
 import xyz.dashnetwork.celest.connection.User;
 import xyz.dashnetwork.celest.util.ProfileUtil;
-import xyz.dashnetwork.celest.storage.data.PunishData;
+import xyz.dashnetwork.celest.sql.data.PunishData;
 
 import java.util.UUID;
 

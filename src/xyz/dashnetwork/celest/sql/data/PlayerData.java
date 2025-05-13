@@ -1,4 +1,4 @@
-package xyz.dashnetwork.celest.storage.data;
+package xyz.dashnetwork.celest.sql.data;
 
 import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.util.GameProfile;

@@ -25,13 +25,13 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import xyz.dashnetwork.celest.Celest;
 import xyz.dashnetwork.celest.channel.Channel;
-import xyz.dashnetwork.celest.storage.data.UserData;
+import xyz.dashnetwork.celest.sql.data.UserData;
 import xyz.dashnetwork.celest.util.PermissionType;
 import xyz.dashnetwork.celest.util.TimeType;
 import xyz.dashnetwork.celest.util.TimeUtil;
 import xyz.dashnetwork.celest.chat.ColorUtil;
 import xyz.dashnetwork.celest.chat.builder.PageBuilder;
-import xyz.dashnetwork.celest.storage.data.PunishData;
+import xyz.dashnetwork.celest.sql.data.PunishData;
 import xyz.dashnetwork.celest.vault.Vault;
 
 public final class User implements CommandSource {

@@ -18,7 +18,7 @@
 
 package xyz.dashnetwork.celest.util;
 
-import xyz.dashnetwork.celest.storage.data.PunishData;
+import xyz.dashnetwork.celest.sql.data.PunishData;
 
 public final class PunishUtil {
 

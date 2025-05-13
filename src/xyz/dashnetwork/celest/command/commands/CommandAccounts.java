@@ -28,7 +28,7 @@ import xyz.dashnetwork.celest.chat.builder.formats.OfflineUserFormat;
 import xyz.dashnetwork.celest.chat.builder.formats.PlayerDataFormat;
 import xyz.dashnetwork.celest.connection.Address;
 import xyz.dashnetwork.celest.connection.User;
-import xyz.dashnetwork.celest.storage.data.PlayerData;
+import xyz.dashnetwork.celest.sql.data.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;

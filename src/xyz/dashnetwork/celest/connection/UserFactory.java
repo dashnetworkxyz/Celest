@@ -1,9 +1,7 @@
 package xyz.dashnetwork.celest.connection;
 
 import com.github.benmanes.caffeine.cache.*;
-import org.jspecify.annotations.Nullable;
-import xyz.dashnetwork.celest.storage.Storage;
-import xyz.dashnetwork.celest.storage.data.UserData;
+import xyz.dashnetwork.celest.sql.data.UserData;
 
 import java.util.HashMap;
 import java.util.Map;
