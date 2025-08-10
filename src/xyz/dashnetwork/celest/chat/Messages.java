@@ -96,7 +96,8 @@ public final class Messages {
 
         for (String split : message.split(" ")) {
             if (!split.isEmpty()) {
-                Section section = builder.append(" " + split);
+                builder.append(" ");
+                Section section = builder.append(split);
 
                 if (StringUtils.matchesUrl(split)) {
                     String url = split.toLowerCase().startsWith("http") ? split : "https://" + split;
