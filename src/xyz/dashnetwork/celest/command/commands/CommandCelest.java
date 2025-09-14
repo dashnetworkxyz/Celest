@@ -133,7 +133,7 @@ public final class CommandCelest extends CelestCommand {
 
                 try {
                     InputStream stream = resource.openStream();
-                    properties = new String(stream.readAllBytes()).split("\r\n");
+                    properties = new String(stream.readAllBytes()).split("[\r\n]");
 
                     stream.close();
                 } catch (IOException exception) {
