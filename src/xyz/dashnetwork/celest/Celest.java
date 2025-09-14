@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 import xyz.dashnetwork.celest.channel.Channel;
 import xyz.dashnetwork.celest.channel.channels.input.ChannelInBroadcast;
 import xyz.dashnetwork.celest.channel.channels.input.ChannelInOnline;
+import xyz.dashnetwork.celest.channel.channels.input.ChannelInServer;
 import xyz.dashnetwork.celest.channel.channels.input.ChannelInSignSpy;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelOutDisplayName;
 import xyz.dashnetwork.celest.channel.channels.output.ChannelOutUserData;
@@ -121,6 +122,7 @@ public final class Celest {
         logger.info("Registering channels...");
         Channel.registerIn("broadcast", ChannelInBroadcast::new);
         Channel.registerIn("online", ChannelInOnline::new);
+        Channel.registerIn("server", ChannelInServer::new);
         Channel.registerIn("signspy", ChannelInSignSpy::new);
         Channel.registerOut("displayname", ChannelOutDisplayName::new);
         Channel.registerOut("userdata", ChannelOutUserData::new);
