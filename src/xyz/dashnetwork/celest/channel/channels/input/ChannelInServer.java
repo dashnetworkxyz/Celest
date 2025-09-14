@@ -13,7 +13,8 @@ public final class ChannelInServer extends Channel {
 
     @Override
     public void handle(ByteArrayDataInput input) {
-        Optional<RegisteredServer> server = Celest.getServer().getServer(input.readUTF());
+        String name = input.readUTF();
+        Optional<RegisteredServer> server = Celest.getServer().getServer(name);
 
         if (server.isEmpty())
             return;
@@ -28,6 +29,7 @@ public final class ChannelInServer extends Channel {
                 vanished++;
         }
 
+        output.writeUTF(name);
         output.writeInt(online);
         output.writeInt(vanished);
     }
