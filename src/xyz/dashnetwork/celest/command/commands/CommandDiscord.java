@@ -32,9 +32,9 @@ public final class CommandDiscord extends CelestCommand {
     public void execute(CommandSource source, String label, Arguments arguments) {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&7 Join the discord server at ");
-        builder.append("&6https://discord.gg/RJQyN7ng3a")
-                .hover("&7Click to open &6https://discord.com/invite/RJQyN7ng3a")
-                .click(ClickEvent.openUrl("https://discord.com/invite/RJQyN7ng3a"));
+        builder.append("&6https://discord.gg/WCSNrPjT8Q")
+                .hover("&7Click to open &6https://discord.com/invite/WCSNrPjT8Q")
+                .click(ClickEvent.openUrl("https://discord.com/invite/WCSNrPjT8Q"));
         builder.append("&7.");
         builder.message(source);
     }
