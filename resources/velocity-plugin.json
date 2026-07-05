@@ -1,0 +1,1 @@
+{"id":"celest","name":"Celest","version":"1.0.5","authors":["MasterDash5"],"dependencies":[{"id":"luckperms","optional":"true"},{"id":"signedvelocity","optional":"true"}],"main":"xyz.dashnetwork.celest.Celest"}
