@@ -33,8 +33,8 @@ public final class CommandDiscord extends CelestCommand {
         MessageBuilder builder = new MessageBuilder();
         builder.append("&6&l»&7 Join the discord server at ");
         builder.append("&6https://discord.gg/59DnrsGMGw")
-                .hover("&7Click to open &6https://discord.com/invite/WCSNrPjT8Q")
-                .click(ClickEvent.openUrl("https://discord.com/invite/WCSNrPjT8Q"));
+                .hover("&7Click to open &6https://discord.gg/59DnrsGMGw")
+                .click(ClickEvent.openUrl("https://discord.gg/59DnrsGMGw"));
         builder.append("&7.");
         builder.message(source);
     }
